@@ -1,88 +1,98 @@
 <template>
   <div v-if="changes.length > 0">
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
-        Champs
-      </div>
+      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">Champs</div>
     </div>
-    <Box :variant="boxVariant" :padding="boxPadding" :loading="loading">
-      <Disclosure v-for="change in changes" :key="change.property">
+    <BaseBox :variant="boxVariant" :padding="boxPadding" :loading="loading">
+      <BaseDisclosure v-for="change in changes" :key="change.property">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex-shrink-0 group-hover:text-gray-600">
               {{ change.property }}
             </div>
-            <div class="w-full border-t mt-1 ml-2 -mr-1" />
-            <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-            <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+            <div class="w-full border-t mt-1 mx-2" />
+            <RiIndeterminateCircleLine
+              v-if="isOpen"
+              class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+            />
+            <RiAddCircleLine
+              v-else
+              class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+            />
           </div>
         </template>
         <div class="mt-3 space-y-3">
           <div>
-            <Badge color="gray-light" size="xs">
-              Avant
-            </Badge>
+            <BaseBadge color="gray-light" size="xs"> Avant </BaseBadge>
             <div class="text-gray-500 italic mt-2">
               {{ change.before || '-' }}
             </div>
           </div>
           <div>
-            <Badge color="gray-light" size="xs">
-              Après
-            </Badge>
+            <BaseBadge color="gray-light" size="xs"> Après </BaseBadge>
             <div class="text-gray-500 italic mt-2">
               {{ change.after || '-' }}
             </div>
           </div>
         </div>
-      </Disclosure>
-    </Box>
+      </BaseDisclosure>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     activityLog: {
       type: Object,
-      required: true
+      required: true,
     },
     showAction: {
       type: Boolean,
-      default: true
+      default: true,
     },
     linkLabel: {
       type: String,
-      default: 'Consulter'
+      default: 'Consulter',
     },
     showTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     boxVariant: {
       type: [String],
-      default: 'flat'
+      default: 'flat',
     },
     boxPadding: {
       type: [String, Boolean],
-      default: 'xs'
-    }
+      default: 'xs',
+    },
   },
-  data () {
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   computed: {
-    uselessProperties () {
-      return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at', 'commitment__total']
+    uselessProperties() {
+      return [
+        'user_id',
+        'latitude',
+        'longitude',
+        'country',
+        'api_id',
+        'updated_at',
+        'commitment__total',
+        'old__format',
+        'is_qpv',
+      ]
     },
-    changes () {
+    changes() {
       return this.formatChanges(this.activityLog)
-    }
+    },
   },
   methods: {
-    formatChanges (activityLog) {
+    formatChanges(activityLog) {
       const changes = []
 
       if (!activityLog?.properties?.attributes) {
@@ -93,18 +103,19 @@ export default {
         if (this.uselessProperties.includes(key)) {
           continue
         }
-        if (!activityLog.properties.old && !value) { // Valeurs vides
+        if (!activityLog.properties.old && !value) {
+          // Valeurs vides
           continue
         }
         changes.push({
           property: this.formatPropertyLabel(key),
           after: value,
-          before: activityLog.properties.old && activityLog.properties.old[key]
+          before: activityLog.properties.old && activityLog.properties.old[key],
         })
       }
       return changes
     },
-    formatPropertyLabel (property) {
+    formatPropertyLabel(property) {
       switch (property) {
         case 'created_at':
           return 'Crée le'
@@ -146,6 +157,10 @@ export default {
           return 'Template de mission'
         case 'statut_juridique':
           return 'Statut juridique'
+        case 'structure_privee_type':
+          return 'Type organisation privée'
+        case 'is_alsace_moselle':
+          return 'Alsace Moselle'
         case 'city':
           return 'Ville'
         case 'dates_infos':
@@ -167,7 +182,7 @@ export default {
         case 'email':
           return 'E-mail'
         case 'can_export_profiles':
-          return 'Peut exporter les profils'
+          return 'Peut exporter les utilisateurs'
         case 'referent_department':
           return 'Référent départemental'
         case 'referent_region':
@@ -175,9 +190,9 @@ export default {
         case 'disponibilities':
           return 'Disponibilités'
         case 'commitment__duration':
-          return 'Durée d\'engagement'
+          return "Durée d'engagement"
         case 'commitment__time_period':
-          return 'Période d\'engagement'
+          return "Période d'engagement"
         case 'start_date':
           return 'Date de début'
         case 'end_date':
@@ -206,6 +221,8 @@ export default {
           return 'Autonomie - Codes postaux'
         case 'autonomy_precisions':
           return 'Autonomie - Précisions'
+        case 'addresses_precisions':
+          return 'Précisions zone intervention'
         case 'date_type':
           return 'Type de dates'
         case 'recurrent_description':
@@ -232,10 +249,21 @@ export default {
           return 'Profile ID'
         case 'mission_id':
           return 'Mission ID'
+        case 'seo_engage_paragraphs':
+          return 'SEO'
+        case 'is_active':
+          return 'Actif'
+        case 'is_online':
+          return 'En ligne'
+        case 'is_registration_open':
+          return 'Inscription ouverte'
+        case 'activity_secondary_id':
+          return 'Activité secondaire'
+        case 'prerequisites':
+          return 'Prérequis'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
-    }
-  }
-
-}
+    },
+  },
+})
 </script>

@@ -4,7 +4,7 @@
       <div
         v-for="(step, index) in steps"
         :key="step.slug"
-        class="relative flex items-center "
+        class="relative flex items-center"
         :class="[
           { 'mr-24': index != steps.length - 1 },
           { 'cursor-pointer': !isLastStep && index < currentStepIndex },
@@ -15,9 +15,7 @@
           class="flex-none rounded-full border-2 w-10 h-10 flex items-center justify-center border-[#C7C7C7]"
           :class="[
             {
-              '!bg-jva-blue-500':
-                index < currentStepIndex ||
-                currentStepIndex == steps.length - 1,
+              '!bg-jva-blue-500': index < currentStepIndex || currentStepIndex == steps.length - 1,
             },
             { '!border-jva-blue-500': index <= currentStepIndex },
           ]"
@@ -35,9 +33,7 @@
           ]"
         />
 
-        <div
-          class="absolute bottom-0 translate-y-full -translate-x-1/2 left-1/2"
-        >
+        <div class="absolute bottom-0 translate-y-full -translate-x-1/2 left-1/2">
           <div
             class="pt-2 text-[11px] text-[#A7A7B0] font-bold"
             :class="[{ '!text-jva-blue-500': index <= currentStepIndex }]"
@@ -51,33 +47,33 @@
 </template>
 
 <script>
-export default {
-  data () {
+export default defineNuxtComponent({
+  data() {
     return {}
   },
   computed: {
-    steps () {
-      return this.$store.getters['temoignage/steps']
+    steps() {
+      return this.$stores.temoignage.steps
     },
-    currentStep () {
-      return this.$store.getters['temoignage/step']
+    currentStep() {
+      return this.$stores.temoignage.step
     },
-    currentStepIndex () {
-      return this.$store.getters['temoignage/stepIndex']
+    currentStepIndex() {
+      return this.$stores.temoignage.stepIndex
     },
-    lastStep () {
+    lastStep() {
       return this.steps[this.steps.length - 1]
     },
-    isLastStep () {
+    isLastStep() {
       return this.currentStep.slug == this.lastStep.slug
-    }
+    },
   },
   methods: {
-    onClick (index) {
+    onClick(index) {
       if (!this.isLastStep && index < this.currentStepIndex) {
-        this.$store.commit('temoignage/setStep', this.steps[index])
+        this.$stores.temoignage.step = this.steps[index]
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>

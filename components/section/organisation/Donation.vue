@@ -1,16 +1,14 @@
 <template>
   <div v-if="organisation.donation" id="faire-un-don" class="gradient mt-20">
     <div class="container px-4 md:px-8 mx-auto relative">
-      <div
-        class="max-w-[960px] mx-auto rounded-[24px] transform -translate-y-16 mb-6"
-      >
+      <div class="max-w-[960px] mx-auto rounded-[24px] transform -translate-y-16 mb-6">
         <div class="relative rounded-[24px] overflow-hidden shadow-lg">
           <img
             src="/images/organisations/bg_don.png"
             srcset="/images/organisations/bg_don@2x.png 2x"
             class="bg-img absolute object-cover w-full h-full"
             alt=""
-          >
+          />
 
           <div
             class="absolute inset-0 w-full h-full opacity-90"
@@ -22,13 +20,12 @@
               class="font-bold text-center mb-6 text-3xl leading-8 tracking-tight sm:text-5xl sm:leading-tight"
             >
               <span>Faites un don à l'organisation </span>
-              <br class="hidden xl:block">
+              <br class="hidden xl:block" />
               <span class="font-extrabold">{{ organisation.name }}</span>
             </h2>
 
             <p class="text-xl max-w-xl mx-auto">
-              Plus que jamais, l'organisation {{ organisation.name }} a besoin de
-              votre générosité
+              Plus que jamais, l'organisation {{ organisation.name }} a besoin de votre générosité
             </p>
           </div>
         </div>
@@ -73,17 +70,14 @@
           <div
             v-if="
               organisation.donation.includes('helloasso') ||
-                organisation.donation.includes('leetchi') ||
-                organisation.donation.includes('microdon') ||
-                organisation.donation.includes('ulule')
+              organisation.donation.includes('leetchi') ||
+              organisation.donation.includes('microdon') ||
+              organisation.donation.includes('ulule')
             "
             class="-mt-7 pt-6"
           >
             <div class="flex items-center justify-center">
-              <span
-                class="uppercase text-gray-500 mr-2"
-                style="font-size: 10px"
-              >Par</span>
+              <span class="uppercase text-gray-500 mr-2" style="font-size: 10px">Par</span>
 
               <img
                 v-if="organisation.donation.includes('helloasso')"
@@ -91,7 +85,7 @@
                 alt="Helloasso"
                 class="flex-none"
                 width="92px"
-              >
+              />
 
               <img
                 v-if="organisation.donation.includes('leetchi')"
@@ -99,7 +93,7 @@
                 srcset="/images/organisations/leetchi@2x.png 2x"
                 alt="Leetchi"
                 class="flex-none"
-              >
+              />
 
               <img
                 v-if="organisation.donation.includes('ulule')"
@@ -107,7 +101,7 @@
                 alt="Ulule"
                 class="flex-none"
                 width="92px"
-              >
+              />
 
               <img
                 v-if="organisation.donation.includes('microdon')"
@@ -115,7 +109,7 @@
                 srcset="/images/organisations/microdon@2x.png 2x"
                 alt="Microdon"
                 class="flex-none"
-              >
+              />
             </div>
           </div>
         </div>
@@ -125,26 +119,20 @@
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
   props: {
     organisation: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
-    goTo (url) {
-      window.plausible &&
-        window.plausible('Click Module de don - Page Orga', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+    goTo(url) {
+      this.$plausible.trackEvent('Click Module de don - Page Orga', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
       window.open(url, '_blank')
-    }
-  }
-}
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

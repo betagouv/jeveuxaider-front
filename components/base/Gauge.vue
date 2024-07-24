@@ -1,52 +1,65 @@
 <template>
-  <div
-    v-tooltip="tooltip"
-    class="w-full bg-gray-200 overflow-hidden"
-    :class="[
-      { 'h-1': size === 'xs'},
-      { 'h-2': size === 'sm'},
-      { 'h-3': size === 'lg'},
-      { 'h-4': size === 'xl'},
-    ]"
-  >
+  <div class="relative w-full">
     <div
+      v-tooltip="tooltip"
+      class="w-full bg-gray-200 overflow-hidden"
       :class="[
-        gaugeColorClass,
-        { 'h-1': size === 'xs'},
-        { 'h-2': size === 'sm'},
-        { 'h-3': size === 'lg'},
-        { 'h-4': size === 'xl'},
-        'transition-all duration-500'
+        { 'h-1': size === 'xs' },
+        { 'h-2': size === 'sm' },
+        { 'h-3': size === 'lg' },
+        { 'h-4': size === 'xl' },
       ]"
-      :style="`width:${percentage}%`"
-    />
+    >
+      <div
+        :class="[
+          gaugeColorClass,
+          { 'h-1': size === 'xs' },
+          { 'h-2': size === 'sm' },
+          { 'h-3': size === 'lg' },
+          { 'h-4': size === 'xl' },
+          'transition-all duration-500',
+        ]"
+        :style="`width:${percentage}%`"
+      />
+    </div>
+    <div
+      v-if="track"
+      class="absolute text-[16px] z-10 top-[-16px] text-gray-400"
+      :style="`left:${track}%`"
+    >
+      ▾
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     percentage: {
       type: Number,
-      required: true
+      required: true,
     },
     tooltip: {
       type: String,
-      default: null
+      default: null,
     },
     size: {
       type: String,
       default: 'sm',
-      validator: s => ['xs', 'sm', 'lg', 'xl'].includes(s)
+      validator: (s) => ['xs', 'sm', 'lg', 'xl'].includes(s),
     },
     color: {
       type: String,
       default: 'salmon',
-      validator: s => ['salmon', 'green', 'blue'].includes(s)
-    }
+      validator: (s) => ['salmon', 'green', 'blue', 'gradient'].includes(s),
+    },
+    track: {
+      type: Number,
+      default: null,
+    },
   },
   computed: {
-    gaugeColorClass () {
+    gaugeColorClass() {
       switch (this.color) {
         case 'salmon':
           return 'bg-[#FF9A7B]'
@@ -54,14 +67,12 @@ export default {
           return 'bg-jva-green-500'
         case 'blue':
           return 'bg-jva-blue-500'
+        case 'gradient':
+          return 'bg-gradient-to-r from-[#F95D5F] to-[#6A6AF4]'
         default:
           return 'bg-[#FF9A7B]'
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

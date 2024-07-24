@@ -1,52 +1,55 @@
 <template>
   <div>
-    <Button size="lg" icon="CheckIcon" :loading="loading" @click.native="showDialog = true">
+    <BaseButton size="lg" icon="RiCheckLine" :loading="loading" @click.native="showDialog = true">
       Validation en masse ({{ count }})
-    </Button>
-    <AlertDialog
-      theme="warning"
+    </BaseButton>
+    <BaseAlertDialog
+      icon="RiErrorWarningLine"
       title="Validation en masse"
-      :text="`Vous êtes sur le point de valider ${count} participation(s) actuellement en attente de validation.`"
       :is-open="showDialog"
       @confirm="handleConfirm()"
       @cancel="showDialog = false"
-    />
+    >
+      Vous êtes sur le point de valider {{ count }} participation(s) actuellement en attente de
+      validation.
+    </BaseAlertDialog>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     structureId: {
       type: Number,
-      required: true
+      required: true,
     },
     count: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       showDialog: false,
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleConfirm () {
+    async handleConfirm() {
       this.loading = true
-      const res = await this.$axios.post(`/structures/${this.structureId}/validate-waiting-participations`).catch(() => {})
+      const res = await apiFetch(
+        `/structures/${this.structureId}/validate-waiting-participations`,
+        {
+          method: 'POST',
+        }
+      ).catch(() => {})
       if (res) {
         this.$emit('mass-validated')
         this.$toast.success(`Les ${this.count} participation(s) en attente ont été validée(s)`)
       }
       this.showDialog = false
       this.loading = false
-    }
-  }
-}
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

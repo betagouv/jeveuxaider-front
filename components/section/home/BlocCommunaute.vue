@@ -9,14 +9,19 @@
           width="81"
           height="69"
           aria-hidden="true"
-        >
-        <Heading as="h2" size="2xl" color="text-white">
+        />
+        <DsfrHeading as="h2" size="2xl" color="text-white">
           <span>Rejoignez la communauté </span>
-          <br class="hidden xl:block">
-          <span>des <br class="hidden lg:block xl:hidden"> Super-Bénévoles</span>
-        </Heading>
+          <br class="hidden xl:block" />
+          <span
+            >des <br class="hidden lg:block xl:hidden" />
+            Super-Bénévoles</span
+          >
+        </DsfrHeading>
       </div>
-      <ul class="text-xl leading-6 space-y-6 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-x-12 lg:gap-y-6 xl:gap-x-16">
+      <ul
+        class="text-xl leading-6 space-y-6 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-x-12 lg:gap-y-6 xl:gap-x-16"
+      >
         <li class="flex items-start lg:items-center space-x-3">
           <RiCheckboxCircleLine class="w-6 h-6 text-white fill-current flex-none" />
           <p>Agissez en faveur de l’<strong>intérêt général</strong></p>
@@ -30,47 +35,47 @@
           <p>Montez en <strong>compétences</strong></p>
         </li>
       </ul>
-      <Button
+      <DsfrButton
         type="tertiary-no-outline"
         class="lg:absolute lg:right-0 lg:bottom-0 xl:bottom-auto xl:top-[26px]"
         size="lg"
         @click="handleClick()"
       >
         Devenir Super-Bénévole
-      </Button>
-      <div class="flex items-center space-x-4 xl:absolute xl:right-[320px] xl:max-w-[340px] xl:top-[26px]">
+      </DsfrButton>
+      <div
+        class="flex items-center space-x-4 xl:absolute xl:right-[320px] xl:max-w-[340px] xl:top-[26px]"
+      >
         <img
           srcset="
-            /images/home/coralie.webp, /images/home/coralie@2x.webp 2x,
-            /images/home/coralie.png, /images/home/coralie@2x.png 2x
+            /images/home/coralie.webp,
+            /images/home/coralie@2x.webp 2x,
+            /images/home/coralie.png,
+            /images/home/coralie@2x.png  2x
           "
           src="/images/home/coralie.png"
           alt="Coralie"
           class="flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
-        >
-        <p><strong>Coralie</strong> de JeVeuxAider.gouv.fr <br class="hidden sm:block"> pour vous accompagner</p>
+        />
+        <p>
+          <strong>Coralie</strong> de JeVeuxAider.gouv.fr
+          <br class="hidden sm:block" />
+          pour vous accompagner
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/dsfr/Button.vue'
-import Heading from '@/components/dsfr/Heading.vue'
-
-export default {
-  components: {
-    Button,
-    Heading
-  },
+export default defineNuxtComponent({
   methods: {
-    handleClick () {
-      window.plausible &&
-        window.plausible('Homepage - CTA - Rejoindre la communauté', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+    handleClick() {
+      this.$plausible.trackEvent('Homepage - CTA - Rejoindre la communauté', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
       this.$router.push('/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris')
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -1,76 +1,65 @@
 <template>
   <div class="flex flex-col gap-8">
     <DrawerActivityLog :activity-log-id="drawerActivityLogId" @close="drawerActivityLogId = null" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Autres' },
-          { text: 'Logs' }
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[{ text: 'Administration', to: '/admin' }, { text: 'Autres' }, { text: 'Logs' }]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'log',
         'logs',
         false
       )}`"
-      :loading="$fetchState.pending"
+      :loading="queryLoading"
     />
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par emails..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
-          :key="`toutes-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="deleteAllFilters"
-        >
-          Toutes
-        </Tag>
-        <FilterSelectAdvanced
-          :key="`subject-type-${$route.fullPath}`"
+        <BaseFilterSelectAdvanced
           name="types"
           placeholder="Tous les types"
           :options="[
-            {key:'organisations', label:'Organisations'},
-            {key:'missions', label:'Missions'},
-            {key:'participations', label:'Participations'},
-            {key:'utilisateurs', label:'Utilisateurs'},
-            {key:'rules', label:'Règles'},
+            { key: 'organisations', label: 'Organisations' },
+            { key: 'missions', label: 'Missions' },
+            { key: 'participations', label: 'Participations' },
+            { key: 'utilisateurs', label: 'Utilisateurs' },
+            { key: 'tags', label: 'Tags' },
+            { key: 'rules', label: 'Règles' },
           ]"
-          :value="$route.query['filter[type]']"
+          :modelValue="$route.query['filter[type]']?.split(',')"
           clearable
-          @input="changeFilter('filter[type]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[type]', $event, true)"
         />
-        <FilterSelectAdvanced
-          :key="`action-${$route.fullPath}`"
+        <BaseFilterSelectAdvanced
           name="action"
           placeholder="Toutes les actions"
           :options="[
-            {key:'created', label:'Création'},
-            {key:'updated', label:'Modification'},
-            {key:'duplicated', label:'Duplication'},
-            {key:'deleted', label:'Suppression'},
+            { key: 'created', label: 'Création' },
+            { key: 'updated', label: 'Modification' },
+            { key: 'duplicated', label: 'Duplication' },
+            { key: 'deleted', label: 'Suppression' },
+            { key: 'exported', label: 'Export' },
+            { key: 'impersonated', label: 'Masquerade' },
           ]"
-          :value="$route.query['filter[description]']"
+          :modelValue="$route.query['filter[description]']?.split(',')"
           clearable
-          @input="changeFilter('filter[description]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[description]', $event, true)"
         />
       </template>
     </SearchFilters>
@@ -82,6 +71,8 @@
       class="cursor-pointer"
       @click.native="drawerActivityLogId = log.id"
     />
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -102,27 +93,31 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import CardLog from '@/components/card/CardLog.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     DrawerActivityLog,
     SearchFilters,
     Pagination,
     Breadcrumb,
     CardLog,
-    Tag
+    Tag,
   },
   mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/activity-logs',
       queryParams: {
-        include: 'causer,causer.profile'
+        include: 'causer,causer.profile',
       },
-      drawerActivityLogId: null
+      drawerActivityLogId: null,
     }
-  }
-}
+  },
+})
 </script>

@@ -1,87 +1,71 @@
 <template>
-  <div>
-    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 mb-12">
+  <div v-if="$stores.algoliaSearch.indexKey === 'missionsIndex'">
+    <div v-if="$stores.algoliaSearch.results" class="container md:px-8 mb-12">
       <div class="flex flex-col space-y-8 sm:space-y-12">
-        <SectionHeading
+        <BaseSectionHeading
           v-if="!noHeader"
           title="Trouver une mission de bénévolat"
-          :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
-            $store.state.algoliaSearch.results.nbHits,
+          :secondary-title-bottom="`${$numeral(
+            $stores.algoliaSearch.results.nbHits
+          )} ${$filters.pluralize(
+            $stores.algoliaSearch.results.nbHits,
             'mission disponible',
             'missions disponibles',
             false
           )}`"
-        >
-          <template #action>
-            <div class="hidden sm:block flex-none">
-              <TabsFacetFilter
-                filter-name="type"
-                :tabs="[
-                  {
-                    icon: 'RiMapPinFill',
-                    filterValue: 'Mission en présentiel',
-                    current: !$route.query['type'],
-                    label: 'Près de chez moi',
-                    sublabel: `${$options.filters.formatNumber($store.getters['algoliaSearch/nbMissionsPresentiel'])} ${$options.filters.pluralize($store.getters['algoliaSearch/nbMissionsPresentiel'], 'mission', 'missions', false)}`
-                  },
-                  {
-                    icon: 'RiComputerFill',
-                    filterValue: 'Mission à distance',
-                    label: 'Depuis chez moi',
-                    sublabel: `${$options.filters.formatNumber($store.state.algoliaSearch.nbMissionsDistance)} ${$options.filters.pluralize($store.state.algoliaSearch.nbMissionsDistance, 'mission', 'missions', false)}`
-                  }
-                ]"
-              />
-            </div>
-          </template>
-        </Sectionheading>
+        />
 
         <template v-if="!noFilters">
-          <MobileFilters class="sm:hidden" />
-
-          <div class="hidden sm:flex sm:flex-col relative z-10">
-            <PrimaryFilters />
-            <SecondaryFilters :filters-name="secondaryFilters" />
-          </div>
+          <MobileFilters />
+          <PrimaryFilters />
+          <SecondaryFilters :filters-name="secondaryFilters" />
         </template>
 
-        <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
-          Il n'y a aucun résultat avec les filtres actuels.<br>
-          <Link
-            class="text-jva-blue-500"
-            @click.native="deleteAllFilters()"
-          >
+        <div v-if="$stores.algoliaSearch.results.nbHits == 0" class="text-center">
+          Il n'y a aucun résultat avec les filtres actuels.<br />
+          <DsfrLink class="text-jva-blue-500" @click.native="deleteAllFilters()">
             Réinitialiser les filtres
-          </Link>
+          </DsfrLink>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <template v-for="item, i in $store.state.algoliaSearch.results.hits">
-            <nuxt-link
-              :key="item.id"
-              class="flex min-w-0 transition"
-              :to="
-                item.provider == 'api_engagement'
-                  ? `/missions-benevolat/${item.id}`
-                  : `/missions-benevolat/${item.id}/${item.slug}`
-              "
-              @click.native="handleClickCard(item)"
-            >
-              <CardMission :mission="item" />
-            </nuxt-link>
+        <template
+          v-if="
+            withSlideshowRemote &&
+            $route.query.type !== 'Mission à distance' &&
+            $stores.algoliaSearch.searchParameters.page === 0
+          "
+        >
+          <GridResults :hits="$stores.algoliaSearch.results.hits.slice(0, 6)" />
+          <BlocSlideshowRemote />
+          <GridResults
+            :hits="
+              $stores.algoliaSearch.results.hits.slice(6, $stores.algoliaSearch.results.hits.length)
+            "
+          />
+        </template>
+        <GridResults v-else :hits="$stores.algoliaSearch.results.hits" />
 
-            <PromoteMissionDistance v-if="i === 6 && $route.query.type !== 'Mission à distance'" :key="i" />
-          </template>
-        </div>
+        <BlocSlideshowRemote
+          v-if="
+            withSlideshowRemote &&
+            $route.query.type !== 'Mission à distance' &&
+            $stores.algoliaSearch.results?.nbPages === Number($route.query?.page)
+          "
+        />
 
-        <Pagination
+        <DsfrPagination
           v-if="!noPagination"
-          :current-page="$store.state.algoliaSearch.results.page + 1"
-          :total-rows="$store.state.algoliaSearch.results.nbHits > 1000 ? 1000 : $store.state.algoliaSearch.results.nbHits"
-          :per-page="$route.query.type === 'Mission à distance' ? 18 : 17"
+          :current-page="$stores.algoliaSearch.results.page + 1"
+          :total-rows="
+            $stores.algoliaSearch.results.nbHits > 1000
+              ? 1000
+              : $stores.algoliaSearch.results.nbHits
+          "
+          :per-page="18"
           :max-pages="10"
           :with-first-page="false"
           :with-last-page="false"
+          :anchor-content-id="paginationAnchorContentId"
           @page-change="handleChangePage"
         />
       </div>
@@ -90,113 +74,148 @@
 </template>
 
 <script>
-import CardMission from '@/components/card/CardMission.vue'
-import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
-import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
-import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
-import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
-import MobileFilters from '~/components/section/search/missions/MobileFilters.vue'
-import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
-import Pagination from '@/components/dsfr/Pagination.vue'
-import Link from '@/components/dsfr/Link.vue'
+import PrimaryFilters from '@/components/section/search/missions/PrimaryFilters.vue'
+import SecondaryFilters from '@/components/section/search/missions/SecondaryFilters.vue'
+import MobileFilters from '@/components/section/search/missions/MobileFilters.vue'
+import GridResults from '@/components/section/search/missions/GridResults.vue'
+import BlocSlideshowRemote from '@/components/section/search/missions/BlocSlideshowRemote.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    CardMission,
-    TabsFacetFilter,
     PrimaryFilters,
     SecondaryFilters,
-    PromoteMissionDistance,
     MobileFilters,
-    Pagination,
-    Link
+    GridResults,
+    BlocSlideshowRemote,
   },
-  mixins: [AlgoliaMissionsQueryBuilder],
   props: {
     initialFilters: {
       type: String,
-      default: ''
+      default: '',
     },
     secondaryFilters: {
       type: Array,
       default: () => {
-        return [
-          'department_name'
-        ]
-      }
+        return ['department_name']
+      },
     },
     initialHitsPerPage: {
       type: Number,
-      default: null
+      default: null,
     },
     initialAroundLatLng: {
       type: String,
-      default: null
+      default: null,
     },
     noHeader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noFilters: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noPagination: {
       type: Boolean,
-      default: false
-    }
-  },
-  async fetch () {
-    await this.search()
+      default: false,
+    },
+    withSlideshowRemote: {
+      type: Boolean,
+      default: false,
+    },
+    paginationAnchorContentId: {
+      type: String,
+      default: 'contenuprincipal',
+    },
   },
   watch: {
-    $route: '$fetch'
-  },
-  created () {
-    this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
-    this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
-    this.$store.commit('algoliaSearch/setAvailableFacets', ['type', 'activity.name', 'structure.name', 'tags', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires', 'publisher_name'])
-    this.$store.commit('algoliaSearch/setAvailableNumericFilters', ['commitment__total', 'is_autonomy'])
-    this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
-    if (this.initialHitsPerPage) {
-      this.$store.commit('algoliaSearch/setHitsPerPage', this.initialHitsPerPage)
-    }
-    if (this.initialAroundLatLng) {
-      this.$store.commit('algoliaSearch/setAroundLatLng', this.initialAroundLatLng)
-    }
-    this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
-  },
-  mounted () {
-    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
-      if (!this.$route.query.aroundLatLng) {
-        this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
+    async $route(newVal, oldVal) {
+      if (newVal.name !== oldVal.name) {
+        return
       }
-      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
+      this.$stores.algoliaSearch.filters = this.recomputeFilters(newVal.query)
+      await this.search()
+      this.handleNavigatorGeolocation()
+    },
+  },
+  async setup(props) {
+    const { $stores } = useNuxtApp()
+    const { recomputeFilters } = useAlgoliaMissionsQueryBuilder()
+    const runtimeConfig = useRuntimeConfig()
+    const route = useRoute()
+
+    $stores.algoliaSearch.reset()
+    $stores.algoliaSearch.indexKey = 'missionsIndex'
+    $stores.algoliaSearch.indexName = runtimeConfig.public.algolia.missionsIndex
+    $stores.algoliaSearch.availableFacets = [
+      'type',
+      'activities.name',
+      'structure.name',
+      'tags',
+      'department_name',
+      'domaines',
+      'structure.reseaux.name',
+      'publics_beneficiaires',
+      'template_subtitle',
+      'publics_volontaires',
+      'publisher_name',
+      'commitment',
+      'date_type',
+    ]
+    $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']
+    $stores.algoliaSearch.initialFilters = props.initialFilters
+    $stores.algoliaSearch.filters = recomputeFilters()
+
+    if (props.initialHitsPerPage) {
+      $stores.algoliaSearch.hitsPerPage = props.initialHitsPerPage
+    }
+    if (props.initialAroundLatLng) {
+      $stores.algoliaSearch.aroundLatLng = props.initialAroundLatLng
+    }
+
+    const { search, deleteAllFilters, onNavigatorGeolocation, onNavigatorGeolocationError } =
+      useAlgoliaMissionsQueryBuilder()
+
+    await search()
+
+    return {
+      search,
+      deleteAllFilters,
+      onNavigatorGeolocation,
+      onNavigatorGeolocationError,
+      recomputeFilters,
     }
   },
-  beforeDestroy () {
-    this.$store.dispatch('algoliaSearch/reset')
+  mounted() {
+    this.handleNavigatorGeolocation()
   },
   methods: {
-    handleChangePage (page) {
+    handleChangePage(page) {
       this.$router.push({
         path: this.$route.path,
-        query: { ...this.$route.query, page }
+        query: { ...this.$route.query, page },
       })
     },
-    async handleClickCard (item) {
-      window.plausible &&
-        window.plausible('Click Card Missions - Liste résultat', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            isFromApi: item.provider === 'api_engagement',
-            isRegistrationOpen: item.is_registration_open,
-            hasPlacesLeft: item.has_places_left,
-            isOutdated: item.is_outdated
-          }
-        })
-      await this.$gtm.push({ event: 'benevole-clic-carte-mission' })
-    }
-  }
-}
+    handleNavigatorGeolocation() {
+      if (this.$route.query.type === 'Mission à distance') {
+        return
+      }
+
+      if (
+        navigator.geolocation &&
+        !this.$stores.algoliaSearch.navigatorGeolocation &&
+        !this.$stores.algoliaSearch.aroundLatLng &&
+        !this.$stores.algoliaSearch.searchParameters?.aroundLatLng
+      ) {
+        if (!this.$route.query.aroundLatLng) {
+          this.$stores.algoliaSearch.loadingNavigatorGeolocation = true
+        }
+        navigator.geolocation.getCurrentPosition(
+          this.onNavigatorGeolocation,
+          this.onNavigatorGeolocationError
+        )
+      }
+    },
+  },
+})
 </script>

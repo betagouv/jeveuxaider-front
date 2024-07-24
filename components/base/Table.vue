@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="max-w-full"
-    :class="[{'overflow-x-auto rounded-lg': overflow}]"
-  >
+  <div class="max-w-full" :class="[{ 'overflow-x-auto rounded-lg': overflow }]">
     <table class="min-w-full divide-y divide-gray-100 p-3">
       <slot />
     </table>
@@ -10,12 +7,12 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     overflow: {
       type: Boolean,
-      default: true
-    }
-  }
-}
+      default: true,
+    },
+  },
+})
 </script>

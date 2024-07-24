@@ -1,40 +1,41 @@
 <template>
   <div class="inline-flex items-center space-x-2">
-    <div :class="['h-3 w-3 rounded-full', published ? 'bg-jva-green-500' : 'bg-jva-red-500']" />
-    <component :is="link ? 'Link' : 'span'" :to="link" :is-external="true" class="text-sm">
+    <div
+      :class="['h-3 w-3 rounded-full flex-none', published ? 'bg-jva-green-500' : 'bg-jva-red-500']"
+    />
+    <div>
       {{ published ? publishedLabel : unpublishedLabel }}
-    </component>
+      <component v-if="link" :is="component" :to="link" :is-external="true" class="text-sm">
+        - Ouvrir l'aperçu
+      </component>
+    </div>
   </div>
 </template>
 
 <script>
-import Link from '@/components/dsfr/Link.vue'
-
-export default {
-  components: {
-    Link
-  },
+export default defineNuxtComponent({
   props: {
     published: {
       type: Boolean,
-      required: true
+      required: true,
     },
     link: {
       type: String,
-      default: null
+      default: null,
     },
     publishedLabel: {
       type: String,
-      default: 'En ligne'
+      default: 'En ligne',
     },
     unpublishedLabel: {
       type: String,
-      default: 'Hors ligne'
-    }
-  }
-}
+      default: 'Hors ligne',
+    },
+  },
+  computed: {
+    component() {
+      return this.link ? resolveComponent('DsfrLink') : 'span'
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

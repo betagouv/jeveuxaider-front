@@ -7,58 +7,90 @@
       <slot name="action" />
     </div>
 
-    <Box variant="flat" padding="xs">
-      <DescriptionList>
-        <DescriptionListItem term="Crée le" :description="$dayjs(mission.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Type" :description="missionType" />
-        <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name" />
+    <BaseBox variant="flat" padding="xs">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Crée le"
+          :description="$dayjs(mission.created_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Modifié le"
+          :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem term="Type" :description="mission.type" />
+        <BaseDescriptionListItem
+          term="Domaine"
+          :description="mission.domaine && mission.domaine.name"
+        />
         <template v-if="mission.template && mission.template.domaine_secondary">
-          <DescriptionListItem term="Domaine secondaire" :description="mission.template.domaine_secondary.name" />
+          <BaseDescriptionListItem
+            term="Domaine secondaire"
+            :description="mission.template.domaine_secondary.name"
+          />
         </template>
         <template v-if="!mission.template && mission.domaine_secondary">
-          <DescriptionListItem term="Domaine secondaire" :description="mission.domaine_secondary.name" />
+          <BaseDescriptionListItem
+            term="Domaine secondaire"
+            :description="mission.domaine_secondary.name"
+          />
         </template>
-        <DescriptionListItem
+        <BaseDescriptionListItem
           v-if="mission.publics_beneficiaires"
           term="Publics bénéf."
-          :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
+          :description="
+            mission.publics_beneficiaires
+              .map((item) => $filters.label(item, 'mission_publics_beneficiaires'))
+              .join(', ')
+          "
         />
-        <DescriptionListItem v-if="!mission.is_autonomy && mission.full_address.trim()" term="Adresse" :description="mission.full_address" />
-        <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
-        <DescriptionListItem v-if="autonomyCities" term="Villes" :description="autonomyCities" />
-        <DescriptionListItem
-          v-if="['admin'].includes($store.getters.contextRole) && mission.tags"
+        <BaseDescriptionListItem
+          term="Adresses"
+          :description="mission?.addresses?.map((item) => item.label).join(', ')"
+        />
+        <BaseDescriptionListItem
+          v-if="mission.department"
+          term="Département"
+          :description="`${mission.department} - ${$filters.label(
+            mission.department,
+            'departments'
+          )}`"
+        />
+        <!-- <BaseDescriptionListItem
+          v-if="autonomyCities"
+          term="Villes"
+          :description="autonomyCities"
+        /> -->
+        <BaseDescriptionListItem
+          v-if="['admin'].includes($stores.auth.contextRole) && mission.tags"
           term="Tags"
           :description="mission.tags.map((item) => item.name).join(', ')"
         />
-      </DescriptionList>
-    </Box>
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     mission: {
       type: Object,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      default: 'Informations'
-    }
+      default: 'Informations',
+    },
   },
   computed: {
-    missionType () {
-      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    missionType() {
+      return this.mission.type
+      // return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     },
-    autonomyCities () {
-      if (this.mission.is_autonomy && this.mission.autonomy_zips?.length) {
-        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
-      }
-      return null
-    }
-  }
-}
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
+  },
+})
 </script>

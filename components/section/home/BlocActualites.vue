@@ -1,122 +1,113 @@
 <template>
-  <div v-if="articles.length" class="bg-white py-12 xl:py-24 overflow-hidden">
+  <div class="bg-white py-12 xl:py-24 overflow-hidden">
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
-        <div class="">
-          <Heading id="label-slideshow-articles" as="h2" size="alt-sm" class="mb-6 md:mb-2">
+        <div>
+          <DsfrHeading id="label-slideshow-articles" as="h2" size="alt-sm" class="mb-6 md:mb-2">
             Les actualités de l’engagement
-          </Heading>
+          </DsfrHeading>
           <p class="text-[#4D4D4D] text-xl xl:text-2xl">
             Restez informé de l'actualité de tous ceux qui font vivre l'engagement en France
           </p>
         </div>
         <div class="hidden lg:block flex-none">
           <div class="flex space-x-2">
-            <SlideshowArrows
-              ref-name="slideshowArticles"
-              :refs="$refs"
-              @previous="handleSlideshowPreviousClick"
-              @next="handleSlideshowNextClick"
-            />
-            <Button
-              to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
-              :is-external="true"
+            <div id="slideshowArticlesArrows" />
+            <NuxtLink
+              no-prefetch
+              to="https://www.jeveuxaider.gouv.fr/engagement/category/actualite/"
               class="flex-none"
-              type="secondary"
+              target="_blank"
             >
-              Plus d’articles
-            </Button>
+              <DsfrButton type="secondary" class="h-full"> Plus d’articles </DsfrButton>
+            </NuxtLink>
           </div>
         </div>
       </div>
 
       <div v-if="articles.length" class="mt-12">
-        <Slideshow
-          ref="slideshowArticles"
-          :slides-are-links="true"
+        <BaseSlideshow
+          navigation-id="slideshowArticlesArrows"
           aria-labelledby="label-slideshow-articles"
         >
-          <a
-            v-for="article in articles"
-            :key="article.id"
-            class="slide-wrapper"
-            :href="`${$config.blog.url}/${article.slug}`"
-            target="_blank"
-            @click="onSlideClick"
-          >
-            <CardArticle :article="article" class="!h-full" />
-          </a>
-        </Slideshow>
+          <swiper-slide v-for="article in articles" :key="article.id" class="slide-wrapper">
+            <a
+              :href="`${urlBlog}/${article.slug}`"
+              target="_blank"
+              class="h-full"
+              @click="onSlideClick"
+            >
+              <CardArticle :article="article" class="!h-full" />
+            </a>
+          </swiper-slide>
+        </BaseSlideshow>
       </div>
       <div class="lg:hidden mt-8 text-center">
-        <Button
-          to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
-          :is-external="true"
-          type="tertiary"
+        <NuxtLink
+          no-prefetch
+          to="https://www.jeveuxaider.gouv.fr/engagement/category/actualite/"
+          target="_blank"
         >
-          Plus d’articles
-        </Button>
+          <DsfrButton type="tertiary"> Plus d’articles </DsfrButton>
+        </NuxtLink>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Button from '@/components/dsfr/Button.vue'
 import CardArticle from '@/components/card/CardArticle.vue'
-import Heading from '@/components/dsfr/Heading.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Button,
     CardArticle,
-    Heading
   },
-  data () {
+  setup() {
+    const runtimeConfig = useRuntimeConfig()
     return {
-      articles: []
+      urlBlog: runtimeConfig.public.blog.url,
     }
   },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: articles } = await axios.get(
-      `${this.$config.blog.restApiUrl}/?per_page=6`
-    )
-    const articlesWithMedia = []
-    for (const article of articles) {
-      const url = article._links['wp:featuredmedia']
-        ? article._links['wp:featuredmedia'][0].href
-        : article._links['wp:attachment'][0].href
-      const { data: media } = await axios.get(url)
-      if (!Array.isArray(media)) {
-        articlesWithMedia.push({ ...article, media })
-      } else {
-        articlesWithMedia.push({ ...article, media: media[0] })
-      }
+  data() {
+    return {
+      articles: [],
     }
-    this.articles = articlesWithMedia
+  },
+  created() {
+    this.fetch()
   },
   methods: {
-    handleSlideshowPreviousClick () {
-      this.$refs.slideshowArticles.previous()
+    async fetch() {
+      const runtimeConfig = useRuntimeConfig()
+
+      const articles = await $fetch(`${runtimeConfig.public.blog.restApiUrl}/?per_page=6`)
+      const articlesWithMedia = []
+      // @todo: promise.all
+      for (const article of articles) {
+        const url = article._links['wp:featuredmedia']
+          ? article._links['wp:featuredmedia'][0].href
+          : article._links['wp:attachment'][0].href
+        const media = await $fetch(url)
+        if (!Array.isArray(media)) {
+          articlesWithMedia.push({ ...article, media })
+        } else {
+          articlesWithMedia.push({ ...article, media: media[0] })
+        }
+      }
+      this.articles = articlesWithMedia
     },
-    handleSlideshowNextClick () {
-      this.$refs.slideshowArticles.next()
+    onSlideClick() {
+      this.$plausible.trackEvent('Homepage - Clique - Article du blog', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
     },
-    onSlideClick () {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Article du blog', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
-    }
-  }
-}
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
 .slide-wrapper {
-  @apply !flex flex-col h-full max-w-[323px] transition;
+  @apply !flex flex-col h-full max-w-[320px] transition;
   width: calc(100vw - 64px) !important; /* To let the next slide appear */
 }
 </style>

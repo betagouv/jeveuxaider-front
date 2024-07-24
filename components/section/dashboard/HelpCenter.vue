@@ -1,25 +1,25 @@
 <template>
-  <div id="help-center" class="bg-jva-blue-400 p-12 shadow-lg">
-    <div class="space-y-4">
-      <Heading as="h2" :level="2" class="text-white font-extrabold">
-        Centre d'aide
-      </Heading>
-      <div class="text-xl text-white font-bold max-w-[260px]">
+  <div id="help-center" class="bg-[#0063CB] p-10 shadow-lg overflow-hidden">
+    <div class="">
+      <BaseHeading as="h2" :level="3" class="text-white font-extrabold mb-4">
+        Centre d’aide
+      </BaseHeading>
+      <div class="text-xl text-white max-w-[260px] mb-6">
         Trouvez toutes les réponses à vos questions
       </div>
-      <Button variant="white-blue" @click.native="onClick()">
+      <DsfrButton type="tertiary-no-outline" @click.native="onClick()">
         Foire aux questions
-      </Button>
+      </DsfrButton>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   methods: {
-    onClick () {
+    onClick() {
       let url = 'https://reserve-civique.crisp.help/fr/'
-      switch (this.$store.getters.contextRole) {
+      switch (this.$stores.auth.contextRole) {
         case 'referent':
         case 'referent_regional':
           url = 'https://reserve-civique.crisp.help/fr/category/referent-1j08uk0/'
@@ -38,17 +38,19 @@ export default {
           break
       }
       window.open(url, '_blank')
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
-
 #help-center {
-  background-image: url('/images/dashboard/bg-help-center.png');
-  background-position: right 38px center;
+  background-image: url('/images/dashboard/illus-centre-aide.svg');
   background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 210px auto;
+  @screen xl {
+    background-position: right bottom;
+  }
 }
-
 </style>

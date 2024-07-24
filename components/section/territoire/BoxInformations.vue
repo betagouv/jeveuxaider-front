@@ -1,39 +1,75 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
+    <div v-if="showTitle" class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
       Informations
     </div>
-    <Box variant="flat" padding="xs">
-      <DescriptionList>
-        <DescriptionListItem term="Crée le" :description="$dayjs(territoire.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(territoire.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Nom" :description="territoire.name" />
-        <DescriptionListItem term="Type" :description="$options.filters.label(territoire.type,'territoire_types')" />
-        <DescriptionListItem v-if="territoire.department" term="Département" :description="`${territoire.department} - ${$options.filters.label(territoire.department, 'departments')}`" />
-        <DescriptionListItem v-if="territoire.type === 'city'" term="Zips" :description="territoire.zips.join(', ')" />
-        <template v-if="['admin'].includes($store.getters.contextRole)">
-          <DescriptionListItemGauge
+    <BaseBox :variant="boxVariant" :padding="boxPadding">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Crée le"
+          :description="$dayjs(territoire.created_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Modifié le"
+          :description="$dayjs(territoire.updated_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem term="Nom" :description="territoire.name" />
+        <BaseDescriptionListItem
+          term="Type"
+          :description="$filters.label(territoire.type, 'territoire_types')"
+        />
+        <BaseDescriptionListItem
+          v-if="territoire.department"
+          term="Département"
+          :description="`${territoire.department} - ${$filters.label(
+            territoire.department,
+            'departments'
+          )}`"
+        />
+        <BaseDescriptionListItem
+          v-if="territoire.type === 'city'"
+          term="Zips"
+          :description="territoire.zips.join(', ')"
+        />
+        <template v-if="['admin'].includes($stores.auth.contextRole)">
+          <BaseDescriptionListItemGauge
             term="Tx. complétion"
             :percentage="territoire.completion_rate"
           />
-          <DescriptionListItem
+          <BaseDescriptionListItem
             v-if="territoire.missing_fields.length"
             term="Champs manquants"
-            :description="territoire.missing_fields.map((option) => $options.filters.label(option, 'territoire_fields')).join(', ')"
+            :description="
+              territoire.missing_fields
+                .map((option) => $filters.label(option, 'territoire_fields'))
+                .join(', ')
+            "
           />
         </template>
-      </DescriptionList>
-    </Box>
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     territoire: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+    showTitle: {
+      type: Boolean,
+      default: false,
+    },
+    boxVariant: {
+      type: String,
+      default: 'flat',
+    },
+    boxPadding: {
+      type: String,
+      default: 'xs',
+    },
+  },
+})
 </script>

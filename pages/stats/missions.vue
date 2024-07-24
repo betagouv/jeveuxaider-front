@@ -1,52 +1,46 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Statistiques', to: '/stats' },
-          { text: 'Missions' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Missions' }]" />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Missions"
-    >
+    <BaseSectionHeading title="Missions">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
-      <Heading as="h2" :level="2">
-        L’activité relative aux missions en détail
-      </Heading>
-      <MissionsByDate ref="missionsByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <MissionsByStates ref="missionsByStates" />
-          <MissionsByTypes ref="missionsByTypes" />
-          <MissionsByActivities ref="missionsByActivities" />
-          <MissionsByTemplates ref="missionsByTemplates" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <MissionsByDomaines ref="missionsByDomaines" />
-          <MissionsByTemplateTypes ref="missionsByTemplateTypes" />
-          <MissionsByOrganisations ref="missionsByOrganisations" />
-          <MissionsByReseaux ref="missionsByReseaux" />
-        </div>
+      <!-- <MissionsByDate ref="missionsByDate" /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8">
+          L’activité relative aux missions en détail
+        </BaseHeading>
+
+        <MissionsByPeriod ref="missionsByPeriod" />
+        <MissionsByStates ref="missionsByStates" />
+        <MissionsByTypes ref="missionsByTypes" />
+        <MissionsByActivities ref="missionsByActivities" />
+        <MissionsByTemplates ref="missionsByTemplates" />
+        <MissionsByDomaines ref="missionsByDomaines" />
+        <MissionsByTemplateTypes ref="missionsByTemplateTypes" />
+        <MissionsByOrganisations ref="missionsByOrganisations" />
+        <MissionsByReseaux ref="missionsByReseaux" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import MissionsStatistics from '@/components/statistics/MissionsStatistics.vue'
 import MissionsByDate from '@/components/statistics/MissionsByDate.vue'
+import MissionsByPeriod from '@/components/statistics/MissionsByPeriod.vue'
 import MissionsByStates from '@/components/statistics/MissionsByStates.vue'
 import MissionsByTypes from '@/components/statistics/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/statistics/MissionsByActivities.vue'
@@ -57,11 +51,11 @@ import MissionsByReseaux from '@/components/statistics/MissionsByReseaux.vue'
 import MissionsByTemplateTypes from '@/components/statistics/MissionsByTemplateTypes.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FiltersStatisticsPublic,
     MissionsStatistics,
     MissionsByDate,
+    MissionsByPeriod,
     MissionsByStates,
     MissionsByTypes,
     MissionsByActivities,
@@ -70,29 +64,44 @@ export default {
     MissionsByOrganisations,
     MissionsByReseaux,
     MissionsByTemplateTypes,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics-public',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-public',
+    })
+  },
+  data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.missionsByDate.$fetch()
-      this.$refs.missionsStatistics.$fetch()
-      this.$refs.missionsByStates.$fetch()
-      this.$refs.missionsByDomaines.$fetch()
-      this.$refs.missionsByTypes.$fetch()
-      this.$refs.missionsByActivities.$fetch()
-      this.$refs.missionsByOrganisations.$fetch()
-      this.$refs.missionsByReseaux.$fetch()
-      this.$refs.missionsByTemplates.$fetch()
-      this.$refs.missionsByTemplateTypes.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.missionsByDate?.fetch()
+      this.$refs.missionsByPeriod?.fetch()
+      this.$refs.missionsStatistics?.fetch()
+      this.$refs.missionsByStates?.fetch()
+      this.$refs.missionsByDomaines?.fetch()
+      this.$refs.missionsByTypes?.fetch()
+      this.$refs.missionsByActivities?.fetch()
+      this.$refs.missionsByOrganisations?.fetch()
+      this.$refs.missionsByReseaux?.fetch()
+      this.$refs.missionsByTemplates?.fetch()
+      this.$refs.missionsByTemplateTypes?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

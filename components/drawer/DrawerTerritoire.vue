@@ -1,118 +1,153 @@
 <template>
-  <Drawer :is-open="Boolean(territoireId)" @close="$emit('close')">
-    <AlertDialog
-      v-if="territoire"
-      theme="danger"
-      title="Supprimer le territoire"
-      :text="`Vous êtes sur le point de supprimer le territoire ${territoire.name}.`"
-      :is-open="showAlert"
-      @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
-    />
+  <BaseDrawer :is-open="Boolean(territoireId)" @close="$emit('close')">
     <template #title>
-      <Heading v-if="territoire" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/contenus/territoires/${territoireId}`" class="hover:underline" target="_blank">
+      <BaseHeading v-if="territoire" :level="3" class="text-jva-blue-500">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/territoires/${territoireId}`"
+          class="hover:underline"
+          target="_blank"
+        >
           {{ territoire.name }}
         </nuxt-link>
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="territoire">
-      <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
-      <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}`" class="inline-flex">
-          <Button variant="white" size="sm" icon="EyeIcon">
-            Détails
-          </Button>
-        </nuxt-link>
-        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
-        </nuxt-link>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+      <DsfrLink :to="`/villes/${territoire.slug}`" :is-external="true" class="text-xs font-normal">
+        Voir le territoire
+      </DsfrLink>
+      <Badges class="mt-5" :territoire="territoire" />
+      <div class="flex flex-wrap gap-1 mt-6">
+        <DsfrButton
+          :to="`/admin/contenus/territoires/${territoire.id}`"
+          type="tertiary"
+          icon="RiEyeLine"
+          size="sm"
+        >
+          Détails
+        </DsfrButton>
+
+        <DsfrButton
+          :to="`/admin/contenus/territoires/${territoire.id}/edit`"
+          type="tertiary"
+          icon="RiPencilLine"
+          size="sm"
+        >
+          Modifier
+        </DsfrButton>
+
+        <Actions
+          v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+          :territoire="territoire"
+          @territoireDeleted="handleDeleted"
+          buttonSize="sm"
+        />
       </div>
 
       <div class="border-t -mx-6 my-6" />
-      <div class="text-sm  uppercase font-semibold text-gray-600">
-        Statut du territoire
-      </div>
-      <SelectTerritoireState v-if="canEditStatut" :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div class="text-sm uppercase font-semibold text-gray-600">Statut du territoire</div>
+      <SelectTerritoireState
+        v-if="canEditStatut"
+        :modelValue="territoire.state"
+        class="mt-4"
+        @selected="handleChangeState($event)"
+      />
       <div v-else class="mt-4 font-medium text-gray-800">
-        {{ $options.filters.label(territoire.state,'territoire_workflow_states') }}
+        {{ $filters.label(territoire.state, 'territoire_workflow_states') }}
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :territoire="territoire" />
       <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
       <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
-      <BoxResponsable v-for="responsable in territoire.responsables" :key="responsable.id" class="mb-8" :responsable="responsable.profile" />
+
+      <template v-for="responsable in territoire.responsables" :key="responsable.id">
+        <BoxResponsable class="mb-8" :responsable="responsable.profile" />
+      </template>
 
       <div class="flex justify-center mb-10">
-        <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="uppercase font-semibold text-sm hover:underline">
+        <BaseLink
+          :to="`/admin/contenus/territoires/${territoire.id}`"
+          class="uppercase font-semibold text-sm hover:underline"
+        >
           Détails du territoire
-        </Link>
+        </BaseLink>
       </div>
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-import BoxInformations from '@/components/section/territoire/BoxInformations'
-import BoxMission from '@/components/section/territoire/BoxMission'
-import BoxParticipation from '@/components/section/territoire/BoxParticipation'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/territoire/BoxInformations.vue'
+import BoxMission from '@/components/section/territoire/BoxMission.vue'
+import BoxParticipation from '@/components/section/territoire/BoxParticipation.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import SelectTerritoireState from '@/components/custom/SelectTerritoireState.vue'
 import MixinTerritoire from '@/mixins/territoire'
+import Badges from '@/components/section/territoire/Badges.vue'
+import Actions from '@/components/section/territoire/Actions.vue'
 
-export default {
+export default defineNuxtComponent({
+  emits: ['loaded', 'refetch', 'close'],
   components: {
     BoxInformations,
-    OnlineIndicator,
     BoxMission,
     BoxParticipation,
     BoxResponsable,
-    SelectTerritoireState
+    SelectTerritoireState,
+    Badges,
+    Actions,
   },
   mixins: [MixinTerritoire],
   props: {
     territoireId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       territoire: null,
       stats: null,
-      showAlert: false
+      showAlert: false,
     }
   },
-  async fetch () {
-    if (!this.territoireId) {
-      return null
-    }
-    const { data: territoire } = await this.$axios.get(`/territoires/${this.territoireId}`)
-    this.territoire = territoire
-    const { data: territoireStats } = await this.$axios.get(`/territoires/${this.territoireId}/statistics`)
-    this.stats = territoireStats
-    this.$emit('loaded', territoire)
-  },
+
   watch: {
-    territoireId: '$fetch'
+    territoireId: 'fetch',
   },
   methods: {
-    async handleChangeState (option) {
-      this.territoire.state = option.key
-      await this.$axios.put(`/territoires/${this.territoireId}`, this.territoire).catch(() => {})
-      this.$fetch()
+    async fetch() {
+      if (!this.territoireId) {
+        return null
+      }
+      const territoire = await apiFetch(`/territoires/${this.territoireId}`)
+      this.territoire = territoire
+      const stats = await apiFetch(`/territoires/${this.territoireId}/statistics`)
+      this.stats = stats
+      this.$emit('loaded', territoire)
     },
-    async handleConfirmDelete () {
-      await this.$axios.delete(`/territoires/${this.territoireId}`).then((res) => {
-        this.showAlert = false
-        this.$emit('close')
-        this.$emit('refetch')
+    async handleChangeState(option) {
+      this.territoire.state = option.key
+      await apiFetch(`/territoires/${this.territoireId}`, {
+        method: 'PUT',
+        body: this.territoire,
       }).catch(() => {})
-    }
-  }
-}
+      this.fetch()
+      this.$emit('refetch')
+    },
+    // async handleConfirmDelete() {
+    //   await apiFetch(`/territoires/${this.territoireId}`, { method: 'DELETE' })
+    //     .then((res) => {
+    //       this.showAlert = false
+    //       this.$emit('close')
+    //       this.$emit('refetch')
+    //     })
+    //     .catch(() => {})
+    // },
+    handleDeleted() {
+      this.$emit('close')
+      this.$emit('refetch')
+    },
+  },
+})
 </script>

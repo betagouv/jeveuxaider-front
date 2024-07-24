@@ -6,11 +6,11 @@
         <div class="lg:hidden h-[1px] bg-[#CACAFB] my-8" />
         <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#CACAFB] mx-16 xl:mx-48" />
         <div class="flex-none">
-          <Heading as="h2" size="sm" class="mb-6">
+          <DsfrHeading as="h2" size="sm" class="mb-6">
             <span>Suivez-nous </span>
-            <br class="sm:hidden lg:block">
+            <br class="sm:hidden lg:block" />
             <span>sur les réseaux sociaux</span>
-          </Heading>
+          </DsfrHeading>
           <div class="flex space-x-4 -ml-2">
             <a
               v-for="socialMedia in socialMedias"
@@ -30,39 +30,37 @@
 </template>
 
 <script>
-import Heading from '@/components/dsfr/Heading.vue'
 import FormNewsletter from '@/components/section/home/FormNewsletter.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Heading,
-    FormNewsletter
+    FormNewsletter,
   },
-  data () {
+  data() {
     return {
       socialMedias: [
         {
           name: 'Twitter',
           icon: 'RiTwitterFill',
-          url: 'https://twitter.com/ReserveCivique'
+          url: 'https://twitter.com/ReserveCivique',
         },
         {
           name: 'Linkedin',
           icon: 'RiLinkedinBoxFill',
-          url: 'https://fr.linkedin.com/company/jeveuxaider-gouv-fr'
+          url: 'https://fr.linkedin.com/company/jeveuxaider-gouv-fr',
         },
         {
           name: 'Facebook',
           icon: 'RiFacebookCircleFill',
-          url: 'https://fr-fr.facebook.com/jeveuxaider.gouv.fr/'
+          url: 'https://fr-fr.facebook.com/jeveuxaider.gouv.fr/',
         },
         {
           name: 'Instagram',
           icon: 'RiInstagramFill',
-          url: 'https://www.instagram.com/jeveuxaider_gouv/?hl=fr'
-        }
-      ]
+          url: 'https://www.instagram.com/jeveuxaider_gouv/?hl=fr',
+        },
+      ],
     }
-  }
-}
+  },
+})
 </script>

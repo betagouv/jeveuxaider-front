@@ -1,80 +1,93 @@
 <template>
   <div class="relative bg-[#081992]">
-    <portal to="body-end">
-      <Modal
-        v-scroll-lock="showModalConfirmOrga"
-        :is-open="showModalConfirmOrga"
-        :prevent-click-outside="true"
-        :overflow-hidden="false"
-        background-overlay="bg-jva-blue-500"
-        width-class="sm:max-w-xl"
-        hide-footer
-        @close="showModalConfirmOrga = false"
-      >
-        <div v-if="modalConfirmOrgaStep == 1" class="flex flex-col justify-center items-center">
-          <div class="text-5xl text-center">
-            ☝
+    <ClientOnly>
+      <Teleport to="#teleport-body-end">
+        <BaseModal
+          v-scroll-lock="showModalConfirmOrga"
+          :is-open="showModalConfirmOrga"
+          :prevent-click-outside="true"
+          :overflow-hidden="false"
+          background-overlay="bg-jva-blue-500"
+          width-class="sm:max-w-xl"
+          hide-footer
+          @close="showModalConfirmOrga = false"
+        >
+          <div v-if="modalConfirmOrgaStep == 1" class="flex flex-col justify-center items-center">
+            <div class="text-5xl text-center">☝</div>
+            <p class="text-lg font-semibold text-center my-6 leading-7">
+              Vous êtes sur le point d'inscrire une nouvelle organisation.<br />
+              Merci de confirmer que votre organisation
+            </p>
+            <ul class="text-gray-600 space-y-3 text-left">
+              <li class="flex items-start">
+                <RiCheckboxCircleLine
+                  class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px] fill-current"
+                />dispose d'une personnalité morale
+              </li>
+              <li class="flex items-start">
+                <RiCheckboxCircleLine
+                  class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px] fill-current"
+                />n'est pas à but lucratif
+              </li>
+              <li class="flex items-start">
+                <RiCheckboxCircleLine
+                  class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px] fill-current"
+                />n'est pas politique, cultuelle ou syndicale.
+              </li>
+            </ul>
+            <div class="mt-8 space-y-3 pb-8">
+              <DsfrButton class="w-full" @click.native="handleConfirmChoixOrga">
+                Je confirme ces éléments
+              </DsfrButton>
+              <DsfrButton type="secondary" class="w-full" @click.native="modalConfirmOrgaStep = 2">
+                Mon organisation ne remplit pas ces conditions
+              </DsfrButton>
+            </div>
           </div>
-          <p class="text-lg font-semibold text-center my-6 leading-7">
-            Vous êtes sur le point d'inscrire une nouvelle organisation.<br>
-            Merci de confirmer que votre organisation
-          </p>
-          <ul class="text-gray-600 space-y-3 text-left">
-            <li class="flex items-start">
-              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />dispose d'une personnalité morale
-            </li>
-            <li class="flex items-start">
-              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />n'est pas à but lucratif
-            </li>
-            <li class="flex items-start">
-              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />n'est pas politique, cultuelle ou syndicale.
-            </li>
-          </ul>
-          <div class="mt-8 space-y-3">
-            <DsfrButton class="w-full" @click.native="handleConfirmChoixOrga">
-              Je confirme ces éléments
-            </DsfrButton>
-            <DsfrButton type="secondary" class="w-full" @click.native="modalConfirmOrgaStep = 2">
-              Mon organisation ne remplit pas ces conditions
-            </DsfrButton>
-          </div>
-        </div>
-        <div v-else-if="modalConfirmOrgaStep == 2" class="flex flex-col justify-center items-center">
-          <div class="text-5xl text-center">
-            😕
-          </div>
-          <p class="text-lg font-semibold text-center my-6 leading-7">
-            Votre organisation ne répond malheureusement pas aux conditions énoncées dans la
-            <span class="whitespace-nowrap">
-              <Link
-                to="/charte-reserve-civique"
+          <div
+            v-else-if="modalConfirmOrgaStep == 2"
+            class="flex flex-col justify-center items-center"
+          >
+            <div class="text-5xl text-center">😕</div>
+            <p class="text-lg font-semibold text-center my-6 leading-7">
+              Votre organisation ne répond malheureusement pas aux conditions énoncées dans la
+              <span class="whitespace-nowrap">
+                <DsfrLink to="/charte-reserve-civique" class="text-jva-blue-500">
+                  Charte de la Réserve Civique</DsfrLink
+                >.
+              </span>
+            </p>
+            <p class="text-gray-600 text-center">
+              Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement
+              <DsfrLink
+                to="https://www.service-public.fr/particuliers/vosdroits/R1757"
                 class="text-jva-blue-500"
-              >Charte de la Réserve Civique</Link>.
-            </span>
-          </p>
-          <p class="text-gray-600 text-center">
-            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement
-            <Link to="https://www.service-public.fr/particuliers/vosdroits/R1757" class="text-jva-blue-500" :is-external="true">
-              créer une association en ligne
-            </Link>.
-          </p>
-          <p class="text-gray-600 text-center mt-4">
-            Si votre organisation a une <span class="font-bold">dimension lucrative</span> ou bien est une <span class="font-bold">organisation politique, culturelle</span> ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos associations partenaires de mettre en ligne des missions sur notre plateforme.
-          </p>
-          <div class="mt-6 w-full">
-            <DsfrButton class="w-full" @click.native="handleDeniedChoixOrga">
-              Fermer
-            </DsfrButton>
+                :is-external="true"
+              >
+                créer une association en ligne </DsfrLink
+              >.
+            </p>
+            <p class="text-gray-600 text-center mt-4">
+              Si votre organisation a une
+              <span class="font-bold">dimension lucrative</span> ou bien est une
+              <span class="font-bold">organisation politique, culturelle</span>
+              ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos
+              associations partenaires de mettre en ligne des missions sur notre plateforme.
+            </p>
+            <div class="mt-6 w-full pb-8">
+              <DsfrButton class="w-full" @click.native="handleDeniedChoixOrga"> Fermer </DsfrButton>
+            </div>
           </div>
-        </div>
-      </Modal>
-    </portal>
+        </BaseModal>
+      </Teleport>
+    </ClientOnly>
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
       alt="JeVeuxAider.gouv.fr"
-      srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
+      src="/images/bg-jva.jpg"
+      srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x"
       data-not-lazy
-    >
+    />
     <div class="relative z-10 py-12 lg:py-24 px-6">
       <div class="text-center mb-12">
         <h2
@@ -159,25 +172,43 @@
               v-if="['Association', 'Collectivité'].includes($route.query.orga_type)"
               class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 md:flex md:space-x-4"
             >
-              <InformationCircleSolidIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
+              <RiInformationFill
+                class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none fill-current"
+              />
               <span class="text-sm md:text-base">
-                <template v-if="$route.query.orga_type === 'Association'">Vous êtes une association indépendante ou une association antenne d’un réseau associatif. Vous êtes reconnue association loi 1901 ou bien association de droit local.</template>
-                <template v-else-if="$route.query.orga_type === 'Collectivité'">Une collectivité territoriale est une autorité publique distincte de l'État. Il peut s’agir d’une commune, d’un CCAS, d’un département ou bien d’une région.</template>
+                <template v-if="$route.query.orga_type === 'Association'"
+                  >Vous êtes une association indépendante ou une association antenne d’un réseau
+                  associatif. Vous êtes reconnue association loi 1901 ou bien association de droit
+                  local.</template
+                >
+                <template v-else-if="$route.query.orga_type === 'Collectivité'"
+                  >Une collectivité territoriale est une autorité publique distincte de l'État. Il
+                  peut s’agir d’une commune, d’un CCAS, d’un département ou bien d’une
+                  région.</template
+                >
               </span>
             </div>
 
-            <FormControl html-for="name" :label="$route.query.orga_type === 'Collectivité' ? 'Nom de votre collectivité territoriale' : $route.query.orga_type === 'Association' ? 'Nom de votre association' : 'Nom de votre organisation' ">
-              <ApiEngagementAssociationsSearch
+            <BaseFormControl
+              html-for="name"
+              :label="
+                $route.query.orga_type === 'Collectivité'
+                  ? 'Nom de votre collectivité territoriale'
+                  : $route.query.orga_type === 'Association'
+                  ? 'Nom de votre association'
+                  : 'Nom de votre organisation'
+              "
+            >
+              <ApiEngagementInputAutocomplete
                 v-if="$route.query.orga_type === 'Association'"
                 v-model="form.structure.name"
-                placeholder="Indiquez le nom en minuscules - Ex : La Fourmilière"
                 :show-add-button="!orgaExist"
                 :loading-add-button="loading"
+                placeholder="Indiquez le nom de votre association"
                 @selected="onStructureApiSelected"
-                @change="orgaExist = null"
                 @added="onSubmitChooseName"
               />
-              <Input
+              <BaseInput
                 v-else
                 v-model="form.structure.name"
                 name="name"
@@ -187,7 +218,7 @@
                     : 'Renseignez le nom de votre organisation'
                 "
               />
-            </FormControl>
+            </BaseFormControl>
 
             <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
               <DsfrButton
@@ -199,31 +230,30 @@
                 Continuer
               </DsfrButton>
             </template>
-            <div v-if="orgaExist" class="text-center mt-4">
+            <div v-if="orgaExist" class="mt-4">
               <p class="mb-0 font-bold">
                 L'organisation
                 <span class="text-jva-blue-500">{{ orgaExist.structure_name }}</span>
                 est déjà inscrite sur la plateforme.
               </p>
-              <p class="text-gray-500 text-sm">
+              <p class="text-gray-700 text-sm mt-4">
                 <template v-if="orgaExist.responsable_fullname">
-                  Veuillez vous rapprocher de la personne suivante pour intégrer
-                  l'équipe :<br>
-                  <span class="text-black">{{
-                    orgaExist.responsable_fullname
-                  }}</span>
+                  Veuillez vous rapprocher de
+                  <span class="text-black font-semibold">{{ orgaExist.responsable_fullname }}</span>
+                  pour intégrer l'équipe.<br />
                 </template>
-                <template v-else>
-                  Merci de contacter notre support pour plus de détails.
-                </template>
+                <template v-else> Merci de contacter notre support pour plus de détails. </template>
               </p>
             </div>
           </form>
 
           <div class="container mt-4 text-center">
-            <Link to="/inscription/responsable" class="text-sm text-white active:!bg-transparent">
+            <DsfrLink
+              to="/inscription/responsable"
+              class="text-sm text-white active:!bg-transparent"
+            >
               Retour
-            </Link>
+            </DsfrLink>
           </div>
         </template>
 
@@ -244,69 +274,66 @@
 
       <div v-else-if="currentStep.key == 'form_utilisateur'" class="mt-4">
         <div class="form-register-steps max-w-xl mx-auto bg-gray-100 p-6 sm:p-12">
-          <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmitRegisterResponsableForm">
-            <FormControl
+          <form
+            id="inscription"
+            class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2"
+            @submit.prevent="onSubmitRegisterResponsableForm"
+          >
+            <BaseFormControl
               label="Prénom"
               html-for="first_name"
               required
               :error="errors.first_name"
             >
-              <Input
+              <BaseInput
                 v-model="form.first_name"
                 name="first_name"
                 placeholder="Jean"
                 @blur="validate('first_name')"
               />
-            </FormControl>
-            <FormControl
-              label="Nom"
-              html-for="last_name"
-              required
-              :error="errors.last_name"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Nom" html-for="last_name" required :error="errors.last_name">
+              <BaseInput
                 v-model="form.last_name"
                 name="last_name"
                 placeholder="Dupont"
                 @blur="validate('last_name')"
               />
-            </FormControl>
-            <FormControl
-              label="Email"
-              html-for="email"
-              required
-              :error="errors.email"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Email" html-for="email" required :error="errors.email">
+              <BaseInput
                 v-model="form.email"
                 name="email"
                 type="email"
                 placeholder="jean.dupont@gmail.com"
                 @blur="validate('email')"
               />
-            </FormControl>
-            <FormControl
-              label="Code postal"
-              html-for="zip"
-              required
-              :error="errors.zip"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+              <BaseSelectAutocomplete
                 v-model="form.zip"
                 name="zip"
-                type="tel"
-                maxlength="5"
+                :options="zipAutocompleteOptions"
+                :min-length-to-search="3"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
                 placeholder="56000"
+                search-input-placeholder="Recherche par ville ou code postal"
+                options-class="md:min-w-[320px]"
+                :loading="loadingFetchZips"
+                @selected="handleSelectedZip"
+                @fetch-suggestions="onFetchZipSuggestions($event)"
                 @blur="validate('zip')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Téléphone mobile"
               html-for="mobile"
               required
               :error="errors.mobile"
             >
-              <Input
+              <BaseInput
                 v-model="form.mobile"
                 name="mobile"
                 type="tel"
@@ -314,43 +341,48 @@
                 placeholder="0612345678"
                 @blur="validate('mobile')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Date de naissance"
               html-for="birthday"
               required
               :error="errors.birthday"
             >
-              <InputDate v-model="form.birthday" required name="birthday" />
-            </FormControl>
-            <FormControl
+              <BaseInputDateNative
+                v-model="form.birthday"
+                required
+                name="birthday"
+                @blur="validate('birthday')"
+              />
+            </BaseFormControl>
+            <BaseFormControl
               label="Mot de passe"
               html-for="password"
               required
               :error="errors.password"
             >
-              <Input
+              <BaseInput
                 v-model="form.password"
                 name="password"
                 placeholder="Votre mot de passe"
                 type="password"
                 @blur="validate('password')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Confirmation"
               html-for="password_confirmation"
               required
               :error="errors.password_confirmation"
             >
-              <Input
+              <BaseInput
                 v-model="form.password_confirmation"
                 name="password_confirmation"
                 placeholder="Votre mot de passe"
                 type="password"
                 @blur="validate('password_confirmation')"
               />
-            </FormControl>
+            </BaseFormControl>
           </form>
 
           <DsfrButton
@@ -366,25 +398,35 @@
             <template v-else-if="$route.query.orga_type === 'Association'">
               J'inscris mon association
             </template>
-            <template v-else>
-              J'inscris mon organisation
-            </template>
+            <template v-else> J'inscris mon organisation </template>
           </DsfrButton>
 
-          <div class="mt-4 text-center text-gray-800 text-sm">
-            En m'inscrivant j'accepte
-            <!-- eslint-disable -->
-            <Link to="/politique-de-confidentialite"
-            >la politique de confidentialité</Link>
-            <!-- eslint-enable -->
+          <div class="mt-4 text-center text-gray-800 text-xs">
+            <span>En m’inscrivant j'accepte les </span>
+            <DsfrLink
+              class="font-medium text-gray-900"
+              to="/conditions-generales-d-utilisation"
+              :is-external="true"
+              :icon-size="12"
+            >
+              <span>conditions générales d’utilisation</span>
+            </DsfrLink>
+            <br class="hidden sm:block" />
+            <span> et la </span>
+            <DsfrLink
+              class="font-medium text-gray-900"
+              to="/charte-reserve-civique"
+              :is-external="true"
+              :icon-size="12"
+            >
+              <span>charte</span>
+            </DsfrLink>
+            <span> de la Réserve Civique.</span>
           </div>
         </div>
       </div>
 
-      <div
-        v-else-if="currentStep.key == 'form_reseau'"
-        class="mt-4"
-      >
+      <div v-else-if="currentStep.key == 'form_reseau'" class="mt-4">
         <FormLeadReseau />
       </div>
     </div>
@@ -393,29 +435,46 @@
 
 <script>
 import { string, object, ref, date } from 'yup'
-import BoxItem from '@/components/section/inscription/BoxItem'
-import ApiEngagementAssociationsSearch from '@/components/section/search/ApiEngagementAssociationsSearch'
+import BoxItem from '@/components/section/inscription/BoxItem.vue'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
-import FormLeadReseau from '@/components/form/FormLeadReseau'
+import FormLeadReseau from '@/components/form/FormLeadReseau.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
-import Link from '@/components/dsfr/Link.vue'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
-export default {
+export default defineNuxtComponent({
   components: {
     BoxItem,
-    ApiEngagementAssociationsSearch,
     FormLeadReseau,
     DsfrButton,
-    Link
   },
-  mixins: [FormErrors, Emailable],
-  data () {
+  setup() {
+    useHead({
+      title:
+        'Devenez bénévole avec JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Créez votre page dédiée et centralisez les missions de vos associations et organisations publiques afin de promouvoir le bénévolat de proximité.',
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: '/images/share-image.jpg',
+        },
+      ],
+    })
+  },
+  mixins: [FormErrors, Emailable, GeolocProfile],
+  data() {
     return {
       loading: false,
       currentStepKey: 'choix_orga_type',
       form: {
-        structure: {}
+        structure: {},
+        birthday: '',
       },
       orgaExist: null,
       showModalConfirmOrga: false,
@@ -425,41 +484,43 @@ export default {
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
-        birthday: date().required('Le format de la date est incorrect').nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        mobile: string()
+          .min(10)
+          .matches(/^[+|\s|\d]*$/, 'Ce format est incorrect')
+          .required('Un téléphone mobile est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
+        birthday: date()
+          .typeError('La date indiquée est invalide')
+          .test(
+            'is-old-enough',
+            'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans',
+            (date) => {
+              if (!date) {
+                return true
+              }
+              const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+              return age >= 16
+            }
+          ),
         email: string().required('Un email est requis').email(),
         password: string().min(8).required('Un mot de passe est requis'),
-        password_confirmation: string().required('La confirmation est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
-      })
-    }
-  },
-  head () {
-    return {
-      title:
-        'Devenez bénévole avec JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            'Créez votre page dédiée et centralisez les missions de vos associations et organisations publiques afin de promouvoir le bénévolat de proximité.'
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: '/images/share-image.jpg'
-        }
-      ]
+        password_confirmation: string()
+          .required('La confirmation est requise')
+          .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
+      }),
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {
-    steps () {
+    steps() {
       return [
         {
           key: 'choix_orga_type',
           title: 'Excellent choix !',
-          subtitle: 'Vous êtes...'
+          subtitle: 'Vous êtes...',
         },
         {
           key: 'choix_orga_nom',
@@ -467,9 +528,9 @@ export default {
             this.$route.query.orga_type === 'Collectivité'
               ? 'Voilà un grand pas<br /> pour votre collectivité territoriale !'
               : this.$route.query.orga_type === 'Association'
-                ? 'Votre association est <br /> la bienvenue chez nous !'
-                : 'Voilà un grand pas<br /> pour votre organisation !',
-          subtitle: 'Quel est son petit nom ?'
+              ? 'Votre association est <br /> la bienvenue chez nous !'
+              : 'Voilà un grand pas<br /> pour votre organisation !',
+          subtitle: 'Quel est son petit nom ?',
         },
         {
           key: 'form_utilisateur',
@@ -480,98 +541,106 @@ export default {
           subtitle:
             this.$route.query.orga_type === 'Association'
               ? 'Et vous dans tout ça ?'
-              : 'Qui êtes-vous ?'
+              : 'Qui êtes-vous ?',
         },
         {
           key: 'form_reseau',
           title: 'Voilà un grand pas<br /> pour votre réseau !',
-          subtitle: 'Quel est le nom de votre tête de réseau ?'
-        }
+          subtitle: 'Quel est le nom de votre tête de réseau ?',
+        },
       ]
     },
-    currentStep () {
-      return this.steps.find(step => step.key === this.currentStepKey)
+    currentStep() {
+      return this.steps.find((step) => step.key === this.currentStepKey)
     },
-    userHasRoleResponsable () {
-      if (!this.$store.getters.isLogged) {
+    userHasRoleResponsable() {
+      if (!this.$stores.auth.isLogged) {
         return false
       }
-      const organisations = this.$store.getters.roles.filter(role => role.key === 'responsable')
+      const organisations = this.$stores.auth.roles.filter((role) => role.key === 'responsable')
       return organisations.length ? organisations[0] : false
-    }
+    },
   },
   watch: {
     $route: {
       immediate: true,
-      handler () {
+      handler() {
         this.orgaExist = null
         this.initCurrentStep()
         if (!process.server) {
           window.scrollTo(0, 0)
         }
-      }
-    }
+      },
+    },
   },
   methods: {
-    initCurrentStep () {
-      this.currentStepKey = this.$route.query.orga_type === 'Association' ||
+    initCurrentStep() {
+      this.currentStepKey =
+        this.$route.query.orga_type === 'Association' ||
         this.$route.query.orga_type === 'Collectivité' ||
         this.$route.query.orga_type === 'Organisation publique' ||
         this.$route.query.orga_type === 'Organisation privée'
-        ? 'choix_orga_nom'
-        : this.$route.query.orga_type === 'Tête de réseau'
+          ? 'choix_orga_nom'
+          : this.$route.query.orga_type === 'Tête de réseau'
           ? 'form_reseau'
           : 'choix_orga_type'
     },
-    handleChooseOrgaType (orgaType) {
+    handleChooseOrgaType(orgaType) {
       this.orgaTypeChosen = orgaType
       if (orgaType === 'Crisp') {
-        window.open('https://go.crisp.chat/chat/embed/?website_id=4b843a95-8a0b-4274-bfd5-e81cbdc188ac', '_blank')
-      } else if (['Association', 'Collectivité', 'Organisation publique', 'Organisation privée'].includes(orgaType)) {
+        window.open(
+          'https://go.crisp.chat/chat/embed/?website_id=4b843a95-8a0b-4274-bfd5-e81cbdc188ac',
+          '_blank'
+        )
+      } else if (
+        ['Association', 'Collectivité', 'Organisation publique', 'Organisation privée'].includes(
+          orgaType
+        )
+      ) {
         this.showModalConfirmOrga = true
       } else {
         this.$router.push(`/inscription/responsable?orga_type=${orgaType}`)
       }
     },
-    handleConfirmChoixOrga () {
+    handleConfirmChoixOrga() {
       this.showModalConfirmOrga = false
       this.$router.push(`/inscription/responsable?orga_type=${this.orgaTypeChosen}`)
     },
-    handleDeniedChoixOrga () {
+    handleDeniedChoixOrga() {
       this.$router.push('/')
     },
-    async onStructureApiSelected (structure) {
-      const res = await this.$axios.get(`/structures/${structure._id}/exist`)
-      if (res.data) {
-        this.orgaExist = res.data
+    async onStructureApiSelected(structure) {
+      const response = await apiFetch(`/structures/${structure._id}/exist`)
+      if (response.structure) {
+        this.orgaExist = response.structure
       } else {
         this.form.structure = structure
-        if (this.$store.getters.isLogged) {
+        if (this.$stores.auth.isLogged) {
           this.registerStructure()
         } else {
           this.currentStepKey = 'form_utilisateur'
         }
       }
     },
-    async onSubmitChooseName () {
+    async onSubmitChooseName() {
       if (!this.form.structure.name || this.form.structure.name.trim() === '') {
         this.$toast.error("Merci de saisir un nom d'organisation")
         return
       }
       if (this.$route.query.orga_type === 'Collectivité') {
-        const res = await this.$axios.get(`/structures/${this.form.structure.name}/exist`)
-        if (res.data) {
-          this.orgaExist = res.data
+        const response = await apiFetch(`/structures/${this.form.structure.name}/exist`)
+        if (response.structure) {
+          this.orgaExist = response.structure
           return false
         }
       }
-      if (this.$store.getters.isLogged) {
+      if (this.$stores.auth.isLogged) {
         this.registerStructure()
       } else {
         this.currentStepKey = 'form_utilisateur'
       }
     },
-    onSubmitRegisterResponsableForm () {
+    onSubmitRegisterResponsableForm() {
       if (this.loading) {
         return
       }
@@ -585,18 +654,16 @@ export default {
             this.$toast.error('Votre adresse mail comporte une erreur')
             return
           }
-          await this.$store.dispatch('auth/registerResponsable', {
+          await this.$stores.auth.registerResponsable({
             ...this.form,
             structure_name: this.form.structure.name,
             structure_statut_juridique: this.$route.query.orga_type,
-            structure_api: this.form.structure.rna
-              ? this.form.structure
-              : null
+            structure_api: this.form.structure.rna ? this.form.structure : null,
           })
-          window.plausible && window.plausible('Inscription responsable - Étape 1 - Création de compte')
-          await this.$gtm.push({ event: 'inscription-responsable' })
+          this.$plausible.trackEvent('Inscription responsable - Étape 1 - Création de compte')
+          await this.$gtm?.trackEvent({ event: 'inscription-responsable' })
           this.$router.push({
-            path: '/inscription/responsable/step/charte-bon-fonctionnement'
+            path: '/inscription/responsable/step/charte-bon-fonctionnement',
           })
         })
         .catch((errors) => {
@@ -606,27 +673,30 @@ export default {
           this.loading = false
         })
     },
-    async registerStructure () {
+    async registerStructure() {
       if (this.loading) {
         return
       }
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
-      const res = await this.$axios.post('/structure', this.form.structure)
-      if (res.data) {
-        await this.$store.dispatch('auth/updateUser', {
-          context_role: 'responsable',
-          contextable_type: 'structure',
-          contextable_id: res.data.id
-        })
-        this.$router.push('/inscription/responsable/step/organisation')
+      const response = await apiFetch('/structure', {
+        method: 'POST',
+        body: this.form.structure,
+      })
+      if (response) {
+        await this.$stores.auth
+          .switchRole({
+            context_role: 'responsable',
+            contextable_type: 'structure',
+            contextable_id: response.id,
+          })
+          .then(() => {
+            this.$router.push('/inscription/responsable/step/organisation')
+          })
+          .catch(() => {})
       }
       this.loading = false
-    }
-  }
-}
+    },
+  },
+})
 </script>
-
-<style scoped>
-
-</style>

@@ -12,13 +12,16 @@
       <p class="text-gray-600">
         {{ participationNames }}
       </p>
-      <FormParticipationDecline class="mt-4" :is-bulk-operation="true" @confirm="onFormConfirm($event, handleSubmit, endpoint)" />
+      <FormParticipationDecline
+        class="mt-4"
+        :is-bulk-operation="true"
+        @confirm="onFormConfirm($event, handleSubmit, endpoint)"
+        :operations-count="operations.length"
+      />
     </template>
 
     <template #submit>
-      <Button type="submit" form="form-participation-decline">
-        Confirmer
-      </Button>
+      <DsfrButton is-submit form="form-participation-decline"> Confirmer </DsfrButton>
     </template>
   </ModalBulkOperations>
 </template>
@@ -27,50 +30,56 @@
 import ModalBulkOperations from '@/components/modal/ModalBulkOperations.vue'
 import FormParticipationDecline from '@/components/form/FormParticipationDecline.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     ModalBulkOperations,
-    FormParticipationDecline
+    FormParticipationDecline,
   },
   props: {
     operations: {
       type: Array,
-      required: true
+      required: true,
     },
     isOpen: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      state: null
+      state: null,
     }
   },
   computed: {
-    participationNames () {
-      const names = this.operations.slice(0, 5).map(participation => participation.profile?.full_name).join(', ')
+    participationNames() {
+      const names = this.operations
+        .slice(0, 5)
+        .map((participation) => participation.profile?.full_name)
+        .join(', ')
       return this.operations.length > 5 ? `${names}... (+${this.operations.length - 5})` : names
     },
-    modalTitle () {
+    modalTitle() {
       switch (this.state) {
         case 'processing':
           return 'En cours de traitement'
         case 'processed':
-          return this.$options.filters.pluralize(
+          return this.$filters.pluralize(
             this.operations.length,
             'participation a été refusée',
             'participations ont été refusées'
           )
         default:
-          return `Vous êtes sur le point de refuser ${this.$options.filters.pluralize(this.operations.length, 'participation')}&nbsp;:`
+          return `Vous êtes sur le point de refuser ${this.$filters.pluralize(
+            this.operations.length,
+            'participation'
+          )}`
       }
-    }
+    },
   },
   methods: {
-    onFormConfirm (form, handleSubmit, endpoint) {
+    onFormConfirm(form, handleSubmit, endpoint) {
       handleSubmit(endpoint, form)
-    }
-  }
-}
+    },
+  },
+})
 </script>

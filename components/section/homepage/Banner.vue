@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <section class="relative h-[590px] shadow-xl">
     <picture class="lg:hidden">
       <source
@@ -9,7 +9,7 @@
           /images/homepage/banner@2x.jpg  2x
         "
         media="(min-width: 440px)"
-      >
+      />
 
       <img
         srcset="
@@ -23,7 +23,7 @@
         width="440"
         height="584"
         data-not-lazy
-      >
+      />
     </picture>
 
     <video
@@ -33,7 +33,7 @@
       class="object-cover absolute w-full h-full hidden lg:block"
       autoplay
     >
-      <source src="/video/banner.mp4" type="video/mp4">
+      <source src="/video/banner.mp4" type="video/mp4" />
     </video>
 
     <div class="bg-black opacity-50 absolute inset-0 h-full w-full" />
@@ -41,22 +41,27 @@
     <div class="relative z-10 h-full">
       <div class="container mx-auto px-4 h-full">
         <div class="flex flex-col justify-center items-center h-full text-shadow text-center">
-          <Heading as="div" size="alt-sm" class="mb-4" color="text-white">
+          <DsfrHeading as="div" size="alt-sm" class="mb-4" color="text-white">
             Envie de bénévolat&nbsp;?
-          </Heading>
+          </DsfrHeading>
 
-          <Heading as="h1" size="md" class="mb-8" :bold="false" color="text-white">
+          <DsfrHeading as="h1" size="md" class="mb-8" :bold="false" color="text-white">
             <strong> Devenez bénévole </strong>
             <span> et trouvez des missions de bénévolat </span>
-            <br class="hidden md:block">
+            <br class="hidden md:block" />
             <strong> près de chez vous </strong>
             <span> ou </span>
             <strong> à distance </strong>
-          </Heading>
+          </DsfrHeading>
 
-          <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" @click="handleClickCTA()">
+          <DsfrButton
+            size="lg"
+            type="tertiary-no-outline"
+            icon="RiSearchLine"
+            @click="handleClickCTA()"
+          >
             Trouver une mission
-          </Button>
+          </DsfrButton>
         </div>
       </div>
 
@@ -74,63 +79,61 @@
 
 <script>
 import inViewport from 'vue-in-viewport-mixin'
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
 
-export default {
-  components: {
-    Heading,
-    Button
-  },
+export default defineNuxtComponent({
+  components: {},
   mixins: [inViewport],
-  data () {
+  data() {
     return {
       videoPausedByViewport: false,
-      videoPausedByUser: false
+      videoPausedByUser: false,
     }
   },
   computed: {
-    videoIsPaused () {
+    videoIsPaused() {
       return this.videoPausedByViewport || this.videoPausedByUser
-    }
+    },
   },
   watch: {
-    'inViewport.now' (visible) {
+    'inViewport.now'(visible) {
       if (!visible) {
         this.videoPausedByViewport = true
       } else {
         this.videoPausedByViewport = false
       }
     },
-    videoIsPaused (newVal) {
+    videoIsPaused(newVal) {
       const video = this.$refs.video
-      const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
+      const isPlaying =
+        video.currentTime > 0 &&
+        !video.paused &&
+        !video.ended &&
+        video.readyState > video.HAVE_CURRENT_DATA
       if (!newVal && !isPlaying) {
         const playPromise = video.play()
         if (playPromise !== null) {
-          playPromise.catch(() => { /* discard runtime error */ })
+          playPromise.catch(() => {
+            /* discard runtime error */
+          })
         }
       } else if (newVal && isPlaying) {
         video.pause()
       }
-    }
+    },
   },
   methods: {
-    handleClickCTA () {
-      window.plausible &&
-        window.plausible('Click CTA - Homepage', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+    handleClickCTA() {
+      this.$plausible.trackEvent('Click CTA - Homepage', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
       this.$router.push('/missions-benevolat')
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
-
 .text-shadow {
   text-shadow: 0px 4px 14px rgb(0 0 0 / 25%), 0px 4px 30px rgb(0 0 0 / 85%);
 }
-
-</style>
+</style> -->

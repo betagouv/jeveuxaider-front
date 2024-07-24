@@ -1,50 +1,58 @@
 <template>
   <div class="flex flex-col gap-8">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Paramètres' },
-          { text: 'Général' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Paramètres' },
+            { text: 'Général' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading title="Paramétrage général" />
-    <Box>
+    <BaseSectionHeading title="Paramétrage général" />
+    <BaseBox>
       <div class="space-y-8">
-        <Toggle
+        <BaseToggle
           v-model="form.blog_active"
           label="Blog"
           description="Récupèration des articles du blog sur la page d'accueil"
         />
-        <Toggle
+        <BaseToggle
           v-model="form.snu_mig_active"
           label="SNU MIG"
           description="Récupèration des actions en attente côté SNU"
         />
-        <Toggle
+        <BaseToggle
           v-model="form.france_connect_active"
           label="France Connect"
           description="Activer le France Connect pour la connexion et l'inscription des utilisateurs"
         />
-        <Toggle
+        <BaseToggle
           v-model="form.maintenance_mode_active"
           label="Mode de maintenance"
           description="Activer le mode maintenance pour les autres utilisateurs"
         />
-        <Toggle
+        <BaseToggle
           v-model="form.light_mode_active"
           label="Mode dégradé"
           description="Activer le mode dégradé lors de très fort trafic (inscriptions désactivées)"
         />
         <div class="text-right">
-          <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
+          <BaseButton
+            type="submit"
+            variant="green"
+            size="xl"
+            :loading="loading"
+            @click.native="onSubmit"
+          >
             Enregistrer
-          </Button>
+          </BaseButton>
         </div>
       </div>
-    </Box>
+    </BaseBox>
   </div>
 </template>
 
@@ -53,31 +61,33 @@ import { object, boolean } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Breadcrumb
+    Breadcrumb,
   },
   mixins: [FormErrors],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  async asyncData ({ $axios }) {
-    const { data: settings } = await $axios.get('/settings/general')
+  async setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+    const settings = await apiFetch('/settings/general')
     return {
-      form: settings
+      form: settings,
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       formSchema: object({
         maintenance_mode_active: boolean(),
         france_connect_active: boolean(),
-        light_mode_active: boolean()
-      })
+        light_mode_active: boolean(),
+      }),
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -85,7 +95,7 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$store.dispatch('settings/updateGeneral', this.form)
+          await this.$stores.settings.updateGeneral(this.form)
           this.$toast.success('Modifications enregistrées')
         })
         .catch((errors) => {
@@ -94,11 +104,9 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

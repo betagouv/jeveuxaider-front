@@ -1,55 +1,47 @@
 <template>
-  <Container2Cols>
+  <BaseContainer2Cols>
     <template #breadcrumb>
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Notes' },
-        ]"
-      />
+      <Breadcrumb :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Notes' }]" />
     </template>
     <template #header>
-      <SectionHeading :title="`Toutes les notes`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
+      <BaseSectionHeading
+        :title="`Toutes les notes`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
+      />
     </template>
     <template #left>
-      <Box>
-        <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-          {{ $options.filters.formatNumber(queryResult.total) }} {{ $options.filters.pluralize(
-            queryResult.total,
-            'note',
-            'notes',
-            false) }}
-        </Heading>
-        <SearchFilters class="mb-8">
-          <Input
-            name="search"
-            placeholder="Rechercher par mots clés, nom"
-            icon="SearchIcon"
-            variant="transparent"
-            :value="$route.query['filter[search]']"
-            clearable
-            @input="changeFilter('filter[search]', $event)"
+      <BaseBox>
+        <BaseHeading as="h2" :level="2" class="mb-8 font-extrabold">
+          {{ $numeral(queryResult.total) }}
+          {{ $filters.pluralize(queryResult.total, 'note', 'notes', false) }}
+        </BaseHeading>
+        <SearchFilters class="mb-12" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
+            icon="RiSearchLine"
+            :modelValue="$route.query['filter[search]']"
+            @update:modelValue="changeFilter('filter[search]', $event)"
           />
           <template #prefilters>
-            <Tag
+            <!-- <Tag
               :key="`tous-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="hasActiveFilters()"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Toutes
-            </Tag>
+            </Tag> -->
 
             <Tag
               :key="`mine-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
               @click.native="changeFilter('filter[mine]', '1')"
             >
               Mes notes
@@ -60,8 +52,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'organisations'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="
+                $route.query['filter[type]'] && $route.query['filter[type]'] == 'organisations'
+              "
               @click.native="changeFilter('filter[type]', 'organisations')"
             >
               Organisations
@@ -72,8 +65,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'missions'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="
+                $route.query['filter[type]'] && $route.query['filter[type]'] == 'missions'
+              "
               @click.native="changeFilter('filter[type]', 'missions')"
             >
               Missions
@@ -81,13 +75,10 @@
           </template>
         </SearchFilters>
         <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
-          <CardNote
-            v-for="note in queryResult.data"
-            :key="note.id"
-            class=""
-            :note="note"
-          />
+          <CardNote v-for="note in queryResult.data" :key="note.id" :note="note" />
         </div>
+
+        <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
         <Pagination
           class="mt-8"
@@ -96,28 +87,28 @@
           :per-page="queryResult.per_page"
           @page-change="changePage"
         />
-      </Box>
+      </BaseBox>
     </template>
     <template #right>
       <MoreNumbers />
       <GuideLinks />
       <HelpCenter />
     </template>
-  </Container2Cols>
+  </BaseContainer2Cols>
 </template>
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import CardNote from '@/components/card/CardNote.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     HelpCenter,
     Pagination,
@@ -126,26 +117,26 @@ export default {
     SearchFilters,
     Tag,
     MoreNumbers,
-    GuideLinks
+    GuideLinks,
   },
   mixins: [QueryBuilder],
-  middleware: 'authenticated',
-  asyncData ({ store, error }) {
-    if (
-      !['admin', 'referent'].includes(
-        store.getters.contextRole
-      )
-    ) {
-      return error({ statusCode: 403 })
+  setup() {
+    definePageMeta({
+      middleware: ['authenticated'],
+    })
+
+    const { $stores } = useNuxtApp()
+
+    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       endpoint: '/notes',
-      queryParams: {
-      }
+      queryParams: {},
     }
-  }
-}
+  },
+})
 </script>

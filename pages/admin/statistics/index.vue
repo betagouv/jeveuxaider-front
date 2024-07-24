@@ -1,90 +1,127 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Plus de chiffres' },
-          { text: 'Vue d\'ensemble' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            {
+              text: 'Administration',
+              to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
+            },
+            { text: 'Plus de chiffres' },
+            { text: 'Vue d’ensemble' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Vue d'ensemble"
+    <BaseSectionHeading
+      title="Vue d’ensemble"
+      secondaryTitleBottom="L’activité sur JeVeuxAider.gouv.fr en détail"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <OverviewQuickGlance ref="overviewQuickGlance" />
 
-    <Heading as="h2" :level="2">
-      L’activité sur JeVeuxAider.gouv.fr en détail
-    </Heading>
-
+    <!-- <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading> -->
+    <!-- <OverviewPlaces ref="overviewPlaces" /> -->
     <OverviewParticipations ref="overviewParticipations" />
-    <OverviewUtilisateurs ref="overviewUtilisateurs" />
-    <OverviewOrganisations ref="overviewOrganisations" />
+    <OverviewUtilisateurs
+      v-if="['admin'].includes($stores.auth.contextRole)"
+      ref="overviewUtilisateurs"
+    />
     <OverviewMissions ref="overviewMissions" />
-    <OverviewPlaces ref="overviewPlaces" />
-    <!-- <OverviewAPIEngagement v-if="['admin'].includes($store.getters.contextRole)" ref="overviewAPIEngagement" /> -->
+
+    <OverviewOrganisations
+      ref="overviewOrganisations"
+      v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+    />
+    <!-- <OverviewAPIEngagement v-if="['admin'].includes($stores.auth.contextRole)" ref="overviewAPIEngagement" /> -->
   </div>
 </template>
 
 <script>
-import OverviewOrganisations from '@/components/numbers/OverviewOrganisations'
-import OverviewMissions from '@/components/numbers/OverviewMissions'
-import OverviewParticipations from '@/components/numbers/OverviewParticipations'
-import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
-import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
-import OverviewPlaces from '@/components/numbers/OverviewPlaces'
-// import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import OverviewOrganisations from '@/components/numbers/OverviewOrganisations.vue'
+import OverviewMissions from '@/components/numbers/OverviewMissions.vue'
+import OverviewParticipations from '@/components/numbers/OverviewParticipations.vue'
+import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance.vue'
+import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs.vue'
+// import OverviewPlaces from '@/components/numbers/OverviewPlaces.vue'
+// import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     OverviewQuickGlance,
     OverviewOrganisations,
     OverviewParticipations,
     OverviewMissions,
     OverviewUtilisateurs,
-    OverviewPlaces,
+    // OverviewPlaces,
     // OverviewAPIEngagement,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics',
-  middleware: 'authenticated',
-  asyncData ({ store, error }) {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-admin',
+      middleware: ['authenticated'],
+    })
+
+    const { $stores } = useNuxtApp()
+
     if (
-      !['admin', 'referent'].includes(
-        store.getters.contextRole
-      )
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
     ) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  data() {
     return {}
   },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['department', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['daterange', 'daterange']
+      }
+
+      return []
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.overviewQuickGlance.$fetch()
-      this.$refs.overviewParticipations.$fetch()
-      this.$refs.overviewUtilisateurs.$fetch()
-      this.$refs.overviewOrganisations.$fetch()
-      this.$refs.overviewMissions.$fetch()
-      this.$refs.overviewPlaces.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.overviewQuickGlance?.fetch()
+      this.$refs.overviewParticipations?.fetch()
+      this.$refs.overviewUtilisateurs?.fetch()
+      this.$refs.overviewOrganisations?.fetch()
+      this.$refs.overviewMissions?.fetch()
+      this.$refs.overviewPlaces?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

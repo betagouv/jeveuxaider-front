@@ -1,70 +1,75 @@
 <template>
-  <portal to="body-end">
-    <Modal
-      :key="`modal_alert_dialog_${uuid}`"
-      v-scroll-lock="isOpen"
-      :title="title"
-      :is-open="isOpen"
-      :theme="theme"
-      @close="$emit('cancel')"
-    >
-      <div class="text-gray-700 space-y-4">
-        <div v-html="text" />
-        <slot />
-      </div>
-      <template #footer>
-        <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
-          {{ cancelLabel }}
-        </Button>
-        <Button :variant="confirmButtonVariant" @click.native="$emit('confirm')">
-          {{ confirmLabel }}
-        </Button>
-      </template>
-    </Modal>
-  </portal>
+  <ClientOnly>
+    <Teleport to="#teleport-body-end">
+      <BaseModal
+        :key="`modal_alert_dialog_${uuid}`"
+        :title="title"
+        :is-open="isOpen"
+        :icon="icon"
+        :prevent-click-outside="preventClickOutside"
+        :overflow-hidden="overflowHidden"
+        @close="$emit('cancel')"
+      >
+        <div class="text-gray-700 mb-4">
+          <slot />
+        </div>
+        <template #footer>
+          <DsfrButton type="secondary" @click="$emit('cancel')">
+            {{ cancelLabel }}
+          </DsfrButton>
+          <DsfrButton :loading="buttonLoading" @click="$emit('confirm')">
+            {{ buttonLabel }}
+          </DsfrButton>
+        </template>
+      </BaseModal>
+    </Teleport>
+  </ClientOnly>
 </template>
 
 <script>
-import uuid from '@/mixins/uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
-  mixins: [uuid],
+export default defineNuxtComponent({
+  emits: ['cancel', 'confirm'],
   props: {
     isOpen: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    buttonLoading: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
+      type: String,
+      default: null,
     },
     title: {
       type: String,
-      required: true
-    },
-    text: {
-      type: String,
-      default: ''
-    },
-    theme: {
-      type: String,
-      default: 'success' // success, warning, danger
+      required: true,
     },
     buttonLabel: {
       type: String,
-      default: null
+      default: 'Confirmer',
     },
     cancelLabel: {
       type: String,
-      default: 'Annuler'
+      default: 'Annuler',
+    },
+    preventClickOutside: {
+      type: Boolean,
+      default: true,
+    },
+    overflowHidden: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  computed: {},
+  data() {
+    return {
+      uuid: uuidv4(),
     }
   },
-  computed: {
-    confirmButtonVariant () {
-      return this.theme == 'danger' ? 'red' : this.theme == 'warning' ? 'primary' : 'green'
-    },
-    confirmLabel () {
-      if (this.buttonLabel) {
-        return this.buttonLabel
-      }
-      return this.theme == 'danger' ? 'Supprimer' : this.theme == 'success' ? 'Confirmer' : 'Valider'
-    }
-  }
-}
+})
 </script>

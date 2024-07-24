@@ -1,38 +1,50 @@
 <template>
   <a
     target="_blank"
-    :href="`${shareBaseUrl}${message}${appUrl}${url}`"
-    class="bg-white h-12 w-12 lg:h-[85px] lg:w-[85px] rounded-full flex justify-center items-center cursor-pointer tracking-wide shadow-lg hover:scale-105 transform transition will-change-transform"
+    :href="`${shareBaseUrl}${appUrl}${url}&text=${message}`"
+    class="bg-white rounded-full flex justify-center items-center cursor-pointer tracking-wide shadow-lg hover:scale-105 transform transition will-change-transform"
+    :class="[
+      { 'h-20 w-20': size === 'xl' },
+      { 'h-16 w-16': size === 'lg' },
+      { 'h-12 w-12': size === 'md' },
+    ]"
   >
     <img
       src="@/assets/images/share-twitter.svg"
       alt="Partagez la mission sur Twitter"
-      class="w-6 h-auto lg:w-auto"
-    >
+      class="w-auto"
+      :class="[{ 'h-8': size === 'xl' }, { 'h-6': size === 'lg' }, { 'h-4': size === 'md' }]"
+    />
   </a>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
+    size: {
+      type: String,
+      default: 'xl',
+    },
     url: {
       type: String,
-      default () {
-        return this.$router.currentRoute.fullPath
-      }
+      default() {
+        const router = useRouter()
+        return router.currentRoute.value.fullPath
+      },
     },
     message: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   computed: {
-    appUrl () {
-      return this.$config.appUrl
+    appUrl() {
+      const runtimeConfig = useRuntimeConfig()
+      return runtimeConfig.public.appUrl
     },
-    shareBaseUrl () {
+    shareBaseUrl() {
       return 'https://twitter.com/intent/tweet?url='
-    }
-  }
-}
+    },
+  },
+})
 </script>

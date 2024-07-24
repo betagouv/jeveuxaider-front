@@ -1,145 +1,136 @@
 <template>
-  <ContainerRightSidebar>
-    <DrawerOrganisation :organisation-id="drawerOrganisationId" @close="drawerOrganisationId = null" @updated="$fetch()" @refetch="$fetch()" />
-    <template #breadcrumb>
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Organisations' }
-        ]"
-      />
-    </template>
-    <template #sidebar>
-      <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
-      <div class="flex flex-col gap-y-4 sticky top-8">
-        <InputAutocomplete
-          v-if="['admin'].includes($store.getters.contextRole)"
-          :value="$route.query['filter[reseaux.name]']"
-          icon="SearchIcon"
-          name="autocomplete"
-          placeholder="Réseau"
-          :options="autocompleteOptionsReseaux"
-          variant="transparent"
-          @fetch-suggestions="onFetchSuggestionsReseaux"
-          @selected="changeFilter('filter[reseaux.name]', $event ? $event.name : undefined)"
-        />
-        <SelectAdvanced
-          name="statut_juridique"
-          placeholder="Statut juridique"
-          :options="$labels.structure_legal_status"
-          :value="$route.query['filter[statut_juridique]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[statut_juridique]', $event)"
-        />
-        <SelectAdvanced
-          name="department"
-          placeholder="Département"
-          :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[department]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[department]', $event)"
-        />
-        <SelectAdvanced
-          :key="`state-${$route.fullPath}`"
-          name="state"
-          placeholder="Statut"
-          :options="$labels.structure_workflow_states"
-          :value="$route.query['filter[state]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[state]', $event)"
-        />
-      </div>
-    </template>
+  <div class="container">
+    <DrawerOrganisation
+      :organisation-id="drawerOrganisationId"
+      @close="drawerOrganisationId = null"
+      @updated="fetch()"
+      @refetch="fetch()"
+    />
+
+    <Breadcrumb
+      :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Organisations' }]"
+    />
+
     <div>
-      <SectionHeading
-        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+      <BaseSectionHeading
+        :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
           queryResult.total,
           'organisation',
           'organisations',
           false
         )}`"
+        :loading="queryLoading"
       >
         <template #action>
-          <div class="">
-            <Button
+          <div>
+            <DsfrButton
+              v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
               type="secondary"
               icon="RiDownload2Line"
+              :disabled="queryResult?.total === 0"
               :loading="exportLoading"
               @click.native="handleExport"
             >
               Exporter
-            </Button>
+            </DsfrButton>
           </div>
         </template>
-      </SectionHeading>
-      <SearchFilters class="my-8">
-        <Input
-          name="search"
+      </BaseSectionHeading>
+      <SearchFilters class="mt-8 mb-12" @reset-filters="deleteAllFilters">
+        <DsfrInput
+          type="search"
+          size="lg"
           placeholder="Rechercher une organisation (ville, id, ou rna)"
-          icon="SearchIcon"
-          variant="transparent"
-          :value="$route.query['filter[search]']"
-          clearable
-          @input="changeFilter('filter[search]', $event)"
+          icon="RiSearchLine"
+          :modelValue="$route.query['filter[search]']"
+          @update:modelValue="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
-          <Tag
-            :key="`toutes-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-selected="hasActiveFilters()"
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="deleteAllFilters"
-          >
-            Toutes
-          </Tag>
+          <div class="flex gap-3 items-center">
+            <span class="text-base">Trier par</span>
+            <BaseFilterSelectAdvanced
+              key="sort"
+              name="sort"
+              :options="[
+                { key: '-created_at', label: 'Les plus récentes' },
+                { key: 'created_at', label: 'Les plus anciennes' },
+                { key: '-updated_at', label: 'Date de denière modification' },
+                { key: '-missions_count', label: 'Nombre de missions proposées' },
+                { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
+              ]"
+              :modelValue="$route.query['sort']"
+              placeholder="Trier par"
+              options-class="!min-w-[280px]"
+              @update:modelValue="changeFilter('sort', $event)"
+            />
+            <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
+          </div>
 
-          <Tag
-            :key="`state-en-attente-validation-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-selected="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[state]', 'En attente de validation')"
-          >
-            En attente de validation
-          </Tag>
+          <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'state'"
+              name="state"
+              :options="$labels.structure_workflow_states"
+              :modelValue="$route.query['filter[state]']?.split(',')"
+              placeholder="Statut"
+              multiple
+              @update:modelValue="changeFilter('filter[state]', $event, true)"
+            />
 
-          <Tag
-            :key="`state-en-cours-traitement-${$route.fullPath}`"
-            as="button"
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofReseau'"
+              v-model="selectedReseau"
+              label="Réseau"
+              name="autocomplete-reseau"
+              :options="autocompleteOptionsReseaux"
+              :loading="loadingFetchReseaux"
+              @fetch-suggestions="onFetchSuggestionsReseaux"
+              @selected="onSelectReseau"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'statut_juridique'"
+              name="statut_juridique"
+              :options="$labels.structure_legal_status"
+              :modelValue="$route.query['filter[statut_juridique]']"
+              placeholder="Statut juridique"
+              @update:modelValue="changeFilter('filter[statut_juridique]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'department'"
+              name="department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              :modelValue="$route.query['filter[department]']?.split(',')"
+              :searchable="true"
+              placeholder="Département"
+              multiple
+              @update:modelValue="changeFilter('filter[department]', $event, true)"
+            />
+          </template>
+
+          <DsfrTag
+            v-if="visibleFilters.length < allFilters.length"
+            key="view-all-filter"
+            context="clickable"
+            icon="RiAddLine"
+            :icon-only="true"
             size="md"
-            context="selectable"
-            :is-selected="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[state]', 'En cours de traitement')"
-          >
-            En cours de traitement
-          </Tag>
-          <FilterSelectAdvanced
-            key="sort"
-            name="sort"
-            :options="[
-              { key: '-created_at', label: 'Les plus récentes' },
-              { key: 'created_at', label: 'Les plus anciennes' },
-              { key: '-updated_at', label: 'Date de denière modification' },
-              { key: '-missions_count', label: 'Nombre de missions proposées' },
-              { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
-            ]"
-            :value="$route.query['sort']"
-            placeholder="Trier par"
-            options-class="!min-w-[300px]"
-            @input="changeFilter('sort', $event)"
+            as="button"
+            title="Afficher plus de filtres"
+            @click="showAllFilters = true"
           />
         </template>
       </SearchFilters>
 
-      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <CardOrganisation
           v-for="organisation in queryResult.data"
           :key="organisation.id"
@@ -148,19 +139,24 @@
           show-infos
           show-state
           tabindex="0"
-          @click.native="drawerOrganisationId = organisation.id"
+          @click.left="drawerOrganisationId = organisation.id"
+          @click.middle="
+            navigateTo(`/admin/organisations/${organisation.id}`, { open: { target: '_blank' } })
+          "
         />
       </div>
 
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
+
       <Pagination
-        class="mt-12"
+        class="my-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
         @page-change="changePage"
       />
     </div>
-  </ContainerRightSidebar>
+  </div>
 </template>
 
 <script>
@@ -168,58 +164,61 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
 import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 import MixinExport from '@/mixins/export'
-import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
-import Tag from '@/components/dsfr/Tag.vue'
-import Button from '@/components/dsfr/Button.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import MixinFiltersVisibility from '@/mixins/filters-visibility'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardOrganisation,
     DrawerOrganisation,
-    BoxContext,
     SearchFilters,
     Pagination,
-    Tag,
-    Button,
-    Breadcrumb
+    Breadcrumb,
   },
-  mixins: [QueryBuilder, MixinExport],
-  middleware: 'authenticated',
-  asyncData ({ store, error }) {
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility, MixinSuggestionsFilters],
+  setup() {
+    const { $stores } = useNuxtApp()
+
+    definePageMeta({
+      middleware: ['authenticated'],
+    })
+
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau'].includes(
-        store.getters.contextRole
+        $stores.auth.contextRole
       )
     ) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  computed: {
+    allFilters() {
+      return [
+        'state',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'ofReseau',
+        'statut_juridique',
+        'department',
+      ].filter((f) => f)
+    },
+    alwaysVisibleFilters() {
+      return this.allFilters
+    },
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/structures',
       exportEndpoint: '/export/structures',
       queryParams: {
-        append: ['places_left', 'completion_rate'],
-        include: 'domaines,reseaux,illustrations,overrideImage1'
+        append: 'places_left,completion_rate',
+        include: 'domaines,reseaux,illustrations,overrideImage1',
       },
       drawerOrganisationId: null,
-      autocompleteOptionsReseaux: []
     }
   },
-  methods: {
-    async onFetchSuggestionsReseaux (value) {
-      const res = await this.$axios.get('/reseaux', {
-        params: {
-          'filter[search]': value,
-          pagination: 20
-        }
-      })
-      this.autocompleteOptionsReseaux = res.data.data
-    }
-  }
-}
+  methods: {},
+})
 </script>

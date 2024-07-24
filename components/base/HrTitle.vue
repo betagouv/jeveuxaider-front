@@ -7,7 +7,7 @@
 </template>
 
 <script>
-export default {}
+export default defineNuxtComponent({})
 </script>
 
 <style lang="postcss" scoped>
@@ -15,7 +15,7 @@ export default {}
   &::after {
     content: '';
     flex: 1 1;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #e5e5e5;
     @apply my-auto ml-4;
   }
 }

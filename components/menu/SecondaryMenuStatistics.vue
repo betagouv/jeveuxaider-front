@@ -2,7 +2,7 @@
   <div v-if="items">
     <div class="sm:hidden">
       <label for="menu" class="sr-only">Menu</label>
-      <SelectAdvanced
+      <BaseSelectAdvanced
         id="menu"
         v-model="selectedItem"
         name="menu"
@@ -13,20 +13,33 @@
     </div>
     <div class="hidden sm:block">
       <div class="space-y-12">
-        <div v-for="item,i in items" :key="i">
+        <div v-for="(item, i) in items" :key="i">
           <template v-if="item">
-            <h3 id="projects-headline" class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <h3
+              id="projects-headline"
+              class="text-xs font-semibold text-gray-500 uppercase tracking-wider"
+            >
               {{ item.label }}
             </h3>
             <div class="mt-1 space-y-1" :aria-labelledby="item.label">
-              <template v-for="link, index in item.childrens">
+              <template v-for="(link, index) in item.childrens" :key="index">
                 <template v-if="link">
-                  <nuxt-link v-if="link.to" :key="index" :to="link.to" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                  <nuxt-link
+                    no-prefetch
+                    v-if="link.to"
+                    :to="link.to"
+                    class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900"
+                  >
                     <span class="truncate">
                       {{ link.label }}
                     </span>
                   </nuxt-link>
-                  <a v-else-if="link.href" :key="index" :href="link.href" target="_blank" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                  <a
+                    v-else-if="link.href"
+                    :href="link.href"
+                    target="_blank"
+                    class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900"
+                  >
                     <span class="truncate">
                       {{ link.label }}
                     </span>
@@ -44,88 +57,182 @@
 <script>
 import MixinSecondaryMenu from '@/mixins/secondary-menu'
 
-export default {
+export default defineNuxtComponent({
   mixins: [MixinSecondaryMenu],
-  data () {
+  data() {
     return {
+      items: [],
     }
   },
-  computed: {
-    items () {
-      if (this.$store.getters.contextRole === 'admin') {
-        return [
+  mounted() {
+    this.recomputeMenuItems()
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.recomputeMenuItems()
+      },
+    },
+  },
+  methods: {
+    recomputeMenuItems() {
+      let items = []
+
+      const runtimeConfig = useRuntimeConfig()
+      const queryString = window.location.search
+
+      if (this.$stores.auth.contextRole === 'admin') {
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: 'Vue d\'ensemble', to: '/admin/statistics' },
-              { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-              { label: 'Participations', to: '/admin/statistics/participations' },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
-              { label: 'Places', to: '/admin/statistics/places' }
-            ]
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              // { label: 'Conversions', to: `/admin/statistics/conversions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+            ],
           },
           {
             key: 'api',
             label: 'API Engagement',
             childrens: [
-              { label: 'Trafic entrant', to: '/admin/statistics/api-engagement/trafic-entrant' },
-              { label: 'Trafic sortant', to: '/admin/statistics/api-engagement/trafic-sortant' }
-            ]
+              {
+                label: 'Trafic entrant',
+                to: `/admin/statistics/api-engagement/trafic-entrant${queryString}`,
+              },
+              {
+                label: 'Trafic sortant',
+                to: `/admin/statistics/api-engagement/trafic-sortant${queryString}`,
+              },
+            ],
           },
-          {
-            key: 'actions',
-            label: 'Actions en attente',
-            childrens: [
-              { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
-              { label: 'Départements', to: '/admin/statistics/departements/organisations-a-valider' }
-            ]
-          },
+          // {
+          //   key: 'actions',
+          //   label: 'Actions en attente',
+          //   childrens: [
+          //     {
+          //       label: 'Organisations',
+          //       to: '/admin/statistics/organisations/participations-a-valider',
+          //     },
+          //     {
+          //       label: 'Départements',
+          //       to: '/admin/statistics/departements/organisations-a-valider',
+          //     },
+          //   ],
+          // },
           {
             key: 'services',
             label: 'Services tiers',
             childrens: [
-              { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
-              { label: 'Plausible', href: this.$config.plausible.shared_link }
-            ]
-          }
-
+              {
+                label: 'Metabase',
+                href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/',
+              },
+              {
+                label: 'Plausible',
+                href: runtimeConfig.public.plausible.shared_link,
+              },
+            ],
+          },
         ]
-      } else if (this.$store.getters.contextRole === 'referent') {
-        return [
+      } else if (this.$stores.auth.contextRole === 'referent') {
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: 'Vue d\'ensemble', to: '/admin/statistics' },
-              { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-              { label: 'Participations', to: '/admin/statistics/participations' },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
-              { label: 'Places', to: '/admin/statistics/places' }
-            ]
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+            ],
           },
           {
             key: 'actions',
             label: 'Actions en attente',
             childrens: [
-              { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' }
-            ]
-          }
+              {
+                label: 'Organisations',
+                to: `/admin/statistics/organisations/participations-a-valider${queryString}`,
+              },
+            ],
+          },
+        ]
+      } else if (this.$stores.auth.contextRole === 'responsable') {
+        items = [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+            ],
+          },
+        ]
+      } else if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        items = [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+            ],
+          },
         ]
       }
 
-      return null
-    }
-  }
-}
+      this.items = items
+    },
+  },
+})
 </script>
 
-<style scoped>
-a.nuxt-link-exact-active {
+<style lang="postcss" scoped>
+a.router-link-active {
   @apply text-jva-blue-500;
 }
 </style>

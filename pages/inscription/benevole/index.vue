@@ -4,9 +4,10 @@
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
         alt="JeVeuxAider.gouv.fr"
-        srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
+        src="/images/bg-jva.jpg"
+        srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x"
         data-not-lazy
-      >
+      />
       <div class="max-w-[1280px] mx-auto py-12 relative w-full lg:inset-y-0 z-10">
         <div class="px-4 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-8 pb-10">
           <div class="lg:col-span-6">
@@ -81,40 +82,28 @@
             <p
               class="pt-10 pb-16 lg:pb-0 leading-10 text-3xl sm:text-4xl font-medium text-white sm:mt-5"
             >
-              <b class="font-bold">460 000 bénévoles</b> inscrits
+              <b class="font-bold">550 000 bénévoles</b> inscrits
             </p>
           </div>
           <div class="lg:col-span-6">
-            <div
-              class="max-w-2xl mx-auto lg:col-span-6 lg:px-0 lg:w-full"
-            >
+            <div class="max-w-2xl mx-auto lg:col-span-6 lg:px-0 lg:w-full">
               <div class="rounded-lg shadow-xl">
                 <div class="bg-white px-6">
-                  <template v-if="$store.state.settings.general.france_connect_active">
+                  <template v-if="$stores.settings.general.france_connect_active">
                     <div class="pt-8">
-                      <h2
-                        class="mt-2 text-center text-3xl font-bold text-gray-900 leading-8 px-4"
-                      >
+                      <h2 class="mt-2 text-center text-3xl font-bold text-gray-900 leading-8 px-4">
                         Utilisez FranceConnect pour créer votre espace bénévole
                       </h2>
 
-                      <div
-                        v-show="isLoadingFranceConnect"
-                        class="font-medium text-center p-4"
-                      >
+                      <div v-show="isLoadingFranceConnect" class="font-medium text-center p-4">
                         Inscription en cours avec FranceConnect...
                       </div>
 
                       <div v-show="!isLoadingFranceConnect">
-                        <div
-                          class="mt-4 sm:mx-auto sm:w-full sm:max-w-md text-left"
-                        >
+                        <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md text-left">
                           <div class="py-4 px-4 sm:px-10 text-center">
                             <div class="relative text-gray-500">
-                              <FranceConnect
-                                is-dark
-                                @loading="isLoadingFranceConnect = $event"
-                              />
+                              <FranceConnect is-dark @loading="isLoadingFranceConnect = $event" />
                               <span class="block mt-4">OU</span>
                             </div>
                           </div>
@@ -134,40 +123,58 @@
                   v-show="!isLoadingFranceConnect"
                   class="border-t-2 border-gray-100 pt-2 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
-                  <template v-if="$store.state.settings.general.light_mode_active">
+                  <template v-if="$stores.settings.general.light_mode_active">
                     <div class="text-center space-y-6 pb-12">
-                      <p class="font-medium">
-                        Quel élan de solidarité&nbsp;!
+                      <p class="font-medium">Quel élan de solidarité&nbsp;!</p>
+                      <p>
+                        Vous êtes actuellement très nombreux·ses à vouloir vous engager et notre
+                        plateforme rencontre des difficultés.
                       </p>
                       <p>
-                        Vous êtes actuellement très nombreux·ses à vouloir vous
-                        engager et notre plateforme rencontre des difficultés.
-                      </p>
-                      <p>
-                        Revenez dans quelques minutes pour vous inscrire. Nous
-                        avons plus que jamais besoin de vous&nbsp;!
+                        Revenez dans quelques minutes pour vous inscrire. Nous avons plus que jamais
+                        besoin de vous&nbsp;!
                       </p>
                       <div>
-                        <nuxt-link to="/missions-benevolat">
-                          <Button size="lg" class="w-full">
-                            Décrouvrir les missions
-                          </Button>
-                        </nuxt-link>
+                        <DsfrButton to="/missions-benevolat" size="lg" class="w-full">
+                          Décrouvrir les missions
+                        </DsfrButton>
                       </div>
                     </div>
                   </template>
                   <template v-else>
                     <p class="mb-8 text-xs text-gray-600 text-center">
-                      Les champs avec <span class="text-[#E2011C] font-bold">*</span> sont requis.
+                      Les champs avec
+                      <span class="text-[#E2011C] font-bold">*</span> sont requis.
                     </p>
-                    <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
-                      <FormControl
+                    <form
+                      id="inscription"
+                      class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2"
+                      @submit.prevent="onSubmit"
+                    >
+                      <BaseFormControl
+                        label="Email"
+                        html-for="email"
+                        required
+                        :error="errors.email"
+                        class="lg:col-span-2"
+                      >
+                        <BaseInput
+                          v-model="form.email"
+                          type="email"
+                          name="email"
+                          placeholder="jean.dupont@gmail.com"
+                          aria-required="true"
+                          autocomplete="email"
+                          @blur="onBlurEmailCheckIfUserArchiveDatasExists"
+                        />
+                      </BaseFormControl>
+                      <BaseFormControl
                         label="Prénom"
                         html-for="first_name"
                         required
                         :error="errors.first_name"
                       >
-                        <Input
+                        <BaseInput
                           v-model="form.first_name"
                           name="first_name"
                           placeholder="Jean"
@@ -175,14 +182,14 @@
                           autocomplete="given-name"
                           @blur="validate('first_name')"
                         />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+                      <BaseFormControl
                         label="Nom"
                         html-for="last_name"
                         required
                         :error="errors.last_name"
                       >
-                        <Input
+                        <BaseInput
                           v-model="form.last_name"
                           name="last_name"
                           placeholder="Dupont"
@@ -190,47 +197,55 @@
                           autocomplete="family-name"
                           @blur="validate('last_name')"
                         />
-                      </FormControl>
-                      <FormControl
-                        label="Email"
-                        html-for="email"
-                        required
-                        :error="errors.email"
-                      >
-                        <Input
-                          v-model="form.email"
-                          type="email"
-                          name="email"
-                          placeholder="jean.dupont@gmail.com"
-                          aria-required="true"
-                          autocomplete="email"
-                          @blur="validate('email')"
-                        />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+
+                      <BaseFormControl
                         label="Code postal"
                         html-for="zip"
                         required
                         :error="errors.zip"
                       >
-                        <Input
+                        <BaseSelectAutocomplete
                           v-model="form.zip"
                           name="zip"
-                          type="tel"
+                          :options="zipAutocompleteOptions"
+                          attribute-key="id"
+                          attribute-label="label"
+                          attribute-right-label="typeLabel"
                           placeholder="56000"
-                          maxlength="5"
-                          aria-required="true"
-                          autocomplete="postal-code"
+                          search-input-placeholder="Recherche par ville ou code postal"
+                          options-class="md:min-w-[320px]"
+                          :min-length-to-search="3"
+                          :loading="loadingFetchZips"
+                          @selected="handleSelectedZip"
+                          @fetch-suggestions="onFetchZipSuggestions($event)"
                           @blur="validate('zip')"
                         />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+                      <BaseFormControl
+                        label="Pays de résidence"
+                        html-for="country"
+                        required
+                        :error="errors.country"
+                      >
+                        <BaseSelectAdvanced
+                          v-model="form.country"
+                          name="country"
+                          placeholder="Sélectionner un pays"
+                          :options="[{ code: 'FR', name: 'France' }, ...countries]"
+                          attribute-key="code"
+                          attribute-label="name"
+                          autocomplete="ctry"
+                          @blur="validate('country')"
+                        />
+                      </BaseFormControl>
+                      <BaseFormControl
                         label="Téléphone mobile"
                         html-for="mobile"
                         required
                         :error="errors.mobile"
                       >
-                        <Input
+                        <BaseInput
                           v-model="form.mobile"
                           name="mobile"
                           type="tel"
@@ -240,28 +255,28 @@
                           autocomplete="tel"
                           @blur="validate('mobile')"
                         />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+
+                      <BaseFormControl
                         label="Date de naissance"
                         html-for="birthday"
                         required
                         :error="errors.birthday"
                       >
-                        <InputDate
+                        <BaseInputDateNative
                           v-model="form.birthday"
                           required
                           name="birthday"
-                          aria-required="true"
-                          autocomplete="bday"
+                          @blur="validate('birthday')"
                         />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+                      <BaseFormControl
                         label="Mot de passe"
                         html-for="password"
                         required
                         :error="errors.password"
                       >
-                        <Input
+                        <BaseInput
                           v-model="form.password"
                           name="password"
                           placeholder="Votre mot de passe"
@@ -270,14 +285,14 @@
                           autocomplete="current-password"
                           @blur="validate('password')"
                         />
-                      </FormControl>
-                      <FormControl
+                      </BaseFormControl>
+                      <BaseFormControl
                         label="Confirmation"
                         html-for="password_confirmation"
                         required
                         :error="errors.password_confirmation"
                       >
-                        <Input
+                        <BaseInput
                           v-model="form.password_confirmation"
                           name="password_confirmation"
                           placeholder="Votre mot de passe"
@@ -286,10 +301,10 @@
                           autocomplete="current-password"
                           @blur="validate('password_confirmation')"
                         />
-                      </FormControl>
+                      </BaseFormControl>
                     </form>
 
-                    <Button
+                    <DsfrButton
                       size="lg"
                       form="inscription"
                       :loading="loading"
@@ -297,31 +312,35 @@
                       @click.prevent.native="onSubmit"
                     >
                       Je m'inscris en tant que bénévole
-                    </Button>
+                    </DsfrButton>
 
                     <div class="mt-6 mb-3 bg-gray-50">
                       <p class="text-xs text-gray-600 text-center">
-                        En m'inscrivant j'accepte la
-                        <Link
-                          to="/politique-de-confidentialite"
+                        <span>En m’inscrivant j'accepte les </span>
+                        <DsfrLink
+                          to="/conditions-generales-d-utilisation"
                           class="font-medium text-gray-900"
+                          :is-external="true"
+                          :icon-size="12"
                         >
-                          <span>politique de confidentialité</span>
-                        </Link>
-                        <br class="hidden sm:block">
-                        et la
-                        <Link
+                          <span>conditions générales d’utilisation</span>
+                        </DsfrLink>
+                        <br class="hidden sm:block" />
+                        <span> et la </span>
+                        <DsfrLink
                           to="/charte-reserve-civique"
                           class="font-medium text-gray-900"
+                          :is-external="true"
+                          :icon-size="12"
                         >
                           <span>charte</span>
-                        </Link>
-                        de JeVeuxAider.gouv.fr.
-                        <br><br>
+                        </DsfrLink>
+                        <span> de la Réserve Civique.</span>
+                        <br /><br />
                         Déjà inscrit ?
-                        <Link to="/login" class="font-medium text-gray-900">
+                        <DsfrLink to="/login" class="font-medium text-gray-900">
                           Je me connecte
-                        </Link>
+                        </DsfrLink>
                       </p>
                     </div>
                   </template>
@@ -338,8 +357,7 @@
           id="label-carousel-logos-inscription-benevoles"
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
-          Plus de <b class="font-bold">11 200 organisations</b> ont déjà rejoint
-          JeVeuxAider.gouv.fr
+          Plus de <b class="font-bold">13 800 organisations</b> ont déjà rejoint JeVeuxAider.gouv.fr
         </h3>
         <CarouselLogos />
       </div>
@@ -353,88 +371,120 @@
           class="w-auto sm:h-10 mx-auto opacity-75 mb-4"
           src="/images/inscription/logo_jva_gris.png"
           alt=""
-        >
+        />
         <img
           class="w-auto sm:h-12 mx-auto opacity-50"
           src="/images/inscription/logo_cpt_gris.png"
           style=""
           alt=""
-        >
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { string, object, ref, date } from 'yup'
+import { string, object, ref, date, lazy, mixed } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
-import FranceConnect from '@/components/custom/FranceConnect'
-import Temoignages from '@/components/section/homepage/Temoignages'
-import CarouselLogos from '@/components/section/inscription/CarouselLogos'
-import Link from '@/components/dsfr/Link.vue'
-import Button from '@/components/dsfr/Button.vue'
+import FranceConnect from '@/components/custom/FranceConnect.vue'
+import Temoignages from '@/components/section/homepage/Temoignages.vue'
+import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
+import countries from '@/assets/countries.json'
+import { useToast } from 'vue-toastification'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
-export default {
+const errorIsOldEnoughErrorMessage =
+  'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
+
+export default defineNuxtComponent({
   components: {
     FranceConnect,
     Temoignages,
     CarouselLogos,
-    Link,
-    Button
   },
-  mixins: [FormErrors, Emailable],
-  middleware: 'guest',
-  data () {
-    return {
-      loading: false,
-      isLoadingFranceConnect: false,
-      form: {
-        email: this.$route.query.email ? this.$route.query.email : '',
-        zip: this.$route.query.zip ? this.$route.query.zip : '',
-        password: '',
-        utm_source: this.$cookies.get('utm_source'),
-        utm_campaign: this.$cookies.get('utm_campaign'),
-        utm_medium: this.$cookies.get('utm_medium')
-      },
-      formSchema: object({
-        first_name: string().required('Un prénom est requis'),
-        last_name: string().required('Un nom est requis'),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
-        birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
-        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
-        password: string().min(8).required('Un mot de passe est requis'),
-        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
-      })
-    }
-  },
-  head () {
-    return {
-      title: 'Devenez bénévole avec JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique',
+  mixins: [FormErrors, Emailable, DetectUserArchiveDatas, GeolocProfile],
+  setup() {
+    definePageMeta({
+      middleware: ['guest'],
+    })
+
+    useHead({
+      title:
+        'Devenez bénévole avec JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique',
       link: [
         {
           rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/inscription/benevole'
-        }
+          href: 'https://www.jeveuxaider.gouv.fr/inscription/benevole',
+        },
       ],
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            'Créez votre page dédiée et centralisez les missions de vos associations et organisations publiques afin de promouvoir le bénévolat de proximité.'
+            'Créez votre page dédiée et centralisez les missions de vos associations et organisations publiques afin de promouvoir le bénévolat de proximité.',
         },
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/images/share-image.jpg'
-        }
-      ]
+          content: '/images/share-image.jpg',
+        },
+      ],
+    })
+  },
+  data() {
+    const utmSourceCookie = useCookie('utm_source')
+    const utmCampaignCookie = useCookie('utm_campaign')
+    const utmMediumCookie = useCookie('utm_medium')
+
+    return {
+      loading: false,
+      loadingFetchZips: false,
+      isLoadingFranceConnect: false,
+      form: {
+        email: this.$route.query.email ? this.$route.query.email : '',
+        zip: this.$route.query.zip ? this.$route.query.zip : '',
+        password: '',
+        country: 'FR',
+        utm_source: utmSourceCookie?.value,
+        utm_campaign: utmCampaignCookie?.value,
+        utm_medium: utmMediumCookie?.value,
+        birthday: '',
+      },
+      formSchema: object({
+        first_name: string().required('Un prénom est requis'),
+        last_name: string().required('Un nom est requis'),
+        mobile: string()
+          .min(10)
+          .matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect')
+          .required('Un téléphone mobile est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
+        country: string().required('Un pays est requis'),
+        birthday: date()
+          .typeError('La date indiquée est invalide')
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, (date) => {
+            if (!date) {
+              return true
+            }
+            const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+            return age >= 16
+          }),
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        password: string().min(8).required('Un mot de passe est requis'),
+        password_confirmation: string()
+          .required('Une confirmation de mot de passe est requise')
+          .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
+      }),
+      countries,
+      zipAutocompleteOptions: [],
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -445,21 +495,39 @@ export default {
           const isEmailValid = await this.emailableValidation()
           if (!isEmailValid) {
             this.errors.email = 'Votre adresse mail comporte une erreur'
-            this.$toast.error('Votre adresse mail comporte une erreur')
+            const toast = useToast()
+            toast.error('Votre adresse mail comporte une erreur')
             return
           }
-          await this.$store.dispatch('auth/registerVolontaire', this.form)
-          await this.$gtm.push({ event: 'benevole-inscription' })
-          window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
+
+          await this.$stores.auth.registerVolontaire(this.form)
+
+          // API Engagement - Commande pour compter une création de compte
+          try {
+            window.apieng && window.apieng('trackAccount')
+          } catch (error) {
+            console.error('API ENGAGEMENT - trackAccount', error)
+          }
+
+          await this.$gtm?.trackEvent({ event: 'benevole-inscription' })
+          this.$plausible.trackEvent('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')
         })
         .catch((errors) => {
+          if (errors.errors?.length === 1 && errors.errors[0] === errorIsOldEnoughErrorMessage) {
+            // Custom toast
+            this.setErrors(errors, false)
+            const toast = useToast()
+            toast.error(errorIsOldEnoughErrorMessage)
+            return
+          }
+
           this.setErrors(errors)
         })
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

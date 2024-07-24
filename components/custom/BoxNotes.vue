@@ -1,27 +1,28 @@
 <template>
-  <Box id="notes">
+  <BaseBox id="notes">
     <div class="flex justify-between items-center">
-      <Heading :level="3">
-        Notes
-      </Heading>
-      <div class="">
-        <Button variant="white" @click.native="showDrawer = true">
+      <BaseHeading :level="3"> Notes </BaseHeading>
+      <div>
+        <DsfrButton type="tertiary" @click.native="showModalNote = true">
           Ajouter une note
-        </Button>
+        </DsfrButton>
       </div>
     </div>
     <template v-if="notes && notes.data.length > 0">
-      <div class="">
+      <div>
         <div class="divide-y divide-gray-200">
           <div v-for="note in notes.data" :key="note.id" class="py-12">
             <div class="flex justify-between items-center">
               <div class="flex items-center">
-                <Avatar
-                  :img-srcset="note.user.profile.avatar ? note.user.profile.avatar.urls.thumbMedium : null"
-                  :img-src="note.user.profile.avatar ? note.user.profile.avatar.urls.original : null"
+                <BaseAvatar
+                  :img-srcset="
+                    note.user.profile.avatar ? note.user.profile.avatar.urls.thumbMedium : null
+                  "
+                  :img-src="
+                    note.user.profile.avatar ? note.user.profile.avatar.urls.original : null
+                  "
                   :initials="note.user.profile.short_name"
                   size="xs"
-                  class=""
                 />
                 <div class="ml-4">
                   <h4 class="text-sm font-bold text-gray-900">
@@ -33,20 +34,19 @@
                 </div>
               </div>
 
-              <div v-if="note.permissions.canUpdate" class="">
-                <PencilIcon class="h-4 w-4 text-gray-500 cursor-pointer hover:text-gray-900" @click="handleUpdate(note)" />
+              <div v-if="note.permissions.canUpdate">
+                <RiPencilLine
+                  class="h-4 w-4 text-gray-500 cursor-pointer hover:text-gray-900 fill-current"
+                  @click="handleUpdate(note)"
+                />
               </div>
             </div>
 
             <div class="mt-4 space-y-6 text-base italic text-gray-600">
-              <nl2br
-                tag="p"
-                :text="note.content"
-                class-name="break-word"
-              />
+              <p class="break-word" v-html="$filters.nl2br(note.content)"></p>
             </div>
           </div>
-          <Pagination
+          <BasePagination
             :current-page="notes.current_page"
             :total-rows="notes.total"
             :per-page="notes.per_page"
@@ -56,82 +56,72 @@
       </div>
     </template>
     <template v-else>
-      <div class="text-gray-500 py-12">
-        Aucune note pour le moment
-      </div>
+      <div class="text-gray-500 py-12">Aucune note pour le moment</div>
     </template>
-    <Drawer :is-open="showDrawer" form-id="form-note" submit-label="Enregistrer la note" @close="showDrawer = false">
-      <template #title>
-        <Heading :level="3">
-          Ajouter une note
-        </Heading>
-      </template>
-      <FormNote
-        class="mt-8"
-        :notable-type="notableType"
-        :notable-id="notableId"
-        :note="selectedNote"
-        @submitted="onSubmitted()"
-      />
-    </Drawer>
-  </Box>
+    <ModalNote
+      :is-open="showModalNote"
+      :notable-type="notableType"
+      :notable-id="notableId"
+      :note="selectedNote"
+      @confirm="onNoteSubmitted"
+      @cancel="onModalCancel"
+    />
+  </BaseBox>
 </template>
 
 <script>
-import FormNote from '@/components/form/FormNote.vue'
-
-export default {
-  components: {
-    FormNote
-  },
+export default defineNuxtComponent({
   props: {
     notableType: {
       type: String,
-      required: true
+      required: true,
     },
     notableId: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       loading: true,
       notes: null,
-      showDrawer: false,
+      showModalNote: false,
       selectedNote: null,
-      page: 1
+      page: 1,
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get(`/${this.notableType}/${this.notableId}/notes`, {
-      params: {
-        page: this.page
-      }
-    }).then((response) => {
-      this.loading = false
-      this.notes = response.data
-    })
+  created() {
+    this.fetch()
   },
   methods: {
-    changePage (page) {
-      this.page = page
-      this.$fetch()
+    async fetch() {
+      this.loading = true
+      await apiFetch(`/${this.notableType}/${this.notableId}/notes`, {
+        params: {
+          page: this.page,
+        },
+      }).then((response) => {
+        this.loading = false
+        this.notes = response
+      })
     },
-    handleUpdate (note) {
-      this.showDrawer = true
+    changePage(page) {
+      this.page = page
+      this.fetch()
+    },
+    handleUpdate(note) {
+      this.showModalNote = true
       this.selectedNote = note
     },
-    onSubmitted () {
-      this.$fetch()
-      this.showDrawer = false
+    onNoteSubmitted() {
+      this.fetch()
+      this.showModalNote = false
       this.selectedNote = null
-    }
-  }
-}
+    },
+    onModalCancel() {
+      this.showModalNote = false
+      this.selectedNote = null
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

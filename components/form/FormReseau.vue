@@ -2,79 +2,69 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations générales
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
           <div class="space-y-10">
-            <FormControl
-              html-for="name"
-              label="Nom du réseau"
-              required
-              :error="errors.name"
-            >
-              <Input
-                v-model="form.name"
-                name="name"
-              />
-            </FormControl>
-            <FormControl
+            <BaseFormControl html-for="name" label="Nom du réseau" required :error="errors.name">
+              <BaseInput v-model="form.name" name="name" />
+            </BaseFormControl>
+            <BaseFormControl
               label="À propos de votre réseau"
               html-for="description"
               required
               :error="errors.description"
             >
-              <Textarea
+              <BaseTextarea
                 v-model="form.description"
                 name="name"
                 placeholder="Dites-nous tout à propos de votre réseau..."
                 :rows="10"
                 @blur="validate('description')"
               />
-            </FormControl>
-            <FormControl label="Domaines d'action" html-for="domaines" required :error="errors.domaines">
-              <CheckboxGroup
+            </BaseFormControl>
+            <BaseFormControl
+              label="Domaines d'action"
+              html-for="domaines"
+              required
+              :error="errors.domaines"
+            >
+              <BaseCheckboxGroup
                 v-model="form.domaines"
                 name="domaines"
                 variant="button"
                 :options="$labels.domaines"
                 is-model
               />
-            </FormControl>
-            <FormControl label="Publics bénéficiaires" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">
-              <CheckboxGroup
+            </BaseFormControl>
+            <BaseFormControl
+              label="Publics bénéficiaires"
+              html-for="publics_beneficiaires"
+              required
+              :error="errors.publics_beneficiaires"
+            >
+              <BaseCheckboxGroup
                 v-model="form.publics_beneficiaires"
                 name="publics_beneficiaires"
                 variant="button"
                 :options="$labels.mission_publics_beneficiaires"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Votre réseau sur Internet
-          </Heading>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Votre réseau sur Internet </BaseHeading>
           <div class="grid grid-cols-2 gap-10">
-            <FormControl
-              label="Email public"
-              html-for="email"
-              :error="errors.email"
-            >
-              <Input
+            <BaseFormControl label="Email public" html-for="email" :error="errors.email">
+              <BaseInput
                 v-model="form.email"
                 type="email"
                 name="email"
                 placeholder="contact@mon-organisation.fr"
                 @blur="validate('email')"
               />
-            </FormControl>
-            <FormControl
-              label="Téléphone public"
-              html-for="phone"
-              :error="errors.phone"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Téléphone public" html-for="phone" :error="errors.phone">
+              <BaseInput
                 v-model="form.phone"
                 name="phone"
                 type="tel"
@@ -82,79 +72,59 @@
                 placeholder="0123456789"
                 @blur="validate('phone')"
               />
-            </FormControl>
-            <FormControl
-              label="Site internet"
-              html-for="website"
-              :error="errors.website"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Site internet" html-for="website" :error="errors.website">
+              <BaseInput
                 v-model="form.website"
                 name="website"
                 placeholder="https://www.votresite.fr"
                 @blur="validate('website')"
               />
-            </FormControl>
-            <FormControl
-              label="Page Facebook"
-              html-for="facebook"
-              :error="errors.facebook"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Page Facebook" html-for="facebook" :error="errors.facebook">
+              <BaseInput
                 v-model="form.facebook"
                 name="facebook"
                 placeholder="https://facebook.com/votrepage"
                 @blur="validate('facebook')"
               />
-            </FormControl>
-            <FormControl
-              label="Page Twitter"
-              html-for="twitter"
-              :error="errors.twitter"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Page Twitter" html-for="twitter" :error="errors.twitter">
+              <BaseInput
                 v-model="form.twitter"
                 name="twitter"
                 placeholder="https://twitter.com/votrepage"
                 @blur="validate('twitter')"
               />
-            </FormControl>
-            <FormControl
-              label="Page Instagram"
-              html-for="instagram"
-              :error="errors.instagram"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Page Instagram" html-for="instagram" :error="errors.instagram">
+              <BaseInput
                 v-model="form.instagram"
                 name="instagram"
                 placeholder="https://instagram.com/votrepage"
                 @blur="validate('instagram')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="URL vers la plateforme de dons"
               html-for="donation"
               :error="errors.donation"
             >
-              <Input
+              <BaseInput
                 v-model="form.donation"
                 name="donation"
                 placeholder="URL de votre page Helloasso, Microdon, Ulule, etc..."
                 @blur="validate('donation')"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
 
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Images à destination de vos antennes
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Images à destination de vos antennes </BaseHeading>
 
-          <FormControl
-            html-for="illustrations_antennes"
-          >
-            <ImageCropMultiple
+          <BaseFormControl html-for="illustrations_antennes">
+            <BaseImageCropMultiple
               class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
               :medias="form.illustrations_antennes"
               :limit="6"
@@ -168,57 +138,74 @@
               variant="compact"
               upload-variant="compact"
               preview-conversion="large"
-              :disable-delete="$store.getters.contextRole !== 'admin'"
-              @add="addFiles({ files: [$event], collection: 'reseau__illustrations_antennes' })"
+              :disable-delete="$stores.auth.contextRole !== 'admin'"
+              @add="
+                addFiles({
+                  files: [$event],
+                  collection: 'reseau__illustrations_antennes',
+                })
+              "
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
-          </FormControl>
-        </Box>
+          </BaseFormControl>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Paramètres
-          </Heading>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <Toggle
+            <BaseToggle
               v-model="form.is_published"
               :label="form.is_published ? 'En ligne' : 'Hors ligne'"
               description="Pour rendre la page accessible"
             />
-            <FormControl
-              v-if="['admin'].includes($store.getters.contextRole)"
+            <BaseFormControl
+              v-if="['admin'].includes($stores.auth.contextRole)"
               html-for="color"
               label="Couleur"
             >
-              <FormHelperText>La valeur doit être comprise par le CSS. Code hexadecimal accepté.</FormHelperText>
-              <Input
-                v-model="form.color"
-                placeholder="#B91C1C"
-                name="color"
-              />
-            </FormControl>
+              <BaseFormHelperText
+                >La valeur doit être comprise par le CSS. Code hexadecimal
+                accepté.</BaseFormHelperText
+              >
+              <BaseInput v-model="form.color" placeholder="#B91C1C" name="color" />
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Adresse du réseau
-          </Heading>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Adresse du réseau </BaseHeading>
           <div class="space-y-6">
-            <FormControl label="Département de votre réseau" html-for="department" required :error="errors.department">
-              <Combobox
+            <BaseFormControl
+              label="Département de votre réseau"
+              html-for="department"
+              required
+              :error="errors.department"
+            >
+              <BaseCombobox
                 key="department"
                 v-model="form.department"
                 name="department"
                 placeholder="Sélectionnez votre département"
-                :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+                :options="
+                  $labels.departments.map((item) => {
+                    return {
+                      key: item.key,
+                      label: `${item.key} - ${item.label}`,
+                    }
+                  })
+                "
                 @blur="validate('department')"
               />
-            </FormControl>
-            <FormControl label="Saisissez l'adresse de votre réseau" html-for="autocomplete" required :error="errors.address">
-              <InputAutocomplete
-                icon="LocationMarkerIcon"
+            </BaseFormControl>
+            <BaseFormControl
+              label="Saisissez l'adresse de votre réseau"
+              html-for="autocomplete"
+              required
+              :error="errors.address"
+            >
+              <BaseInputAutocomplete
+                icon="RiMapPinLine"
                 name="autocomplete"
                 label="Autocomplete"
                 placeholder="Ex: 14 rue de Rivoli, Paris"
@@ -230,55 +217,25 @@
                 @selected="handleSelectedGeo"
                 @fetch-suggestions="onFetchGeoSuggestions"
               />
-            </FormControl>
-            <FormControl
-              label="Adresse"
-              html-for="address"
-            >
-              <Input
-                v-model="form.address"
-                name="address"
-                disabled
-                placeholder="..."
-              />
-            </FormControl>
+            </BaseFormControl>
+            <BaseFormControl label="Adresse" html-for="address">
+              <BaseInput v-model="form.address" name="address" disabled placeholder="..." />
+            </BaseFormControl>
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
-              <FormControl
-                label="Code postal"
-                html-for="zip"
-                required
-                :error="errors.zip"
-              >
-                <Input
-                  v-model="form.zip"
-                  name="zip"
-                  placeholder="..."
-                  disabled
-                />
-              </FormControl>
-              <FormControl
-                label="Ville"
-                html-for="city"
-                required
-                :error="errors.city"
-              >
-                <Input
-                  v-model="form.city"
-                  name="city"
-                  disabled
-                  placeholder="..."
-                />
-              </FormControl>
+              <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+                <BaseInput v-model="form.zip" name="zip" placeholder="..." disabled />
+              </BaseFormControl>
+              <BaseFormControl label="Ville" html-for="city" required :error="errors.city">
+                <BaseInput v-model="form.city" name="city" disabled placeholder="..." />
+              </BaseFormControl>
             </div>
           </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Images
-          </Heading>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Images </BaseHeading>
           <div class="space-y-12">
-            <FormControl label="Logo" html-for="logo">
-              <ImageCrop
+            <BaseFormControl label="Logo" html-for="logo">
+              <BaseImageCrop
                 :default-value="form.logo"
                 :ratio="null"
                 :min-height="112"
@@ -290,14 +247,14 @@
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
-            </FormControl>
+            </BaseFormControl>
 
-            <FormControl
-              label="Visuels d'illustration"
-              html-for="illustrations"
-            >
-              <MediaPickerDomaine
-                v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
+            <BaseFormControl label="Visuels d'illustration" html-for="illustrations">
+              <BaseMediaPickerDomaine
+                v-if="
+                  $stores.auth.contextRole === 'admin' ||
+                  (!form.override_image1 && !form.override_image2)
+                "
                 collection="domaine__illustrations_organisation"
                 :domaine-ids="mediaPickerIds"
                 :defaults="form.illustrations"
@@ -311,11 +268,11 @@
               <div v-else class="text-gray-600 text-sm">
                 Les images ont été surchargées par un administrateur et ne sont pas modifiables.
               </div>
-            </FormControl>
+            </BaseFormControl>
 
-            <div v-if="$store.getters.contextRole === 'admin'" class="grid grid-cols-2 gap-4">
-              <FormControl label="Surcharger visuel 1" html-for="avatar">
-                <ImageCrop
+            <div v-if="$stores.auth.contextRole === 'admin'" class="grid grid-cols-2 gap-4">
+              <BaseFormControl label="Surcharger visuel 1" html-for="avatar">
+                <BaseImageCrop
                   :default-value="form.override_image1"
                   :min-width="1400"
                   :min-height="900"
@@ -323,14 +280,19 @@
                   :preview-width="200"
                   :ratio="null"
                   :upload-max-size="2000000"
-                  @add="addFiles({ files: [$event], collection: 'reseau__override_image_1' })"
+                  @add="
+                    addFiles({
+                      files: [$event],
+                      collection: 'reseau__override_image_1',
+                    })
+                  "
                   @delete="deleteFile($event)"
                   @crop="onManipulationsChange($event)"
                 />
-              </FormControl>
+              </BaseFormControl>
 
-              <FormControl label="Surcharger visuel 2" html-for="avatar">
-                <ImageCrop
+              <BaseFormControl label="Surcharger visuel 2" html-for="avatar">
+                <BaseImageCrop
                   :default-value="form.override_image2"
                   :min-width="1400"
                   :min-height="900"
@@ -338,21 +300,26 @@
                   :preview-width="200"
                   :ratio="null"
                   :upload-max-size="2000000"
-                  @add="addFiles({ files: [$event], collection: 'reseau__override_image_2' })"
+                  @add="
+                    addFiles({
+                      files: [$event],
+                      collection: 'reseau__override_image_2',
+                    })
+                  "
                   @delete="deleteFile($event)"
                   @crop="onManipulationsChange($event)"
                 />
-              </FormControl>
+              </BaseFormControl>
             </div>
           </div>
-        </Box>
+        </BaseBox>
       </div>
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </Button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -364,20 +331,17 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import MixinInputGeo from '@/mixins/input-geo'
 
-export default {
+export default defineNuxtComponent({
   mixins: [FormErrors, FormUploads, MixinInputGeo],
-  middleware: 'admin',
   props: {
     reseau: {
       type: Object,
       default: () => {
-        return {
-
-        }
-      }
-    }
+        return {}
+      },
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: { ...this.reseau },
@@ -387,26 +351,32 @@ export default {
         address: string().nullable(),
         zip: string().nullable().required('Le code postal est requis'),
         city: string().nullable().required('La ville est requise'),
-        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
+        domaines: array().min(1, "Au moins 1 domaine d'action"),
         publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire'),
-        description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise'),
+        description: string()
+          .nullable()
+          .min(200, 'La description doit contenir au moins 200 caractères')
+          .required('Une description est requise'),
         email: string().nullable().email("Le format de l'email public est incorrect"),
         website: string().nullable().url(),
         facebook: string().nullable().url(),
         twitter: string().nullable().url(),
         instagram: string().nullable().url(),
         donation: string().nullable().url(),
-        phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').nullable()
-      })
+        phone: string()
+          .min(10)
+          .matches(/^[+|\s|\d]*$/, 'Ce format est incorrect')
+          .nullable(),
+      }),
     }
   },
   computed: {
-    mediaPickerIds () {
-      return this.form.domaines?.map(domaine => domaine.id)
-    }
+    mediaPickerIds() {
+      return this.form.domaines?.map((domaine) => domaine.id)
+    },
   },
   methods: {
-    async handleSubmit (attributes) {
+    async handleSubmit(attributes) {
       if (this.loading) {
         return
       }
@@ -415,7 +385,7 @@ export default {
       if (attributes) {
         this.form = {
           ...this.form,
-          ...attributes
+          ...attributes,
         }
       }
 
@@ -423,9 +393,15 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await this.$axios.put(`/reseaux/${this.form.id}`, this.form)
+            await apiFetch(`/reseaux/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
           } else {
-            const { data: newReseau } = await this.$axios.post('/reseaux', this.form)
+            const newReseau = await apiFetch('/reseaux', {
+              method: 'POST',
+              body: this.form,
+            })
             this.form.id = newReseau.id
           }
           await this.uploadFiles('reseau', this.form.id)
@@ -438,12 +414,17 @@ export default {
           this.loading = false
         })
     },
-    onMediaPickerChange (payload, field) {
+    onMediaPickerChange(payload, field) {
       if (!this.form[field]) {
-        this.$set(this.form, field, [null, null])
+        this.form[field] = [null, null]
       }
       this.form[field].splice(payload.index, 1, payload.media)
-    }
-  }
-}
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+      })
+    },
+  },
+})
 </script>

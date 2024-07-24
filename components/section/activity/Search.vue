@@ -3,27 +3,23 @@
     <div class="pt-12 pb-28 bg-white">
       <div class="container">
         <h2 class="text-center">
-          <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
-            Trouver une mission
-          </p>
+          <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">Trouver une mission</p>
 
           <p
             class="text-3xl lg:text-4xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px]"
           >
-            Parmi les dernières missions <br class="hidden md:block">de
-            bénévolat {{ activity.name }}
+            Parmi les dernières missions <br class="hidden md:block" />de bénévolat
+            {{ activity.name }}
           </p>
         </h2>
       </div>
     </div>
 
-    <hr class="opacity-25">
+    <hr class="opacity-25" />
 
-    <div
-      class="pb-12 bg-[#fafaff]"
-    >
+    <div class="pb-12 bg-[#fafaff]">
       <AlgoliaSearch
-        :initial-filters="`activity.name:&quot;${activity.name}&quot;`"
+        :initial-filters="`activities.name:&quot;${activity.name}&quot;`"
         :initial-hits-per-page="6"
         no-header
         no-filters
@@ -32,7 +28,7 @@
       />
       <div class="container mx-auto px-4">
         <div v-if="moreLink" class="text-center mt-6">
-          <nuxt-link :to="moreLink">
+          <nuxt-link no-prefetch :to="moreLink">
             <button
               class="leading-none uppercase shadow-lg text-xs font-extrabold rounded-full text-gray-500 bg-white py-4 px-8 hover:scale-105 transform transition will-change-transform"
             >
@@ -46,30 +42,30 @@
 </template>
 
 <script>
-import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
+import AlgoliaSearch from '@/components/section/search/missions/AlgoliaSearch.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    AlgoliaSearch
+    AlgoliaSearch,
   },
   props: {
     activity: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
-    moreLink () {
-      return `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`
+    moreLink() {
+      return `/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}`
     },
-    filters () {
-      return `activity.name:"${this.activity.name}"`
-    }
-  }
-}
+    filters() {
+      return `activities.name:"${this.activity.name}"`
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

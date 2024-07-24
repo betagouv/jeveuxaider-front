@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="flex justify-start items-center relative p-4 h-[116px]" :class="{'xl:container': !fullWidth}">
+    <div
+      class="flex justify-start items-center relative p-4 h-[116px]"
+      :class="{ 'xl:container': !fullWidth }"
+    >
       <div class="flex space-x-6 items-center">
         <img
           src="@/assets/images/republique-francaise-logo.svg"
@@ -9,10 +12,10 @@
           width="6500"
           height="5670"
           data-not-lazy
-        >
+        />
       </div>
       <div class="flex items-center flex-1 pl-6">
-        <nuxt-link to="/" aria-label="Page d'accueil">
+        <nuxt-link no-prefetch to="/" aria-label="Page d'accueil">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt=""
@@ -20,12 +23,12 @@
             width="256"
             height="41"
             data-not-lazy
-          >
+          />
         </nuxt-link>
       </div>
-      <nav role="navigation" class="flex gap-8">
+      <nav role="navigation" class="flex items-center gap-6">
         <div class="flex divide-x divide-gray-200">
-          <NavItem
+          <BaseNavItem
             v-for="link in primaryNavigation"
             :key="link.name"
             :href="link.href"
@@ -33,248 +36,507 @@
             :click="link.click"
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
-            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
-              {{ link.count > 99 ? "99+" : link.count }}
-            </div>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
             {{ link.name }}
-          </NavItem>
+          </BaseNavItem>
         </div>
-        <DropdownUser v-if="$store.getters.isLogged" class="" />
-        <template v-if="!$store.getters.isLogged">
-          <DsfrButton type="tertiary" size="sm" icon="UserIcon" @click="$router.push('/login')">
+
+        <template v-if="$stores.auth.isLogged">
+          <div class="relative">
+            <nuxt-link no-prefetch to="/messages" class="group flex p-1">
+              <EnvelopeIcon class="text-jva-blue-500 h-[22px] group-hover:scale-105" />
+              <div
+                v-if="$stores.messaging.unreadMessagesCount"
+                class="group-hover:scale-105 absolute top-[2px] right-[2px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]"
+              />
+            </nuxt-link>
+          </div>
+          <CustomDropdownUserNotifications />
+          <CustomDropdownUser class="lg:ml-2" />
+        </template>
+
+        <template v-if="!$stores.auth.isLogged">
+          <DsfrButton type="tertiary" size="sm" icon="RiUserLine" @click="$router.push('/login')">
             Mon compte
           </DsfrButton>
         </template>
       </nav>
     </div>
     <div class="w-full border-t" />
-    <div class="flex justify-between text-sm text-gray-800" :class="{'xl:container': !fullWidth}">
+    <div class="flex justify-between text-sm text-gray-800" :class="{ 'xl:container': !fullWidth }">
       <nav
         role="navigation"
-        :class="['flex w-full', {'xl:-mx-4': !fullWidth}]"
+        :class="['flex w-full', { 'xl:-mx-4': !fullWidth }]"
         :style="!fullWidth ? 'width: calc(100% + 2rem);' : null"
       >
-        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
+        <BaseDropdown
+          v-if="$stores.auth.roles && $stores.auth.roles.length > 1"
+          ref="switchRole"
+          positionClass="origin-top-left left-0"
+          class="h-full"
+        >
           <template #button>
             <button class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">
               <div class="truncate">
                 <div class="truncate mr-auto font-semibold">
-                  <template v-if="$store.getters.currentRole">
-                    {{ $store.getters.currentRole.label }}
+                  <template v-if="$stores.auth.currentRole">
+                    {{ $stores.auth.currentRole.label }}
                   </template>
-                  <template v-else>
-                    Bénévole
-                  </template>
+                  <template v-else> Bénévole </template>
                 </div>
               </div>
-              <ChevronDownIcon class="h-3 flex-none" />
+              <RiArrowDownSLine class="h-3 flex-none" />
             </button>
           </template>
           <template #items>
-            <template v-if="$store.getters.roles" class="w-80">
+            <template v-if="$stores.auth.roles">
               <div class="w-80">
-                <DropdownOptionsItem
-                  v-for="role,index in $store.getters.roles"
+                <BaseDropdownOptionsItem
+                  v-for="(role, index) in $stores.auth.roles"
                   :key="index"
-                  :label="$options.filters.label(role.key, 'role', 'espace')"
+                  :label="$filters.label(role.key, 'roles', 'espace')"
                   @click.native="switchRole(role)"
                 >
                   {{ role.label }}
                   <template #iconRight>
-                    <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
-                      <template v-if="$store.getters.contextRole === 'responsable'">
-                        <CheckIcon v-if="role.contextable_type === 'structure' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
-                        <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                    <template
+                      v-if="
+                        ['responsable', 'responsable_territoire'].includes($stores.auth.contextRole)
+                      "
+                    >
+                      <template v-if="$stores.auth.contextRole === 'responsable'">
+                        <RiCheckLine
+                          v-if="
+                            role.contextable_type === 'structure' &&
+                            role.contextable_id === $stores.auth.contextableId
+                          "
+                          class="h-5 text-jva-green-500 fill-current"
+                        />
+                        <ArrowsRightLeftIcon
+                          v-else
+                          class="h-5 text-gray-400 group-hover:scale-110"
+                        />
                       </template>
-                      <template v-if="$store.getters.contextRole === 'responsable_territoire'">
-                        <CheckIcon v-if="role.contextable_type === 'responsable_territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
-                        <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                      <template v-if="$stores.auth.contextRole === 'responsable_territoire'">
+                        <RiCheckLine
+                          v-if="
+                            role.contextable_type === 'responsable_territoire' &&
+                            role.contextable_id === $stores.auth.contextableId
+                          "
+                          class="h-5 text-jva-green-500 fill-current"
+                        />
+                        <ArrowsRightLeftIcon
+                          v-else
+                          class="h-5 text-gray-400 group-hover:scale-110"
+                        />
                       </template>
                     </template>
                     <template v-else>
-                      <CheckIcon v-if="role.key === $store.getters.contextRole " class="h-5 text-jva-green-500 " />
-                      <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                      <RiCheckLine
+                        v-if="role.key === $stores.auth.contextRole"
+                        class="h-5 text-jva-green-500 fill-current"
+                      />
+                      <ArrowsRightLeftIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                     </template>
                   </template>
-                </DropdownOptionsItem>
+                </BaseDropdownOptionsItem>
               </div>
             </template>
           </template>
-        </Dropdown>
-        <NavItem
+        </BaseDropdown>
+        <BaseNavItem
           v-for="link in secondaryNavigation"
           :key="link.name"
           :href="link.href"
           :to="link.to"
           :click="link.click"
           :target="link.target"
-          :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
+          :class="[
+            'p-4 hover:bg-gray-50 hover:text-jva-blue-500',
+            { 'text-jva-blue-500 bg-gray-50 font-medium': link.isActive },
+          ]"
         >
           {{ link.name }}
-        </NavItem>
+        </BaseNavItem>
 
-        <!-- <NavItem
-          v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-          key="printemps-pour-la-planete"
-          to="/missions-benevolat?publisher_name=J%27agis%20pour%20la%20nature%7CJeVeuxAider.gouv.fr&activity.name=Travaux%20manuels%7CActions%20de%20sensibilisation%7CVie%20citoyenne%7CRamassage%20de%20d%C3%A9chets%7CAm%C3%A9nagement%20d%27espaces%20naturels%7CSoins%20aux%20animaux&domaines=Protection%20de%20la%20nature"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
-        >
-          <span aria-hidden="true">🌍</span>
-          <span>Printemps pour la planète</span>
-        </NavItem> -->
-
-        <NavItem
-          v-if="$store.getters.contextRole == 'admin'"
-          to="/admin/contenus/missions-prioritaires"
-          :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
-        >
-          <CogIcon class="h-4 w-4 mr-2 flex-none" />
-          Administration
-        </NavItem>
+        <div v-if="$stores.auth.contextRole == 'admin'" class="flex ml-auto">
+          <BaseNavItem
+            to="/admin"
+            :class="[
+              'p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center',
+              {
+                'text-jva-blue-500 bg-gray-50 font-medium':
+                  isActiveLink('/admin/(settings|contenus|scripts|taxonomies)/*') ||
+                  isActiveLink('/admin'),
+              },
+            ]"
+          >
+            <RiAdminLine class="h-4 w-4 mr-2 flex-none" />
+            Administration
+          </BaseNavItem>
+          <BaseNavItem
+            to="/support"
+            :class="[
+              'p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center',
+              {
+                'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/support/*'),
+              },
+            ]"
+          >
+            <RiUserStarLine class="h-4 w-4 mr-2 flex-none" />
+            Support
+          </BaseNavItem>
+        </div>
       </nav>
     </div>
   </div>
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { ArrowsRightLeftIcon, CalendarIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FocusLoop } from '@vue-a11y/focus-loop'
-import DropdownUser from '@/components/custom/DropdownUser'
-import DsfrButton from '@/components/dsfr/Button.vue'
-import HeaderBanner from '@/components/layout/HeaderBanner.vue'
+import { EnvelopeIcon } from '@heroicons/vue/24/outline'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    DropdownUser,
-    DsfrButton,
     FocusLoop,
-    HeaderBanner
+    EnvelopeIcon,
+    ArrowsRightLeftIcon,
   },
   props: {
     fullWidth: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
-    return {
-      unreadMessageCount: 0
-    }
+  data() {
+    return {}
   },
   computed: {
-    primaryNavigation () {
-      if (!this.$store.getters.isLogged) {
+    primaryNavigation() {
+      if (!this.$stores.auth.isLogged) {
         return [
-          { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-          { name: 'Publier une mission', to: '/inscription/responsable', icon: CalendarIcon }
+          {
+            name: 'Trouver une mission',
+            icon: MagnifyingGlassIcon,
+            to: '/missions-benevolat',
+          },
+          {
+            name: 'Publier une mission',
+            to: '/inscription/responsable',
+            icon: CalendarIcon,
+          },
         ]
       }
       return [
-        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessages'] }
+        {
+          name: 'Trouver une mission',
+          icon: MagnifyingGlassIcon,
+          to: '/missions-benevolat',
+        },
       ]
     },
-    secondaryNavigation () {
-      if (!this.$store.getters.isLogged) {
+    secondaryNavigation() {
+      if (!this.$stores.auth.isLogged) {
         return [
-          { name: 'Bénévolat près de chez moi', to: '/missions-benevolat', isActive: this.isBenevolatPresDeChezMoiActiveLink() },
-          { name: 'À distance', to: '/missions-benevolat?type=Mission%20à%20distance', isActive: this.isBenevolatADistanceActiveLink() },
-          { name: 'Associations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
-          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/', target: '_blank' }
+          {
+            name: 'Bénévolat près de chez moi',
+            to: '/missions-benevolat',
+            isActive:
+              this.isBenevolatPresDeChezMoiActiveLink() &&
+              !this.isActiveOperation('Collecte nationale des Restos du Cœur'),
+          },
+          {
+            name: 'À distance',
+            to: '/missions-benevolat?type=Mission%20à%20distance',
+            isActive: this.isBenevolatADistanceActiveLink(),
+          },
+          {
+            name: '🔥 En ce moment',
+            to: '/en-ce-moment',
+            isActive: this.isActiveLink('/en-ce-moment'),
+          },
+          // {
+          //   name: 'Printemps pour la Planète 🌱',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+          //   target: '_blank',
+          // },
+          // {
+          //   name: 'Élections législatives 🗳️',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
+          //   target: '_blank',
+          // },
+          // {
+          //   name: 'La tournée d’été ☀️',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',
+          //   target: '_blank',
+          // },
+          {
+            name: 'Associations',
+            to: '/organisations',
+            isActive: this.isActiveLink('/organisations'),
+          },
+          {
+            name: "Centre d'aide",
+            href: 'https://reserve-civique.crisp.help/fr/',
+            target: '_blank',
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'admin') {
+      } else if (this.$stores.auth.currentRole?.key === 'admin') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
-          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') }
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Organisations',
+            to: '/admin/organisations',
+            isActive: this.isActiveLink('/admin/organisations/*'),
+          },
+          {
+            name: 'Missions',
+            to: '/admin/missions',
+            isActive: this.isActiveLink('/admin/missions/*'),
+          },
+          {
+            name: 'Participations',
+            to: '/admin/participations',
+            isActive: this.isActiveLink('/admin/participations/*'),
+          },
+          {
+            name: 'Utilisateurs',
+            to: '/admin/utilisateurs',
+            isActive: this.isActiveLink('/admin/utilisateurs/*'),
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'responsable') {
+      } else if (this.$stores.auth.currentRole?.key === 'responsable') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
-          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/', target: '_blank' }
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Mon organisation',
+            to: `/admin/organisations/${this.$stores.auth.contextableId}`,
+            isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)'),
+          },
+          {
+            name: 'Missions',
+            to: '/admin/missions',
+            isActive: this.isActiveLink('/admin/missions/*|missions/add'),
+          },
+          {
+            name:
+              this.$stores.auth.user?.statistics?.participations_need_to_be_treated_count > 0
+                ? '⚠️ Participations'
+                : 'Participations',
+            to: '/admin/participations',
+            isActive: this.isActiveLink('/admin/participations/*'),
+          },
+          {
+            name: "Centre d'aide",
+            href: 'https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/',
+            target: '_blank',
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
+      } else if (this.$stores.auth.currentRole?.key === 'responsable_territoire') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon territoire', to: `/admin/contenus/territoires/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/territoires/*') },
-          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/collectivites-1s01ktj/', target: '_blank' }
-
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Mon territoire',
+            to: `/admin/contenus/territoires/${this.$stores.auth.contextableId}`,
+            isActive: this.isActiveLink('/admin/contenus/territoires/*'),
+          },
+          {
+            name: "Centre d'aide",
+            href: 'https://reserve-civique.crisp.help/fr/category/collectivites-1s01ktj/',
+            target: '_blank',
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
+      } else if (this.$stores.auth.currentRole?.key === 'tete_de_reseau') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
-          { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
-          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/tetes-de-reseau-1pfzcje/', target: '_blank' }
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Mon réseau',
+            to: `/admin/contenus/reseaux/${this.$stores.auth.contextableId}`,
+            isActive: this.isActiveLink('/admin/contenus/reseaux/*'),
+          },
+          {
+            name: 'Membres du réseau',
+            to: '/admin/organisations',
+            isActive: this.isActiveLink('/admin/organisations/*'),
+          },
+          {
+            name: 'Missions',
+            to: '/admin/missions',
+            isActive: this.isActiveLink('/admin/missions/*'),
+          },
+          {
+            name: 'Participations',
+            to: '/admin/participations',
+            isActive: this.isActiveLink('/admin/participations/*'),
+          },
+          {
+            name: "Centre d'aide",
+            href: 'https://reserve-civique.crisp.help/fr/category/tetes-de-reseau-1pfzcje/',
+            target: '_blank',
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'referent') {
+      } else if (this.$stores.auth.currentRole?.key === 'referent') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
-          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') },
-          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/referent-1j08uk0/', target: '_blank' }
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Organisations',
+            to: '/admin/organisations',
+            isActive: this.isActiveLink('/admin/organisations/*'),
+          },
+          {
+            name: 'Missions',
+            to: '/admin/missions',
+            isActive: this.isActiveLink('/admin/missions/*'),
+          },
+          {
+            name: 'Participations',
+            to: '/admin/participations',
+            isActive: this.isActiveLink('/admin/participations/*'),
+          },
+          {
+            name: 'Utilisateurs',
+            to: '/admin/utilisateurs',
+            isActive: this.isActiveLink('/admin/utilisateurs/*'),
+          },
+          {
+            name: "Centre d'aide",
+            href: 'https://reserve-civique.crisp.help/fr/category/referent-1j08uk0/',
+            target: '_blank',
+          },
         ]
-      } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
+      } else if (this.$stores.auth.currentRole?.key === 'referent_regional') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+          {
+            name: 'Tableau de bord',
+            to: '/dashboard',
+            isActive: this.isActiveLink('/dashboard'),
+          },
+          {
+            name: 'Organisations',
+            to: '/admin/organisations',
+            isActive: this.isActiveLink('/admin/organisations/*'),
+          },
+          {
+            name: 'Missions',
+            to: '/admin/missions',
+            isActive: this.isActiveLink('/admin/missions/*'),
+          },
+          {
+            name: 'Participations',
+            to: '/admin/participations',
+            isActive: this.isActiveLink('/admin/participations/*'),
+          },
         ]
       }
       return [
-        { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
-        { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
-        { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
+        {
+          name: 'Mon espace',
+          to: '/profile',
+          isActive: this.isActiveLink('/profile', true),
+        },
+        {
+          name: 'Mes missions',
+          to: '/profile/missions',
+          isActive: this.isActiveLink('profile/missions'),
+        },
+        {
+          name: '🔥 En ce moment',
+          to: '/en-ce-moment',
+          isActive: this.isActiveLink('/en-ce-moment'),
+        },
+        // {
+        //   name: 'Printemps pour la Planète 🌱',
+        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+        //   target: '_blank',
+        // },
+        // {
+        //   name: 'Élections législatives 🗳️',
+        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
+        //   target: '_blank',
+        // },
+        // {
+        //   name: 'La tournée d’été ☀️',
+        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',
+        //   target: '_blank',
+        // },
+        {
+          name: "Centre d'aide",
+          href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',
+          target: '_blank',
+        },
       ]
-    }
+    },
   },
   watch: {
-    $route () {
+    $route() {
       this.showMobileMenu = false
-    }
-  },
-  methods: {
-    async switchRole (role) {
-      await this.$store.dispatch('auth/updateUser', {
-        context_role: role.key,
-        contextable_type: role.contextable_type ?? null,
-        contextable_id: role.contextable_id ?? null
-      })
-
-      this.$refs.switchRole.show = false
-
-      if (this.$router.history.current.path === '/dashboard') {
-        window.location.reload(true)
-      } else {
-        this.$router.push('/dashboard')
-      }
     },
-    isActiveLink (regex, exact = false) {
+  },
+  created() {},
+  methods: {
+    async switchRole(role) {
+      await this.$stores.auth
+        .switchRole({
+          context_role: role.key,
+          contextable_type: role.contextable_type ?? null,
+          contextable_id: role.contextable_id ?? null,
+        })
+        .then(() => {
+          this.$refs.switchRole.show = false
+
+          if (this.$route.name === 'dashboard') {
+            window.location.reload(true)
+          } else {
+            this.$router.push('/dashboard')
+          }
+        })
+        .catch(() => {})
+    },
+    isActiveLink(regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
     },
-    isBenevolatPresDeChezMoiActiveLink () {
-      if (this.$route.path === '/missions-benevolat' && this.$route.query.type !== 'Mission à distance') {
+    isActiveOperation(operation) {
+      return this.$route.query?.tags == operation
+    },
+    isBenevolatPresDeChezMoiActiveLink() {
+      if (
+        this.$route.path === '/missions-benevolat' &&
+        this.$route.query.type !== 'Mission à distance'
+      ) {
         return true
       }
       return false
     },
-    isBenevolatADistanceActiveLink () {
-      if (this.$route.path === '/missions-benevolat' && this.$route.query.type === 'Mission à distance') {
+    isBenevolatADistanceActiveLink() {
+      if (
+        this.$route.path === '/missions-benevolat' &&
+        this.$route.query.type === 'Mission à distance'
+      ) {
         return true
       }
       return false
-    }
-  }
-}
+    },
+  },
+})
 </script>

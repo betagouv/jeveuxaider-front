@@ -3,64 +3,98 @@
     class="card--mission h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
-      <img
+      <NuxtImg
+        ref="thumbnail"
         v-if="thumbnail && domainId"
+        src="/images/card-thumbnail-default.jpg"
         :srcset="thumbnail"
-        :alt="$options.filters.label(domainId, 'domaines')"
+        :alt="$filters.label(domainId, 'domaines')?.toString()"
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        :loading="lazyLoading ? 'lazy' : undefined"
         @error="onImgError"
-      >
+      />
 
       <template v-if="showState">
         <div class="custom-gradient absolute inset-0" />
-        <DsfrBadge
-          size="sm"
-          :type="badgeTypeMissionSate"
-          class="absolute top-3 left-3 shadow-lg"
-        >
-          {{ mission.state }}
-        </DsfrBadge>
+        <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
+          <DsfrBadge class="shadow-lg" size="sm" :type="badgeTypeMissionSate">
+            {{ mission.state }}
+          </DsfrBadge>
 
-        <DsfrBadge
-          v-if="!mission.is_active"
-          v-tooltip="{
-            content: 'Cette mission a été désactivée par un membre du support. Elle n’est plus visible des bénévoles.',
-          }"
-          size="sm"
-          type="warning"
-          class="absolute bottom-3 left-3 shadow-lg"
-        >
-          Mission désactivée
-        </DsfrBadge>
+          <DsfrBadge
+            class="shadow-lg"
+            size="sm"
+            type="gray"
+            v-if="!mission.is_online && mission.state == 'Validée'"
+            v-tooltip="{
+              content:
+                'Cette mission a été mise hors ligne par un membre du support. Elle n’est plus visible des bénévoles.',
+            }"
+          >
+            <div class="flex items-center">
+              <div class="h-2 w-2 rounded-full mr-1 bg-red-600"></div>
+              Hors ligne
+            </div>
+          </DsfrBadge>
+        </div>
 
         <div class="custom-gradient-2 absolute inset-0 pointer-events-none" />
-        <div v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
+        <div
+          v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+          class="text-white absolute bottom-1 right-2 text-xs text-shadow"
+        >
           Id: {{ mission.id }}
+        </div>
+      </template>
+      <template v-else>
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[318px] pr-8">
+          <DsfrBadge
+            v-if="isIdealPourDebuter"
+            size="sm"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
+          >
+            Idéale pour débuter
+          </DsfrBadge>
+
+          <DsfrBadge
+            v-if="formattedCommitment"
+            size="sm"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
+          >
+            {{ formattedCommitment }}
+          </DsfrBadge>
         </div>
       </template>
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
       <div class="flex flex-col w-full">
-        <Heading as="h3" size="xs" class="line-clamp-3 mb-3 order-3" :title="mission.name">
-          {{ mission.name }}
-        </Heading>
+        <DsfrHeading as="h3" size="xs" class="line-clamp-3 mb-3 order-3" :title="mission.name">
+          {{ mission.name ?? 'Titre à définir' }}
+        </DsfrHeading>
 
         <div class="mb-4 flex flex-wrap gap-2 order-1">
-          <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
-            {{ $options.filters.label(domainId, 'domaines') }}
-          </Tag>
-          <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
+          <DsfrTag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
+            {{ $filters.label(domainId, 'domaines') }}
+          </DsfrTag>
+          <DsfrTag
+            v-if="
+              (mission.template && mission.template.domaine_secondary_id) ||
+              mission.domaine_secondary_id
+            "
+          >
             +1
-          </Tag>
+          </DsfrTag>
         </div>
 
-        <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full order-2">
+        <div
+          class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full order-2"
+        >
           <component
             :is="iconOrganizationState"
-            v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
+            v-if="['admin', 'referent'].includes($stores.auth.contextRole) && showState"
             class="w-4 h-4 mr-2 fill-current flex-none"
           />
           <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
@@ -69,21 +103,11 @@
       </div>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
-        <template v-if="mission.is_autonomy">
-          {{ autonomyCities }}
+        <template v-if="mission.type === 'Mission en présentiel' && mission.addresses">
+          {{ uniqueCities.join(', ') }}
         </template>
-
-        <template
-          v-else-if="mission.city && mission.type == 'Mission en présentiel'"
-        >
-          <span v-if="mission.zip">{{ missionCity }} ({{ mission.zip }})</span>
-          <span v-else-if="mission.department">{{ missionCity }} ({{ mission.department }})</span>
-          <span v-else>{{ missionCity }}</span>
-        </template>
-
-        <template v-else>
-          Mission à distance
-        </template>
+        <template v-else-if="mission.type === 'Mission à distance'"> Mission à distance </template>
+        <template v-else>Lieu à définir</template>
       </div>
 
       <div
@@ -92,9 +116,7 @@
       >
         <div class="flex items-center justify-between space-x-6">
           <div>
-            <div class="leading-none">
-              Mission proposée par
-            </div>
+            <div class="leading-none">Mission proposée par</div>
             <div class="font-bold">
               {{ mission.publisher_name }}
             </div>
@@ -102,39 +124,33 @@
           <img
             :src="mission.publisher_logo"
             :alt="mission.publisher_name"
-            width="70px"
+            width="70"
             class="h-auto max-h-[38px] object-contain"
-          >
+          />
         </div>
       </div>
 
       <template v-if="showTags && mission.tags">
         <div class="mt-3 max-w-full">
-          <DsfrBadge
-            v-for="tag in mission.tags"
-            :key="tag.id"
-            size="sm"
-            class="truncate"
-          >
+          <DsfrBadge v-for="tag in mission.tags" :key="tag.id" size="sm" class="truncate">
             {{ tag.name }}
           </DsfrBadge>
         </div>
       </template>
 
-      <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
+      <div
+        class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full"
+      >
         <div v-if="hasExpired">
           <p>Inscription terminée</p>
         </div>
         <div v-else>
           <p>{{ placesLeftText }}</p>
-          <p v-if="formattedDate && (placesLeftText !== 'Complet') && mission.is_registration_open">
+          <p v-if="formattedDate && placesLeftText !== 'Complet' && mission.is_registration_open">
             {{ formattedDate }}
           </p>
         </div>
-
-        <RiArrowRightLine
-          :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']"
-        />
+        <RiArrowRightLine :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']" />
       </div>
     </div>
   </div>
@@ -143,52 +159,49 @@
 <script>
 import MixinMission from '@/mixins/mission'
 import MixinDomaines from '@/mixins/domaines'
-import DsfrBadge from '@/components/dsfr/Badge.vue'
-import Tag from '@/components/dsfr/Tag.vue'
-import Heading from '@/components/dsfr/Heading.vue'
-import iconSuccess from '@/static/images/icons/dsfr/badge/success.svg?inline'
-import iconError from '@/static/images/icons/dsfr/badge/error.svg?inline'
-import iconWarning from '@/static/images/icons/dsfr/badge/warning.svg?inline'
-import iconNew from '@/static/images/icons/dsfr/badge/new.svg?inline'
-import iconInfo from '@/static/images/icons/dsfr/badge/info.svg?inline'
+import SpinIcon from '@/components/icon/SpinIcon.vue'
+import DsfrSuccessIcon from '@/components/icon/dsfr/Success.vue'
+import DsfrErrorIcon from '@/components/icon/dsfr/Error.vue'
+import DsfrWarningIcon from '@/components/icon/dsfr/Warning.vue'
+import DsfrNewIcon from '@/components/icon/dsfr/New.vue'
+import DsfrInfoIcon from '@/components/icon/dsfr/Info.vue'
+import mission from '@/mixins/mission'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    DsfrBadge,
-    Tag,
-    Heading,
-    iconSuccess,
-    iconError,
-    iconWarning,
-    iconNew,
-    iconInfo
+    DsfrSuccessIcon,
+    DsfrErrorIcon,
+    DsfrWarningIcon,
+    DsfrNewIcon,
+    DsfrInfoIcon,
+    SpinIcon,
   },
   mixins: [MixinMission, MixinDomaines],
   props: {
     mission: {
       type: Object,
-      default: null
+      default: null,
     },
     showState: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showTags: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    lazyLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
-    autonomyCities () {
-      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
-        return this.mission.autonomy_zips.map((item) => {
-          return item.city.includes(' Arrondissement') ? `${item.city.replace(' Arrondissement', '')}` : `${item.city} (${item.zip})`
-        }).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true })).join(', ')
-      }
-      return null
-    },
-    placesLeftText () {
-      if (this.mission.provider === 'reserve_civique' && !this.mission.is_registration_open) {
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
+    placesLeftText() {
+      if (!this.mission.is_registration_open) {
         return 'Inscription fermée'
       } else if (
         this.mission.publisher_name &&
@@ -197,20 +210,21 @@ export default {
       ) {
         return 'Plusieurs bénévoles recherchés'
       } else if (this.mission.places_left && this.mission.places_left > 0) {
-        return (
-          this.$options.filters.pluralize(
-            this.mission.places_left,
-            'bénévole recherché',
-            'bénévoles recherchés'
-          )
+        return this.$filters.pluralize(
+          this.mission.places_left,
+          'bénévole recherché',
+          'bénévoles recherchés'
         )
       } else {
+        if (!this.mission.publisher_name && !this.mission.participations_max) {
+          return ''
+        }
         return this.mission.has_places_left === false || this.mission.places_left === 0
           ? 'Complet'
           : 'Plusieurs bénévoles recherchés'
       }
     },
-    formattedDate () {
+    formattedDate() {
       const startDate = this.mission.start_date
       const endDate = this.mission.end_date
       const now = this.$dayjs()
@@ -219,14 +233,18 @@ export default {
         return
       }
 
+      if (this.$route.query?.start && this.$route.name === 'en-ce-moment') {
+        return `le ${this.$dayjs(this.$route.query?.start).format('D MMMM YYYY')}`
+      }
+
       const startDateObject =
         Number.isInteger(startDate) && this.$dayjs.unix(startDate).isValid()
           ? this.$dayjs.unix(startDate)
           : this.$dayjs(startDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
-            ? this.$dayjs(startDate, 'YYYY-MM-DD HH:mm:ss')
-            : this.$dayjs(startDate).isValid()
-              ? this.$dayjs(startDate)
-              : null
+          ? this.$dayjs(startDate, 'YYYY-MM-DD HH:mm:ss')
+          : this.$dayjs(startDate).isValid()
+          ? this.$dayjs(startDate)
+          : null
 
       if (!startDateObject || startDateObject.isBefore(now)) {
         return null
@@ -236,13 +254,13 @@ export default {
 
       if (endDate) {
         const endDateObject =
-        Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
-          ? this.$dayjs.unix(endDate)
-          : this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
+          Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
+            ? this.$dayjs.unix(endDate)
+            : this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
             ? this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss')
             : this.$dayjs(endDate).isValid()
-              ? this.$dayjs(endDate)
-              : null
+            ? this.$dayjs(endDate)
+            : null
 
         if (endDateObject && this.$dayjs(startDateObject).isSame(this.$dayjs(endDateObject))) {
           return `le ${this.$dayjs(startDateObject).format(format)}`
@@ -251,41 +269,28 @@ export default {
 
       return `à partir du ${startDateObject.format(format)}`
     },
-    iconOrganizationState () {
+    iconOrganizationState() {
       switch (this.mission.structure.state) {
         case 'Validée':
-          return iconSuccess
+          return DsfrSuccessIcon
         case 'Signalée':
         case 'Désinscrite':
-          return iconError
+          return DsfrErrorIcon
         case 'En attente de validation':
         case 'En cours de traitement':
-          return iconWarning
+          return DsfrWarningIcon
         default:
-          return iconInfo
+          return DsfrInfoIcon
       }
     },
-    badgeTypeMissionSate () {
-      switch (this.mission.state) {
-        case 'Validée':
-          return 'success'
-        case 'Signalée':
-        case 'Annulée':
-          return 'error'
-        case 'En attente de validation':
-        case 'En cours de traitement':
-          return 'warning'
-        default:
-          return 'info'
-      }
-    }
   },
   methods: {
-    onImgError ($event) {
-      $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
-    }
-  }
-}
+    onImgError() {
+      this.$refs.thumbnail.$el.srcset =
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -322,24 +327,15 @@ export default {
 }
 
 .custom-gradient {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 70%,
-    rgba(0, 0, 0, 0.7) 150%
-  );
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.7) 150%);
 }
 
 .custom-gradient-2 {
-  background: linear-gradient(
-    165deg,
-    rgba(0, 0, 0, 0) 77%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
+  background: linear-gradient(165deg, rgba(0, 0, 0, 0) 77%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 .text-shadow {
-  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25),
-    0px 4px 30px rgba(0, 0, 0, 0.85);
+  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25), 0px 4px 30px rgba(0, 0, 0, 0.85);
 }
 
 /* .fake-purge {

@@ -1,21 +1,28 @@
-<template>
+<!-- <template>
   <section class="py-16 bg-white overflow-hidden">
-    <div class="container mx-auto px-8 sm:px-4 ">
+    <div class="container mx-auto px-8 sm:px-4">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading :id="`label-domaines-action-${uuid}`" as="h2" size="2xl" class="text-center md:text-left">
+          <DsfrHeading
+            :id="`label-domaines-action-${uuid}`"
+            as="h2"
+            size="2xl"
+            class="text-center md:text-left"
+          >
             Trouvez votre domaine d'action
-          </Heading>
-          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
+          </DsfrHeading>
+          <p
+            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
+          >
             #jeveuxaider
           </p>
         </div>
 
-        <Slideshow
+        <BaseSlideshow
           :slides-are-links="true"
           :aria-labelledby="`label-domaines-action-${uuid}`"
         >
-          <nuxt-link
+          <nuxt-link no-prefetch
             v-for="domaine in domaines"
             :key="domaine.id"
             class="card--domaine--wrapper"
@@ -23,24 +30,23 @@
           >
             <CardDomaine :domaine="domaine" class="!h-full" />
           </nuxt-link>
-        </Slideshow>
+        </BaseSlideshow>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import CardDomaine from '@/components/card/CardDomaine'
-import Heading from '@/components/dsfr/Heading.vue'
+import CardDomaine from '@/components/card/CardDomaine.vue'
 import uuid from '@/mixins/uuid'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardDomaine,
-    Heading
+    Heading,
   },
   mixins: [uuid],
-  data () {
+  data() {
     return {
       domaines: [
         {
@@ -50,27 +56,25 @@ export default {
           description: 'Faites du savoir une chance pour tous',
           image:
             '/images/domaines/card_domaine_education.webp, /images/domaines/card_domaine_education@2x.webp 2x, /images/domaines/card_domaine_education.jpg, /images/domaines/card_domaine_education@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 1,
           name: 'Santé pour tous',
           slug: 'sante-pour-tous',
-          description:
-            'Soutenez les personnes malades et leurs proches',
+          description: 'Soutenez les personnes malades et leurs proches',
           image:
             '/images/domaines/card_domaine_sante.webp, /images/domaines/card_domaine_sante@2x.webp 2x, /images/domaines/card_domaine_sante.jpg, /images/domaines/card_domaine_sante@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 10,
           name: 'Protection de la nature',
           slug: 'protection-de-la-nature',
-          description:
-            'Contribuez à la préservation de l’environnement',
+          description: 'Contribuez à la préservation de l’environnement',
           image:
             '/images/domaines/card_domaine_nature.webp, /images/domaines/card_domaine_nature@2x.webp 2x, /images/domaines/card_domaine_nature.jpg, /images/domaines/card_domaine_nature@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 7,
@@ -80,16 +84,17 @@ export default {
             'Venez en aide aux personnes exclues, fragiles et isolées',
           image:
             '/images/domaines/card_domaine_solidarite.webp, /images/domaines/card_domaine_solidarite@2x.webp 2x, /images/domaines/card_domaine_solidarite.jpg, /images/domaines/card_domaine_solidarite@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 4,
           name: 'Sport pour tous',
           slug: 'sport-pour-tous',
-          description: 'Contribuez à rendre la pratique sportive accessible à tous',
+          description:
+            'Contribuez à rendre la pratique sportive accessible à tous',
           image:
             '/images/domaines/card_domaine_sport.webp, /images/domaines/card_domaine_sport@2x.webp 2x, /images/domaines/card_domaine_sport.jpg, /images/domaines/card_domaine_sport@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 2,
@@ -98,16 +103,17 @@ export default {
           description: 'Engagez-vous pour secourir, protéger et sensibiliser',
           image:
             '/images/domaines/card_domaine_prevention.webp, /images/domaines/card_domaine_prevention@2x.webp 2x, /images/domaines/card_domaine_prevention.jpg, /images/domaines/card_domaine_prevention@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 8,
           name: 'Mémoire et citoyenneté',
           slug: 'memoire-et-citoyennete',
-          description: 'Participez à l’effort de mémoire et aux initiatives citoyennes',
+          description:
+            'Participez à l’effort de mémoire et aux initiatives citoyennes',
           image:
             '/images/domaines/card_domaine_memoire.webp, /images/domaines/card_domaine_memoire@2x.webp 2x, /images/domaines/card_domaine_memoire.jpg, /images/domaines/card_domaine_memoire@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 6,
@@ -116,16 +122,17 @@ export default {
           description: 'Mobilisez-vous pour la coopération internationale',
           image:
             '/images/domaines/card_domaine_cooperation.webp, /images/domaines/card_domaine_cooperation@2x.webp 2x, /images/domaines/card_domaine_cooperation.jpg, /images/domaines/card_domaine_cooperation@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 3,
           name: 'Art & Culture pour tous',
           slug: 'art-et-culture-pour-tous',
-          description: 'Faites vivre les initiatives culturelles près de chez vous',
+          description:
+            'Faites vivre les initiatives culturelles près de chez vous',
           image:
             '/images/domaines/card_domaine_art.webp, /images/domaines/card_domaine_art@2x.webp 2x, /images/domaines/card_domaine_art.jpg, /images/domaines/card_domaine_art@2x.jpg 2x',
-          bottom: true
+          bottom: true,
         },
         {
           id: 11,
@@ -134,17 +141,17 @@ export default {
           description: 'Mettez vos savoir-faire au service des autres',
           image:
             '/images/domaines/card_domaine_benevolat_competences.webp, /images/domaines/card_domaine_benevolat_competences@2x.webp 2x, /images/domaines/card_domaine_benevolat_competences.jpg, /images/domaines/card_domaine_benevolat_competences@2x.jpg 2x',
-          bottom: true
-        }
-      ]
+          bottom: true,
+        },
+      ],
     }
-  }
-}
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
 .card--domaine--wrapper {
-  width: calc(100vw - 64px)!important;
+  width: calc(100vw - 64px) !important;
   max-width: 360px;
 }
 
@@ -163,4 +170,4 @@ export default {
     }
   }
 }
-</style>
+</style> -->

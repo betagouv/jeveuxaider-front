@@ -4,8 +4,8 @@
       <div class="relative font-medium text-[15px]">
         <div v-if="!showSearch" class="h-[29px]">
           <span :id="`label-search-${uuid}`">{{ label }}</span>
-          <SearchIcon
-            class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0"
+          <RiSearchLine
+            class="text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0 fill-current"
             width="20"
             @click="toggleSearch"
           />
@@ -17,7 +17,7 @@
           v-model="facetQuery"
           always-show-clear
           :aria-labelledby="`label-search-${uuid}`"
-          @input="handleChangeSearchFacetValues"
+          @update:modelValue="handleChangeSearchFacetValues"
           @clear="showSearch = false"
         />
       </div>
@@ -27,15 +27,15 @@
           Aucun résultat avec les filtres actuels.
         </div>
 
-        <fieldset class="relative" style="min-inline-size: auto;">
+        <fieldset class="relative" style="min-inline-size: auto">
           <legend class="sr-only">
             {{ legend }}
           </legend>
-          <div class="space-y-4">
+          <div class="space-y-2">
             <div
-              v-for="(facet) in limitedValues"
+              v-for="facet in limitedValues"
               :key="facet.value"
-              :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+              :class="[{ 'text-jva-blue-500': isActiveFilter(facetName, facet.value) }]"
               class="cursor-pointer flex items-center"
             >
               <input
@@ -45,14 +45,18 @@
                 type="checkbox"
                 :checked="isActiveFilter(facetName, facet.value)"
                 class="rounded text-jva-blue-500"
-                @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
-              >
+                @change="
+                  isActiveFilter(facetName, facet.value)
+                    ? deleteFilter(facetName, facet.value, true)
+                    : addFilter(facetName, facet.value, true)
+                "
+              />
               <label
                 :for="`facetMobileFilter__${facetName}_${facet.value}`"
                 class="ml-2 flex justify-between truncate flex-1"
               >
                 <div class="truncate">
-                  {{ facet.value }}
+                  {{ resolveFacetValue(facet.value) }}
                 </div>
                 <div class="text-gray-600 ml-1 font-light">
                   {{ facet.count }}
@@ -62,8 +66,8 @@
           </div>
         </fieldset>
 
-        <div v-if="showMore && allValues.length > showMoreLimit" class="">
-          <div class="" @click="showAllValues = !showAllValues">
+        <div v-if="showMore && allValues.length > showMoreLimit">
+          <div @click="showAllValues = !showAllValues">
             {{ showAllValues ? 'Moins' : 'Plus' }}
           </div>
         </div>
@@ -73,101 +77,117 @@
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
-import uuid from '@/mixins/uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FacetSearch
+    FacetSearch,
   },
-  mixins: [AlgoliaQueryBuilder, uuid],
+  setup() {
+    const { isActiveFilter, searchForFacetValues, addFilter, deleteFilter } =
+      useAlgoliaQueryBuilder()
+
+    return {
+      isActiveFilter,
+      searchForFacetValues,
+      addFilter,
+      deleteFilter,
+    }
+  },
   props: {
     facetName: {
       type: String,
-      required: true
+      required: true,
     },
     facets: {
       type: Object,
-      required: true
+      required: true,
     },
     label: {
       type: String,
-      required: true
+      required: true,
     },
     showMoreLimit: {
       type: Number,
-      default: 3
+      default: 3,
     },
     showMore: {
       type: Boolean,
-      default: false
+      default: false,
     },
     legend: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
+    facetValueResolver: { type: Object, default: null },
   },
-  data () {
+  data() {
     return {
       isOpen: false,
       facetHits: null,
       facetQuery: null,
       showSearch: false,
-      showAllValues: false
+      showAllValues: false,
+      uuid: uuidv4(),
     }
   },
   computed: {
-    allValues () {
+    allValues() {
       if (this.facetHits) {
         return this.facetHits.map((facetHit) => {
           return {
             value: facetHit.value,
-            count: facetHit.count
+            count: facetHit.count,
           }
         })
       }
       return Object.keys(this.facets).map((value) => {
         return {
           value,
-          count: this.facets[value]
+          count: this.facets[value],
         }
       })
     },
-    limitedValues () {
-      return this.showMore && !this.showAllValues ? [...this.activeValues, ...this.inactiveValues].slice(0, this.showMoreLimit) : [...this.activeValues, ...this.inactiveValues]
+    limitedValues() {
+      return this.showMore && !this.showAllValues
+        ? [...this.activeValues, ...this.inactiveValues].slice(0, this.showMoreLimit)
+        : [...this.activeValues, ...this.inactiveValues]
     },
-    activeValues () {
+    activeValues() {
       return this.allValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
-    inactiveValues () {
+    inactiveValues() {
       return this.allValues.filter((facet) => {
         return !this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
-    firstValueSelected () {
+    firstValueSelected() {
       return this.$route.query[this.facetName]?.split('|')[0]
     },
-    activeValuesCount () {
+    activeValuesCount() {
       return this.$route.query[this.facetName]?.split('|').length
-    }
+    },
   },
   watch: {
-    async '$route' () {
+    async $route() {
       if (this.facetHits && this.facetQuery) {
         const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
         this.facetHits = res.facetHits
       }
-    }
+    },
   },
   methods: {
-    deleteFacet () {
+    resolveFacetValue(value) {
+      return this.facetValueResolver ? this.facetValueResolver[value] : value
+    },
+    deleteFacet() {
       this.deleteFilter(this.facetName)
       this.isOpen = false
     },
-    async handleChangeSearchFacetValues (facetQuery) {
+    async handleChangeSearchFacetValues(facetQuery) {
       if (!facetQuery || facetQuery == '') {
         this.facetHits = null
         return
@@ -175,13 +195,13 @@ export default {
       const res = await this.searchForFacetValues(this.facetName, facetQuery)
       this.facetHits = res.facetHits
     },
-    async toggleSearch () {
+    async toggleSearch() {
       this.showSearch = !this.showSearch
       if (this.showSearch) {
         await this.$nextTick()
         this.$refs.facetSearch.$refs.input?.focus()
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>

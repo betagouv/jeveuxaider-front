@@ -1,36 +1,52 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <div
-        class="text-gray-900 font-bold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-4"
-      >
-        Votre candidature est enregistrée
-      </div>
-      <div
-        class="text-gray-500 text-lg lg:text-xl max-w-md mx-auto"
-      >
-        Et si vous invitiez vos proches à participer eux aussi à cette mission ?
-      </div>
+    <div class="text-center mb-8">
+      <template v-if="emails.length > 1">
+        <div class="text-[48px]">💌</div>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          Les invitations sont envoyées
+        </DsfrHeading>
+        <div class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
+          <span class="font-bold">{{ emails.slice(0, -1).join(', ') }}</span> et
+          <span class="font-bold">{{ emails.slice(-1)[0] }}</span>
+          vont bientôt recevoir un email
+        </div>
+      </template>
+      <template v-else-if="emails.length === 1">
+        <div class="text-[48px]">💌</div>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          L’invitation est envoyée
+        </DsfrHeading>
+        <div class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
+          <span class="font-bold">{{ emails[0] }}</span> va bientôt recevoir un email
+        </div>
+      </template>
+      <template v-else>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          Vous pouvez aussi partager la mission sur vos réseaux
+        </DsfrHeading>
+      </template>
     </div>
-    <div class="">
-      <div class="text-xl font-bold text-center">
-        Partagez la mission autour de vous
+
+    <div>
+      <div v-if="emails.length > 0" class="text-center text-[24px] font-bold">
+        Vous pouvez aussi partager la mission sur vos réseaux
       </div>
       <div class="flex justify-center space-x-3 my-10">
         <ShareFacebook />
         <ShareTwitter :message="message" />
         <ShareLinkedin :message="message" />
         <ShareWhatsApp :message="message" />
-        <ShareMail
-          v-if="$store.state.softGate.selectedMission"
-          :subject="$store.state.softGate.selectedMission.name"
+        <!-- <ShareMail
+          v-if="$stores.softGate.selectedMission"
+          :subject="$stores.softGate.selectedMission.name"
           :message="message"
-        />
+        /> -->
       </div>
       <div class="text-center">
-        <Link class="text-jva-blue-500" @click.native="$emit('next')">
+        <DsfrLink class="text-jva-blue-500" @click.native="$emit('next')">
           Passer l'étape
-        </Link>
+        </DsfrLink>
       </div>
     </div>
   </div>
@@ -42,27 +58,27 @@ import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
 import ShareMail from '@/components/share/Mail.vue'
 import ShareWhatsApp from '@/components/share/WhatsApp.vue'
-import Link from '@/components/dsfr/Link.vue'
 
-export default {
+export default defineNuxtComponent({
   name: 'SoftGateShare',
+  props: {
+    emails: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {
     ShareFacebook,
     ShareTwitter,
     ShareLinkedin,
     ShareMail,
     ShareWhatsApp,
-    Link
   },
-  data () {
+  data() {
     return {
       message:
         "J'ai trouvé ma future mission de bénévolat sur JeVeuxAider.gouv.fr. Rejoignez le mouvement %23ChacunPourTous ",
-      baseUrl: this.$config.appUrl
     }
   },
-  methods: {
-
-  }
-}
+})
 </script>

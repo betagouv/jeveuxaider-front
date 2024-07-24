@@ -1,6 +1,10 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Répartition des mission par domaine d’action" class="mb-6" infos-bulle="Répartition des missions validées ou terminées, créées sur la période par domaine d'action" />
+  <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
+    <BoxHeadingStatistics
+      title="Répartition des missions par domaines d’action"
+      class="mb-6"
+      infos-bulle="Répartition des missions validées ou terminées, créées sur la période par domaines d'action"
+    />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount
         v-for="item in items"
@@ -12,37 +16,43 @@
         display="count_percent"
       />
     </div>
-  </Box>
+  </BaseBox>
 </template>
 
 <script>
 import ListItemCount from '@/components/custom/ListItemCount.vue'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     ListItemCount,
-    BoxHeadingStatistics
+    BoxHeadingStatistics,
   },
-  data () {
+  data() {
     return {
       loading: true,
-      items: null
+      items: null,
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get('/statistics/missions-by-domaines', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.items = response.data
-    })
+  created() {
+    this.fetch()
   },
+
   computed: {
-    total () {
+    total() {
       return this.items ? this.items.reduce((acc, curr) => acc + curr.count, 0) : 0
-    }
-  }
-}
+    },
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      await apiFetch('/statistics/missions-by-domaines', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.items = response
+      })
+    },
+  },
+})
 </script>

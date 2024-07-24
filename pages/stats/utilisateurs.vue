@@ -1,86 +1,91 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Statistiques', to: '/stats' },
-          { text: 'Utilisateurs' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Utilisateurs' }]" />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Utilisateurs"
-    >
+    <BaseSectionHeading title="Utilisateurs">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
       <UtilisateursStatistics ref="utilisateursStatistics" />
-      <Heading as="h2" :level="2">
-        Les utilisateurs en détail
-      </Heading>
-      <UtilisateursByDate ref="utilisateursByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <UtilisateursByAge ref="utilisateursByAge" />
-          <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <TemoignagesByGrades ref="temoignagesByGrades" />
-          <UtilisateursByDomaines ref="utilisateursByDomaines" />
-          <!-- <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" /> -->
-        </div>
+      <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les utilisateurs en détail </BaseHeading>
+
+        <UtilisateursByPeriod ref="utilisateursByPeriod" />
+        <UtilisateursByAge ref="utilisateursByAge" />
+        <UtilisateursByActivities ref="utilisateursByActivities" />
+        <TemoignagesByGrades ref="temoignagesByGrades" />
+        <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
-import UtilisateursByDomaines from '@/components/statistics/UtilisateursByDomaines.vue'
+import UtilisateursByPeriod from '@/components/statistics/UtilisateursByPeriod.vue'
+import UtilisateursByActivities from '@/components/statistics/UtilisateursByActivities.vue'
 import UtilisateursByAge from '@/components/statistics/UtilisateursByAge.vue'
-// import ParticipationsCanceledByBenevoles from '@/components/statistics/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
 import TemoignagesByGrades from '@/components/statistics/TemoignagesByGrades.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FiltersStatisticsPublic,
     UtilisateursStatistics,
     UtilisateursByDate,
-    UtilisateursByDomaines,
+    UtilisateursByActivities,
     UtilisateursByAge,
-    // ParticipationsCanceledByBenevoles,
+    UtilisateursByPeriod,
     ParticipationsDelaysByRegistrations,
     TemoignagesByGrades,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics-public',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-public',
+    })
+  },
+  data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.utilisateursStatistics.$fetch()
-      this.$refs.utilisateursByDate.$fetch()
-      this.$refs.utilisateursByAge.$fetch()
-      // this.$refs.participationsCanceledByBenevoles.$fetch()
-      this.$refs.utilisateursByDomaines.$fetch()
-      this.$refs.participationsDelaysByRegistrations.$fetch()
-      this.$refs.temoignagesByGrades.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.utilisateursStatistics?.fetch()
+      this.$refs.utilisateursByDate?.fetch()
+      this.$refs.utilisateursByPeriod?.fetch()
+      this.$refs.utilisateursByAge?.fetch()
+      this.$refs.utilisateursByActivities?.fetch()
+      this.$refs.participationsDelaysByRegistrations?.fetch()
+      this.$refs.temoignagesByGrades?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

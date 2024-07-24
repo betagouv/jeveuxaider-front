@@ -1,18 +1,20 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerRule :rule-id="drawerRuleId" @close="drawerRuleId = null" @refetch="$fetch" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Paramètres' },
-          { text: 'Règles' }
-        ]"
-      />
-    </portal>
+    <DrawerRule :rule-id="drawerRuleId" @close="drawerRuleId = null" @refetch="fetch" />
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <DsfrBreadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Paramètres' },
+            { text: 'Règles' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'règle',
         'règles',
@@ -21,114 +23,102 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button icon="RiAddLine" @click="$router.push(`/admin/settings/rules/add`)">
+          <DsfrButton icon="RiAddLine" @click="$router.push(`/admin/settings/rules/add`)">
             Nouvelle règle
-          </Button>
+          </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
-        </Tag>
+        </DsfrTag> -->
 
-        <Tag
+        <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
           @click.native="changeFilter('filter[is_active]', 1)"
         >
           Active
-        </Tag>
+        </DsfrTag>
 
-        <Tag
+        <DsfrTag
           :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
           @click.native="changeFilter('filter[is_active]', 0)"
         >
           Inactive
-        </Tag>
+        </DsfrTag>
       </template>
     </SearchFilters>
 
-    <Table v-if="queryResult.total">
-      <TableHead>
-        <TableHeadCell>Nom</TableHeadCell>
-        <TableHeadCell>
-          Déclencheur
-        </TableHeadCell>
-        <TableHeadCell>
-          Action
-        </TableHeadCell>
-        <TableHeadCell>
-          Statut
-        </TableHeadCell>
-      </TableHead>
-      <TableBody>
-        <TableRow
+    <BaseTable v-if="queryResult.total">
+      <BaseTableHead>
+        <BaseTableHeadCell>Nom</BaseTableHeadCell>
+        <BaseTableHeadCell> Déclencheur </BaseTableHeadCell>
+        <BaseTableHeadCell> Action </BaseTableHeadCell>
+        <BaseTableHeadCell> Statut </BaseTableHeadCell>
+      </BaseTableHead>
+      <BaseTableBody>
+        <BaseTableRow
           v-for="rule in queryResult.data"
           :key="rule.id"
           class="cursor-pointer"
           @click.native="drawerRuleId = rule.id"
         >
-          <TableRowCell class="max-w-xl">
+          <BaseTableRowCell class="max-w-xl">
             <div class="font-medium text-gray-900 truncate">
               {{ rule.name }}
             </div>
-          </TableRowCell>
-          <TableRowCell>
-            <DsfrBadge
-              size="sm"
-              type="info"
-              no-icon
-              class="truncate"
-            >
-              {{ rule.event | label('rule_events') }}
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <DsfrBadge size="sm" type="info" no-icon class="truncate">
+              {{ $filters.label(rule.event, 'rule_events') }}
             </DsfrBadge>
-          </TableRowCell>
-          <TableRowCell>
-            <DsfrBadge
-              size="sm"
-              class="truncate"
-            >
-              {{ rule.action_key | label('rule_actions') }} : {{ rule.action_value }}
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <DsfrBadge size="sm" class="truncate">
+              {{ $filters.label(rule.action_key, 'rule_actions') }} :
+              {{ rule.action_value }}
             </DsfrBadge>
-          </TableRowCell>
-          <TableRowCell>
-            <RiCheckboxCircleLine v-if="rule.is_active" class="w-6 h-6 text-green-600 fill-current flex-none" />
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <RiCheckboxCircleLine
+              v-if="rule.is_active"
+              class="w-6 h-6 text-green-600 fill-current flex-none"
+            />
             <RiCloseCircleLine v-else class="w-6 h-6 text-gray-500 fill-current flex-none" />
-          </TableRowCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+          </BaseTableRowCell>
+        </BaseTableRow>
+      </BaseTableBody>
+    </BaseTable>
 
-    <Pagination
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
+
+    <DsfrPagination
       class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
@@ -140,33 +130,27 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import DrawerRule from '@/components/drawer/DrawerRule'
+import DrawerRule from '@/components/drawer/DrawerRule.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
-import Pagination from '@/components/dsfr/Pagination.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Tag from '@/components/dsfr/Tag.vue'
-import DsfrBadge from '@/components/dsfr/Badge.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     DrawerRule,
     SearchFilters,
-    Pagination,
-    Breadcrumb,
-    Button,
-    Tag,
-    DsfrBadge
   },
   mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/rules',
-      drawerRuleId: null
+      drawerRuleId: null,
     }
-  }
-}
+  },
+})
 </script>

@@ -1,110 +1,84 @@
 <template>
-  <Disclosure>
+  <BaseDisclosure v-if="$stores.aideModeration.isAICompliant === false">
     <template #button="{ isOpen }">
       <div class="flex font-semibold text-sm items-center group">
         <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-          <template v-if="loading">
+          <template v-if="$stores.aideModeration.loading">
             <LoadingIndicator>Analyse de l'organisation</LoadingIndicator>
           </template>
-          <template v-else>
+          <template v-else-if="$stores.aideModeration.isAICompliant === false">
             <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" />
             L'organisation ne semble pas conforme
           </template>
         </div>
         <div class="w-full border-t mt-1 mx-2" />
-        <template v-if="!loading">
-          <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-          <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+        <template v-if="!$stores.aideModeration.loading">
+          <RiIndeterminateCircleLine
+            v-if="isOpen"
+            class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+          />
+          <RiAddCircleLine
+            v-else
+            class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+          />
         </template>
       </div>
     </template>
-    <div v-if="response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
-      <p> Score de conformité : {{ score | formatNumber("0.[00]") }}%. <br>En dessous de 87%, la mission présente un risque.</p>
+    <div v-if="$stores.aideModeration.response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
+      <p>
+        Score de conformité : <strong>{{ $numeral(globalScore, '0.[00]') }}%</strong>. <br />En
+        dessous de 50%, la mission présente un risque.
+      </p>
       <template v-if="sentencesError.length > 0">
         <div>Les phrases détectées par le modèle :</div>
         <ul class="pl-5 space-y-4">
-          <li
-            v-for="sentence in sentencesError"
-            :key="sentence.key"
-            class="list-disc italic"
-          >
+          <li v-for="sentence in sentencesError" :key="sentence.key" class="list-disc italic">
             ... {{ sentence.text }} ...
           </li>
         </ul>
       </template>
       <div class="text-xs bg-gray-50 px-2 py-2 rounded">
-        <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline " />  Cette information vient de notre modèle d’intelligence artificielle, qui se base sur l’historique des missions signalées. Il s’agit d’un outil en test, une vérification humaine est nécessaire.
+        <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline" />
+        Cette information vient de notre modèle d’intelligence artificielle, qui se base sur
+        l’historique des missions signalées. Il s’agit d’un outil en test, une vérification humaine
+        est nécessaire.
       </div>
     </div>
-  </Disclosure>
+  </BaseDisclosure>
 </template>
 
 <script>
-import axios from 'axios'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
+import MixinAideModeration from '@/mixins/organisation-aide-moderation'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    LoadingIndicator
+    LoadingIndicator,
   },
+  mixins: [MixinAideModeration],
   props: {
     organisation: {
       type: Object,
-      required: true
-    }
-  },
-  data () {
-    return {
-      response: null,
-      loading: true
-    }
-  },
-  async fetch () {
-    this.loading = true
-    const { data: response } = await axios.post(this.$config.ai.organisationModerationUrl, {
-      text: this.textToAnalyze
-    })
-    this.response = response
-    if (this.response.global < 0.87) {
-      this.$emit('bad-score')
-    } else {
-      this.$emit('good-score')
-    }
-    this.loading = false
+      required: true,
+    },
   },
   computed: {
-    sentencesWithKeyAndScore () {
-      if (!this.response) {
+    sentencesWithKeyAndScore() {
+      if (!this.$stores.aideModeration.response) {
         return []
       }
-      return this.response.sentences.map((sentence, key) => ({ key, text: sentence, score: this.response.scores[key] }))
+      return this.$stores.aideModeration.response.sentences.map((sentence, key) => ({
+        key,
+        text: sentence,
+        score: this.$stores.aideModeration.response.scores[key],
+      }))
     },
-    sentencesSuccess () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score >= 0.95)
+    sentencesError() {
+      return this.sentencesWithKeyAndScore.filter((item) => item.score <= 0.8)
     },
-    sentencesWarning () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75 && item.score < 0.95)
+    globalScore() {
+      return this.$stores.aideModeration.response.global * 100
     },
-    sentencesError () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score <= 0.75)
-    },
-    otherSentences () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75).sort(function (a, b) {
-        return parseFloat(a.score) - parseFloat(b.score)
-      })
-    },
-    textToAnalyze () {
-      let text = this.organisation.name + '|' + this.organisation.description
-      text = text.replace(/<\/li>/g, '</li> | ')
-      text = text.replace(/<\/?[^>]+(>|$)/g, '')
-      return text
-    },
-    score () {
-      return this.response.global * 100
-    },
-    scoreMin () {
-      return this.response.scores.reduce((a, b) => Math.min(a, b)) * 100
-    }
-  }
-}
+  },
+})
 </script>

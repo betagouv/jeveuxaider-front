@@ -1,79 +1,71 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" @refetch="$fetch" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Contenus' },
-          { text: 'Domaines d\'action' }
-        ]"
-      />
-    </portal>
+    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" @refetch="fetch" />
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Contenus' },
+            { text: 'Domaines d\'action' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'domaine',
         'domaines d\'action',
         false
       )}`"
+      :loading="queryLoading"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/domaines/add`)">
+          <DsfrButton icon="RiAddLine" @click="$router.push(`/admin/contenus/domaines/add`)">
             Nouveau
-          </Button>
+          </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
-          :key="`toutes-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="deleteAllFilters"
-        >
-          Toutes
-        </Tag>
-
-        <Tag
+        <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[published]'] && $route.query['filter[published]'] == 'true'
+          "
           @click.native="changeFilter('filter[published]', 'true')"
         >
           En ligne
-        </Tag>
+        </DsfrTag>
 
-        <Tag
+        <DsfrTag
           :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[published]'] && $route.query['filter[published]'] == 'false'
+          "
           @click.native="changeFilter('filter[published]', 'false')"
         >
           Hors ligne
-        </Tag>
+        </DsfrTag>
       </template>
     </SearchFilters>
 
@@ -92,19 +84,18 @@
       >
         <template #footer>
           <div
-            class="border-t font-semibold  text-sm text-center py-4"
-            :class="[
-              domaine.published ? 'text-gray-900' : 'text-gray-400'
-            ]"
+            class="border-t font-semibold text-sm text-center py-4"
+            :class="[domaine.published ? 'text-gray-900' : 'text-gray-400']"
           >
             {{
-              domaine.places_left
-                | pluralize('bénévole recherché', 'bénévoles recherchés')
+              $filters.pluralize(domaine.places_left, 'bénévole recherché', 'bénévoles recherchés')
             }}
           </div>
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -118,37 +109,37 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerDomaine from '@/components/drawer/DrawerDomaine'
+import Card from '@/components/card/Card.vue'
+import DrawerDomaine from '@/components/drawer/DrawerDomaine.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Tag from '@/components/dsfr/Tag.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     Card,
     DrawerDomaine,
     SearchFilters,
     Pagination,
     Breadcrumb,
-    Button,
-    Tag
   },
   mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/domaines',
       queryParams: {
         include: 'banner',
-        append: 'places_left'
+        append: 'places_left',
       },
-      drawerDomaineId: null
+      drawerDomaineId: null,
     }
-  }
-}
+  },
+})
 </script>

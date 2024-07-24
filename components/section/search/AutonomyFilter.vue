@@ -1,32 +1,26 @@
 <template>
-  <Tag
+  <DsfrTag
     v-if="isPresentiel"
     v-tooltip="{
       content: 'Mission à réaliser de votre côté sans présence obligatoire.',
-      classes: 'theme-white',
-      hideOnTargetClick: true,
+      theme: 'white',
       placement: 'bottom',
-      offset: 8
+      distance: 8,
     }"
     as="button"
     size="md"
     context="selectable"
-    :is-selected="isAutonomy"
-    is-selected-class="border-gray-50 bg-gray-50"
+    :is-active="isAutonomy"
     @click.native="handleToggle"
   >
     En autonomie
-  </Tag>
+  </DsfrTag>
 </template>
 
 <script>
 import MixinAutonomyFilter from '@/mixins/search/mission/autonomy-filter'
-import Tag from '@/components/dsfr/Tag.vue'
 
-export default {
-  components: {
-    Tag
-  },
-  mixins: [MixinAutonomyFilter]
-}
+export default defineNuxtComponent({
+  mixins: [MixinAutonomyFilter],
+})
 </script>

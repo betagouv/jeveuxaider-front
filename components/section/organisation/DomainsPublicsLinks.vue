@@ -3,31 +3,23 @@
     <!-- DOMAINES -->
     <template v-if="organisation.domaines">
       <div class="flex items-center mb-4">
-        <p class="flex-none uppercase font-bold text-sm mr-4">
-          Causes défendues
-        </p>
-        <hr class="w-full border-white opacity-25">
+        <p class="flex-none uppercase font-bold text-sm mr-4">Causes défendues</p>
+        <hr class="w-full border-white opacity-25" />
       </div>
 
-      <p v-if="!organisation.domaines.length">
-        Non renseigné
-      </p>
+      <p v-if="!organisation.domaines.length">Non renseigné</p>
 
       <ul v-else class="grid md:grid-cols-2 gap-3 xl:gap-x-6">
-        <li
-          v-for="domaine in organisation.domaines"
-          :key="domaine.id"
-          class="flex items-start"
-        >
+        <li v-for="domaine in organisation.domaines" :key="domaine.id" class="flex items-start">
           <div class="flex-none w-6 h-6 mr-3">
             <img
-              :src="$options.filters.label(domaine.id, 'domaines', 'icon')"
+              :src="$filters.label(domaine.id, 'domaines', 'icon')"
               alt=""
               width="24"
               height="24"
-            >
+            />
           </div>
-          <div>{{ $options.filters.label(domaine.id, 'domaines') }}</div>
+          <div>{{ $filters.label(domaine.id, 'domaines') }}</div>
         </li>
       </ul>
     </template>
@@ -35,37 +27,25 @@
     <!-- PUBLICS -->
     <template v-if="organisation.publics_beneficiaires">
       <div class="flex items-center mb-4 mt-8">
-        <p class="flex-none uppercase font-bold text-sm mr-4">
-          Bénéficiaires
-        </p>
-        <hr class="w-full border-white opacity-25">
+        <p class="flex-none uppercase font-bold text-sm mr-4">Bénéficiaires</p>
+        <hr class="w-full border-white opacity-25" />
       </div>
 
-      <p v-if="!organisation.publics_beneficiaires.length">
-        Non renseigné
-      </p>
+      <p v-if="!organisation.publics_beneficiaires.length">Non renseigné</p>
 
-      <ul
-        v-else
-        class="space-y-3"
-      >
+      <ul v-else class="space-y-3">
         <li
-          v-for="(
-            public_beneficiaire, key
-          ) in organisation.publics_beneficiaires"
+          v-for="(public_beneficiaire, key) in organisation.publics_beneficiaires"
           :key="key"
           class="flex items-center"
         >
-          <div
+          <!-- <div
             class="public-wrapper w-6 h-6 mr-3 flex items-center justify-center"
             v-html="iconPublicType(public_beneficiaire)"
-          />
+          /> -->
 
           <div>
-            {{
-              public_beneficiaire
-                | label('mission_publics_beneficiaires')
-            }}
+            {{ $filters.label(public_beneficiaire, 'mission_publics_beneficiaires') }}
           </div>
         </li>
       </ul>
@@ -75,16 +55,14 @@
     <template
       v-if="
         organisation.website ||
-          organisation.facebook ||
-          organisation.twitter ||
-          organisation.instagram
+        organisation.facebook ||
+        organisation.twitter ||
+        organisation.instagram
       "
     >
       <div class="flex items-center mb-4 mt-8">
-        <div class="flex-none uppercase font-bold text-sm mr-4">
-          En savoir plus
-        </div>
-        <hr class="w-full border-white opacity-25">
+        <div class="flex-none uppercase font-bold text-sm mr-4">En savoir plus</div>
+        <hr class="w-full border-white opacity-25" />
       </div>
 
       <div class="flex -m-1">
@@ -94,11 +72,7 @@
           class="m-1 hover:scale-110 transform transition will-change-transform !outline-none focus-within:ring border border-white rounded-full w-10 h-10 flex items-center justify-center"
           @click="goTo(organisation.website)"
         >
-          <img
-            class="flex-none"
-            src="/images/icons/link.svg"
-            :alt="organisation.name"
-          >
+          <img class="flex-none" src="/images/icons/link.svg" :alt="organisation.name" />
         </button>
 
         <!-- FACEBOOK -->
@@ -107,11 +81,7 @@
           class="m-1 hover:scale-110 transform transition will-change-transform !outline-none focus-within:ring border border-white rounded-full w-10 h-10 flex items-center justify-center"
           @click="goTo(organisation.facebook)"
         >
-          <img
-            class="flex-none"
-            src="/images/icons/facebook.svg"
-            alt="Facebook"
-          >
+          <img class="flex-none" src="/images/icons/facebook.svg" alt="Facebook" />
         </button>
 
         <!-- TWITTER -->
@@ -120,11 +90,7 @@
           class="m-1 hover:scale-110 transform transition will-change-transform !outline-none focus-within:ring border border-white rounded-full w-10 h-10 flex items-center justify-center"
           @click="goTo(organisation.twitter)"
         >
-          <img
-            class="flex-none"
-            src="/images/icons/twitter.svg"
-            alt="twitter"
-          >
+          <img class="flex-none" src="/images/icons/twitter.svg" alt="twitter" />
         </button>
 
         <!-- INSTAGRAM -->
@@ -133,11 +99,7 @@
           class="m-1 hover:scale-110 transform transition will-change-transform !outline-none focus-within:ring border border-white rounded-full w-10 h-10 flex items-center justify-center"
           @click="goTo(organisation.instagram)"
         >
-          <img
-            class="flex-none"
-            src="/images/icons/instagram.svg"
-            alt="instagram"
-          >
+          <img class="flex-none" src="/images/icons/instagram.svg" alt="instagram" />
         </button>
       </div>
     </template>
@@ -145,16 +107,15 @@
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
   props: {
     organisation: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
-    iconPublicType (publicType) {
+    iconPublicType(publicType) {
       switch (publicType) {
         case 'seniors':
           return require('@/static/images/icons/personnes_agees.svg?raw')
@@ -187,11 +148,11 @@ export default {
           return require('@/static/images/icons/tous_public.svg?raw')
       }
     },
-    goTo (url) {
+    goTo(url) {
       window.open(url, '_blank')
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -1,51 +1,52 @@
 <template>
-  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 lg:gap-12">
-    <div class="max-w-4xl">
-      <div v-if="secondaryTitle" class="text-xl text-gray-600">
-        {{ secondaryTitle }}
-      </div>
-      <div class="flex space-x-4 items-center">
-        <Heading as="h1" size="2xl">
-          {{ title }}
-        </Heading>
-        <LoadingIndicator v-if="loading" />
-      </div>
+  <div>
+    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 lg:gap-12">
+      <div class="max-w-4xl">
+        <div v-if="secondaryTitle" class="text-xl text-gray-600">
+          {{ secondaryTitle }}
+        </div>
+        <div class="flex space-x-4 items-center">
+          <DsfrHeading as="h1" size="2xl">
+            {{ title }}
+          </DsfrHeading>
+          <LoadingIndicator v-if="loading" />
+        </div>
 
-      <slot name="tags" />
-      <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-lg lg:text-xl">
-        {{ secondaryTitleBottom }}
+        <slot name="tags" />
+        <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-lg lg:text-xl">
+          {{ secondaryTitleBottom }}
+        </div>
       </div>
+      <slot name="action" />
     </div>
-    <slot name="action" />
+    <slot name="bottom" />
   </div>
 </template>
 
 <script>
-import Heading from '@/components/dsfr/Heading.vue'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Heading,
-    LoadingIndicator
+    LoadingIndicator,
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     secondaryTitle: {
       type: String,
-      default: null
+      default: null,
     },
     secondaryTitleBottom: {
       type: String,
-      default: null
+      default: null,
     },
     loading: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+})
 </script>

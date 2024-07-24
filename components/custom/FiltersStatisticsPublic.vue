@@ -1,18 +1,19 @@
 <template>
   <div>
     <div class="flex gap-4">
-      <Combobox
+      <BaseCombobox
         v-if="filters.includes('department')"
         v-model="form.department"
         name="department"
         placeholder="Tous les départements"
-        :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-        @input="onChanged"
+        :options="
+          $labels.departments.map((option) => {
+            return { key: option.key, label: `${option.key} - ${option.label}` }
+          })
+        "
+        @update:modelValue="onChanged"
       />
-      <DaterangePicker
-        v-if="filters.includes('daterange')"
-        @changed="onChangedDaterange"
-      />
+      <DaterangePicker v-if="filters.includes('daterange')" @changed="onChangedDaterange" />
     </div>
   </div>
 </template>
@@ -20,33 +21,35 @@
 <script>
 import DaterangePicker from '@/components/custom/DaterangePicker.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    DaterangePicker
+    DaterangePicker,
   },
   props: {
     filters: {
       type: Array,
       default: () => {
         return ['department', 'daterange']
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
-      form: { ...this.$store.state.statistics.params }
+      form: { ...this.$stores.statistics.params },
     }
   },
   methods: {
-    onChangedDaterange (payload) {
-      this.$store.commit('statistics/setParams', { ...this.form, ...payload })
+    onChangedDaterange(payload) {
+      this.form = { ...this.form, ...payload }
+      this.$stores.statistics.setParams({ ...this.form })
       this.$emit('refetch')
     },
-    onChanged () {
-      this.$store.commit('statistics/setParams', { ...this.form })
+    onChanged() {
+      this.$stores.statistics.setParams({ ...this.form })
+      // console.log('onChanged', { ...this.form })
       this.$emit('refetch')
-    }
-  }
-}
+    },
+  },
+})
 </script>

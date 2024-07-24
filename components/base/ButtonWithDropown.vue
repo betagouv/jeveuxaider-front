@@ -7,7 +7,7 @@
     >
       <slot name="buttonText" />
     </button>
-    <span v-click-outside="() => show = false" class="-ml-px relative block">
+    <span v-click-outside="() => (show = false)" class="-ml-px relative block">
       <button
         id="option-menu-button"
         type="button"
@@ -17,15 +17,15 @@
         @click="show = !show"
       >
         <span class="sr-only">Open options</span>
-        <ChevronDownSolidIcon class="h-5 w-5" />
+        <RiArrowDownSLine class="h-5 w-5" />
       </button>
 
       <transition
         enter-active-class="transition ease-out duration-100"
-        enter-class="transform opacity-0 scale-95"
+        enter-from-class="transform opacity-0 scale-95"
         enter-to-class="transform opacity-100 scale-100"
         leave-active-class="transition ease-in duration-75"
-        leave-class="transform opacity-100 scale-100"
+        leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
       >
         <div
@@ -46,24 +46,22 @@
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
   props: {
     buttonClick: {
       type: Function,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      show: false
+      show: false,
     }
   },
   methods: {
-    close () {
+    close() {
       this.show = false
-    }
-  }
-
-}
+    },
+  },
+})
 </script>

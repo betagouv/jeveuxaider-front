@@ -2,52 +2,53 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Administration', to: '/admin' },
         { text: 'Contenus' },
         { text: 'Territoires', to: `/admin/contenus/territoires` },
-        { text: 'Nouveau territoire' }
+        { text: 'Nouveau territoire' },
       ]"
     />
     <div class="pb-6">
-      <SectionHeading title="Création d'un nouveau territoire">
+      <BaseSectionHeading title="Création d'un nouveau territoire">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
+            <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
               Enregistrer
-            </Button>
+            </BaseButton>
           </div>
         </template>
-      </Sectionheading>
+      </BaseSectionHeading>
 
-      <FormTerritoire
-        ref="form"
-        class="my-8"
-      />
+      <FormTerritoire ref="form" class="my-8" />
     </div>
   </div>
 </template>
 
 <script>
-import FormTerritoire from '~/components/form/FormTerritoire'
+import FormTerritoire from '@/components/form/FormTerritoire.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: { FormTerritoire, Breadcrumb },
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

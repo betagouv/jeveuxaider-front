@@ -1,25 +1,28 @@
 <template>
-  <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
+  <BaseSelectWithDescription
+    :options="statesAvailable"
+    :modelValue="modelValue"
+    @selected="$emit('selected', $event)"
+  />
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
+  emits: ['selected'],
   props: {
-    value: {
+    modelValue: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   computed: {
-    statesAvailable () {
-      const toStates = this.$options.filters.label(this.value, 'territoire_workflow_states', 'to')
-      return this.$labels.territoire_workflow_states.filter(state => toStates.includes(state.key))
-    }
-  }
-}
+    statesAvailable() {
+      const toStates = this.$filters.label(this.modelValue, 'territoire_workflow_states', 'to')
+      return this.$labels.territoire_workflow_states.filter((state) => toStates.includes(state.key))
+    },
+  },
+})
 </script>

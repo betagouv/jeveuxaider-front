@@ -5,39 +5,39 @@
         {{ title }}
       </div>
     </div>
-    <Box :variant="boxVariant" :padding="boxPadding">
-      <DescriptionList>
-        <DescriptionListItem term="Source" :description="model.utm_source" />
-        <DescriptionListItem term="Campaign" :description="model.utm_campaign" />
-        <DescriptionListItem term="Medium" :description="model.utm_medium" />
-      </DescriptionList>
-    </Box>
+    <BaseBox :variant="boxVariant" :padding="boxPadding">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem term="Source" :description="model.utm_source" />
+        <BaseDescriptionListItem term="Campaign" :description="model.utm_campaign" />
+        <BaseDescriptionListItem term="Medium" :description="model.utm_medium" />
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     model: {
       type: Object,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      default: 'UTM'
+      default: 'UTM',
     },
     showTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     boxVariant: {
       type: [String],
-      default: 'flat'
+      default: 'flat',
     },
     boxPadding: {
       type: [String, Boolean],
-      default: 'xs'
-    }
-  }
-}
+      default: 'xs',
+    },
+  },
+})
 </script>

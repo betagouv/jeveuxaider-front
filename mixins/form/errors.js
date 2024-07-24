@@ -1,39 +1,55 @@
-import Toast from '@/components/base/Toast'
+import Toast from '@/components/Toast.vue'
+import { useToast } from 'vue-toastification'
 
 export default {
-  data () {
+  data() {
     return {
-      errors: {}
+      errors: {},
     }
   },
   methods: {
-    setErrors (errors, showToast = true) {
+    setErrors(errors, showToast = true) {
       this.resetErrors()
       errors?.inner?.forEach((error) => {
-        this.$set(this.errors, error.path, error.message)
+        this.errors[error.path] = error.message
       })
       if (showToast && errors.errors) {
-        this.$toast.error({
+        const toast = useToast()
+        toast.error({
           component: Toast,
           props: {
             message: 'Merci de corriger les éléments suivants',
-            errors: errors.errors
-          }
+            errors: errors.errors,
+          },
         })
       }
     },
-    resetErrors () {
+    resetErrors() {
       this.errors = {}
     },
-    validate (field) {
+    isValid(field) {
+      return this.formSchema.isValid(field)
+    },
+    validate(field) {
       this.formSchema
         .validateAt(field, this.form)
         .then(() => {
-          this.$delete(this.errors, field)
+          this.errors[field] = ''
         })
         .catch((error) => {
-          this.$set(this.errors, field, error.message)
+          this.errors[field] = error.message
         })
-    }
-  }
+    },
+    stringContainsEmail(string) {
+      return /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/is.test(string)
+    },
+    stringContainsUrl(string) {
+      return /(http|ftp|mailto|www)/.test(string)
+    },
+    stringContainsPhone(string) {
+      return /(?:(?:(?:\+|00)33[ ]?(?:\(0\)[ ]?)?)|0){1}[1-9]{1}([ .-]?)(?:\d{2}\1?){3}\d{2}/.test(
+        string
+      )
+    },
+  },
 }

@@ -1,8 +1,8 @@
 <template>
-  <client-only>
+  <ClientOnly>
     <Doughnut
-      :chart-options="chartOptions"
-      :chart-data="chartData"
+      :options="chartOptions"
+      :data="chartData"
       :chart-id="chartId"
       :dataset-id-key="datasetIdKey"
       :plugins="plugins"
@@ -11,60 +11,74 @@
       :width="width"
       :height="height"
     />
-  </client-only>
+  </ClientOnly>
 </template>
 
 <script>
+import { Doughnut } from 'vue-chartjs'
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+} from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-export default {
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, ChartDataLabels)
+
+export default defineNuxtComponent({
+  components: {
+    Doughnut,
+  },
   name: 'DoughnutChart',
   props: {
     chartId: {
       type: String,
-      default: 'doughnut-chart'
+      default: 'doughnut-chart',
     },
     datasetIdKey: {
       type: String,
-      default: 'label'
+      default: 'label',
     },
     width: {
       type: Number,
-      default: 400
+      default: 400,
     },
     height: {
       type: Number,
-      default: 400
+      default: 400,
     },
     cssClasses: {
       default: '',
-      type: String
+      type: String,
     },
     styles: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     plugins: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     chartData: {
       type: Object,
-      default: null
+      default: null,
     },
     chartOptions: {
       type: Object,
       default: () => {
         return {
           responsive: false,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
         }
-      }
-    }
+      },
+    },
   },
-  data () {
-    return {
-
-    }
-  }
-}
+  data() {
+    return {}
+  },
+})
 </script>

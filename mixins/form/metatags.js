@@ -1,13 +1,15 @@
 export default {
-  created () {
+  created() {
     if (!this.form.metatags) {
-      this.$set(this.form, 'metatags', { properties: {} })
+      this.form.metatags = { properties: {} }
     }
   },
   methods: {
-    handleMetatags (modelType, modelId) {
+    handleMetatags(modelType, modelId) {
       this.trimAllProperties()
-      const isAllPropertiesEmpty = Object.values(this.form.metatags.properties).every(x => x === null || x === '')
+      const isAllPropertiesEmpty = Object.values(this.form.metatags.properties).every(
+        (x) => x === null || x === ''
+      )
 
       if (!this.form.metatags.id && !isAllPropertiesEmpty) {
         this.addMetatags(modelType, modelId)
@@ -17,20 +19,29 @@ export default {
         isAllPropertiesEmpty ? this.deleteMetatags() : this.updateMetatags()
       }
     },
-    async addMetatags (modelType, modelId) {
-      await this.$axios.post(`${modelType}/${modelId}/metatags`, this.form.metatags)
+    async addMetatags(modelType, modelId) {
+      await apiFetch(`${modelType}/${modelId}/metatags`, {
+        method: 'POST',
+        body: this.form.metatags,
+      })
     },
-    async deleteMetatags () {
-      await this.$axios.delete(`metatags/${this.form.metatags.id}`)
+    async deleteMetatags() {
+      await apiFetch(`metatags/${this.form.metatags.id}`, {
+        method: 'DELETE',
+      })
     },
-    async updateMetatags () {
-      await this.$axios.put(`/metatags/${this.form.metatags.id}`, this.form.metatags)
+    async updateMetatags() {
+      await apiFetch(`/metatags/${this.form.metatags.id}`, {
+        method: 'PUT',
+        body: this.form.metatags,
+      })
     },
-    trimAllProperties () {
-      const trimmedProperties = Object.keys(this.form.metatags.properties).forEach(
-        (key) => { this.form.metatags.properties[key] = this.form.metatags.properties[key].trim() }
-      )
-      this.$set(this.form, 'metatags.properties', trimmedProperties)
-    }
-  }
+    trimAllProperties() {
+      if (!!this.form.metatags.properties) {
+        Object.keys(this.form.metatags.properties).forEach((key) => {
+          this.form.metatags.properties[key] = this.form.metatags.properties[key].trim()
+        })
+      }
+    },
+  },
 }

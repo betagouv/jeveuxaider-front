@@ -1,17 +1,23 @@
 <template>
-  <nav v-if="totalRows" role="navigation" class="fr-pagination flex" aria-label="Pagination">
-    <div class="flex-1">
+  <nav
+    v-if="totalRows"
+    role="navigation"
+    class="fr-pagination flex"
+    aria-label="Pagination"
+    :class="[{ 'flex justify-end': align === 'right' }]"
+  >
+    <div :class="[{ 'flex-1': variant === 'full' }]">
       <button
         :class="[
           'fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label',
-          {'!text-[#929292] pointer-events-none': currentPage === 1}
+          { '!text-[#929292] pointer-events-none': currentPage === 1 },
         ]"
         :aria-disabled="currentPage === 1"
         :disabled="currentPage === 1"
         role="link"
-        @click="$emit('page-change', currentPage - 1)"
+        @click="onPageChange(currentPage - 1)"
       >
-        Précédent
+        <template v-if="variant === 'full'"> Précédent </template>
       </button>
     </div>
 
@@ -21,7 +27,7 @@
           class="fr-pagination__link !hidden md:!inline"
           :aria-current="currentPage === 1"
           title="Page 1"
-          @click="$emit('page-change', 1)"
+          @click="onPageChange(1)"
         >
           1
         </button>
@@ -38,11 +44,11 @@
         v-for="page in pages"
         :key="page"
         class="fr-pagination__link"
-        :class="{'!hidden md:!inline': !mobileVisiblePages.includes(page)}"
+        :class="{ '!hidden md:!inline': !mobileVisiblePages.includes(page) }"
         :title="`Page ${page}`"
         :aria-current="currentPage === page"
         :disabled="currentPage === page"
-        @click="$emit('page-change', page)"
+        @click="onPageChange(page)"
       >
         {{ page }}
       </button>
@@ -59,25 +65,25 @@
           class="fr-pagination__link !hidden md:!inline"
           :aria-current="currentPage === totalPages"
           :title="`Page ${totalPages}`"
-          @click="$emit('page-change', totalPages)"
+          @click="onPageChange(totalPages)"
         >
           {{ totalPages }}
         </button>
       </template>
     </div>
 
-    <div class="flex-1 flex justify-end">
+    <div class="flex justify-end" :class="[{ 'flex-1': variant === 'full' }]">
       <button
         :class="[
           'fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label',
-          {'!text-[#929292] pointer-events-none': currentPage >= (totalRows / perPage)}
+          { '!text-[#929292] pointer-events-none': currentPage >= totalRows / perPage },
         ]"
         role="link"
-        :aria-disabled="currentPage >= (totalRows / perPage)"
-        :disabled="currentPage >= (totalRows / perPage)"
-        @click="$emit('page-change', currentPage + 1)"
+        :aria-disabled="currentPage >= totalRows / perPage"
+        :disabled="currentPage >= totalRows / perPage"
+        @click="onPageChange(currentPage + 1)"
       >
-        Suivant
+        <template v-if="variant === 'full'"> Suivant </template>
       </button>
     </div>
   </nav>
@@ -86,44 +92,56 @@
 <script>
 import '@gouvfr/dsfr/dist/component/pagination/pagination.main.min.css'
 
-export default {
+export default defineNuxtComponent({
   props: {
+    variant: {
+      type: String,
+      default: 'full',
+    },
+    align: {
+      type: String,
+      default: 'center',
+    },
     currentPage: {
       default: 1,
-      type: [Number, String]
+      type: [Number, String],
     },
     totalRows: {
       default: 0,
-      type: [Number, String]
+      type: [Number, String],
     },
     perPage: {
       default: 15,
-      type: Number
+      type: Number,
     },
     maxPages: {
       default: 5,
-      type: Number
+      type: Number,
     },
     withFirstPage: {
       type: Boolean,
-      default: true
+      default: true,
     },
     withLastPage: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
+    anchorContentId: {
+      type: String,
+      default: 'contenuprincipal',
+    },
   },
   computed: {
-    totalPages () {
+    totalPages() {
       return Math.ceil(this.totalRows / this.perPage)
     },
-    maxPagesBeforeCurrentPage () {
+    maxPagesBeforeCurrentPage() {
       return Math.floor(this.maxPages / 2)
     },
-    maxPagesAfterCurrentPage () {
+    maxPagesAfterCurrentPage() {
       return Math.ceil(this.maxPages / 2) - 1
     },
-    startPage () {
+    startPage() {
       let startPage = 1
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
         return startPage
@@ -136,9 +154,9 @@ export default {
       }
       return startPage <= 0 ? 1 : startPage
     },
-    endPage () {
+    endPage() {
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
-        if ((this.totalRows / this.perPage) < this.maxPages) {
+        if (this.totalRows / this.perPage < this.maxPages) {
           return Math.ceil(this.totalRows / this.perPage)
         }
         return this.maxPages
@@ -150,16 +168,18 @@ export default {
         return this.currentPage + this.maxPagesAfterCurrentPage
       }
     },
-    pages () {
-      return Array.from(Array((this.endPage + 1) - this.startPage).keys()).map(i => this.startPage + i)
+    pages() {
+      return Array.from(Array(this.endPage + 1 - this.startPage).keys()).map(
+        (i) => this.startPage + i
+      )
     },
-    showFirstPage () {
+    showFirstPage() {
       return this.maxPages - this.endPage < 0
     },
-    showLastPage () {
+    showLastPage() {
       return this.endPage - this.totalPages < 0
     },
-    mobileVisiblePages () {
+    mobileVisiblePages() {
       if (this.currentPage === 1) {
         return [1, 2, 3]
       }
@@ -168,16 +188,30 @@ export default {
       }
 
       return [this.currentPage - 1, this.currentPage, this.currentPage + 1]
-    }
-  }
-}
+    },
+  },
+  methods: {
+    onPageChange(page) {
+      this.$emit('page-change', page)
+      window.scrollTo({
+        top: document.getElementById(this.anchorContentId)?.offsetTop ?? 0,
+      })
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
 .fr-pagination__link {
-  @apply hover:bg-[#F6F6F6] active:bg-[#EDEDED];
+  @apply hover:underline;
 }
-.fr-pagination__link[aria-current] {
+.fr-pagination__link[aria-current='true'] {
   @apply text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900;
+}
+
+/* override */
+.fr-pagination__link[aria-current]:not([href]) {
+  cursor: pointer;
+  pointer-events: initial;
 }
 </style>

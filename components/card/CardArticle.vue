@@ -5,52 +5,49 @@
     <div class="thumbnail--wrapper relative">
       <img
         v-if="article.media"
-        v-lazy-load
         :src="article.media.media_details.sizes.medium_large.source_url"
         :alt="article.title.rendered"
         class="w-full h-full object-cover"
         width="325"
         height="180"
-      >
+      />
 
       <div class="custom-gradient absolute inset-0" />
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
       <div v-if="article.categories.length" class="mb-4 flex flex-wrap gap-2">
-        <Tag v-for="categoryId in article.categories" :key="categoryId">
+        <DsfrTag v-for="categoryId in article.categories" :key="categoryId">
           {{ category(categoryId) }}
-        </Tag>
+        </DsfrTag>
       </div>
 
-      <Heading as="h3" size="xs" class="line-clamp-3 mb-auto" :title="$options.filters.decodeHTMLEntities(article.title.rendered)">
-        {{ article.title.rendered | decodeHTMLEntities }}
-      </Heading>
+      <DsfrHeading
+        as="h3"
+        size="xs"
+        class="line-clamp-3 mb-auto"
+        :title="$filters.decodeHTMLEntities(article.title.rendered)"
+      >
+        {{ $filters.decodeHTMLEntities(article.title.rendered) }}
+      </DsfrHeading>
 
       <div class="text-gray-600 text-base mt-4 line-clamp-2">
-        {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
+        {{ $filters.decodeHTMLEntities($filters.stripHTML(article.excerpt.rendered)) }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Tag from '@/components/dsfr/Tag.vue'
-import Heading from '@/components/dsfr/Heading.vue'
-
-export default {
-  components: {
-    Tag,
-    Heading
-  },
+export default defineNuxtComponent({
   props: {
     article: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   methods: {
-    category (id) {
+    category(id) {
       switch (id) {
         case 2:
           return 'Actualité'
@@ -65,9 +62,9 @@ export default {
         default:
           return id
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -92,10 +89,6 @@ export default {
 }
 
 .custom-gradient {
-  background: linear-gradient(
-    183.3deg,
-    rgba(0, 0, 0, 0) 80%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
+  background: linear-gradient(183.3deg, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0.7) 100%);
 }
 </style>

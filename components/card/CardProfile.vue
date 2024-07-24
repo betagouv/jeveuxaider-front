@@ -1,11 +1,12 @@
 <template>
-  <div
-    class="shadow-xl bg-white overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl"
-  >
-    <div class="relative bg-cover pt-9 pb-5 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
+  <div class="shadow-xl bg-white overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl">
+    <div
+      class="relative bg-cover pt-9 pb-5 px-6 text-white"
+      style="background-image: url('/images/profiles/bg-card-profile.jpg')"
+    >
       <div class="flex space-x-3 items-center">
-        <Avatar
-          :img-srcset="profile.avatar ? profile.avatar.urls.thumbLarge: null"
+        <BaseAvatar
+          :img-srcset="profile.avatar ? profile.avatar.urls.thumbLarge : null"
           :img-src="profile.avatar ? profile.avatar.urls.original : null"
           background-color="white"
           class="shadow-lg"
@@ -17,7 +18,7 @@
             {{ profile.full_name }}
           </div>
           <div class="text-sm">
-            {{ profile.type | label('profile_type') }}
+            {{ $filters.label(profile.type, 'profile_type') }}
           </div>
         </div>
       </div>
@@ -26,32 +27,31 @@
         <span>📍</span> {{ profile.zip ? profile.zip : 'Non communiqué' }}
       </div>
 
-      <div
-        class="absolute top-0 flex justify-center inset-x-0"
-      >
+      <div class="absolute top-0 flex justify-center inset-x-0">
         <div v-if="profile.user" class="pill">
-          {{ $options.filters.label(profile.user.context_role, 'role') }}
+          {{ $filters.label(profile.user.context_role, 'roles') }}
         </div>
       </div>
     </div>
 
     <div class="border-t px-6 py-4 text-sm font-bold">
       <span class="text-gray-400">Der. connexion : </span>
-      <span class="font-bold">{{ profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : 'Jamais' }}</span>
+      <span class="font-bold">{{
+        profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : 'Jamais'
+      }}</span>
     </div>
   </div>
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
   props: {
     profile: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

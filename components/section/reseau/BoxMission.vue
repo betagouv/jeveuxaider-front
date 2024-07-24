@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
-        Missions
-      </div>
-      <Link :to="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`" icon="ChevronRightIcon">
+      <div class="uppercase font-semibold text-gray-600">Missions</div>
+      <BaseLink
+        :to="`/admin/missions?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
+        icon="RiArrowRightSLine"
+      >
         Consulter
-      </Link>
+      </BaseLink>
     </div>
-    <Box variant="flat" padding="xs" :loading="!stats">
+    <BaseBox variant="flat" padding="xs" :loading="!stats">
       <template v-if="stats">
         <div class="flex items-center">
           <div class="text-4xl font-semibold pr-4">
@@ -16,35 +17,41 @@
           </div>
           <div>
             <div class="font-semibold">
-              {{ stats.missions_actives | pluralize('mission', 'missions', false) }} en ligne
+              {{ $filters.pluralize(stats.missions_actives, 'mission', 'missions', false) }}
+              en ligne
             </div>
             <div class="text-gray-500 -mt-1">
-              sur {{ stats.missions| pluralize('mission') }}
+              sur {{ $filters.pluralize(stats.missions, 'mission') }}
             </div>
           </div>
         </div>
         <template v-if="stats.missions_state['En attente de validation'] > 0">
           <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-          <nuxt-link :to="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}&filter[state]=En attente de validation`" class="flex justify-center items-center text-sm text-jva-orange-500 font-medium hover:underline">
-            {{ stats.missions_state['En attente de validation']| pluralize('mission') }} en attente de validation <ChevronRightIcon class="h-3 w-3 ml-2" />
+          <nuxt-link
+            no-prefetch
+            :to="`/admin/missions?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}&filter[state]=En attente de validation`"
+            class="flex justify-center items-center text-sm text-jva-orange-500 font-medium hover:underline"
+          >
+            {{ $filters.pluralize(stats.missions_state['En attente de validation'], 'mission') }}
+            en attente de validation <RiArrowRightLine class="h-3 w-3 ml-2" />
           </nuxt-link>
         </template>
       </template>
-    </Box>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     reseau: {
       type: Object,
-      required: true
+      required: true,
     },
     stats: {
       type: Object,
-      default: null
-    }
-  }
-}
+      default: null,
+    },
+  },
+})
 </script>

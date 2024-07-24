@@ -1,8 +1,9 @@
 <template>
   <div>
-    <Heading as="h2" size="sm" class="mb-6">
-      Suivez-nous <br class="hidden lg:block"> sur les réseaux sociaux
-    </Heading>
+    <DsfrHeading as="h2" size="sm" class="mb-6">
+      Suivez-nous <br class="hidden lg:block" />
+      sur les réseaux sociaux
+    </DsfrHeading>
 
     <div class="flex justify-between -mx-2">
       <a
@@ -20,42 +21,37 @@
 </template>
 
 <script>
-import Heading from '@/components/dsfr/Heading.vue'
-
-export default {
-  components: {
-    Heading
-  },
-  data () {
+export default defineNuxtComponent({
+  data() {
     return {
       socialMedias: [
         {
           name: 'Twitter',
           icon: 'RiTwitterFill',
-          url: 'https://twitter.com/ReserveCivique'
+          url: 'https://twitter.com/ReserveCivique',
         },
         {
           name: 'Linkedin',
           icon: 'RiLinkedinBoxFill',
-          url: 'https://fr.linkedin.com/company/jeveuxaider-gouv-fr'
+          url: 'https://fr.linkedin.com/company/jeveuxaider-gouv-fr',
         },
         {
           name: 'Facebook',
           icon: 'RiFacebookCircleFill',
-          url: 'https://fr-fr.facebook.com/jeveuxaider.gouv.fr/'
+          url: 'https://fr-fr.facebook.com/jeveuxaider.gouv.fr/',
         },
         {
           name: 'Instagram',
           icon: 'RiInstagramFill',
-          url: 'https://www.instagram.com/jeveuxaider_gouv/?hl=fr'
-        }
+          url: 'https://www.instagram.com/jeveuxaider_gouv/?hl=fr',
+        },
         // {
         //   name: 'Youtube',
         //   icon: 'RiYoutubeFill',
         //   url: ''
         // }
-      ]
+      ],
     }
-  }
-}
+  },
+})
 </script>

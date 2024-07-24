@@ -1,41 +1,51 @@
 <template>
   <div>
-    <!-- <div v-if="nextDates" class="flex items-center text-sm cursor-pointer text-gray-600" @click="$emit('back')">
-      <ChevronLeftIcon class="mr-1 h-4 w-4" /> Retour
-    </div> -->
-    <div class="text-center mb-6">
-      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
-        Proposez votre aide
-      </Heading>
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Proposez votre aide </DsfrHeading>
       <div
-        v-if="$store.state.softGate.selectedMission"
-        class="text-cool-gray-500 text-lg lg:text-xl max-w-md mx-auto"
+        v-if="$stores.softGate.selectedMission"
+        class="text-cool-gray-500 lg:text-lg max-w-md mx-auto"
       >
-        Vous allez être mis en relation avec
-        <span class="font-bold">{{ $store.state.softGate.selectedMission.responsable.first_name }}</span>,
-        responsable de la mission chez
-        <span class="font-bold">{{ $store.state.softGate.selectedMission.structure.name }}</span>.
+        Envoyez vos motivations et questions à
+        <span class="font-bold">
+          {{
+            $stores.softGate.selectedMission.responsables.map((r) => r.secret_name).join(', ')
+          }}</span
+        >,
+        {{
+          $filters.pluralize(
+            $stores.softGate.selectedMission.responsables.length,
+            'responsable',
+            'responsables',
+            false
+          )
+        }}
+        de la mission chez
+        <span class="font-bold">{{ $stores.softGate.selectedMission.structure.name }}</span
+        >.
       </div>
     </div>
-    <div class="mx-auto max-w-sm">
-      <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
-        <FormControl label="Votre message" html-for="content" required :error="errors.content">
-          <Textarea
+    <div class="mx-auto">
+      <form id="form" class="space-y-8" @submit.prevent="onSubmit">
+        <BaseFormControl
+          label="Votre message"
+          html-for="content"
+          required
+          :error="errors.content"
+          info="Obligatoire - 100 caractères minimum"
+        >
+          <BaseTextarea
             v-model="form.content"
             name="content"
+            placeholder="Vos motivations en quelques mots"
             :rows="7"
             @blur="validate('content')"
           />
-        </FormControl>
+        </BaseFormControl>
 
-        <Button
-          :loading="loading"
-          size="lg"
-          class="w-full"
-          @click.native.prevent="onSubmit"
-        >
+        <DsfrButton :loading="loading" size="lg" class="w-full" @click.native.prevent="onSubmit">
           Envoyer
-        </Button>
+        </DsfrButton>
       </form>
     </div>
   </div>
@@ -44,72 +54,90 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
 
-export default {
+export default defineNuxtComponent({
   name: 'SoftGateParticipate',
-  components: {
-    Heading,
-    Button
-  },
   mixins: [FormErrors],
-  data () {
+  emits: ['next'],
+  data() {
     return {
       loading: false,
-      selectedMission: this.$store.state.softGate.selectedMission,
+      selectedMission: this.$stores.softGate.selectedMission,
       form: {
-        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+        content: !this.$stores.softGate.selectedMission?.is_motivation_required
+          ? `Bonjour,\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user?.profile?.first_name}`
+          : null,
       },
       formSchema: object({
-        content: string().min(10, 'Votre message est trop court').required('Un message est requis')
-      })
+        content: string()
+          .min(100, 'Votre message est trop court - 100 caractères minimum')
+          .required('Un message est requis'),
+      }),
     }
   },
   computed: {
-    nextDates () {
-      return this.selectedMission.dates?.filter(date =>
-        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+    nextDates() {
+      return this.selectedMission.dates?.filter(
+        (date) =>
+          this.$dayjs(date.id).isAfter(this.$dayjs()) ||
+          this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
-    }
+    },
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
+
       this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$axios.post('/participations', {
-            mission_id: this.$store.state.softGate.selectedMission.id,
-            profile_id: this.$store.state.auth.user.profile.id,
-            content: this.form.content,
-            utm_source: this.$cookies.get('utm_source'),
-            utm_campaign: this.$cookies.get('utm_campaign'),
-            utm_medium: this.$cookies.get('utm_medium'),
-            slots: this.$store.state.softGate.selectedMission.selectedSlots
+          await apiFetch('/participations', {
+            method: 'POST',
+            body: {
+              mission_id: this.$stores.softGate.selectedMission.id,
+              profile_id: this.$stores.auth.user.profile.id,
+              content: this.form.content,
+              utm_source: useCookie('utm_source')?.value,
+              utm_campaign: useCookie('utm_campaign')?.value,
+              utm_medium: useCookie('utm_medium')?.value,
+              slots: this.$stores.softGate.selectedMission.selectedSlots,
+            },
           })
 
-          window.apieng && window.apieng('trackApplication')
-          window.plausible &&
-            window.plausible(
-              'Soft Gate - Étape 3 - Demande de participation'
-            )
-          await this.$gtm.push({ event: 'benevole-participation-soft-gate' })
-          this.$toast.success('Votre participation a été enregistrée et est en attente de validation !')
-          await this.$store.dispatch('auth/fetchUser')
+          // API Engagement - Commande pour compter une candidature
+          try {
+            window.apieng &&
+              window.apieng('trackApplication', this.$stores.softGate.selectedMission?.id)
+          } catch (error) {
+            console.error('API ENGAGEMENT - trackApplication', error)
+          }
+
+          this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation', {
+            props: {
+              hasSlots: this.$stores.softGate.selectedMission?.dates?.length > 0,
+              isMotivationRequired: this.$stores.softGate.selectedMission?.is_motivation_required,
+            },
+          })
+
+          await this.$gtm?.trackEvent({
+            event: 'benevole-participation-soft-gate',
+          })
+          this.$toast.success(
+            'Votre participation a été enregistrée et est en attente de validation !'
+          )
+          await this.$stores.auth.fetchUser()
           this.$emit('next')
         })
         .catch((errors) => {
-          console.log(errors)
           this.setErrors(errors)
         })
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -1,37 +1,16 @@
 <template>
-  <StrapiPage :page="page" />
+  <StrapiPage :page="content" />
 </template>
 
 <script>
-import MixinStrapi from '@/mixins/strapi'
-import StrapiPage from '@/components/section/StrapiPage.vue'
+export default defineNuxtComponent({
+  async setup() {
+    const { content, head } = await useStrapiFetch('conditions-generales-d-utilisation')
+    useHead(head)
 
-export default {
-  components: {
-    StrapiPage
-  },
-  mixins: [MixinStrapi],
-  async asyncData ({ $config, $strapi, error }) {
-    $strapi.setToken($config.strapi.token)
-    const response = await $strapi.find('api/pages',
-      {
-        'filters[slug][$eq]': 'conditions-generales-d-utilisation',
-        'populate[zone][populate]': '*',
-        'populate[seo][populate][image][populate]': '*'
-
-      })
-    if (response.data.length) {
-      return {
-        page: response.data[0]
-      }
-    } else {
-      return error({ statusCode: 404 })
+    return {
+      content,
     }
   },
-  head () {
-    if (this.strapiSeoHead) {
-      return this.strapiSeoHead
-    }
-  }
-}
+})
 </script>

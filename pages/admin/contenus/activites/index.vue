@@ -1,88 +1,96 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerActivity :activity-id="drawerActivityId" @close="drawerActivityId = null" @refetch="$fetch" />
+    <DrawerActivity
+      :activity-id="drawerActivityId"
+      @close="drawerActivityId = null"
+      @refetch="fetch"
+    />
 
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Contenus' },
-          { text: 'Activités' }
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Contenus' },
+            { text: 'Activités' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'activité',
         'activités',
         false
       )}`"
+      :loading="queryLoading"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/activites/add`)">
+          <DsfrButton icon="RiAddLine" @click="$router.push(`/admin/contenus/activites/add`)">
             Nouveau
-          </Button>
+          </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
-        </Tag>
+        </DsfrTag> -->
 
-        <Tag
+        <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
+          "
           @click.native="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
-        </Tag>
+        </DsfrTag>
 
-        <Tag
+        <DsfrTag
           :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
+          "
           @click.native="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne
-        </Tag>
+        </DsfrTag>
 
-        <FilterSelectAdvanced
+        <BaseFilterSelectAdvanced
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
-          :value="$route.query['filter[domaines.id]']"
+          :modelValue="$route.query['filter[domaines.id]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @input="changeFilter('filter[domaines.id]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[domaines.id]', $event, true)"
         />
       </template>
     </SearchFilters>
@@ -97,36 +105,42 @@
         :description="`Réalisez une mission de bénévolat ${activity.name}`"
         :image-srcset="activity.banner ? activity.banner.urls.desktop : undefined"
         :image-src="activity.banner ? activity.banner.urls.original : undefined"
-        @click.native="drawerActivityId = activity.id"
+        @click.left="drawerActivityId = activity.id"
+        @click.middle="
+          navigateTo(`/admin/contenus/activites/${activity.id}`, { open: { target: '_blank' } })
+        "
       >
         <template #badges>
-          <div v-if="activity.domaines.length" class="mb-2 flex gap-2">
-            <Badge class="uppercase" :color="activity.domaines[0].id">
+          <div v-if="activity.domaines.length" class="mb-4 flex gap-2 mt-2">
+            <DsfrTag
+              :custom-theme="true"
+              :class="`${domaineBackgroundColor(activity.domaines[0].id)} text-white`"
+            >
               {{ activity.domaines[0].name }}
-            </Badge>
-            <Badge v-if="activity.domaines.length - 1 > 0" color="gray-light">
+            </DsfrTag>
+            <DsfrTag v-if="activity.domaines.length - 1 > 0" color="gray-light">
               +{{ activity.domaines.length - 1 }}
-            </Badge>
+            </DsfrTag>
           </div>
         </template>
         <div class="mt-4 text-[13px] text-gray-500">
-          Complétion: <span class="font-semibold">{{ activity.completion_rate }}%</span>
+          Complétion:
+          <span class="font-semibold">{{ activity.completion_rate }}%</span>
         </div>
         <template #footer>
           <div
-            class="border-t font-semibold  text-sm text-center py-4"
-            :class="[
-              activity.is_published ? 'text-gray-900' : 'text-gray-400'
-            ]"
+            class="border-t font-semibold text-sm text-center py-4"
+            :class="[activity.is_published ? 'text-gray-900' : 'text-gray-400']"
           >
             {{
-              activity.places_left
-                | pluralize('bénévole recherché', 'bénévoles recherchés')
+              $filters.pluralize(activity.places_left, 'bénévole recherché', 'bénévoles recherchés')
             }}
           </div>
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -140,37 +154,38 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerActivity from '@/components/drawer/DrawerActivity'
+import Card from '@/components/card/Card.vue'
+import DrawerActivity from '@/components/drawer/DrawerActivity.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Tag from '@/components/dsfr/Tag.vue'
+import MixinDomaines from '@/mixins/domaines'
 
-export default {
+export default defineNuxtComponent({
   components: {
     Card,
     DrawerActivity,
     SearchFilters,
     Pagination,
     Breadcrumb,
-    Button,
-    Tag
   },
-  mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  mixins: [QueryBuilder, MixinDomaines],
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/activities',
       queryParams: {
         include: 'banner,domaines',
-        append: ['places_left', 'completion_rate']
+        append: 'places_left,completion_rate',
       },
-      drawerActivityId: null
+      drawerActivityId: null,
     }
-  }
-}
+  },
+})
 </script>

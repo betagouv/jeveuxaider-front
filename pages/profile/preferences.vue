@@ -1,168 +1,111 @@
 <template>
-  <div class="container">
-    <Breadcrumb
-      :links="[
-        { text: 'Mon espace', to: '/profile' },
-        { text: 'Mes préférences de notifications' },
-      ]"
-    />
-
-    <SectionHeading
-      title="Préférences de notifications"
-    />
-
-    <div class="mt-12 mb-24 flex flex-col gap-12">
-      <template v-if="['responsable'].includes($store.getters.contextRole)">
-        <Box>
-          <Heading as="h2" :level="3" class="mb-8">
-            Notifications relatives aux participations et messages reçus
-          </Heading>
-          <Alert class="mb-8">
-            <span class="font-bold">Temps réel :</span> Recevez un mail dès qu’une nouvelle action est réalisée sur la plateforme (une nouvelle candidature à une mission, par exemple)<br>
-            <span class="font-bold">Résumé quotidien :</span> Recevez un mail unique par jour, qui regroupe l’intégralité des actualités quotidiennes
-          </Alert>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
-            <div class="text-gray-600">
-              <p class="mb-4">
-                Les notifications concernées comprennent notamment :
-              </p>
-              <ul class="pl-8 list-disc">
-                <li>Les messages d’information pour toute nouvelle participation</li>
-                <li>Les nouveaux messages reçus dans la messagerie</li>
-                <li>Les relances relatives aux participations en attente</li>
-              </ul>
-            </div>
-            <div class="w-[400px]">
-              <RadioGroup
-                v-model="form.notification__responsable_frequency"
-                :options="[{key: 'realtime', label: 'Temps réel'}, { key: 'summary', label: 'Résumé quotidien'}]"
-                variant="tabs"
-                @updated="handleUpdateProfile"
-              />
-            </div>
-          </div>
-        </Box>
-        <Box>
-          <Heading as="h2" :level="3" class="mb-8">
-            Résumé mensuel de votre activité
-          </Heading>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
-            <div class="text-gray-600 max-w-[500px]">
-              Retrouvez chaque mois un résumé de l'activité liée à votre organisation ainsi que vos actions en attente
-            </div>
-            <div class="w-[400px]">
-              <RadioGroup
-                v-model="form.notification__responsable_bilan"
-                :options="[{key: true, label: 'Activé'}, { key: false, label: 'Désactivé'}]"
-                variant="tabs"
-                @updated="handleUpdateProfile"
-              />
-            </div>
-          </div>
-        </Box>
-      </template>
-      <template v-if="['referent'].includes($store.getters.contextRole)">
-        <Box>
-          <Heading as="h2" :level="3" class="mb-8">
-            Notifications relatives aux missions/organisations en cours de modération et messages reçus
-          </Heading>
-          <Alert class="mb-8">
-            <span class="font-bold">Temps réel :</span> Recevez un mail dès qu’une nouvelle action est réalisée sur la plateforme (une nouvelle mission proposée, par exemple)<br>
-            <span class="font-bold">Résumé bi-hebdomadaire :</span> Recevez deux mails par semaine, regroupant l’intégralité des actualités de JeVeuxAider.gouv.fr sur votre département
-          </Alert>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
-            <div class="text-gray-600">
-              <p class="mb-4">
-                Les notifications concernées comprennent notamment :
-              </p>
-              <ul class="pl-8 list-disc">
-                <li>Les messages d’information pour toute nouvelle mission proposée</li>
-                <li>Les messages d’information pour toute nouvelle organisation inscrite</li>
-                <li>Les notifications relatives aux messages reçus via la messagerie</li>
-              </ul>
-            </div>
-            <div class="w-[400px]">
-              <RadioGroup
-                v-model="form.notification__referent_frequency"
-                :options="[{key: 'realtime', label: 'Temps réel'}, { key: 'summary', label: 'Résumé bi-hebdomadaire'}]"
-                variant="tabs"
-                @updated="handleUpdateProfile"
-              />
-            </div>
-          </div>
-        </Box>
-        <Box>
-          <Heading as="h2" :level="3" class="mb-8">
-            Résumé mensuel de votre activité
-          </Heading>
-          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
-            <div class="text-gray-600 max-w-[500px]">
-              Retrouvez chaque mois un résumé de l'activité liée à votre département ainsi que vos actions en attente
-            </div>
-            <div class="w-[400px]">
-              <RadioGroup
-                v-model="form.notification__referent_bilan"
-                :options="[{key: true, label: 'Activé'}, { key: false, label: 'Désactivé'}]"
-                variant="tabs"
-                @updated="handleUpdateProfile"
-              />
-            </div>
-          </div>
-        </Box>
-      </template>
+  <div class="">
+    <div class="container">
+      <DsfrBreadcrumb
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
+          { text: 'Mes préférences de missions' },
+        ]"
+      />
     </div>
+    <HeaderAction title="Mon compte">
+      <template #action="{ isPinned }">
+        <DsfrButton
+          class="hidden sm:flex"
+          :size="isPinned ? 'md' : 'lg'"
+          variant="primary"
+          :loading="loading"
+          :disabled="!formIsDirty"
+          @click.native="submitForm"
+        >
+          Enregistrer
+        </DsfrButton>
+      </template>
+    </HeaderAction>
+    <BaseContainer2Cols
+      class="mt-8"
+      grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+      class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+      class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
+    >
+      <template #left>
+        <div class="flex flex-col lg:pb-12 gap-8 xl:gap-12">
+          <UserProfileTabs selected-tab-key="preferences">
+            <FormUserPreferences
+              ref="form"
+              :profile="profile"
+              @change="formIsDirty = $event"
+              @submit="fetchProfile"
+            />
+          </UserProfileTabs>
+        </div>
+      </template>
+      <template #right>
+        <BoxCompleteProfile title="Complétez votre profil pour trouver une mission" />
+        <BaseBox class="@container">
+          <SectionProfileCommunicationPreferences :profile="profile" />
+        </BaseBox>
+        <HelpCenter />
+      </template>
+    </BaseContainer2Cols>
   </div>
 </template>
 
 <script>
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
+import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import HeaderAction from '@/components/section/current-user/HeaderActions.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Breadcrumb
+    FormUserPreferences,
+    UserProfileTabs,
+    BoxCompleteProfile,
+    HelpCenter,
+    HeaderAction,
   },
-  middleware: 'authenticated',
-  async asyncData ({ $axios, params, error, store }) {
-    if (
-      ![
-        'referent',
-        'responsable'
-      ].includes(store.getters.contextRole)
-    ) {
-      return error({ statusCode: 403 })
-    }
+  async setup() {
+    definePageMeta({
+      middleware: ['authenticated'],
+    })
 
-    const { data: profile } = await $axios.get(`/profiles/${store.state.auth.user.profile.id}`)
+    const { $stores } = useNuxtApp()
+    const { data: profile, refresh: refreshProfile } = await useApiFetch(
+      `/profiles/${$stores.auth.user.profile.id}`
+    )
 
     return {
-      form: profile
+      profile,
+      refreshProfile,
     }
   },
-  data () {
+  data() {
     return {
-      loading: false
+      loading: false,
+      formIsDirty: false,
     }
   },
   methods: {
-    async handleUpdateProfile () {
+    async fetchProfile() {
+      await this.refreshProfile()
+      this.formIsDirty = false
+    },
+    async submitForm() {
       if (this.loading) {
         return
       }
       this.loading = true
-      await this.$axios.put(`/profiles/${this.form.id}`, this.form).then(() => {
-        this.$toast.success('Vos préférences ont été mises à jour !')
-      })
-        .catch((errors) => {
-          console.log('errors', errors)
-        })
-        .finally(() => {
-          this.loading = false
-        })
+      await this.$refs.form.handleSubmit()
+      this.loading = false
+    },
+  },
+  beforeRouteLeave(to, from) {
+    if (this.formIsDirty) {
+      return window.confirm('Vous avez des modifications non enregistrées.\r\nQuitter quand-même ?')
     }
-  }
-}
+  },
+})
 </script>
-
-<style>
-
-</style>

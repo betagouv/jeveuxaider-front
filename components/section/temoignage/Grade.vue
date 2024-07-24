@@ -4,7 +4,8 @@
       <h1
         class="text-2xl sm:text-[38px] sm:leading-tight font-bold text-jva-blue-500 tracking-[-1px]"
       >
-        <span class="font-extrabold">{{ benevole.first_name }}</span>, comment s'est déroulée votre mission&nbsp;?
+        <span class="font-extrabold">{{ benevole.first_name }}</span
+        >, comment s'est déroulée votre mission&nbsp;?
       </h1>
 
       <div class="font-medium text-md sm:text-xl text-[#808080]">
@@ -12,50 +13,51 @@
       </div>
 
       <div class="py-8">
-        <client-only>
+        <ClientOnly>
           <StarRating
-            v-model="form.grade"
+            v-model:rating="form.grade"
             :rating="form.grade"
             class="justify-center"
             :show-rating="false"
             inactive-color="#E0E0E0"
             active-color="#EF9F03"
             :rounded-corners="true"
-            @rating-selected="$emit('rating-selected', form)"
+            @update:rating="$emit('rating-selected', form)"
           />
-        </client-only>
+        </ClientOnly>
       </div>
 
       <div class="sm:text-lg text-[#808080] max-w-[420px] mx-auto">
-        Cette note est <strong>réservée à l’administration</strong> pour
-        améliorer la qualité des missions proposées.
+        Cette note est <strong>réservée à l’administration</strong> pour améliorer la qualité des
+        missions proposées.
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
+  emits: ['rating-selected'],
   props: {
     benevole: {
       type: Object,
-      required: true
+      required: true,
     },
     mission: {
       type: Object,
-      required: true
+      required: true,
     },
     initialForm: {
       type: Object,
-      required: true
+      required: true,
+    },
+  },
+  data() {
+    return {
+      form: { ...this.initialForm },
     }
   },
-  data () {
-    return {
-      form: { ...this.initialForm }
-    }
-  }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

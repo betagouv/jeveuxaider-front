@@ -1,20 +1,16 @@
-<template>
+<!-- <template>
   <div>
-    <Heading :id="`newsletter-headline-${uuid}`" as="h2" size="sm" class="mb-4">
+    <DsfrHeading :id="`newsletter-headline-${uuid}`" as="h2" size="sm" class="mb-4">
       Un email par mois pour plus d'engagement
-    </Heading>
+    </DsfrHeading>
 
     <form
       :aria-labelledby="`newsletter-headline-${uuid}`"
       class="relative flex flex-col lg:flex-row w-full"
     >
-      <FormControl
-        :error="error"
-        :success="success"
-        html-for="email"
-      >
+      <BaseFormControl :error="error" :success="success" html-for="email">
         <div class="flex w-full">
-          <Input
+          <DsfrInput
             v-model="form.email"
             :error="!!error"
             :success="!!success"
@@ -23,45 +19,43 @@
             input-class="!rounded-none !rounded-tl"
             placeholder="Votre adresse électronique (ex. : nom@domaine.fr)"
           />
-          <Button :disabled="loading" class="flex-none !rounded-none !rounded-tr" @click.native.prevent="onSubmit()">
+          <DsfrButton
+            :disabled="loading"
+            class="flex-none !rounded-none !rounded-tr"
+            @click.native.prevent="onSubmit()"
+          >
             S'abonner
-          </Button>
+          </DsfrButton>
         </div>
-      </FormControl>
+      </BaseFormControl>
     </form>
 
     <p class="text-xs text mt-4 text-[#666666]">
-      Chaque mois, nous vous proposons de nouvelles missions de bénévolat à distance ou près de chez vous.
-      En renseignant votre adresse électronique, vous acceptez de recevoir nos actualités par courriel. Vous pouvez vous désinscrire à tout moment à l’aide des liens de désinscription ou en nous contactant.
+      Chaque mois, nous vous proposons de nouvelles missions de bénévolat à distance ou près de chez
+      vous. En renseignant votre adresse électronique, vous acceptez de recevoir nos actualités par
+      courriel. Vous pouvez vous désinscrire à tout moment à l’aide des liens de désinscription ou
+      en nous contactant.
     </p>
   </div>
 </template>
 
 <script>
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Input from '@/components/dsfr/Input.vue'
 import uuid from '@/mixins/uuid'
 
-export default {
-  components: {
-    Heading,
-    Button,
-    Input
-  },
+export default defineNuxtComponent({
   mixins: [uuid],
-  data () {
+  data() {
     return {
       loading: false,
       error: '',
       success: '',
       form: {
-        email: ''
-      }
+        email: '',
+      },
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -69,11 +63,11 @@ export default {
       this.error = ''
       this.success = ''
 
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (re.test(String(this.form.email).toLowerCase())) {
         this.loading = true
-        this.$axios
-          .post('/sendinblue/contact', { email: this.form.email })
+        apiFetch('/sendinblue/contact', { method: 'POST', body: { email: this.form.email } })
           .then(() => {
             this.success = 'Merci ! Vous êtes désormais inscrit(e) à notre newsletter 😉'
           })
@@ -87,7 +81,7 @@ export default {
       } else {
         this.error = "L'email renseigné n'est pas valide"
       }
-    }
-  }
-}
-</script>
+    },
+  },
+})
+</script> -->

@@ -3,43 +3,39 @@
     <Header />
     <div class="container">
       <div class="min-h-[92px] md:min-h-[116px]">
-        <portal-target name="breadcrumb" />
+        <div id="teleport-breadcrumb"></div>
       </div>
       <div class="grid lg:grid-cols-5 gap-6 lg:gap-12 pb-6 lg:pb-12">
         <aside class="relative lg:col-span-1">
-          <div class="lg:block">
+          <div class="lg:sticky top-8">
             <SecondaryMenuStatisticsPublic />
           </div>
         </aside>
         <div class="lg:col-span-4 min-w-0">
-          <Nuxt />
-          <portal-target name="drawer" class="relative z-20" multiple />
+          <NuxtPage />
+          <div id="teleport-drawer" class="relative z-50"></div>
         </div>
       </div>
     </div>
     <Footer />
-
-    <client-only>
-      <portal-target name="body-end" multiple />
-    </client-only>
+    <div id="teleport-body-end"></div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import SecondaryMenuStatisticsPublic from '@/components/menu/SecondaryMenuStatisticsPublic'
+import SecondaryMenuStatisticsPublic from '@/components/menu/SecondaryMenuStatisticsPublic.vue'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
-  name: 'Dashboard',
   components: {
     Header,
     Footer,
-    SecondaryMenuStatisticsPublic
-  }
+    SecondaryMenuStatisticsPublic,
+  },
+  mixins: [MixinPlausible],
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

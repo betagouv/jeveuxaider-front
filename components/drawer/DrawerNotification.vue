@@ -1,73 +1,74 @@
 <template>
-  <Drawer
+  <BaseDrawer
     :is-open="Boolean(notificationKey)"
     width="4xl"
     form-id="form-notification"
-    :submit-label="`Envoyer à ${$store.getters.profile.email}`"
+    :submit-label="`Envoyer à ${$stores.auth.profile.email}`"
     @close="$emit('close')"
     @submit="onSubmit"
   >
     <template #title>
-      <Heading :level="3">
+      <BaseHeading :level="3">
         {{ notificationLabel }}
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="notification">
       <div class="text-gray-500 text-sm py-6">
         {{ notificationDescription }}
         <div v-if="notificationTags" class="mt-2">
-          <TagIcon class="w-4 h-4 inline" /> {{ notificationTags.join(', ') }}
+          <RiPriceTag3Line class="w-4 h-4 inline" /> {{ notificationTags.join(', ') }}
         </div>
       </div>
       <div class="max-w-full" v-html="notification" />
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-
-export default {
+export default defineNuxtComponent({
   props: {
     notificationKey: {
       type: String,
-      default: null
+      default: null,
     },
     notificationLabel: {
       type: String,
-      default: null
+      default: null,
     },
     notificationDescription: {
       type: String,
-      default: null
+      default: null,
     },
     notificationTags: {
       type: [Array, null],
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      notification: null
+      notification: null,
     }
-  },
-  async fetch () {
-    if (!this.notificationKey) {
-      return null
-    }
-    this.notification = null
-    const { data } = await this.$axios.get(`/notifications/${this.notificationKey}`)
-    this.notification = data
   },
   watch: {
-    notificationKey: '$fetch'
+    notificationKey: 'fetch',
   },
   methods: {
-    async onSubmit () {
-      await this.$axios.post(`/notifications/${this.notificationKey}/test`)
+    async fetch() {
+      if (!this.notificationKey) {
+        return null
+      }
+      this.notification = null
+      const notification = await apiFetch(`/notifications/${this.notificationKey}`)
+      this.notification = notification
+    },
+    async onSubmit() {
+      await apiFetch(`/notifications/${this.notificationKey}/test`, {
+        method: 'POST',
+      })
       this.$toast.success("Vous allez recevoir la notification d'ici quelques instants...")
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -1,103 +1,153 @@
 <template>
   <div class="relative bg-white lg:grid lg:grid-cols-2">
-    <!-- LEFT -->
-    <div class="col-span-2 lg:col-span-1">
-      <header class="border-b flex justify-between items-stretch">
-        <div class="p-4 border-r flex items-center">
-          <img src="@/assets/images/marianne-logo.svg" width="55" class="my-auto">
-        </div>
-
-        <div class="p-4 flex items-center">
-          <span class="text-xs uppercase text-gray-500 mr-3">
-            Encouragé par
-          </span>
-          <nuxt-link to="/">
-            <img
-              src="@/assets/images/jeveuxaider-logo.svg"
-              alt=""
-              width="140"
-            >
-          </nuxt-link>
-        </div>
-      </header>
-
-      <div class="max-w-3xl lg:ml-auto">
-        <div class="px-4 pb-8 md:p-8 lg:pt-6 xl:p-16 xl:pt-8">
-          <Breadcrumb
-            class="md:!py-2"
-            :links="[{ text: organisation.name }]"
-          />
-
-          <img
-            v-if="organisation.logo"
-            :srcset="organisation.logo.urls.large"
-            :alt="organisation.name"
-            class="my-8 h-auto"
-            style="max-width: 16rem; max-height: 120px"
-            @error="onLogoError"
-          >
-
-          <h1
-            class="mt-2 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
-          >
-            <p>Découvrez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</p>
-            <span class="font-extrabold">{{ organisation.name }}</span>
+    <div class="container col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
+      <div class="lg:max-w-3xl lg:ml-auto lg:w-full">
+        <div class="py-8 lg:p-8">
+          <h1 class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold">
+            <span class="relative">
+              <span class="font-semibold">{{ suffixTitle }}</span>
+              <img
+                src="/images/home/sparkle-right.svg"
+                alt=""
+                aria-hidden="true"
+                class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-9px] right-[-30px] lg:top-[-14px] lg:right-[-47px] pointer-events-none"
+              /> </span
+            ><br />
+            <span>{{ organisation.name }}</span>
           </h1>
+          <p class="text-lg lg:text-2xl lg:leading-10 mb-8">
+            Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span>
+            <template v-if="organisation.missions_available_count >= 1">
+              <span v-if="organisation.missions_available_count === 1">
+                et sa mission de bénévolat réalisable</span
+              >
+              <span v-else>
+                et ses {{ $numeral(organisation.missions_available_count) }} missions de bénévolat
+                réalisables</span
+              >
+            </template>
+            <template v-else>. </template>
+            <template v-if="hasMissionsDistanceAndPresentiel">
+              <span>
+                en <span class="font-bold">présentiel</span> ou en
+                <span class="font-bold">télébénévolat</span></span
+              >.
+            </template>
+            <template v-else>
+              <template v-if="hasMissionsDistance">
+                <span> en <span class="font-bold">télébénévolat</span>. </span>
+              </template>
+              <template v-if="hasMissionsPresentiel">
+                <span> en <span class="font-bold">présentiel</span>. </span>
+              </template>
+            </template>
+          </p>
+          <div class="hidden sm:block">
+            <DsfrButton size="lg" @click="onClickFindMissions">
+              Trouver une mission <span class="hidden sm:inline">de bénévolat</span>
+            </DsfrButton>
+            <p class="text-base lg:text-lg mt-4">
+              <template v-if="organisation.places_left > 0">
+                Plus de
+                <span class="font-bold"
+                  >{{ $numeral(organisation.places_left) }}
+                  {{
+                    $filters.pluralize(organisation.places_left, 'bénévole', 'bénévoles', false)
+                  }}</span
+                >
+                {{ $filters.pluralize(organisation.places_left, 'recherché', 'recherchés', false) }}
+              </template>
+            </p>
+          </div>
 
+          <!-- CTA MOBILE -->
           <div
-            class="h-[2.5px] w-16 my-10"
-            :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`"
-          />
-
-          <TextFormatted :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg" />
+            :class="[
+              'sm:hidden fixed bottom-0 px-4 py-4 bg-white z-50 w-full left-0 right-0 text-center',
+            ]"
+            style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%)"
+          >
+            <DsfrButton size="lg" class="w-full" @click="onClickFindMissions">
+              Trouver une mission
+            </DsfrButton>
+            <div v-if="organisation.places_left > 0" class="mt-1 text-sm font-normal text-center">
+              Plus de
+              <span class="font-bold"
+                >{{ $numeral(organisation.places_left) }}
+                {{
+                  $filters.pluralize(organisation.places_left, 'bénévole', 'bénévoles', false)
+                }}</span
+              >
+              {{ $filters.pluralize(organisation.places_left, 'recherché', 'recherchés', false) }}
+            </div>
+          </div>
         </div>
       </div>
-
-      <slot name="anchors" />
     </div>
-
-    <!-- RIGHT -->
-    <div>
-      <img
+    <div class="hidden lg:block">
+      <NuxtImg
+        ref="illustration"
+        src="/images/organisation-default-2.webp"
         :srcset="srcSet"
-        class="lg:absolute object-cover w-full lg:w-1/2 h-full max-h-[400px] lg:max-h-full"
+        class="min-h-[700px] w-auto object-cover"
         @error="onIllustrationError"
-      >
+      />
     </div>
   </div>
 </template>
 
 <script>
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-
-export default {
-  components: {
-    Breadcrumb
-  },
+export default defineNuxtComponent({
   props: {
+    suffixTitle: {
+      type: String,
+      default: 'Découvrez l’association',
+    },
     organisation: {
       type: Object,
-      required: true
+      required: true,
     },
     srcSet: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    redirectParameters: {
+      type: Object,
+      required: true,
+    },
   },
-  data () {
-    return {
-      expandDescription: false
-    }
+  computed: {
+    hasMissionsDistanceAndPresentiel() {
+      return (
+        this.organisation.statistics.missions_available_distance_count > 0 &&
+        this.organisation.statistics.missions_available_presentiel_count > 0
+      )
+    },
+    hasMissionsDistance() {
+      return this.organisation.statistics.missions_available_distance_count
+    },
+    hasMissionsPresentiel() {
+      return this.organisation.statistics.missions_available_presentiel_count
+    },
   },
   methods: {
-    onLogoError ($event) {
-      $event.target.remove()
+    onIllustrationError() {
+      this.$refs.illustration.$el.srcset = '/images/organisation-default-2.webp'
     },
-    onIllustrationError ($event) {
-      $event.target.srcset = '/images/organisation-default-2.webp'
-    }
-  }
-}
+    onClickFindMissions() {
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          ...this.redirectParameters,
+          type:
+            this.hasMissionsDistance && !this.hasMissionsPresentiel
+              ? 'Mission à distance'
+              : undefined,
+        },
+      })
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

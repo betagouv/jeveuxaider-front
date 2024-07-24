@@ -1,73 +1,88 @@
 <template>
-  <Drawer :is-open="Boolean(ressourceId)" @close="$emit('close')">
-    <AlertDialog
+  <BaseDrawer :is-open="Boolean(ressourceId)" @close="$emit('close')">
+    <BaseAlertDialog
       v-if="ressource"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer la ressource"
-      :text="`Vous êtes sur le point de supprimer la ressource ${ressource.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer la ressource {{ ressource.name }}.
+    </BaseAlertDialog>
     <template #title>
-      <Heading v-if="ressource" :level="3" class="text-jva-blue-500">
+      <BaseHeading v-if="ressource" :level="3" class="text-jva-blue-500">
         {{ ressource.title }}
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="ressource">
       <OnlineIndicator :published="ressource.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/ressources/${ressource.id}/edit`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/ressources/${ressource.id}/edit`"
+          class="inline-flex"
+        >
+          <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+        <BaseButton
+          variant="white"
+          size="sm"
+          icon="RiDeleteBinLine"
+          @click.native="() => (showAlert = true)"
+        />
       </div>
       <div class="border-t -mx-6 my-6" />
-      <div class="text-jva-blue-500 flex items-center text-sm font-bold cursor-pointer hover:text-jva-blue-400" @click="handleDownload">
-        <DownloadIcon class="h-4 w-4 mr-4" /> Accéder à la ressource
+      <div
+        class="group text-jva-blue-500 flex items-center text-sm font-bold cursor-pointer hover:text-jva-blue-400"
+        @click="handleDownload"
+      >
+        <RiDownloadLine
+          class="text-jva-blue-500 group-hover:text-jva-blue-400 h-4 w-4 mr-4 fill-current"
+        />
+        Accéder à la ressource
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :ressource="ressource" />
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-import BoxInformations from '@/components/section/ressource/BoxInformations'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/ressource/BoxInformations.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     BoxInformations,
-    OnlineIndicator
+    OnlineIndicator,
   },
   props: {
     ressourceId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       ressource: null,
-      showAlert: false
+      showAlert: false,
     }
   },
-  async fetch () {
-    if (!this.ressourceId) {
-      return null
-    }
-    const { data: ressource } = await this.$axios.get(`/documents/${this.ressourceId}`)
-    this.ressource = ressource
-    this.$emit('loaded', ressource)
-  },
+
   watch: {
-    ressourceId: '$fetch'
+    ressourceId: 'fetch',
   },
   methods: {
-    handleDownload () {
+    async fetch() {
+      if (!this.ressourceId) {
+        return null
+      }
+      const ressource = await apiFetch(`/documents/${this.ressourceId}`)
+      this.ressource = ressource
+      this.$emit('loaded', ressource)
+    },
+    handleDownload() {
       if (this.ressource.type === 'file') {
         if (this.ressource.file.urls) {
           window.open(this.ressource.file.urls.original, '_blank').focus()
@@ -77,13 +92,17 @@ export default {
         window.open(this.ressource.link, '_blank').focus()
       }
     },
-    async handleConfirmDelete () {
-      await this.$axios.delete(`/documents/${this.ressourceId}`).then((res) => {
-        this.showAlert = false
-        this.$emit('close')
-        this.$emit('refetch')
-      }).catch(() => {})
-    }
-  }
-}
+    async handleConfirmDelete() {
+      await apiFetch(`/documents/${this.ressourceId}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          this.showAlert = false
+          this.$emit('close')
+          this.$emit('refetch')
+        })
+        .catch(() => {})
+    },
+  },
+})
 </script>

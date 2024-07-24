@@ -2,141 +2,113 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations générales
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
           <div class="space-y-10">
-            <FormControl
-              html-for="title"
-              label="Titre"
-              required
-              :error="errors.title"
-            >
-              <Input
-                v-model="form.title"
-                name="name"
-                placeholder="Entrez un titre"
-              />
-            </FormControl>
-            <FormControl
-              html-for="type"
-              label="Type"
-              required
-              :error="errors.type"
-            >
-              <SelectAdvanced
+            <BaseFormControl html-for="title" label="Titre" required :error="errors.title">
+              <BaseInput v-model="form.title" name="name" placeholder="Entrez un titre" />
+            </BaseFormControl>
+            <BaseFormControl html-for="type" label="Type" required :error="errors.type">
+              <BaseSelectAdvanced
                 v-model="form.type"
                 name="type"
                 placeholder="Type"
                 :options="[
                   {
                     key: 'link',
-                    label: 'Lien'
+                    label: 'Lien',
                   },
                   {
                     key: 'file',
-                    label: 'Fichier'
-                  }
+                    label: 'Fichier',
+                  },
                 ]"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               v-if="form.type === 'link'"
               html-for="link"
               label="Lien de la ressource"
               required
               :error="errors.link"
             >
-              <Input
-                v-model="form.link"
-                name="link"
-                placeholder="Entrez le lien"
-              />
-            </FormControl>
+              <BaseInput v-model="form.link" name="link" placeholder="Entrez le lien" />
+            </BaseFormControl>
 
-            <FormControl
+            <BaseFormControl
               v-if="form.type === 'file'"
               html-for="file"
               label="Fichier"
               required
               :error="errors.file"
             >
-              <Upload
+              <BaseUpload
                 :default-value="[ressource.file]"
                 :max-size="5000000"
                 @add="addFiles({ files: $event, collection: 'document__file' })"
                 @delete="deleteFile($event)"
               />
-            </FormControl>
+            </BaseFormControl>
 
-            <FormControl
-              label="Description"
-              html-for="description"
-            >
-              <Textarea
+            <BaseFormControl label="Description" html-for="description">
+              <BaseTextarea
                 v-model="form.description"
                 name="description"
                 placeholder="Entrez une description..."
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Paramètres
-          </Heading>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <Toggle
+            <BaseToggle
               v-model="form.is_published"
               :label="form.is_published ? 'En ligne' : 'Hors ligne'"
               description="Pour le rendre accessible"
             />
-            <FormControl
-              html-for="roles"
-              label="Visibilité"
-              required
-              :error="errors.roles"
-            >
-              <CheckboxGroup
+            <BaseFormControl html-for="roles" label="Visibilité" required :error="errors.roles">
+              <BaseCheckboxGroup
                 v-model="form.roles"
                 name="roles"
                 variant="button"
                 :options="[
                   {
                     key: 'referent',
-                    label: 'Référents'
+                    label: 'Référents',
                   },
                   {
                     key: 'responsable',
-                    label: 'Responsables'
-                  }
+                    label: 'Responsables',
+                  },
                 ]"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Notification
-          </Heading>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Notification </BaseHeading>
           <div class="space-y-12">
-            <Toggle
+            <BaseToggle
               v-model="notifyReferents"
               :label="notifyReferents ? 'Oui, je les notifie' : 'Non, je ne les notifie pas'"
-              :description="form.id ? 'Notifier les référents de la mise à jour de cette ressource' : 'Notifier les référents de l\'ajout de cette ressource'"
+              :description="
+                form.id
+                  ? 'Notifier les référents de la mise à jour de cette ressource'
+                  : 'Notifier les référents de l\'ajout de cette ressource'
+              "
             />
           </div>
-        </Box>
+        </BaseBox>
       </div>
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </Button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -147,21 +119,21 @@ import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 
-export default {
+export default defineNuxtComponent({
+  emits: ['submitted'],
   mixins: [FormErrors, FormUploads],
-  middleware: 'admin',
   props: {
     ressource: {
       type: Object,
       default: () => {
         return {
           is_published: true,
-          type: 'link'
+          type: 'link',
         }
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       notifyReferents: false,
@@ -169,18 +141,20 @@ export default {
       formSchema: object({
         title: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
         type: string().required('Le type est requis'),
-        roles: array().required('La visibilité est requise').min(1, 'Merci de sélectionner au moins 1 élement'),
-        link: string().url('L\'url n\'est pas valide').nullable()
+        roles: array()
+          .required('La visibilité est requise')
+          .min(1, 'Merci de sélectionner au moins 1 élement'),
+        link: string().url("L'url n'est pas valide").nullable(),
         // file: object().nullable().when('type', {
         //   is: 'file',
         //   then: schema => schema.required('Le fichier est requis'),
         //   otherwise: schema => schema.nullable()
         // })
-      })
+      }),
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -189,17 +163,23 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await this.$axios.put(`/documents/${this.form.id}`, this.form)
+            await apiFetch(`/documents/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
             this.sendNotification(this.form)
           } else {
-            const { data: ressource } = await this.$axios.post('/documents', this.form)
+            const ressource = await apiFetch('/documents', {
+              method: 'POST',
+              body: this.form,
+            })
             this.form.id = ressource.id
             this.sendNotification(ressource)
           }
           await this.uploadFiles('document', this.form.id)
-          this.$emit('submitted')
-          this.$toast.success('La ressource a bien été enregistrée !')
+
           this.$router.push('/admin/contenus/ressources')
+          this.$toast.success('La ressource a bien été enregistrée !')
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -208,11 +188,13 @@ export default {
           this.loading = false
         })
     },
-    async sendNotification (ressource) {
+    async sendNotification(ressource) {
       if (this.notifyReferents) {
-        await this.$axios.post(`/documents/${ressource.id}/notify`)
+        await apiFetch(`/documents/${ressource.id}/notify`, {
+          method: 'POST',
+        })
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>

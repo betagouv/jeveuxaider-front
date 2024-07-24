@@ -11,17 +11,20 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     icon: {
-      type: String, default: null
+      type: String,
+      default: null,
     },
     title: {
-      type: String, default: null
+      type: String,
+      default: null,
     },
     subtitle: {
-      type: String, default: null
-    }
-  }
-}
+      type: String,
+      default: null,
+    },
+  },
+})
 </script>

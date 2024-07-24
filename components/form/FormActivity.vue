@@ -2,106 +2,85 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations générales
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
           <div class="space-y-10">
-            <FormControl
+            <BaseFormControl
               html-for="name"
               label="Nom de l'activité"
               required
               :error="errors.name"
             >
-              <Input
-                v-model="form.name"
-                name="name"
-              />
-            </FormControl>
-            <FormControl label="Domaines d'action" html-for="domaines" required :error="errors.domaines">
-              <CheckboxGroup
+              <BaseInput v-model="form.name" name="name" />
+            </BaseFormControl>
+            <BaseFormControl
+              label="Domaines d'action"
+              html-for="domaines"
+              required
+              :error="errors.domaines"
+            >
+              <BaseCheckboxGroup
                 v-model="form.domaines"
                 name="domaines"
                 variant="button"
                 :options="$labels.domaines"
                 is-model
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            SEO
-          </Heading>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> SEO </BaseHeading>
           <div class="space-y-10">
-            <FormControl
-              label="Titre de recrutement"
-              html-for="seo_recruit_title"
-            >
-              <Input
-                v-model="form.seo_recruit_title"
-                name="seo_recruit_title"
-                placeholder=""
-              />
-            </FormControl>
-            <FormControl
+            <BaseFormControl label="Titre de recrutement" html-for="seo_recruit_title">
+              <BaseInput v-model="form.seo_recruit_title" name="seo_recruit_title" placeholder="" />
+            </BaseFormControl>
+            <BaseFormControl
               label="Description pour le recrutement"
               html-for="seo_recruit_description"
             >
-              <RichEditor
-                v-model="form.seo_recruit_description"
-              />
-            </FormControl>
-            <FormControl
-              label="Titre pour l'engagement"
-              html-for="seo_engage_title"
-            >
-              <Input
-                v-model="form.seo_engage_title"
-                name="seo_engage_title"
-                placeholder=""
-              />
-            </FormControl>
-            <FormControl
-              label="Description pour l'engagement"
-              html-for="seo_engage_paragraphs"
-            >
-              <Paragraph
+              <BaseRichEditor v-model="form.seo_recruit_description" />
+            </BaseFormControl>
+            <BaseFormControl label="Titre pour l'engagement" html-for="seo_engage_title">
+              <BaseInput v-model="form.seo_engage_title" name="seo_engage_title" placeholder="" />
+            </BaseFormControl>
+            <BaseFormControl label="Description pour l'engagement" html-for="seo_engage_paragraphs">
+              <BaseParagraph
                 :schema="[
                   { key: 'title', label: 'Titre', type: 'text' },
-                  { key: 'description', label: 'Description', type: 'richtext' },
+                  {
+                    key: 'description',
+                    label: 'Description',
+                    type: 'richtext',
+                  },
                 ]"
                 :items="form.seo_engage_paragraphs"
                 @add="onParagraphAddItem('seo_engage_paragraphs', $event)"
                 @update="onParagraphUpdateItem('seo_engage_paragraphs', $event)"
                 @remove="onParagraphRemoveItem('seo_engage_paragraphs', $event)"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Paramètres
-          </Heading>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <Toggle
+            <BaseToggle
               v-model="form.is_published"
               :label="form.is_published ? 'En ligne' : 'Hors ligne'"
               description="Pour rendre la page accessible"
             />
           </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Image
-          </Heading>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Image </BaseHeading>
           <div class="space-y-12">
-            <FormControl label="Bannière" html-for="banner">
-              <ImageCrop
+            <BaseFormControl label="Bannière" html-for="banner">
+              <BaseImageCrop
                 :default-value="form.banner"
-                :ratio="1600/600"
+                :ratio="1600 / 600"
                 :min-width="1600"
                 :preview-width="235"
                 preview-conversion="desktop"
@@ -110,15 +89,13 @@
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
-          <Heading :level="3" class="mb-8">
-            Assocations partenaires
-          </Heading>
+        </BaseBox>
+        <BaseBox v-if="$stores.auth.contextRole === 'admin'" padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Assocations partenaires </BaseHeading>
           <div class="space-y-12">
-            <ImageCropMultiple
+            <BaseImageCropMultiple
               class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
               :medias="form.promoted_organisations"
               :ratio="null"
@@ -130,33 +107,38 @@
               :upload-max-size="500000"
               variant="compact"
               upload-variant="compact"
-              @add="addFiles({ files: [$event], collection: 'activity__promoted_organisations' })"
+              @add="
+                addFiles({
+                  files: [$event],
+                  collection: 'activity__promoted_organisations',
+                })
+              "
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
           </div>
-        </Box>
+        </BaseBox>
 
-        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
-          <Heading :level="3" class="mb-8">
-            Metadonnées
-          </Heading>
+        <BaseBox v-if="$stores.auth.contextRole === 'admin'" padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Metadonnées </BaseHeading>
           <Metatags
             :metas="form.metatags"
             :placeholders="{
               title: `Bénévolat ${form.name || '[Nom de l\'activité]'} | JeVeuxAider.gouv.fr`,
-              description: `Trouvez une mission de bénévolat ${form.name || '[Nom de l\'activité]'} parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`
+              description: `Trouvez une mission de bénévolat ${
+                form.name || '[Nom de l\'activité]'
+              } parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`,
             }"
           />
-        </Box>
+        </BaseBox>
       </div>
     </div>
 
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </Button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -170,33 +152,31 @@ import FormParagraphs from '@/mixins/form/paragraphs'
 import FormMetatags from '@/mixins/form/metatags'
 import Metatags from '@/components/custom/Metatags.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    Metatags
+    Metatags,
   },
   mixins: [FormErrors, FormUploads, FormParagraphs, FormMetatags],
-  middleware: 'admin',
   props: {
     activity: {
       type: Object,
       default: () => {
-        return {
-        }
-      }
-    }
+        return {}
+      },
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: { ...this.activity },
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
-        domaines: array().min(1, 'Au moins 1 domaine d\'action')
-      })
+        domaines: array().min(1, "Au moins 1 domaine d'action"),
+      }),
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -205,14 +185,22 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await this.$axios.put(`/activities/${this.form.id}`, this.form)
+            await apiFetch(`/activities/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
           } else {
-            const { data: activity } = await this.$axios.post('/activities', this.form)
+            const activity = await apiFetch('/activities', {
+              method: 'POST',
+              body: this.form,
+            })
             this.form.id = activity.id
           }
 
-          await this.uploadFiles('activity', this.form.id)
-          await this.handleMetatags('activity', this.form.id)
+          await Promise.all([
+            this.uploadFiles('activity', this.form.id),
+            this.handleMetatags('activity', this.form.id),
+          ])
 
           this.$router.push(`/admin/contenus/activites/${this.form.id}`)
         })
@@ -222,8 +210,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-
-  }
-}
+    },
+  },
+})
 </script>

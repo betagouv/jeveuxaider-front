@@ -3,47 +3,41 @@
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
       alt="JeVeuxAider.gouv.fr"
-      srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
+      srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x"
+      src="/images/bg-jva.jpg"
       data-not-lazy
-    >
+    />
     <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
-      <template v-if="$store.state.settings.general.france_connect_active">
-        <div class="">
-          <h2
-            class="mt-6 mb-4 md:mb-0 text-center text-3xl font-bold text-white leading-8 px-4"
-          >
+      <template v-if="$stores.settings.general?.france_connect_active">
+        <div>
+          <h2 class="mt-6 mb-4 md:mb-0 text-center text-3xl font-bold text-white leading-8 px-4">
             Utilisez FranceConnect pour vous connecter ou créer un compte
           </h2>
           <p class="text-center text-base text-[#c3ddfd]">
-            FranceConnect, c'est la solution proposée par l'Etat pour sécuriser
-            et simplifier la connexion à plus de 700 services en ligne.
+            FranceConnect, c'est la solution proposée par l'Etat pour sécuriser et simplifier la
+            connexion à plus de 700 services en ligne.
           </p>
         </div>
 
-        <div
-          v-show="isLoadingFranceConnect"
-          class="text-white font-medium text-center p-4"
-        >
+        <div v-show="isLoadingFranceConnect" class="text-white font-medium text-center p-4">
           Connexion en cours avec FranceConnect...
         </div>
       </template>
       <template v-else>
-        <div class="">
-          <h2
-            class="mt-6 mb-6 md:mb-12 text-center text-3xl font-bold text-white leading-8 px-4"
-          >
+        <div>
+          <h2 class="mt-6 mb-6 md:mb-12 text-center text-3xl font-bold text-white leading-8 px-4">
             Connexion à votre compte
           </h2>
         </div>
       </template>
       <div v-show="!isLoadingFranceConnect">
         <div
-          v-if="$store.state.settings.general.france_connect_active"
+          v-if="$stores.settings.general?.france_connect_active"
           class="mt-4 sm:mx-auto sm:w-full sm:max-w-md text-left"
         >
           <div class="py-4 px-4 sm:px-10 text-center">
             <div class="relative">
-              <FranceConnect @loading="isLoadingFranceConnect = $event" />
+              <CustomFranceConnect @loading="isLoadingFranceConnect = $event" />
               <span class="block mt-4 text-[#c3ddfd]">OU</span>
             </div>
           </div>
@@ -56,26 +50,29 @@
                 <div class="w-full border-t border-gray-200" />
               </div>
               <div class="relative flex justify-center text-xl">
-                <span class="px-2 bg-white font-bold text-gray-900">
-                  J'ai déjà un compte
-                </span>
+                <span class="px-2 bg-white font-bold text-gray-900"> J'ai déjà un compte </span>
               </div>
             </div>
 
             <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
-              <FormControl label="Email" html-for="email" required :error="errors.email">
-                <Input
+              <BaseFormControl label="Email" html-for="email" required :error="errors.email">
+                <BaseInput
                   v-model="form.email"
                   type="email"
                   name="email"
                   placeholder="Entrez votre email"
                   aria-required="true"
                   autocomplete="email"
-                  @blur="validate('email')"
+                  @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                 />
-              </FormControl>
-              <FormControl label="Mot de passe" html-for="password" required :error="errors.password">
-                <Input
+              </BaseFormControl>
+              <BaseFormControl
+                label="Mot de passe"
+                html-for="password"
+                required
+                :error="errors.password"
+              >
+                <BaseInput
                   v-model="form.password"
                   name="password"
                   placeholder="Entrez votre mot de passe"
@@ -86,21 +83,13 @@
                 />
                 <template #description>
                   <div class="mt-2">
-                    <Link
-                      to="/password-reset"
-                      class="text-sm font-medium  text-jva-blue-500"
-                    >
+                    <DsfrLink to="/password-reset" class="text-sm font-medium text-jva-blue-500">
                       Mot de passe perdu ?
-                    </Link>
+                    </DsfrLink>
                   </div>
                 </template>
-              </FormControl>
-              <DsfrButton
-                size="lg"
-                :loading="loading"
-                class="w-full"
-                @click.native.prevent="onSubmit"
-              >
+              </BaseFormControl>
+              <DsfrButton size="lg" :loading="loading" class="w-full" @click.prevent="onSubmit">
                 Connexion
               </DsfrButton>
             </form>
@@ -110,9 +99,7 @@
                   <div class="w-full border-t border-gray-200" />
                 </div>
                 <div class="relative flex justify-center text-xl">
-                  <span class="px-2 bg-white font-bold text-gray-900">
-                    Première visite ?
-                  </span>
+                  <span class="px-2 bg-white font-bold text-gray-900"> Première visite ? </span>
                 </div>
               </div>
 
@@ -132,14 +119,13 @@
       </div>
       <div class="max-w-3xl mx-auto">
         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <div
-            class="border-[#1e429f] border overflow-hidden shadow"
-          >
+          <div class="border-[#1e429f] border overflow-hidden shadow">
             <div class="px-4 py-5 sm:p-6">
               <p class="text-base font-medium text-[#c3ddfd] truncate">
                 Vous êtes une organisation ?
               </p>
               <nuxt-link
+                no-prefetch
                 to="/inscription/responsable"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >
@@ -154,6 +140,7 @@
                 Vous êtes une collectivité territoriale ?
               </p>
               <nuxt-link
+                no-prefetch
                 to="/inscription/responsable?orga_type=Collectivité"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >
@@ -170,58 +157,54 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
-import FranceConnect from '@/components/custom/FranceConnect'
-import Link from '@/components/dsfr/Link.vue'
-import DsfrButton from '@/components/dsfr/Button.vue'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
-export default {
-  components: {
-    FranceConnect,
-    Link,
-    DsfrButton
-  },
-  mixins: [FormErrors],
-  middleware: 'guest',
-  data () {
-    return {
-      loading: false,
-      isLoadingFranceConnect: false,
-      form: {
-        email: this.$route.query.email ? this.$route.query.email : '',
-        password: ''
-      },
-      formSchema: object({
-        email: string().required().email(),
-        password: string().required()
-      })
-    }
-  },
-  head () {
-    return {
+export default defineNuxtComponent({
+  mixins: [FormErrors, DetectUserArchiveDatas],
+  setup() {
+    definePageMeta({
+      middleware: ['guest'],
+    })
+
+    useHead({
       title: 'Connectez-vous à votre espace personnel | JeVeuxAider.gouv.fr',
       link: [
         {
           rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/login'
-        }
+          href: 'https://www.jeveuxaider.gouv.fr/login',
+        },
       ],
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            'Connectez-vous à votre espace personnel et gérez vos missions de bénévolat en quelques clics. '
+            'Connectez-vous à votre espace personnel et gérez vos missions de bénévolat en quelques clics. ',
         },
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/images/share-image.jpg'
-        }
-      ]
+          content: '/images/share-image.jpg',
+        },
+      ],
+    })
+  },
+  data() {
+    return {
+      loading: false,
+      isLoadingFranceConnect: false,
+      form: {
+        email: this.$route.query?.email ?? '',
+        password: '',
+      },
+      formSchema: object({
+        email: string().required('Le champs email est requis').email(),
+        password: string().required('Le champs mot de passe est requis'),
+      }),
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -229,10 +212,10 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$store.dispatch('auth/login', this.form)
-          this.$router.push(
-            this.$router.history.current.query.redirect || '/'
-          )
+          const errorLogin = await this.$stores.auth.login(this.form)
+          if (!errorLogin) {
+            navigateTo(this.$route.query?.redirect ?? '/')
+          }
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -240,7 +223,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

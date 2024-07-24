@@ -1,7 +1,10 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Générations des données...">
+  <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics title="Vue d'ensemble du trafic entrant" class="mb-6" />
-    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
+    <div
+      v-if="statistics"
+      class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden"
+    >
       <CardStatistic
         :value="statistics.periodRedirections"
         title="Redirections"
@@ -27,33 +30,38 @@
         infos-bulle="Nombre de candidatures des partenaires vers JeVeuxAider.gouv.fr depuis le début"
       />
     </div>
-  </Box>
+  </BaseBox>
 </template>
 
 <script>
-import CardStatistic from '@/components/card/CardStatistic'
-import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
+import CardStatistic from '@/components/card/CardStatistic.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardStatistic,
-    BoxHeadingStatistics
+    BoxHeadingStatistics,
   },
-  data () {
+  data() {
     return {
       loading: true,
-      statistics: null
+      statistics: null,
     }
   },
-  async fetch () {
-    this.loading = true
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
 
-    await this.$axios.get('/statistics/overview-api-engagement-entrant', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.statistics = response.data
-    })
-  }
-}
+      await apiFetch('/statistics/overview-api-engagement-entrant', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.statistics = response
+      })
+    },
+  },
+})
 </script>

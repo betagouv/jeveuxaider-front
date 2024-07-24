@@ -3,25 +3,34 @@
     <div class="pt-12 pb-28 bg-white">
       <div class="container">
         <h2 class="text-center">
-          <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
-            Trouver une mission
-          </p>
+          <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">Trouver une mission</p>
 
           <p
             class="text-3xl lg:text-4xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px]"
           >
-            Parmi les dernières missions <br class="hidden md:block">de
-            bénévolat {{ territoire.suffix_title }}
+            Parmi les dernières missions <br class="hidden md:block" />
+
+            <span v-if="territoire.type === 'department'">
+              de bénévolat {{ territoire.suffix_title }}
+            </span>
+            <span v-else>
+              {{
+                territoire.name.toLowerCase().startsWith('commune') ||
+                territoire.name.toLowerCase().startsWith('communauté')
+                  ? 'aux alentours de la '
+                  : $utils.isFirstLetterVowel(territoire.name)
+                  ? "aux alentours d'"
+                  : 'aux alentours de '
+              }}{{ territoire.name }}
+            </span>
           </p>
         </h2>
       </div>
     </div>
 
-    <hr class="opacity-25">
+    <hr class="opacity-25" />
 
-    <div
-      class="pb-24 bg-[#fafaff]"
-    >
+    <div class="pb-24 bg-[#fafaff]">
       <AlgoliaSearch
         :initial-filters="filters"
         :initial-hits-per-page="6"
@@ -34,7 +43,7 @@
 
       <div class="container mx-auto px-4">
         <div v-if="moreLink" class="text-center mt-6">
-          <nuxt-link :to="moreLink">
+          <nuxt-link no-prefetch :to="moreLink">
             <button
               class="leading-none uppercase shadow-lg text-xs font-extrabold rounded-full text-gray-500 bg-white py-4 px-8 hover:scale-105 transform transition will-change-transform"
             >
@@ -48,23 +57,20 @@
 </template>
 
 <script>
-import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
+import AlgoliaSearch from '@/components/section/search/missions/AlgoliaSearch.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    AlgoliaSearch
+    AlgoliaSearch,
   },
   props: {
     territoire: {
       type: Object,
-      required: true
-    }
-  },
-  data () {
-    return {}
+      required: true,
+    },
   },
   computed: {
-    moreLink () {
+    moreLink() {
       let link = null
       switch (this.territoire.type) {
         case 'department':
@@ -76,14 +82,14 @@ export default {
       }
       return link
     },
-    filters () {
+    filters() {
       if (this.territoire.type === 'department') {
         return `department_name:"${this.departmentName}"`
       }
 
       return ''
     },
-    geoSearch () {
+    geoSearch() {
       // Departements
       if (this.territoire.type === 'department') {
         return null
@@ -91,14 +97,17 @@ export default {
 
       // Villes
       return {
-        aroundLatLng: `${this.territoire.latitude}, ${this.territoire.longitude}`
+        aroundLatLng: `${this.territoire.latitude}, ${this.territoire.longitude}`,
       }
     },
-    departmentName () {
-      return `${this.territoire.department} - ${this.$options.filters.label(this.territoire.department, 'departments')}`
-    }
-  }
-}
+    departmentName() {
+      return `${this.territoire.department} - ${this.$filters.label(
+        this.territoire.department,
+        'departments'
+      )}`
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -127,6 +136,5 @@ export default {
   :deep(.ais-StateResults) {
     @apply mb-4;
   }
-
 }
 </style>

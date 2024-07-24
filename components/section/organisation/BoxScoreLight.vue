@@ -3,38 +3,43 @@
     <div v-if="showTitle" class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
       Score
     </div>
-    <Box :variant="boxVariant" :padding="boxPadding" :loading="loadingScore" loading-text="Récupération du score ...">
+    <BaseBox
+      :variant="boxVariant"
+      :padding="boxPadding"
+      :loading="loadingScore"
+      loading-text="Récupération du score ..."
+    >
       <ScoreDetails :score="score" />
-    </Box>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-import ScoreMixin from '~/mixins/score'
-import ScoreDetails from '~/components/section/organisation/ScoreDetails.vue'
+import ScoreMixin from '@/mixins/score'
+import ScoreDetails from '@/components/section/organisation/ScoreDetails.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    ScoreDetails
+    ScoreDetails,
   },
   mixins: [ScoreMixin],
   props: {
     structureId: {
       type: Number,
-      required: true
+      required: true,
     },
     showTitle: {
       type: Boolean,
-      default: false
+      default: false,
     },
     boxVariant: {
       type: String,
-      default: 'flat'
+      default: 'flat',
     },
     boxPadding: {
       type: String,
-      default: 'xs'
-    }
-  }
-}
+      default: 'xs',
+    },
+  },
+})
 </script>

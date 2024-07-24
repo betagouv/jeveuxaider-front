@@ -1,49 +1,46 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Statistiques', to: '/stats' },
-          { text: 'Organisations' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Organisations' }]" />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Organisations"
-    >
+    <BaseSectionHeading title="Organisations">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
-      <OrganisationsStatistics ref="organisationsStatistics" class="" />
-      <Heading as="h2" :level="2">
-        L’activité des organisations en détail
-      </Heading>
-      <OrganisationsByDate ref="organisationsByDate" class="" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <OrganisationsByStates ref="organisationsByStates" />
-          <OrganisationsByReseaux ref="organisationsByReseaux" />
-          <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
+      <OrganisationsStatistics ref="organisationsStatistics" />
+      <!-- <OrganisationsByDate ref="organisationsByDate" /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8">
+          L’activité des organisations en détail
+        </BaseHeading>
+
+        <OrganisationsByPeriod ref="organisationsByPeriod" />
+        <div class="flex flex-col lg:flex-row gap-12">
+          <OrganisationsByStates ref="organisationsByStates" class="w-full" />
+          <OrganisationsByTypes ref="organisationsByTypes" class="w-full" />
         </div>
-        <div class="space-y-12 lg:w-1/2">
-          <OrganisationsByTypes ref="organisationsByTypes" />
-          <OrganisationsByDomaines ref="organisationsByDomaines" />
-        </div>
+
+        <OrganisationsByReseaux ref="organisationsByReseaux" />
+        <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
+        <OrganisationsByDomaines ref="organisationsByDomaines" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import OrganisationsStatistics from '@/components/statistics/OrganisationsStatistics.vue'
 import OrganisationsByDate from '@/components/statistics/OrganisationsByDate.vue'
+import OrganisationsByPeriod from '@/components/statistics/OrganisationsByPeriod.vue'
 import OrganisationsByStates from '@/components/statistics/OrganisationsByStates.vue'
 import OrganisationsByTypes from '@/components/statistics/OrganisationsByTypes.vue'
 import OrganisationsByDomaines from '@/components/statistics/OrganisationsByDomaines.vue'
@@ -51,36 +48,51 @@ import OrganisationsByReseaux from '@/components/statistics/OrganisationsByResea
 // import ParticipationsRefusedByResponsables from '@/components/statistics/ParticipationsRefusedByResponsables.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FiltersStatisticsPublic,
     OrganisationsStatistics,
     OrganisationsByDate,
+    OrganisationsByPeriod,
     OrganisationsByStates,
     OrganisationsByTypes,
     OrganisationsByDomaines,
     OrganisationsByReseaux,
     // ParticipationsRefusedByResponsables,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics-public',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-public',
+    })
+  },
+  data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.organisationsByDate.$fetch()
-      this.$refs.organisationsStatistics.$fetch()
-      this.$refs.organisationsByStates.$fetch()
-      this.$refs.organisationsByTypes.$fetch()
-      // this.$refs.participationsRefusedByResponsables.$fetch()
-      this.$refs.organisationsByDomaines.$fetch()
-      this.$refs.organisationsByReseaux.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.organisationsByDate?.fetch()
+      this.$refs.organisationsByPeriod?.fetch()
+      this.$refs.organisationsStatistics?.fetch()
+      this.$refs.organisationsByStates?.fetch()
+      this.$refs.organisationsByTypes?.fetch()
+      this.$refs.organisationsByDomaines?.fetch()
+      this.$refs.organisationsByReseaux?.fetch()
+      this.$refs.participationsRefusedByResponsables?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

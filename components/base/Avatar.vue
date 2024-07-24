@@ -3,96 +3,97 @@
     class="component--avatar overflow-hidden rounded-full flex-none flex items-center justify-center"
     :class="[
       // Size
-      {'w-10 h-10': size == 'xs'},
-      {'w-12 h-12': size == 'sm'},
-      {'w-16 h-16': size == 'md'},
+      { 'w-10 h-10': size == 'xs' },
+      { 'w-12 h-12': size == 'sm' },
+      { 'w-16 h-16': size == 'md' },
 
       // Background color
-      {'bg-jva-blue-500 ': backgroundColor == 'blue' && !sources},
-      {'bg-white ': backgroundColor == 'white' && !sources},
+      { 'bg-jva-blue-500 ': backgroundColor == 'blue' && !sources },
+      { 'bg-white ': backgroundColor == 'white' && !sources },
     ]"
   >
-    <img
+    <NuxtImg
       v-if="sources"
       :srcset="sources"
       :src="imgSrc"
       :alt="initials"
       class="object-cover w-full h-full"
       @error="onError"
-    >
+    />
 
     <span
       v-else-if="initials"
       class="first-letter:uppercase"
       :class="[
         // Font size
-        {'text-lg': size == 'sm'},
-        {'text-2xl': size == 'md'},
+        { 'text-lg': size == 'sm' },
+        { 'text-2xl': size == 'md' },
 
         // Colors
-        {'text-white': backgroundColor == 'blue'},
-        {'text-gray-700': backgroundColor == 'white'},
+        { 'text-white': backgroundColor == 'blue' },
+        { 'text-gray-700': backgroundColor == 'white' },
       ]"
     >
       {{ initials }}
     </span>
 
-    <UserSolidIcon
+    <RiUserLine
       v-else
       :class="[
         // Sizes
-        {'h-4 w-4': size == 'xs'},
-        {'h-6 w-6': size == 'sm'},
-        {'h-8 w-8': size == 'md'},
+        { 'h-4 w-4': size == 'xs' },
+        { 'h-6 w-6': size == 'sm' },
+        { 'h-8 w-8': size == 'md' },
 
         // Colors
-        {'text-white': backgroundColor == 'blue'},
-        {'text-gray-700': backgroundColor == 'white'},
+        { 'text-white': backgroundColor == 'blue' },
+        { 'text-gray-700': backgroundColor == 'white' },
+        'fill-current',
       ]"
     />
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     imgSrcset: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     imgSrc: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     initials: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     size: {
       type: String,
       default: 'sm',
-      validator: s => ['xs', 'sm', 'md'].includes(s)
+      validator: (s) => ['xs', 'sm', 'md'].includes(s),
     },
     backgroundColor: {
       type: String,
       default: 'blue',
-      validator: b => ['blue', 'white'].includes(b)
-    }
+      validator: (b) => ['blue', 'white'].includes(b),
+    },
   },
-  data () {
+  data() {
     return {
-      sources: this.imgSrcset
+      sources: this.imgSrcset,
     }
   },
   watch: {
-    imgSrcset (newVal) {
+    imgSrcset(newVal) {
       this.sources = newVal
-    }
+    },
   },
   methods: {
-    onError () {
+    onError() {
       this.sources = null
-    }
-  }
-}
+    },
+  },
+})
 </script>

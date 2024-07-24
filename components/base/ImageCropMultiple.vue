@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ImageCrop
+    <BaseImageCrop
       v-for="(value, index) in values"
       :key="value.id"
       :default-value="value"
@@ -26,59 +26,66 @@
 </template>
 
 <script>
-import uniqid from 'uniqid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
+export default defineNuxtComponent({
+  emits: ['add', 'delete', 'crop'],
   props: {
     limit: { type: Number, default: null },
     medias: { type: Array, default: () => [] },
     previewWidth: { type: Number, default: 200 },
     previewHeight: { type: Number, default: null },
-    previewFit: { type: String, default: 'cover', validator: s => ['cover', 'contain'].includes(s) },
+    previewFit: {
+      type: String,
+      default: 'cover',
+      validator: (s) => ['cover', 'contain'].includes(s),
+    },
     previewClasses: { type: String, default: '' },
     previewConversion: { type: String, default: 'formPreview' },
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
     ratio: { type: Number, default: 1 },
-    variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
+    variant: {
+      type: String,
+      default: 'default',
+      validator: (s) => ['default', 'compact'].includes(s),
+    },
     uploadVariant: { type: String, default: 'default' },
     uploadMaxSize: { type: Number, default: 1000000 },
     disableDelete: { type: Boolean, default: false },
     warningTitle: { type: String, default: null },
-    warning: { type: String, default: null }
+    warning: { type: String, default: null },
   },
-  data () {
+  data() {
     return {
-      values: this.medias
+      values: this.medias,
     }
   },
-  computed: {
-
-  },
-  mounted () {
+  computed: {},
+  mounted() {
     if (!this.limit || this.values.length < this.limit) {
       this.addEmptyMedia()
     }
   },
   methods: {
-    onAdd ($event, index) {
+    onAdd($event, index) {
       this.$emit('add', $event)
       if (!this.limit || this.values.length < this.limit) {
         this.addEmptyMedia()
       }
     },
-    onDelete ($event, index) {
+    onDelete($event, index) {
       this.values.splice(index, 1)
       this.$emit('delete', $event)
 
       // @todo: seulement si necessaire
-      if (this.limit && this.limit == (this.values.length + 1)) {
+      if (this.limit && this.limit == this.values.length + 1) {
         this.addEmptyMedia()
       }
     },
-    addEmptyMedia () {
-      this.values.push({ id: uniqid() })
-    }
-  }
-}
+    addEmptyMedia() {
+      this.values.push({ id: uuidv4() })
+    },
+  },
+})
 </script>

@@ -1,119 +1,130 @@
 <template>
-  <portal to="body-end">
-    <Modal
-      v-scroll-lock="isOpen"
-      :is-open="isOpen"
-      :theme="modalTheme"
-      :title="modalTitle"
-      :prevent-click-outside="true"
-      :hide-footer="state === 'processing'"
-      :hide-close="true"
-      @close="$emit('close')"
-    >
-      <slot v-if="state === 'initial'" name="initialState" :handleSubmit="handleSubmit" :endpoint="endpoint" />
+  <ClientOnly>
+    <Teleport to="#teleport-body-end">
+      <BaseModal
+        :is-open="isOpen"
+        :theme="modalTheme"
+        :title="modalTitle"
+        :prevent-click-outside="true"
+        :hide-footer="state === 'processing'"
+        :hide-close="true"
+        @close="$emit('close')"
+      >
+        <slot
+          v-if="state === 'initial'"
+          name="initialState"
+          :handleSubmit="handleSubmit"
+          :endpoint="endpoint"
+        />
 
-      <template v-else-if="state === 'processing'">
-        <Gauge :percentage="progress" size="xl" class="rounded-full" color="green" />
-        <div class=" text-gray-600 mt-2">
-          Progression: {{ progress }}%
-        </div>
-      </template>
-
-      <template #footer>
-        <template v-if="state === 'initial'">
-          <Button class="mr-3" variant="white" @click.native="$emit('close')">
-            Retour
-          </Button>
-          <slot name="submit">
-            <Button @click.native="handleSubmit(endpoint)">
-              Confirmer
-            </Button>
-          </slot>
+        <template v-else-if="state === 'processing'">
+          <BaseGauge :percentage="progress" size="xl" class="rounded-full" color="green" />
+          <div class="text-gray-600 mt-2">Progression: {{ progress }}%</div>
         </template>
 
-        <Button
-          v-else-if="state === 'processed'"
-          variant="white"
-          @click.native="() => { $emit('processed'); $emit('close') }"
-        >
-          Fermer
-        </Button>
-      </template>
-    </Modal>
-  </portal>
+        <template #footer>
+          <template v-if="state === 'initial'">
+            <DsfrButton type="secondary" @click.native="$emit('close')"> Retour </DsfrButton>
+            <slot name="submit">
+              <DsfrButton @click.native="handleSubmit(endpoint)"> Confirmer </DsfrButton>
+            </slot>
+          </template>
+
+          <DsfrButton
+            v-else-if="state === 'processed'"
+            type="secondary"
+            @click.native="
+              () => {
+                $emit('processed')
+                $emit('close')
+              }
+            "
+          >
+            Fermer
+          </DsfrButton>
+        </template>
+      </BaseModal>
+    </Teleport>
+  </ClientOnly>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     endpoint: {
       type: String,
-      required: true
+      required: true,
     },
     isOpen: {
       type: Boolean,
-      default: false
+      default: false,
     },
     operations: {
       type: Array,
-      required: true
+      required: true,
     },
     modalTitle: {
       type: String,
-      default: 'Opérations de masse'
-    }
+      default: 'Opérations de masse',
+    },
   },
-  data () {
+  data() {
     return {
       progress: 0,
       interval: null,
       state: 'initial', // initial, processing, processed
-      form: null
+      form: null,
     }
   },
   computed: {
-    modalTheme () {
+    modalTheme() {
       return this.state == 'initial' ? 'warning' : this.state == 'processed' ? 'success' : null
     },
-    modelIds () {
-      return this.operations.map(model => model.id)
-    }
+    modelIds() {
+      return this.operations.map((model) => model.id)
+    },
   },
   watch: {
-    async progress (val) {
+    async progress(val) {
       if (val === 100) {
         clearInterval(this.interval)
         // Show the completed progressbar for a given time before continuing
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        await new Promise((resolve) => setTimeout(resolve, 1500))
         this.state = 'processed'
       }
     },
-    async isOpen (val) {
+    async isOpen(val) {
       if (!val) {
         // Avoid footer blink
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise((resolve) => setTimeout(resolve, 500))
       }
       // Reset
       this.state = 'initial'
       this.progress = 0
     },
     state: {
-      handler (val) {
+      handler(val) {
         this.$emit('state-changed', val)
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
-    async handleSubmit (endpoint, payload = {}) {
+    async handleSubmit(endpoint, payload = {}) {
       this.state = 'processing'
-      const { data: batchId } = await this.$axios.post(endpoint, { ...payload, ids: this.modelIds })
+      const batchId = await apiFetch(endpoint, {
+        method: 'POST',
+        body: {
+          ...payload,
+          ids: this.modelIds,
+        },
+      })
       this.interval = setInterval(() => this.refreshBatchProgress(batchId), 1500)
     },
-    async refreshBatchProgress (batchId) {
-      const { data } = await this.$axios.get(`/batch/${batchId}`)
-      this.progress = data.progress
-    }
-  }
-}
+    async refreshBatchProgress(batchId) {
+      const response = await apiFetch(`/batch/${batchId}`)
+      this.progress = response.progress
+    },
+  },
+})
 </script>

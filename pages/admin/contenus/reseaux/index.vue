@@ -1,83 +1,92 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" @refetch="$fetch" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Contenus' },
-          { text: 'Réseaux' }
-        ]"
-      />
-    </portal>
+    <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" @refetch="fetch" />
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Contenus' },
+            { text: 'Réseaux' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'réseau',
         'réseaux',
         false
       )}`"
+      :loading="queryLoading"
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button type="secondary" icon="RiDownload2Line" :loading="exportLoading" @click.native="handleExport">
+          <DsfrButton
+            type="secondary"
+            icon="RiDownload2Line"
+            :disabled="queryResult?.total === 0"
+            :loading="exportLoading"
+            @click.native="handleExport"
+          >
             Exporter
-          </Button>
+          </DsfrButton>
 
-          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/reseaux/add`)">
+          <DsfrButton icon="RiAddLine" @click="$router.push(`/admin/contenus/reseaux/add`)">
             Nouveau
-          </Button>
+          </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <DsfrTag
           :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </DsfrTag> -->
 
-        <Tag
+        <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
+          "
           @click.native="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
-        </Tag>
+        </DsfrTag>
 
-        <Tag
+        <DsfrTag
           :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
+          "
           @click.native="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne
-        </Tag>
+        </DsfrTag>
       </template>
     </SearchFilters>
 
@@ -91,20 +100,31 @@
         :description="`${reseau.structures_count} antennes`"
         :image-srcset="illustrationSrcset(reseau)"
         :image-src="illustrationSrc(reseau)"
-        @click.native="drawerReseauId = reseau.id"
+        @click.left="drawerReseauId = reseau.id"
+        @click.middle="
+          navigateTo(`/admin/contenus/reseaux/${reseau.id}`, { open: { target: '_blank' } })
+        "
       >
         <template #footer>
           <div
-            class="border-t font-semibold  text-sm text-center py-4"
-            :class="[
-              reseau.is_published ? 'text-gray-900' : 'text-gray-400'
-            ]"
+            class="border-t font-semibold text-sm text-center py-4"
+            :class="[reseau.is_published ? 'text-gray-900' : 'text-gray-400']"
           >
-            {{ $options.filters.formatNumber(reseau.places_left) }} {{ $options.filters.pluralize(reseau.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
+            {{ $numeral(reseau.places_left) }}
+            {{
+              $filters.pluralize(
+                reseau.places_left,
+                'bénévole recherché',
+                'bénévoles recherchés',
+                false
+              )
+            }}
           </div>
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -118,14 +138,12 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerReseau from '@/components/drawer/DrawerReseau'
+import Card from '@/components/card/Card.vue'
+import DrawerReseau from '@/components/drawer/DrawerReseau.vue'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
@@ -134,36 +152,42 @@ export default {
     SearchFilters,
     Pagination,
     Breadcrumb,
-    Button,
-    Tag
   },
   mixins: [QueryBuilder, MixinExport],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/reseaux',
       exportEndpoint: '/export/reseaux',
       queryParams: {
         include: 'illustrations,overrideImage1,structuresCount',
-        append: 'places_left'
+        append: 'places_left',
       },
       drawerReseauId: null,
-      drawerReseau: null
+      drawerReseau: null,
     }
   },
   methods: {
-    illustrationSrcset (reseau) {
-      return reseau.override_image1?.urls.large ??
+    illustrationSrcset(reseau) {
+      return (
+        reseau.override_image1?.urls.large ??
         reseau.illustrations[0]?.urls.large ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      )
     },
-    illustrationSrc (reseau) {
-      return reseau.override_image1?.urls.original ??
+    illustrationSrc(reseau) {
+      return (
+        reseau.override_image1?.urls.original ??
         reseau.illustrations[0]?.urls.original ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
-    }
-  }
+      )
+    },
+  },
 }
 </script>

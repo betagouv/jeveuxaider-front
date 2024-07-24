@@ -1,69 +1,91 @@
 <template>
   <div class="flex flex-col space-y-4">
-    <FormControl
+    <BaseFormControl
       v-for="(field, index) in schema"
       :key="index"
       :label="field.label"
       :html-for="field.key"
     >
-      <component
-        :is="component(field.type)"
-        v-model="form[field.key]"
-        :placeholder="field.placeholder"
-        :name="field.key"
-        @input="onInput"
-      />
-    </FormControl>
+      <template v-if="field.type === 'richtext'">
+        <BaseRichEditor
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :name="field.key"
+          :toolbar="['bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link']"
+          @update:modelValue="onInput"
+        />
+      </template>
+
+      <template v-if="field.type === 'text'">
+        <BaseInput
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :name="field.key"
+          @update:modelValue="onInput"
+        />
+      </template>
+      <template v-if="field.type === 'number'">
+        <BaseInput
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :name="field.key"
+          type="number"
+          @update:modelValue="onInput"
+        />
+      </template>
+      <template v-if="field.type === 'select'">
+        <BaseSelectAdvanced
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :options="field.options"
+          :name="field.key"
+          @update:modelValue="onInput"
+        />
+      </template>
+      <template v-if="field.type === 'textarea'">
+        <BaseTextarea
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :name="field.key"
+          @update:modelValue="onInput"
+        />
+      </template>
+    </BaseFormControl>
     <div class="flex justify-end">
-      <Button variant="red" size="sm" icon="TrashIcon" @click.native="onRemove">
+      <BaseButton variant="red" size="sm" icon="RiDeleteBinLine" @click.native="onRemove">
         Supprimer
-      </Button>
+      </BaseButton>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     schema: {
       type: Array,
-      required: true
+      required: true,
     },
     item: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      form: { ...this.item }
+      form: { ...this.item },
     }
   },
   methods: {
-    onRemove () {
+    onRemove() {
       this.$emit('remove', this.form)
     },
-    onInput () {
+    onInput() {
       this.$emit('update', this.form)
     },
-    onAutocompleteChange (payload) {
+    onAutocompleteChange(payload) {
       this.$emit('update', payload)
     },
-    component (fieldType) {
-      let component
-      switch (fieldType) {
-        case 'text':
-          component = 'Input'
-          break
-        case 'textarea':
-          component = 'TexteArea'
-          break
-        case 'richtext':
-          component = 'RichEditor'
-          break
-      }
-      return component
-    }
-  }
-}
+  },
+})
 </script>

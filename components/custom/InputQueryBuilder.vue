@@ -5,8 +5,11 @@
         <div class="text-gray-700 font-semibold">
           {{ group.operator }}
         </div>
-        <div class="">
-          <XIcon class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer" @click="removeGroup(index)" />
+        <div>
+          <RiCloseLine
+            class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer"
+            @click="removeGroup(index)"
+          />
         </div>
       </div>
       <div class="bg-gray-50 py-4 px-4">
@@ -20,106 +23,105 @@
               {{ condition.operator }}
             </div>
           </div>
-          <FormControl
-            html-for="field"
-            class="max-w-[170px]"
-          >
-            <SelectAdvanced
+          <BaseFormControl html-for="field" class="max-w-[170px]">
+            <BaseSelectAdvanced
               v-model="condition.name"
               placeholder="Champ"
               name="field"
               :options="conditionFieldOptions"
+              options-class="!min-w-[230px]"
             />
-          </FormControl>
-          <FormControl
-            html-for="operand"
-            class="max-w-[90px]"
-          >
-            <SelectAdvanced
+          </BaseFormControl>
+          <BaseFormControl html-for="operand" class="max-w-[110px]">
+            <BaseSelectAdvanced
               v-model="condition.operand"
               name="operand"
-              :options="[
-                {key: '=', label: '='},
-                {key: '!=', label: '!='}
-              ]"
+              :options="fieldResolver(condition.name).operands"
             />
-          </FormControl>
-          <FormControl
-            html-for="value"
-            class="max-w-[224px]"
-          >
-            <SelectAdvanced
-              v-if="fieldResolver(condition.name).type === 'select'"
-              v-model="condition.value"
-              placeholder="Valeur"
-              name="value"
-              :options="fieldResolver(condition.name).options"
-            />
-            <Input
-              v-if="fieldResolver(condition.name).type === 'input'"
-              v-model="condition.value"
-              placeholder="Valeur"
-              name="value"
-            />
-          </FormControl>
+          </BaseFormControl>
+          <BaseFormControl :html-for="condition.name" class="flex-1">
+            <template v-if="fieldResolver(condition.name).type === 'select'">
+              <BaseSelectAdvanced
+                v-model="condition.value"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                :name="condition.name"
+                :options="fieldResolver(condition.name).options"
+                options-class="!min-w-[300px]"
+              />
+            </template>
+            <template v-if="fieldResolver(condition.name).type === 'input'">
+              <BaseInput
+                v-model="condition.value"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                :name="condition.name"
+              />
+            </template>
+            <template v-if="fieldResolver(condition.name).type === 'date'">
+              <BaseInput
+                v-model="condition.value"
+                type="date"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                :name="condition.name"
+              />
+            </template>
+          </BaseFormControl>
           <div class="flex-none w-[20px]">
-            <XIcon v-if="cIndex > 0" class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer" @click="removeCondition(group, cIndex)" />
+            <RiCloseLine
+              v-if="cIndex > 0"
+              class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer"
+              @click="removeCondition(group, cIndex)"
+            />
           </div>
         </div>
         <div class="pt-4 pl-[46px]">
-          <Dropdown>
+          <BaseDropdown>
             <template #button>
-              <Button size="sm" type="tertiary" icon="PlusIcon">
+              <DsfrButton size="sm" type="tertiary" icon="RiAddLine">
                 Ajouter une condition
-              </Button>
+              </DsfrButton>
             </template>
             <template #items>
               <div class="w-[100px]">
-                <DropdownOptionsItem size="sm" @click.native="addCondition(group, 'AND')">
+                <BaseDropdownOptionsItem size="sm" @click.native="addCondition(group, 'AND')">
                   ET
-                </DropdownOptionsItem>
-                <DropdownOptionsItem size="sm" @click.native="addCondition(group, 'OR')">
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem size="sm" @click.native="addCondition(group, 'OR')">
                   OU
-                </DropdownOptionsItem>
+                </BaseDropdownOptionsItem>
               </div>
             </template>
-          </Dropdown>
+          </BaseDropdown>
         </div>
       </div>
     </div>
     <div class="flex">
-      <Dropdown>
+      <BaseDropdown>
         <template #button>
-          <Button size="sm" type="tertiary" icon="PlusIcon">
+          <DsfrButton size="sm" type="tertiary" icon="RiAddLine">
             Ajouter un groupe de conditions
-          </Button>
+          </DsfrButton>
         </template>
         <template #items>
           <div class="w-[100px]">
-            <DropdownOptionsItem size="sm" @click.native="addGroup('AND')">
+            <BaseDropdownOptionsItem size="sm" @click.native="addGroup('AND')">
               ET
-            </DropdownOptionsItem>
-            <DropdownOptionsItem size="sm" @click.native="addGroup('OR')">
+            </BaseDropdownOptionsItem>
+            <BaseDropdownOptionsItem size="sm" @click.native="addGroup('OR')">
               OU
-            </DropdownOptionsItem>
+            </BaseDropdownOptionsItem>
           </div>
         </template>
-      </Dropdown>
+      </BaseDropdown>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  components: {
-    Button
-  },
+export default defineNuxtComponent({
   props: {
     conditionFieldOptions: {
       type: Array,
-      required: true
+      required: true,
     },
     modelValue: {
       type: Array,
@@ -131,59 +133,59 @@ export default {
                 name: 'missions.domaine_id',
                 operand: '=',
                 value: '',
-                operator: null
-              }
+                operator: null,
+              },
             ],
-            operator: null
-          }
+            operator: null,
+          },
         ]
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
-      query: this.modelValue
+      query: this.modelValue,
     }
   },
   watch: {
     query: {
       deep: true,
-      handler (value, oldValue) {
+      handler(value, oldValue) {
         this.$emit('update:modelValue', value)
-      }
-    }
+      },
+    },
   },
   methods: {
-    fieldResolver (key) {
-      return this.conditionFieldOptions.find(option => option.key === key)
+    fieldResolver(key) {
+      return this.conditionFieldOptions.find((option) => option.key === key)
     },
-    addGroup (operator) {
+    addGroup(operator) {
       this.query.splice(this.query.length, 0, {
         conditions: [
           {
             name: 'missions.domaine_id',
             operand: '=',
             value: '',
-            operator: null
-          }
+            operator: null,
+          },
         ],
-        operator
+        operator,
       })
     },
-    removeGroup (index) {
+    removeGroup(index) {
       this.query.splice(index, 1)
     },
-    addCondition (group, operator) {
+    addCondition(group, operator) {
       group.conditions.splice(group.conditions.length, 0, {
         name: 'missions.domaine_id',
         operand: '=',
         value: '',
-        operator
+        operator,
       })
     },
-    removeCondition (group, index) {
+    removeCondition(group, index) {
       group.conditions.splice(index, 1)
-    }
-  }
-}
+    },
+  },
+})
 </script>

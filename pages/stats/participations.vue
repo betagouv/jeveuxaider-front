@@ -1,56 +1,51 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Statistiques', to: '/stats' },
-          { text: 'Mises en relation' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Mises en relation' }]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Mises en relation"
-    >
+    <BaseSectionHeading title="Mises en relation">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
-      <Heading as="h2" :level="2">
-        Les mises en relation en détail
-      </Heading>
-      <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
+      <!-- <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" /> -->
 
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <ParticipationsByActivities ref="participationsByActivities" />
-          <ParticipationsByReseaux ref="participationsByReseaux" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <ParticipationsByDomaines ref="participationsByDomaines" />
-          <ParticipationsByOrganisations ref="participationsByOrganisations" />
-        </div>
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les mises en relation en détail </BaseHeading>
+
+        <ParticipationsByPeriod ref="participationsByPeriod" />
+        <ParticipationsByActivities ref="participationsByActivities" />
+        <ParticipationsByReseaux ref="participationsByReseaux" />
+        <ParticipationsByDomaines ref="participationsByDomaines" />
+        <ParticipationsByOrganisations ref="participationsByOrganisations" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import ParticipationsStatistics from '@/components/statistics/ParticipationsStatistics.vue'
 import ParticipationsByDate from '@/components/statistics/ParticipationsByDate.vue'
 import ParticipationsByOrganisations from '@/components/statistics/ParticipationsByOrganisations.vue'
 import ParticipationsByDomaines from '@/components/statistics/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/statistics/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/statistics/ParticipationsByActivities.vue'
+import ParticipationsByPeriod from '@/components/statistics/ParticipationsByPeriod.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FiltersStatisticsPublic,
     ParticipationsStatistics,
@@ -59,25 +54,41 @@ export default {
     ParticipationsByDomaines,
     ParticipationsByReseaux,
     ParticipationsByActivities,
-    Breadcrumb
+    ParticipationsByPeriod,
+    Breadcrumb,
   },
-  layout: 'statistics-public',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-public',
+    })
+  },
+  data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.participationsByDate.$fetch()
-      this.$refs.participationsStatistics.$fetch()
-      this.$refs.participationsByDomaines.$fetch()
-      this.$refs.participationsByOrganisations.$fetch()
-      this.$refs.participationsByReseaux.$fetch()
-      this.$refs.participationsByActivities.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.participationsByDate?.fetch()
+      this.$refs.participationsByPeriod?.fetch()
+      this.$refs.participationsStatistics?.fetch()
+      this.$refs.participationsByDomaines?.fetch()
+      this.$refs.participationsByOrganisations?.fetch()
+      this.$refs.participationsByReseaux?.fetch()
+      this.$refs.participationsByActivities?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

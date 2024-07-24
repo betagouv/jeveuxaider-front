@@ -2,199 +2,182 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations générales
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
           <div class="space-y-10">
-            <FormControl
+            <BaseFormControl
               html-for="name"
               label="Nom du domaine d'action"
               required
               :error="errors.name"
             >
-              <Input
-                v-model="form.name"
-                name="name"
-                placeholder="Nom du domaine d'action"
-              />
-            </FormControl>
-            <FormControl
+              <BaseInput v-model="form.name" name="name" placeholder="Nom du domaine d'action" />
+            </BaseFormControl>
+            <BaseFormControl
               html-for="title"
               label="Titre de la page de ce domaine d'action"
               required
               :error="errors.title"
             >
-              <Input
-                v-model="form.title"
-                name="title"
-                placeholder="Titre de la page"
-              />
-            </FormControl>
-            <FormControl
+              <BaseInput v-model="form.title" name="title" placeholder="Titre de la page" />
+            </BaseFormControl>
+            <BaseFormControl
               label="Description"
               html-for="description"
               :error="errors.description"
               required
             >
-              <Textarea
+              <BaseTextarea
                 v-model="form.description"
                 name="description"
                 placeholder="Décrivez le domaine d'action en quelques mots..."
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Images pour les organisations
-          </Heading>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Images pour les organisations </BaseHeading>
           <div class="space-y-12">
-            <ImageCropMultiple
+            <BaseImageCropMultiple
               class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
               :medias="form.illustrations_organisation"
-              :ratio="945/450"
+              :ratio="945 / 450"
               :min-width="945"
               :preview-width="235"
               variant="compact"
               upload-variant="compact"
               :upload-max-size="2000000"
-              disable-delete
-              @add="addFiles({ files: [$event], collection: 'domaine__illustrations_organisation' })"
+              :disable-delete="false"
+              @add="
+                addFiles({
+                  files: [$event],
+                  collection: 'domaine__illustrations_organisation',
+                })
+              "
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
           </div>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Images pour les missions
-          </Heading>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Images pour les missions </BaseHeading>
           <div class="space-y-12">
-            <ImageCropMultiple
+            <BaseImageCropMultiple
               class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
               :medias="form.illustrations_mission"
-              :ratio="300/143"
+              :ratio="300 / 143"
               :min-width="300"
               :preview-width="235"
               variant="compact"
               upload-variant="compact"
-              disable-delete
-              @add="addFiles({ files: [$event], collection: 'domaine__illustrations_mission' })"
+              :disable-delete="false"
+              @add="
+                addFiles({
+                  files: [$event],
+                  collection: 'domaine__illustrations_mission',
+                })
+              "
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
           </div>
-        </Box>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> FAQ </BaseHeading>
+          <BaseFormControl label="Eléments de la FAQ" html-for="faq">
+            <BaseParagraph
+              :schema="[
+                { key: 'question', label: 'Question', type: 'text' },
+                {
+                  key: 'tab',
+                  label: 'Onglet',
+                  type: 'select',
+                  placeholder: 'Choisissez une option',
+                  options: [
+                    { key: 'benevole', label: 'Pour les bénévoles' },
+                    { key: 'organisation', label: 'Pour les organisations' },
+                  ],
+                },
+                { key: 'weight', label: 'Position', type: 'number' },
+                {
+                  key: 'description',
+                  label: 'Description',
+                  type: 'richtext',
+                },
+              ]"
+              :items="form.faq"
+              @add="onParagraphAddItem('faq', $event)"
+              @update="onParagraphUpdateItem('faq', $event)"
+              @remove="onParagraphRemoveItem('faq', $event)"
+            />
+          </BaseFormControl>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Paramètres
-          </Heading>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <Toggle
-              v-model="form.published"
-              :label="form.published ? 'En ligne' : 'Hors ligne'"
-              description="Pour rendre la page accessible de tous"
-            />
+            <BaseToggle v-model="form.published" label="Mettre la page en ligne" />
           </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Organisations partenaires
-          </Heading>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Metadonnées </BaseHeading>
+          <Metatags
+            :metas="form.metatags"
+            :placeholders="{
+              title: form.title || '[Titre de la page]',
+              description: form.description || '[Description du domaine]',
+            }"
+          />
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Images pour la page publique </BaseHeading>
           <div class="space-y-12">
-            <FormControl html-for="logos_partenaires">
-              <ImageCropMultiple
-                class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
-                :medias="form.logos_partenaires"
-                :ratio="null"
-                :min-height="112"
-                :preview-width="null"
-                :preview-height="56"
-                preview-fit="contain"
-                preview-classes="p-2"
-                :upload-max-size="500000"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </FormControl>
-          </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Organisations actives
-          </Heading>
-          <div class="space-y-12">
-            <FormControl html-for="logos_partenaires_actifs">
-              <ImageCropMultiple
-                class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
-                :medias="form.logos_partenaires_actifs"
-                :ratio="null"
-                :min-height="112"
-                :preview-width="null"
-                :preview-height="56"
-                preview-fit="contain"
-                preview-classes="p-2"
-                :upload-max-size="500000"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires_actifs' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </FormControl>
-          </div>
-        </Box>
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Images pour la page publique
-          </Heading>
-          <div class="space-y-12">
-            <FormControl label="Bannière" html-for="banner">
+            <BaseFormControl label="Bannière" html-for="banner">
               <!-- <div class="text-gray-500 text-sm !mb-2">
               Résolution minimale: 1600 par 600 pixels
             </div> -->
-              <ImageCrop
+              <BaseImageCrop
                 :default-value="form.banner"
-                :ratio="1600/600"
-                :min-width="1600"
-                :preview-width="235"
+                :ratio="1680 / 1400"
+                :min-width="1680"
+                :preview-width="270"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'domaine__banner' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
-            </FormControl>
+            </BaseFormControl>
 
-            <FormControl label="Illustrations" html-for="illustrations">
-              <ImageCropMultiple
+            <BaseFormControl label="Illustrations" html-for="illustrations">
+              <BaseImageCropMultiple
                 class="grid sm:grid-cols-3 gap-4"
                 :limit="6"
                 :medias="form.illustrations"
-                :ratio="1/1"
+                :ratio="1 / 1"
                 :min-width="430"
                 :preview-width="200"
                 variant="compact"
                 upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
+                @add="
+                  addFiles({
+                    files: [$event],
+                    collection: 'domaine__illustrations',
+                  })
+                "
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
       </div>
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </Button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -204,29 +187,34 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import FormParagraphs from '@/mixins/form/paragraphs'
+import FormMetatags from '@/mixins/form/metatags'
+import Metatags from '@/components/custom/Metatags.vue'
 
-export default {
-  mixins: [FormErrors, FormUploads],
-  middleware: 'admin',
+export default defineNuxtComponent({
+  components: {
+    Metatags,
+  },
+  mixins: [FormErrors, FormUploads, FormParagraphs, FormMetatags],
   props: {
     domaine: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
-  data () {
+  data() {
     return {
       form: { ...this.domaine },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
         title: string().required("L'objectif est requis"),
-        description: string().required('La description est requise')
+        description: string().required('La description est requise'),
       }),
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -235,12 +223,23 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await this.$axios.put(`/domaines/${this.form.id}`, this.form)
+            await apiFetch(`/domaines/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
           } else {
-            const { data: domaine } = await this.$axios.post('/domaines', this.form)
+            const domaine = await apiFetch('/domaines', {
+              method: 'POST',
+              body: this.form,
+            })
             this.form.id = domaine.id
           }
-          await this.uploadFiles('domaine', this.form.id)
+
+          await Promise.all([
+            this.uploadFiles('domaine', this.form.id),
+            this.handleMetatags('domaine', this.form.id),
+          ])
+
           this.$router.push('/admin/contenus/domaines')
         })
         .catch((errors) => {
@@ -249,7 +248,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

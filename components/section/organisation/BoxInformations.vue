@@ -3,51 +3,87 @@
     <div v-if="showTitle" class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
       Informations
     </div>
-    <Box :variant="boxVariant" :padding="boxPadding">
-      <DescriptionList>
-        <DescriptionListItem term="Adresse" :description="organisation.city ? `${organisation.city} - ${organisation.zip}` : '-'" />
-        <DescriptionListItem term="Département" :description="organisation.department ? `${organisation.department} - ${$options.filters.label(organisation.department, 'departments')}` : '-'" />
-        <DescriptionListItem term="SIRET" :description="organisation.siret" />
-        <DescriptionListItem term="RNA" :description="organisation.rna" />
-        <DescriptionListItem term="Crée le" :description="$dayjs(organisation.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Statut juridique" :description="organisation.statut_juridique | label('structure_legal_status')" />
-        <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
-        <template v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)">
-          <DescriptionListItemGauge
+    <BaseBox :variant="boxVariant" :padding="boxPadding">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Adresse"
+          :description="organisation.city ? `${organisation.city} - ${organisation.zip}` : '-'"
+        />
+        <BaseDescriptionListItem
+          term="Département"
+          :description="
+            organisation.department
+              ? `${organisation.department} - ${$filters.label(
+                  organisation.department,
+                  'departments'
+                )}`
+              : '-'
+          "
+        />
+        <BaseDescriptionListItem term="SIRET" :description="organisation.siret" />
+        <BaseDescriptionListItem term="RNA" :description="organisation.rna" />
+        <BaseDescriptionListItem
+          term="Crée le"
+          :description="$dayjs(organisation.created_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Modifié le"
+          :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Statut juridique"
+          :description="$filters.label(organisation.statut_juridique, 'structure_legal_status')"
+        />
+        <BaseDescriptionListItem
+          v-if="organisation.association_types"
+          term="Agréements"
+          :description="organisation.association_types.join(', ')"
+        />
+        <template
+          v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+        >
+          <BaseDescriptionListItemGauge
             term="Tx. complétion"
+            v-if="organisation.completion_rate"
             :percentage="organisation.completion_rate"
           />
-          <DescriptionListItem
-            v-if="organisation.missing_fields.length"
-            term="Champs manquants"
-            :description="organisation.missing_fields.map((option) => $options.filters.label(option, 'structure_fields')).join(', ')"
-          />
+
+          <template v-if="organisation.missing_fields">
+            <BaseDescriptionListItem
+              v-if="organisation.missing_fields.length"
+              term="Champs manquants"
+              :description="
+                organisation.missing_fields
+                  .map((option) => $filters.label(option, 'structure_fields'))
+                  .join(', ')
+              "
+            />
+          </template>
         </template>
-      </DescriptionList>
-    </Box>
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     organisation: {
       type: Object,
-      required: true
+      required: true,
     },
     showTitle: {
       type: Boolean,
-      default: false
+      default: false,
     },
     boxVariant: {
       type: String,
-      default: 'flat'
+      default: 'flat',
     },
     boxPadding: {
       type: String,
-      default: 'xs'
-    }
-  }
-}
+      default: 'xs',
+    },
+  },
+})
 </script>

@@ -2,49 +2,40 @@
   <div class="grid grid-cols-1 gap-4">
     <div v-for="(action, index) in actions" :key="index" class="bg-gray-50 py-4 px-4">
       <div class="flex items-center justify-center space-x-4">
-        <FormControl
-          html-for="key"
-        >
-          <SelectAdvanced
+        <BaseFormControl html-for="key">
+          <BaseSelectAdvanced
             v-model="action.key"
             placeholder="Nom de l'action"
             name="key"
             :options="actionFieldOptions"
           />
-        </FormControl>
-        <FormControl
-          html-for="value"
-        >
-          <Input
-            v-model="action.value"
-            placeholder="Valeur"
-            name="value"
-          />
-        </FormControl>
+        </BaseFormControl>
+        <BaseFormControl html-for="value">
+          <BaseInput v-model="action.value" placeholder="Valeur" name="value" />
+        </BaseFormControl>
         <div class="flex-none w-[30px]">
-          <XIcon v-if="index > 0" class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer" @click="removeAction(index)" />
+          <RiCloseLine
+            v-if="index > 0"
+            class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer"
+            @click="removeAction(index)"
+          />
         </div>
       </div>
     </div>
     <div class="flex">
-      <Button size="sm" type="tertiary" icon="PlusIcon" @click="addAction()">
+      <DsfrButton size="sm" type="tertiary" icon="RiAddLine" @click="addAction()">
         Ajouter une action
-      </Button>
+      </DsfrButton>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  components: {
-    Button
-  },
+export default defineNuxtComponent({
   props: {
     actionFieldOptions: {
       type: Array,
-      required: true
+      required: true,
     },
     modelValue: {
       type: Array,
@@ -52,35 +43,35 @@ export default {
         return [
           {
             action: 'attach_tag',
-            value: null
-          }
+            value: null,
+          },
         ]
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
-      actions: this.modelValue
+      actions: this.modelValue,
     }
   },
   watch: {
     actions: {
       deep: true,
-      handler (value, oldValue) {
+      handler(value, oldValue) {
         this.$emit('update:modelValue', value)
-      }
-    }
+      },
+    },
   },
   methods: {
-    addAction () {
+    addAction() {
       this.actions.splice(this.actions.length, 0, {
         action: null,
-        value: null
+        value: null,
       })
     },
-    removeAction (index) {
+    removeAction(index) {
       this.actions.splice(index, 1)
-    }
-  }
-}
+    },
+  },
+})
 </script>

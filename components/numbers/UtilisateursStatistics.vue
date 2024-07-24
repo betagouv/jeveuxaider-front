@@ -1,76 +1,130 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
+  <BaseBox
+    padding="sm"
+    :loading="loading"
+    loading-text="Récupération des statistiques..."
+    class="lg:col-span-2"
+  >
     <BoxHeadingStatistics title="Les utilisateurs en un coup d’oeil" class="mb-6" />
-    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
+    <div
+      v-if="statistics"
+      class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden"
+    >
       <CardStatistic
         :value="statistics.utilisateurs"
-        :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
+        :title="`${$filters.pluralize(
+          statistics.utilisateurs,
+          'Utilisateur',
+          'Utilisateurs',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
         infos-bulle="Nombre d'utilisateurs inscrits sur la période"
       />
       <CardStatistic
         :value="statistics.benevoles"
-        :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
+        :title="`${$filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
+        :subtitle="`${$filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
         infos-bulle="Nombre de bénévoles inscrits sur la période"
       />
       <CardStatistic
         :value="statistics.utilisateurs_with_participations"
-        :title="`${$options.filters.pluralize(statistics.utilisateurs_with_participations, 'Bénévole actif', 'Bénévoles actifs', false)}`"
+        :title="`${$filters.pluralize(
+          statistics.utilisateurs_with_participations,
+          'Bénévole actif',
+          'Bénévoles actifs',
+          false
+        )}`"
         link="/admin/utilisateurs"
         infos-bulle="Nombre de bénévoles isncrits sur la période ayant fait au moins une mise en relation"
       />
       <CardStatistic
         :value="statistics.participations_avg.toString()"
-        :title="`${$options.filters.pluralize(statistics.participations_avg, 'Participation', 'Participations', false)}`"
+        :title="`${$filters.pluralize(
+          statistics.participations_avg,
+          'Participation',
+          'Participations',
+          false
+        )}`"
         :subtitle="`par bénévole actif`"
         link="/admin/utilisateurs"
         infos-bulle="Nombre de participations moyen par bénévoles inscrits sur la période"
       />
       <CardStatistic
         :value="statistics.benevoles_visibles_marketplace"
-        :title="`${$options.filters.pluralize(statistics.benevoles_visibles_marketplace, 'Bénévole visible', 'Bénévoles visibles', false)}`"
-        subtitle="sur la marketplace"
+        :title="`${$filters.pluralize(
+          statistics.benevoles_visibles_marketplace,
+          'Bénévole visible',
+          'Bénévoles visibles',
+          false
+        )}`"
+        subtitle="des organisations"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles sur la marketplace"
+        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles des organisations"
       />
       <CardStatistic
         :value="statistics.benevoles_notifications_martketplace"
-        :title="`${$options.filters.pluralize(statistics.benevoles_notifications_martketplace, 'Demande', 'Demandes', false)}`"
+        :title="`${$filters.pluralize(
+          statistics.benevoles_notifications_martketplace,
+          'Demande',
+          'Demandes',
+          false
+        )}`"
         subtitle="via la marketplace"
         link="/admin/statistics/utilisateurs"
         infos-bulle="Nombre de notifications envoyées aux bénévoles sur la période pour les inviter à participer à leurs missions"
       />
+      <CardStatistic
+        :value="statistics.utilisateurs_archived"
+        :title="`${$filters.pluralize(
+          statistics.utilisateurs_archived,
+          'Utilisateur',
+          'Utilisateurs',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(
+          statistics.utilisateurs_archived,
+          'archivé',
+          'archivés',
+          false
+        )}`"
+        link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre d'utilisateurs archivés sur la période"
+      />
     </div>
-  </Box>
+  </BaseBox>
 </template>
 
 <script>
-import CardStatistic from '@/components/card/CardStatistic'
+import CardStatistic from '@/components/card/CardStatistic.vue'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardStatistic,
-    BoxHeadingStatistics
+    BoxHeadingStatistics,
   },
-  data () {
+  data() {
     return {
       loading: true,
-      statistics: null
+      statistics: null,
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get('/statistics/global/utilisateurs', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.statistics = response.data
-    })
-  }
-}
-
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      await apiFetch('/statistics/global/utilisateurs', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.statistics = response
+      })
+    },
+  },
+})
 </script>

@@ -1,26 +1,30 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Informations
-    </div>
-    <Box variant="flat" padding="xs">
-      <DescriptionList>
-        <DescriptionListItem term="Crée le" :description="$dayjs(domaine.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(domaine.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Titre" :description="domaine.title" />
-        <DescriptionListItem term="Description" :description="domaine.description" />
-      </DescriptionList>
-    </Box>
+    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">Informations</div>
+    <BaseBox variant="flat" padding="xs">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Crée le"
+          :description="$dayjs(domaine.created_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Modifié le"
+          :description="$dayjs(domaine.updated_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem term="Titre" :description="domaine.title" />
+        <BaseDescriptionListItem term="Description" :description="domaine.description" />
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     domaine: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>

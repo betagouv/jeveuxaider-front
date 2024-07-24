@@ -4,21 +4,24 @@
       <button
         :class="[
           'fr-accordion__btn',
-          'hover:bg-[#F6F6F6] active:bg-[#EDEDED]',
-          { 'variant-big !px-2 !py-4 md:!px-4 md:!py-6 lg:!px-6 lg:!py-8 font-bold !text-lg md:!text-xl lg:!text-2xl lg:!leading-9': titleVariant === 'xxl' }
+          {
+            'variant-big !px-2 !py-4 md:!px-4 md:!py-6 lg:!px-6 lg:!py-8 font-bold !text-lg md:!text-xl lg:!text-2xl lg:!leading-9':
+              titleVariant === 'xxl',
+          },
+          titleColorClass,
         ]"
         :aria-expanded="isOpen"
         :aria-controls="`accordion-${uuid}`"
         type="button"
         @click="isOpen = !isOpen"
       >
-        <span :class="{ 'lg:flex lg:items-center': titleEmoji}">
+        <span :class="{ 'lg:flex lg:items-center': titleEmoji }">
           <span
             v-if="titleEmoji"
             aria-hidden="true"
             :class="[
               'mr-1 md:mr-2 font-emoji',
-              { 'lg:text-[32px] lg:mr-6': titleVariant === 'xxl' }
+              { 'lg:text-[32px] lg:mr-6': titleVariant === 'xxl' },
             ]"
           >
             {{ titleEmoji }}
@@ -36,7 +39,7 @@
         'fr-collapse',
         { 'fr-collapse--expanded': isOpen },
         '!mx-0',
-        {'!px-2 md:!px-4 lg:!px-6': titleVariant === 'xxl'}
+        { '!px-2 md:!px-4 lg:!px-6': titleVariant === 'xxl' },
       ]"
     >
       <slot />
@@ -46,41 +49,45 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/accordion/accordion.main.min.css'
-import uuid from '@/mixins/uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
-  mixins: [uuid],
+export default defineNuxtComponent({
   props: {
     initialIsOpen: {
       type: Boolean,
-      default: false
+      default: false,
     },
     buttonClass: {
       type: String,
-      default: ''
+      default: '',
     },
     titleVariant: {
       type: String,
       default: null,
-      validator: tv => ['xxl', null].includes(tv)
+      validator: (tv) => ['xxl', null].includes(tv),
     },
     titleEmoji: {
       type: String,
-      default: null
+      default: null,
+    },
+    titleColorClass: {
+      type: String,
+      default: 'hover:bg-[#F6F6F6] active:bg-[#EDEDED]',
+    },
+  },
+  data() {
+    return {
+      isOpen: this.initialIsOpen,
+      uuid: uuidv4(),
     }
   },
-  data () {
-    return {
-      isOpen: this.initialIsOpen
-    }
-  }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 .fr-collapse {
   overflow: hidden;
-  transition: all .3s;
+  transition: all 0.3s;
   max-height: 0;
 }
 
@@ -107,7 +114,7 @@ button {
   &.variant-big {
     &::after {
       --icon-size: 1.5rem;
-      width: calc(var(--icon-size) + .5rem);
+      width: calc(var(--icon-size) + 0.5rem);
       mask-size: 50px 100%;
       @screen lg {
         width: calc(var(--icon-size) + 40px);

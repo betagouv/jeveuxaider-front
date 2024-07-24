@@ -1,16 +1,21 @@
 export default {
-  data () {
+  data() {
     return {
       score: null,
-      loadingScore: true
+      loadingScore: true,
     }
   },
-  async fetch () {
-    if (!this.structureId) {
-      return
-    }
-    const { data: score } = await this.$axios.get(`/structures/${this.structureId}/score`)
-    this.score = score
-    this.loadingScore = false
-  }
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      if (!this.structureId) {
+        return
+      }
+      const score = await apiFetch(`/structures/${this.structureId}/score`)
+      this.score = score
+      this.loadingScore = false
+    },
+  },
 }

@@ -1,47 +1,52 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Modèles de missions les plus utilisés" class="mb-6" infos-bulle="Liste des modèles de mission les plus utilisés sur la période, sur les missions validées" />
-    <StackedList v-if="items" :divided="false">
-      <StackedListItem
-        v-for="item, i in items"
+  <BaseBox padding="sm" :loading="loading" loading-text="Récupération des activités...">
+    <BoxHeadingStatistics
+      title="Modèles de missions les plus utilisés"
+      class="mb-6"
+      infos-bulle="Liste des modèles de mission les plus utilisés sur la période, sur les missions validées"
+    />
+    <BaseStackedList v-if="items" :divided="false">
+      <BaseStackedListItem
+        v-for="(item, i) in items"
         :key="i"
-        :icon="`${(i+1)}.`"
+        :icon="`${i + 1}.`"
         icon-class="text-xl font-semibold text-gray-500"
       >
         <div class="text-gray-900 font-semibold" v-html="item.title" />
-        <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'mission validée', 'missions validées') }}
+        <div class="text-gray-600 text-sm">
+          {{ $filters.pluralize(item.count, 'mission validée', 'missions validées') }}
         </div>
-      </StackedListItem>
-    </StackedList>
-  </Box>
+      </BaseStackedListItem>
+    </BaseStackedList>
+  </BaseBox>
 </template>
 
 <script>
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    BoxHeadingStatistics
+    BoxHeadingStatistics,
   },
-  data () {
+  data() {
     return {
       loading: true,
-      items: null
+      items: null,
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get('/statistics/public/missions-by-templates', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.items = response.data
-    })
-  }
-}
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      await apiFetch('/statistics/public/missions-by-templates', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.items = response
+      })
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

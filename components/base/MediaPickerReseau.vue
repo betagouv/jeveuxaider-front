@@ -1,5 +1,5 @@
 <template>
-  <MediaPicker
+  <BaseMediaPicker
     :medias="medias"
     :defaults="defaults"
     :limit="limit"
@@ -10,84 +10,81 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     reseaux: {
       type: Array,
       required: true,
-      validator: value => value.length
+      validator: (value) => value.length,
     },
     domaineIds: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     defaults: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     limit: {
       type: Number,
-      default: 1
+      default: 1,
     },
     previewConversion: { type: String, default: 'formPreview' },
-    previewSizes: { type: String, default: undefined }
+    previewSizes: { type: String, default: undefined },
   },
-  data () {
+  data() {
     return {
       openModal: null,
       mediasFromDomaines: [],
-      mediasFromReseau: []
+      mediasFromReseau: [],
     }
   },
   computed: {
-    medias () {
+    medias() {
       return [...this.mediasFromReseau, ...this.mediasFromDomaines]
-    }
+    },
   },
   watch: {
     domaineIds: {
       immediate: false,
-      async handler () {
+      async handler() {
         await this.fetchMediasFromDomaines()
-      }
-    }
+      },
+    },
   },
-  created () {
+  created() {
     this.fetchMedias()
   },
   methods: {
-    fetchMedias () {
-      Promise.all([
-        this.fetchMediasFromReseau(),
-        this.fetchMediasFromDomaines()
-      ])
+    fetchMedias() {
+      Promise.all([this.fetchMediasFromReseau(), this.fetchMediasFromDomaines()])
     },
-    async fetchMediasFromReseau () {
+    async fetchMediasFromReseau() {
       if (!this.reseaux.length) {
         return
       }
-      const { data: medias } = await this.$axios.get('/medias', {
+      const medias = await apiFetch('/medias', {
         params: {
           'filter[collection_name]': 'reseau__illustrations_antennes',
-          'filter[model_id]': this.reseaux.map(reseau => reseau.id).join(','),
-          pagination: 99
-        }
+          'filter[model_id]': this.reseaux.map((reseau) => reseau.id).join(','),
+          pagination: -1,
+        },
       })
       this.mediasFromReseau = medias.data
     },
-    async fetchMediasFromDomaines () {
-      const { data: medias } = await this.$axios.get('/medias', {
+    async fetchMediasFromDomaines() {
+      const medias = await apiFetch('/medias', {
         params: {
           'filter[collection_name]': 'domaine__illustrations_organisation',
           'filter[model_id]': this.domaineIds.join(','),
-          pagination: 99
-        }
+          pagination: -1,
+        },
       })
       this.mediasFromDomaines = medias.data
     },
-    onNewSelection (media, index) {
+    onNewSelection(media, index) {
       this.$emit('change', { media, index })
-    }
-  }
-}
+    },
+  },
+})
 </script>

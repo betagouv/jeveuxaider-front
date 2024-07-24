@@ -1,13 +1,15 @@
 <template>
-  <client-only>
+  <ClientOnly>
     <v-date-picker
       ref="datePicker"
       v-model="date"
+      mode="date"
       :is-required="required"
       :model-config="modelConfig"
       :min-date="minDate"
       :attributes="attributes"
       @popoverWillShow="$emit('popoverWillShow', $refs.datePicker)"
+      :popover="popover"
     >
       <template #default="data">
         <div class="flex items-center relative w-full">
@@ -18,59 +20,67 @@
             :aria-required="ariaRequired"
             :autocomplete="autocomplete || 'off'"
             v-on="data.inputEvents"
-          >
+          />
           <div class="absolute right-4">
             <RiCalendarLine class="h-4 w-4 text-gray-400 fill-current" />
           </div>
         </div>
       </template>
     </v-date-picker>
-  </client-only>
+  </ClientOnly>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
+  emits: ['update:modelValue', 'popoverWillShow'],
   props: {
-    value: {
-      type: String,
-      default: null
+    modelValue: {
+      type: [String, Date],
+      default: null,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     required: {
       type: Boolean,
-      default: false
+      default: false,
     },
     minDate: {
       type: Date,
-      default: null
+      default: null,
     },
     attributes: {
       type: Array,
-      default: null
+      default: null,
+    },
+    popover: {
+      type: Object,
+      default: () => ({
+        visibility: 'hover-focus',
+        placement: 'bottom-start',
+      }),
     },
     popoverWillShow: {
       type: Function,
-      default: () => {}
+      default: () => {},
     },
     ariaRequired: { type: String, default: null },
-    autocomplete: { type: String, default: null }
+    autocomplete: { type: String, default: null },
   },
-  data () {
+  data() {
     return {
-      date: this.value,
+      date: this.modelValue,
       modelConfig: {
         type: 'string',
-        mask: 'YYYY-MM-DD'
-      }
+        mask: 'YYYY-MM-DD',
+      },
     }
   },
   watch: {
-    date (val) {
-      this.$emit('input', val)
-    }
-  }
-}
+    date(val) {
+      this.$emit('update:modelValue', val)
+    },
+  },
+})
 </script>

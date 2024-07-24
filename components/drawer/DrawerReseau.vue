@@ -1,35 +1,46 @@
 <template>
-  <Drawer :is-open="Boolean(reseauId)" @close="$emit('close')">
-    <AlertDialog
+  <BaseDrawer :is-open="Boolean(reseauId)" @close="$emit('close')">
+    <BaseAlertDialog
       v-if="reseau"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le réseau"
-      :text="`Vous êtes sur le point de supprimer le réseau ${reseau.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer le réseau {{ reseau.name }}.
+    </BaseAlertDialog>
     <template #title>
-      <Heading v-if="reseau" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/contenus/reseaux/${reseauId}`" class="hover:underline" target="_blank">
+      <BaseHeading v-if="reseau" :level="3" class="text-jva-blue-500">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/reseaux/${reseauId}`"
+          class="hover:underline"
+          target="_blank"
+        >
           {{ reseau.name }}
         </nuxt-link>
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="reseau">
       <OnlineIndicator :published="reseau.is_published" :link="reseau.full_url" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}`" class="inline-flex">
-          <Button variant="white" size="sm" icon="EyeIcon">
-            Détails
-          </Button>
+        <nuxt-link no-prefetch :to="`/admin/contenus/reseaux/${reseau.id}`" class="inline-flex">
+          <BaseButton variant="white" size="sm" icon="RiEyeLine"> Détails </BaseButton>
         </nuxt-link>
-        <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/reseaux/${reseau.id}/edit`"
+          class="inline-flex"
+        >
+          <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+        <BaseButton
+          variant="white"
+          size="sm"
+          icon="RiDeleteBinLine"
+          @click.native="() => (showAlert = true)"
+        />
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -37,68 +48,78 @@
       <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
-      <BoxResponsable v-for="responsable in reseau.responsables" :key="responsable.id" class="mb-8" :responsable="responsable.profile" />
+      <template v-for="responsable in reseau.responsables" :key="responsable.id">
+        <BoxResponsable class="mb-8" :responsable="responsable.profile" />
+      </template>
 
       <div class="flex justify-center mb-10">
-        <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">
+        <BaseLink
+          :to="`/admin/contenus/reseaux/${reseau.id}`"
+          class="uppercase font-semibold text-sm hover:underline"
+        >
           Détails du réseau
-        </Link>
+        </BaseLink>
       </div>
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-import BoxInformations from '@/components/section/reseau/BoxInformations'
-import BoxMission from '@/components/section/reseau/BoxMission'
-import BoxAntenne from '@/components/section/reseau/BoxAntenne'
-import BoxParticipation from '@/components/section/reseau/BoxParticipation'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/reseau/BoxInformations.vue'
+import BoxMission from '@/components/section/reseau/BoxMission.vue'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne.vue'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     BoxInformations,
     BoxMission,
     BoxAntenne,
     BoxParticipation,
     BoxResponsable,
-    OnlineIndicator
+    OnlineIndicator,
   },
   props: {
     reseauId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       showAlert: false,
       reseau: null,
-      stats: null
+      stats: null,
     }
   },
-  async fetch () {
-    if (!this.reseauId) {
-      return null
-    }
-    const { data: reseau } = await this.$axios.get(`/reseaux/${this.reseauId}`)
-    this.reseau = reseau
-    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseauId}`)
-    this.stats = stats
-    this.$emit('loaded', reseau)
-  },
+
   watch: {
-    reseauId: '$fetch'
+    reseauId: 'fetch',
   },
   methods: {
-    async handleConfirmDelete () {
-      await this.$axios.delete(`/reseaux/${this.reseauId}`).then((res) => {
-        this.showAlert = false
-        this.$emit('close')
-        this.$emit('refetch')
-      }).catch(() => {})
-    }
-  }
-}
+    async fetch() {
+      if (!this.reseauId) {
+        return null
+      }
+      const reseau = await apiFetch(`/reseaux/${this.reseauId}`)
+      this.reseau = reseau
+      const stats = await apiFetch(`/statistics/reseaux/${this.reseauId}`)
+      this.stats = stats
+      this.$emit('loaded', reseau)
+    },
+    async handleConfirmDelete() {
+      await apiFetch(`/reseaux/${this.reseauId}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          this.showAlert = false
+          this.$emit('close')
+          this.$emit('refetch')
+        })
+        .catch(() => {})
+    },
+  },
+})
 </script>

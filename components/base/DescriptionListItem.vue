@@ -1,9 +1,12 @@
 <template>
   <div class="py-2 sm:gap-4 sm:flex">
-    <dt class="text-sm text-gray-500 flex-none" :style="style">
+    <dt class="text-sm text-[#666666] flex-none" :style="style">
       {{ term }}
     </dt>
-    <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1" style="word-break: break-word;">
+    <dd
+      class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1"
+      style="word-break: break-word"
+    >
       <slot>
         {{ description || '-' }}
       </slot>
@@ -12,27 +15,27 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     term: {
       type: String,
-      required: true
+      required: true,
     },
     termSize: {
       type: Number,
-      default: null
+      default: null,
     },
     description: {
       type: [String, Number],
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       style: {
-        width: this.termSize ? `${this.termSize}px` : 'calc(100%/3)'
-      }
+        width: this.termSize ? `${this.termSize}px` : 'calc(100%/3)',
+      },
     }
-  }
-}
+  },
+})
 </script>

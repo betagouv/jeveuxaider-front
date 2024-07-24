@@ -5,8 +5,9 @@
     "label": "✉️ Vie citoyenne",
     "icon": "✉️",
     "name": "Vie citoyenne",
-    "domain":["Mémoire et citoyenneté"],
-    "popular": false
+    "domain": ["Mémoire et citoyenneté"],
+    "popular": false,
+    "full_url": "/activites/vie-citoyenne"
   },
   {
     "id": 40,
@@ -15,7 +16,8 @@
     "icon": "🏛",
     "name": "Valorisation du patrimoine",
     "domain": ["Art et culture pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/valorisation-du-patrimoine"
   },
   {
     "id": 22,
@@ -24,7 +26,8 @@
     "icon": "🔨",
     "name": "Travaux manuels",
     "domain": ["Solidarité et insertion", "Protection de la nature"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/travaux-manuels"
   },
   {
     "id": 35,
@@ -33,7 +36,8 @@
     "icon": "💬",
     "name": "Traduction",
     "domain": ["Bénévolat de compétences"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/traduction"
   },
   {
     "id": 17,
@@ -42,7 +46,8 @@
     "icon": "👨‍🏫",
     "name": "Soutien scolaire et formation",
     "domain": ["Éducation pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/soutien-scolaire-et-formation"
   },
   {
     "id": 16,
@@ -51,7 +56,8 @@
     "icon": "🐰",
     "name": "Soins aux animaux",
     "domain": ["Protection de la nature"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/soins-aux-animaux"
   },
   {
     "id": 15,
@@ -60,7 +66,8 @@
     "icon": "💆‍♀️",
     "name": "Services à la personne",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/services-a-la-personne"
   },
   {
     "id": 14,
@@ -69,7 +76,8 @@
     "icon": "👨‍🚒",
     "name": "Secourisme et sécurité civile",
     "domain": ["Prévention et protection"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/secourisme-et-securite-civile"
   },
   {
     "id": 26,
@@ -78,7 +86,8 @@
     "icon": "🌟",
     "name": "Recherche de partenariats",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/recherche-de-partenariats"
   },
   {
     "id": 12,
@@ -87,7 +96,8 @@
     "icon": "♻️",
     "name": "Ramassage de déchets",
     "domain": ["Protection de la nature"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/ramassage-de-dechets"
   },
   {
     "id": 10,
@@ -96,7 +106,8 @@
     "icon": "🙋‍♂️",
     "name": "Mentorat & parrainage",
     "domain": ["Éducation pour tous"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/mentorat-parrainage"
   },
   {
     "id": 2,
@@ -105,7 +116,8 @@
     "icon": "👩‍⚕️",
     "name": "Médical",
     "domain": ["Santé pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/medical"
   },
   {
     "id": 34,
@@ -114,7 +126,8 @@
     "icon": "🎨",
     "name": "Médiation culturelle",
     "domain": ["Art et culture pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/mediation-culturelle"
   },
   {
     "id": 1,
@@ -123,7 +136,8 @@
     "icon": "☕️",
     "name": "Maraude",
     "domain": ["Solidarité et insertion"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/maraude"
   },
   {
     "id": 8,
@@ -132,7 +146,8 @@
     "icon": "👫",
     "name": "Lutte contre l'isolement",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/lutte-contre-lisolement"
   },
   {
     "id": 33,
@@ -141,7 +156,8 @@
     "icon": "🚛",
     "name": "Logistique",
     "domain": ["Bénévolat de compétences"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/logistique"
   },
   {
     "id": 39,
@@ -150,7 +166,8 @@
     "icon": "🖥",
     "name": "Informatique",
     "domain": ["Bénévolat de compétences"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/informatique"
   },
   {
     "id": 32,
@@ -159,7 +176,8 @@
     "icon": "🧩",
     "name": "Gouvernance",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/gouvernance"
   },
   {
     "id": 30,
@@ -168,7 +186,8 @@
     "icon": "📊",
     "name": "Gestion financière / Comptabilité",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/gestion-financiere-comptabilite"
   },
   {
     "id": 38,
@@ -177,7 +196,8 @@
     "icon": "💭",
     "name": "Gestion des ressources humaines",
     "domain": ["Bénévolat de compétences"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/gestion-des-ressources-humaines"
   },
   {
     "id": 37,
@@ -186,7 +206,8 @@
     "icon": "🚀",
     "name": "Gestion de projets",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/gestion-de-projets"
   },
   {
     "id": 31,
@@ -195,7 +216,8 @@
     "icon": "🗃",
     "name": "Gestion administrative",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/gestion-administrative"
   },
   {
     "id": 11,
@@ -204,7 +226,8 @@
     "icon": "📆",
     "name": "Événementiel",
     "domain": ["Bénévolat de compétences"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/evenementiel"
   },
   {
     "id": 29,
@@ -213,7 +236,8 @@
     "icon": "☎️",
     "name": "Écoute / Aide psychologique",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/ecoute-aide-psychologique"
   },
   {
     "id": 41,
@@ -222,7 +246,8 @@
     "icon": "⚖️",
     "name": "Droit et conseil juridique",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/droit-et-conseil-juridique"
   },
   {
     "id": 28,
@@ -231,7 +256,8 @@
     "icon": "🥘",
     "name": "Distribution",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/distribution"
   },
   {
     "id": 27,
@@ -240,7 +266,8 @@
     "icon": "🗣",
     "name": "Dialogue interculturel",
     "domain": ["Art et culture pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/dialogue-interculturel"
   },
   {
     "id": 24,
@@ -249,7 +276,8 @@
     "icon": "📇",
     "name": "Communication",
     "domain": ["Bénévolat de compétences"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/communication"
   },
   {
     "id": 7,
@@ -258,7 +286,8 @@
     "icon": "🥫",
     "name": "Collecte de produits",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/collecte-de-produits"
   },
   {
     "id": 23,
@@ -266,17 +295,29 @@
     "label": "💶 Collecte de fonds",
     "icon": "💶",
     "name": "Collecte de fonds",
-    "domain": ["Bénévolat de compétences", "Solidarité et insertion", "Mémoire et citoyenneté", "Art et culture pour tous", "Protection de la nature", "Éducation pour tous", "Santé pour tous", "Sport pour tous", "Prévention et protection"],
-    "popular": false
+    "domain": [
+      "Bénévolat de compétences",
+      "Solidarité et insertion",
+      "Mémoire et citoyenneté",
+      "Art et culture pour tous",
+      "Protection de la nature",
+      "Éducation pour tous",
+      "Santé pour tous",
+      "Sport pour tous",
+      "Prévention et protection"
+    ],
+    "popular": false,
+    "full_url": "/activites/collecte-de-fonds"
   },
   {
     "id": 6,
     "key": 6,
     "label": "🤸‍♂️ Animation / Loisirs",
     "icon": "🤸‍♂️",
-    "name": "Animation / Loisirs",
+    "name": "Animation / Loisirs",
     "domain": ["Éducation pour tous", "Sport pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/animation-loisirs"
   },
   {
     "id": 5,
@@ -285,7 +326,8 @@
     "icon": "🌳",
     "name": "Aménagement d'espaces naturels",
     "domain": ["Protection de la nature"],
-    "popular": true
+    "popular": true,
+    "full_url": "/activites/amenagement-despaces-naturels"
   },
   {
     "id": 4,
@@ -294,7 +336,8 @@
     "icon": "📚",
     "name": "Alphabétisation / Apprentissage du français (FLE)",
     "domain": ["Éducation pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/alphabetisation-apprentissage-du-francais-fle"
   },
   {
     "id": 3,
@@ -303,7 +346,8 @@
     "icon": "✍️",
     "name": "Aide aux démarches administratives",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/aide-aux-demarches-administratives"
   },
   {
     "id": 19,
@@ -312,7 +356,8 @@
     "icon": "📣",
     "name": "Actions de sensibilisation",
     "domain": ["Prévention et protection", "Santé pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/actions-de-sensibilisation"
   },
   {
     "id": 21,
@@ -321,16 +366,18 @@
     "icon": "👋",
     "name": "Accueil / Information",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/accueil-information"
   },
   {
     "id": 20,
     "key": 20,
-    "label": "🏀 Accompagnement aux activités sportives",
+    "label": "🏀 Activités sportives",
     "icon": "🏀",
-    "name": "Accompagnement aux activités sportives",
+    "name": "Activités sportives",
     "domain": ["Sport pour tous"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/activites-sportives"
   },
   {
     "id": 36,
@@ -339,6 +386,7 @@
     "icon": "🚗",
     "name": "Accompagnement à la mobilité",
     "domain": ["Solidarité et insertion"],
-    "popular": false
+    "popular": false,
+    "full_url": "/activites/accompagnement-a-la-mobilite"
   }
 ]

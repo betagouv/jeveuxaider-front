@@ -1,15 +1,14 @@
 <template>
   <section class="py-16 bg-gray-50 overflow-hidden">
-    <div class="container mx-auto px-4 relative ">
+    <div class="container mx-auto px-4 relative">
       <div class="mx-auto max-w-6xl">
-        <Heading as="h2" size="2xl" class="mb-12">
-          Engagez-vous près de chez vous
-        </Heading>
+        <DsfrHeading as="h2" size="2xl" class="mb-12"> Engagez-vous près de chez vous </DsfrHeading>
 
         <div
           class="max-w-3xl lg:max-w-[500px] mx-auto lg:ml-0 flex flex-wrap gap-4 items-center justify-center lg:justify-start"
         >
           <nuxt-link
+            no-prefetch
             v-for="(city, index) in cities"
             :key="index"
             :to="city.url"
@@ -17,14 +16,14 @@
             :target="city.target || undefined"
             class="rounded-full"
           >
-            <Tag
+            <DsfrTag
               context="clickable"
               size="md"
               :icon="index === cities.length - 1 ? 'RiAddLine' : null"
               :icon-only="index === cities.length - 1 ? true : false"
             >
               {{ city.name }}
-            </Tag>
+            </DsfrTag>
           </nuxt-link>
         </div>
       </div>
@@ -34,18 +33,21 @@
       >
         <div class="flex flex-col items-center md:flex-row md:items-end">
           <div class="px-6 pt-8 md:pb-12 md:pl-12 md:pr-0 z-10">
-            <Heading as="h2" size="2xl">
-              Ou à distance
-            </Heading>
+            <DsfrHeading as="h2" size="2xl"> Ou à distance </DsfrHeading>
 
             <div class="mt-4 text-lg sm:text-xl text-[#696974]">
-              Plus de 1 000 missions de bénévolat <br class="hidden sm:block md:hidden"> sont réalisables en
-              autonomie
+              Plus de 1 000 missions de bénévolat
+              <br class="hidden sm:block md:hidden" />
+              sont réalisables en autonomie
             </div>
 
-            <Button size="lg" class="mt-8" @click="$router.push('/missions-benevolat?type=Mission à distance')">
+            <DsfrButton
+              size="lg"
+              class="mt-8"
+              @click="$router.push('/missions-benevolat?type=Mission à distance')"
+            >
               Découvrir le télébénévolat
-            </Button>
+            </DsfrButton>
           </div>
 
           <img
@@ -55,7 +57,7 @@
             width="379"
             height="292"
             data-not-lazy
-          >
+          />
         </div>
       </div>
 
@@ -66,85 +68,72 @@
         width="607"
         height="624"
         style="filter: drop-shadow(8px 20px 16px rgba(0, 0, 0, 0.1))"
-      >
+      />
     </div>
   </section>
 </template>
 
 <script>
-import Tag from '@/components/dsfr/Tag.vue'
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  components: {
-    Tag,
-    Heading,
-    Button
-  },
-  data () {
+export default defineNuxtComponent({
+  data() {
     return {
       cities: [
         {
           name: 'Paris',
-          url: '/villes/paris'
+          url: '/villes/paris',
         },
         {
           name: 'Toulouse',
-          url: '/villes/toulouse'
+          url: '/villes/toulouse',
         },
         {
           name: 'Lyon',
-          url: '/villes/lyon'
+          url: '/villes/lyon',
         },
         {
           name: 'Marseille',
-          url: '/villes/marseille'
+          url: '/villes/marseille',
         },
         {
           name: 'Bordeaux',
-          url: '/villes/bordeaux'
+          url: '/villes/bordeaux',
         },
         {
           name: 'Lille',
-          url: '/villes/lille'
+          url: '/villes/lille',
         },
         {
           name: 'Rennes',
-          url: '/villes/rennes'
+          url: '/villes/rennes',
         },
         {
           name: 'Montpellier',
-          url: '/villes/montpellier'
+          url: '/villes/montpellier',
         },
         {
           name: 'Strasbourg',
-          url: '/villes/strasbourg'
+          url: '/villes/strasbourg',
         },
         {
           name: 'Nice',
-          url: '/villes/nice'
+          url: '/villes/nice',
         },
         {
           name: 'Rouen',
-          url: '/villes/rouen'
+          url: '/villes/rouen',
         },
         {
           name: 'Angers',
-          url: '/villes/angers'
+          url: '/villes/angers',
         },
         {
           name: '+',
           url: '/territoires',
           target: '_blank',
-          title: 'Voir tous les territoires engagés'
-        }
-      ]
+          title: 'Voir tous les territoires engagés',
+        },
+      ],
     }
-  }
-}
+  },
+})
 </script>
-
-<style>
-
-</style>

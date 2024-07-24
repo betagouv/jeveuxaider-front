@@ -1,5 +1,5 @@
 <template>
-  <Button
+  <DsfrButton
     :size="size"
     :type="type"
     :disabled="disabled"
@@ -7,51 +7,45 @@
     @click.native="onClick"
   >
     {{ label }}
-  </Button>
+  </DsfrButton>
 </template>
 
 <script>
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  components: {
-    Button
-  },
+export default defineNuxtComponent({
   props: {
     mission: {
       type: Object,
-      required: true
+      required: true,
     },
     type: {
       type: String,
-      default: 'primary'
+      default: 'primary',
     },
     size: {
       type: String,
-      default: 'lg'
+      default: 'lg',
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     label: {
       type: String,
-      default: 'Je propose mon aide'
-    }
+      default: 'Je propose mon aide',
+    },
   },
   methods: {
-    onClick () {
+    onClick() {
       if (this.disabled) {
         return
       }
 
-      window.plausible &&
-        window.plausible('Click CTA - Mission', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
-      this.$store.commit('softGate/showOverlay')
-      this.$store.commit('softGate/setSelectedMission', this.mission)
-    }
-  }
-}
+      this.$plausible.trackEvent('Click CTA - Mission', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
+      this.$stores.softGate.showOverlay = true
+      this.$stores.softGate.selectedMission = this.mission
+    },
+  },
+})
 </script>

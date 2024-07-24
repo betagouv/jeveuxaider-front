@@ -1,103 +1,136 @@
 <template>
-  <Box :key="responsable.id" variant="flat" padding="xs">
+  <BaseBox :key="responsable.id" variant="flat" padding="xs">
     <template #header>
       <div class="flex justify-between items-center mb-4">
-        <Heading as="h3" :level="5">
+        <BaseHeading as="h3" :level="5">
           {{ responsable.full_name }}
-        </Heading>
-        <div
-          v-if="organisation.members.length > 1"
-          class="text-sm flex items-center cursor-pointer group hover:text-red-500"
-          @click="handleDeleteMember(responsable)"
-        >
-          <div class="group-hover:block hidden">
-            Supprimer
-          </div>
-          <div><TrashIcon class="ml-2 h-5 w-5" /></div>
+        </BaseHeading>
+        <div class="space-x-2">
+          <DsfrButton
+            v-if="canSendMessage"
+            size="xs"
+            type="tertiary"
+            icon="RiMessage3Line"
+            icon-only
+            @click="handleClickSendMessage"
+          />
+          <BaseDropdown v-if="showDropdownActions">
+            <template #button>
+              <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
+            </template>
+            <template #items>
+              <div class="w-[240px]">
+                <BaseDropdownOptionsItem
+                  v-if="canDeleteMember"
+                  size="sm"
+                  @click="handleDeleteMember(responsable)"
+                >
+                  Retirer ce responsable
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canMasquerade"
+                  size="sm"
+                  @click="handleImpersonate()"
+                >
+                  Prendre sa place
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOnline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsActive = true"
+                >
+                  Mettre en ligne ses missions
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOffline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsInactive = true"
+                >
+                  Mettre hors ligne ses missions
+                </BaseDropdownOptionsItem>
+              </div>
+            </template>
+          </BaseDropdown>
         </div>
       </div>
     </template>
-    <DescriptionList v-if="responsable">
+    <BaseDescriptionList v-if="responsable">
       <div
-        v-if="$store.getters.contextRole == 'admin' && (responsable.tags || profileStats?.missions_inactive > 0)"
+        v-if="
+          $stores.auth.contextRole == 'admin' &&
+          (responsable.tags || profileStats?.missions_offline > 0)
+        "
         class="mt-1 mb-2 flex flex-wrap gap-1"
       >
-        <Tag v-if="profileStats?.missions_inactive > 0" :custom-theme="true" class="bg-jva-red-600 text-white">
-          {{ profileStats.missions_inactive | pluralize('mission désactivée', 'missions désactivées') }}
-        </Tag>
-        <Tag v-for="tag in responsable.tags" :key="tag.id" size="sm">
+        <DsfrTag
+          v-if="profileStats?.missions_offline > 0"
+          :custom-theme="true"
+          class="bg-jva-red-600 text-white"
+        >
+          {{
+            $filters.pluralize(
+              profileStats?.missions_offline,
+              'mission hors ligne',
+              'missions hors ligne'
+            )
+          }}
+        </DsfrTag>
+        <DsfrTag v-for="tag in responsable.tags" :key="tag.id" size="sm">
           {{ tag.name }}
-        </Tag>
+        </DsfrTag>
       </div>
-      <DescriptionListItem term="Rôle" :description="role?.pivot.fonction" />
-      <DescriptionListItem term="E-mail" :description="responsable.email" />
-      <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-      <DescriptionListItem v-if="responsable.pivot?.fonction" term="Rôle" :description="responsable.pivot.fonction" />
-      <DescriptionListItem term="Nb missions" :description="responsable.missions_count" />
-      <DescriptionListItem term="Invité par">
+      <BaseDescriptionListItem term="Rôle" :description="role?.pivot.fonction" />
+      <BaseDescriptionListItem term="E-mail" :description="responsable.email" />
+      <BaseDescriptionListItem term="Mobile" :description="responsable.mobile" />
+      <BaseDescriptionListItem
+        v-if="responsable.pivot?.fonction"
+        term="Rôle"
+        :description="responsable.pivot.fonction"
+      />
+      <BaseDescriptionListItem term="Nb missions" :description="responsable.missions_count" />
+      <BaseDescriptionListItem term="Invité par">
         <template v-if="role?.invited_by">
-          <Link
-            v-if="['admin'].includes($store.getters.contextRole)"
+          <BaseLink
+            v-if="['admin'].includes($stores.auth.contextRole)"
             class="inline-flex"
             :to="`/admin/utilisateurs/${role.invited_by.profile.id}`"
           >
             {{ role.invited_by.profile.full_name }}
-          </Link>
+          </BaseLink>
           <span v-else>{{ role.invited_by.profile.full_name }}</span>
         </template>
         <span v-else> - </span>
-      </DescriptionListItem>
-      <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
-    </DescriptionList>
-    <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
-      <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-      <div class="flex justify-center text-sm">
-        <Link @click.native="handleClickSendMessage">
-          <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
-        </Link>
-        <ModalSendMessage
-          :is-open="showModalSendMessage"
-          :to-user="responsable"
-          :conversable-id="organisation.id"
-          conversable-type="App\Models\Structure"
-          @cancel="showModalSendMessage = false"
-        />
-      </div>
+      </BaseDescriptionListItem>
+    </BaseDescriptionList>
+
+    <template v-if="profileStats">
+      <ModalResponsableSetMissionsIsActive
+        :value="true"
+        :is-open="showModalResponsableSetMissionsActive"
+        :responsable="responsable"
+        :profile-stats="profileStats"
+        @confirm="afterSetMissionsIsActive"
+        @cancel="showModalResponsableSetMissionsActive = false"
+      />
+
+      <ModalResponsableSetMissionsIsActive
+        :value="false"
+        :is-open="showModalResponsableSetMissionsInactive"
+        :responsable="responsable"
+        :profile-stats="profileStats"
+        @confirm="afterSetMissionsIsActive"
+        @cancel="showModalResponsableSetMissionsInactive = false"
+      />
     </template>
 
-    <template v-if="['admin'].includes($store.getters.contextRole) && profileStats?.missions_inactive > 0">
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <Link @click.native="showModalResponsableSetMissionsActive = true">
-          Activer les missions du responsable
-        </Link>
-        <ModalResponsableSetMissionsIsActive
-          :value="true"
-          :is-open="showModalResponsableSetMissionsActive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsActive = false"
-        />
-      </div>
-    </template>
-
-    <template v-if="['admin'].includes($store.getters.contextRole) && profileStats?.missions_available > 0">
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <Link @click.native="showModalResponsableSetMissionsInactive = true">
-          Désactiver les missions du responsable
-        </Link>
-        <ModalResponsableSetMissionsIsActive
-          :value="false"
-          :is-open="showModalResponsableSetMissionsInactive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsInactive = false"
-        />
-      </div>
-    </template>
+    <ModalSendMessage
+      :is-open="showModalSendMessage"
+      :to-user="responsable"
+      :conversable="conversable"
+      :conversable-id="organisation.id"
+      conversable-type="App\Models\Structure"
+      @cancel="showModalSendMessage = false"
+    />
 
     <ModalRemoveResponsableFromOrganisation
       v-if="memberSelected"
@@ -108,33 +141,35 @@
       @close="showAlertMemberDeleted = false"
       @submitted="$emit('removed')"
     />
-  </Box>
+  </BaseBox>
 </template>
 
 <script>
 import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
 import ModalRemoveResponsableFromOrganisation from '@/components/modal/ModalRemoveResponsableFromOrganisation.vue'
-import ModalResponsableSetMissionsIsActive from '~/components/modal/ModalResponsableSetMissionsIsActive.vue'
-import Tag from '@/components/dsfr/Tag.vue'
+import ModalResponsableSetMissionsIsActive from '@/components/modal/ModalResponsableSetMissionsIsActive.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     ModalSendMessage,
     ModalRemoveResponsableFromOrganisation,
     ModalResponsableSetMissionsIsActive,
-    Tag
   },
   props: {
     organisation: {
       type: Object,
-      required: true
+      required: true,
     },
     responsable: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
+    conversable: {
+      type: Object,
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       showModalSendMessage: false,
       showModalResponsableSetMissionsActive: false,
@@ -143,43 +178,76 @@ export default {
       showAlertMemberDeleted: false,
       conversationCurrentUserAndResponsable: null,
       role: null,
-      profileStats: null
+      profileStats: null,
     }
   },
-  async fetch () {
-    const { data } = await this.$axios.get('/conversations', {
-      params: {
-        'filter[conversable_id]': this.organisation.id,
-        'filter[conversable_type]': 'App\\Models\\Structure',
-        'filter[with_users]': `${this.responsable.user_id},${this.$store.getters.profile.user_id}`
-      }
-    })
-    this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
-
-    const { data: roles } = await this.$axios.get(`/users/${this.responsable.user_id}/roles`)
-    this.role = roles.find(role => role.name === 'responsable' && role.pivot_model.id === this.organisation.id)
-
-    const { data: profileStats } = await this.$axios.get(`/statistics/profiles/${this.responsable.id}`)
-    this.profileStats = profileStats
+  created() {
+    this.fetch()
+  },
+  computed: {
+    showDropdownActions() {
+      return this.canDeleteMember || ['admin', 'referent'].includes(this.$stores.auth.contextRole)
+    },
+    canDeleteMember() {
+      return this.organisation.members.length > 1
+    },
+    canMasquerade() {
+      return ['admin'].includes(this.$stores.auth.contextRole)
+    },
+    canSetMissionOnline() {
+      return (
+        ['admin'].includes(this.$stores.auth.contextRole) && this.profileStats?.missions_offline > 0
+      )
+    },
+    canSetMissionOffline() {
+      return (
+        ['admin'].includes(this.$stores.auth.contextRole) &&
+        this.profileStats?.missions_available > 0
+      )
+    },
+    canSendMessage() {
+      return ['admin', 'referent'].includes(this.$stores.auth.contextRole) && this.conversable
+    },
   },
   methods: {
-    handleClickSendMessage () {
+    async fetch() {
+      const conversations = await apiFetch('/conversations', {
+        params: {
+          'filter[conversable_id]': this.organisation.id,
+          'filter[conversable_type]': 'App\\Models\\Structure',
+          'filter[with_users]': `${this.responsable.user_id},${this.$stores.auth.profile?.user_id}`,
+        },
+      })
+      this.conversationCurrentUserAndResponsable = conversations.total > 0 && conversations.data[0]
+
+      const roles = await apiFetch(`/users/${this.responsable.user_id}/roles`)
+      this.role = roles.find(
+        (role) => role.name === 'responsable' && role.pivot_model.id === this.organisation.id
+      )
+
+      const profileStats = await apiFetch(`/statistics/profiles/${this.responsable.id}`)
+      this.profileStats = profileStats
+    },
+    handleClickSendMessage() {
       if (this.conversationCurrentUserAndResponsable) {
         this.$router.push(`/messages/${this.conversationCurrentUserAndResponsable.id}`)
       } else {
         this.showModalSendMessage = true
       }
     },
-    handleDeleteMember (member) {
+    handleDeleteMember(member) {
       this.memberSelected = member
       this.showAlertMemberDeleted = true
     },
-    afterSetMissionsIsActive () {
-      this.$fetch()
+    async handleImpersonate() {
+      await this.$stores.auth.impersonate(this.responsable.user_id)
+    },
+    afterSetMissionsIsActive() {
+      this.fetch()
       this.showModalResponsableSetMissionsActive = false
       this.showModalResponsableSetMissionsInactive = false
       this.$emit('updated')
-    }
-  }
-}
+    },
+  },
+})
 </script>

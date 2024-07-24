@@ -6,7 +6,8 @@
       >
         <template v-if="initialForm.grade > 3">
           <h1 v-if="initialForm.grade > 3">
-            <span class="font-extrabold">{{ benevole.first_name }}</span>, merci d’avoir partagé votre expérience !
+            <span class="font-extrabold">{{ benevole.first_name }}</span
+            >, merci d’avoir partagé votre expérience !
           </h1>
 
           <div class="font-medium text-md sm:text-xl text-[#808080] mt-4">
@@ -18,19 +19,17 @@
             <ShareFacebook :url="mission.full_url" />
             <ShareTwitter :url="mission.full_url" :message="message" />
             <ShareLinkedin :url="mission.full_url" :message="message" />
+            <ShareWhatsApp :url="mission.full_url" :message="message" />
           </div>
         </template>
 
         <template v-else>
           <div>Merci pour votre retour.</div>
 
-          <div
-            class="font-medium text-md sm:text-xl text-[#808080] max-w-[745px] mt-4"
-          >
-            La mission n’a malheureusement pas été à la hauteur de votre
-            engagement. {{ structureType }} {{ structure.name }} et l’équipe de
-            JVA vont tout mettre en oeuvre pour améliorer l’expérience durant
-            cette mission.
+          <div class="font-medium text-md sm:text-xl text-[#808080] max-w-[745px] mt-4">
+            La mission n’a malheureusement pas été à la hauteur de votre engagement.
+            {{ structureType }} {{ structure.name }} et l’équipe de JVA vont tout mettre en oeuvre
+            pour améliorer l’expérience durant cette mission.
           </div>
         </template>
 
@@ -39,15 +38,10 @@
             Trouvez dès maintenant votre prochaine mission
           </div>
 
-          <nuxt-link to="/missions-benevolat">
-            <Button
-              id="search"
-              size="xl"
-              rounded
-              variant="green"
-            >
+          <nuxt-link no-prefetch to="/missions-benevolat">
+            <BaseButton id="search" size="xl" rounded variant="green">
               Trouver une mission
-            </button>
+            </BaseButton>
           </nuxt-link>
         </div>
       </div>
@@ -59,53 +53,53 @@
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     ShareFacebook,
     ShareTwitter,
-    ShareLinkedin
+    ShareLinkedin,
+    ShareWhatsApp,
   },
   props: {
     benevole: {
       type: Object,
-      required: true
+      required: true,
     },
     mission: {
       type: Object,
-      required: true
+      required: true,
     },
     initialForm: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       form: {},
-      message:
+      message: encodeURIComponent(
         "J'ai réalisé une mission de bénévolat grâce à #JeVeuxAider. Rejoignez le mouvement #ChacunPourTous"
+      ),
     }
   },
   computed: {
-    organization () {
+    organization() {
       return this.mission.structure
     },
-    structure () {
+    structure() {
       return this.mission.structure
     },
-    structureType () {
-      let status = this.$options.filters
-        .label(
-          this.structure.statut_juridique,
-          'structure_legal_status'
-        )
+    structureType() {
+      let status = this.$filters
+        .label(this.structure.statut_juridique, 'structure_legal_status')
         .toLowerCase()
       if (status == 'autre') {
         status = 'organisation'
       }
       return status.match('^[aieouAIEOU].*') ? `L'${status}` : `La ${status}`
-    }
-  }
-}
+    },
+  },
+})
 </script>

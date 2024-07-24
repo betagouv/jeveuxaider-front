@@ -1,44 +1,30 @@
 <template>
-  <ConversationPage v-if="conversationIsSet" />
+  <div />
 </template>
 
 <script>
-import ConversationPage from '@/components/conversation/Page.vue'
-
-export default {
-  components: {
-    ConversationPage
+export default defineNuxtComponent({
+  setup() {
+    definePageMeta({
+      layout: 'messages',
+      middleware: ['authenticated'],
+    })
   },
-  layout: 'messages',
-  middleware: ['authenticated', 'agreedResponsableTerms'],
-  data () {
-    return {
-      conversationIsSet: false
+  components: {},
+  mounted() {
+    if (this.$mq.current == 'xl') {
+      this.getLastReadConversation()
     }
   },
-  computed: {
-    conversation () {
-      return this.$store.getters['messaging/conversations']
-        ? this.$store.getters['messaging/conversations'][0]
-        : null
-    }
-  },
-  watch: {
-    conversation: {
-      immediate: true,
-      async handler () {
-        if (this.conversation && !this.conversationIsSet) {
-          const { data: conversation } = await this.$axios.get(`/conversations/${this.conversation.id}`)
-          this.$store.commit('messaging/setConversation', conversation)
-          this.$store.commit('messaging/replaceConversationInConversations', conversation)
-          this.$store.dispatch('messaging/fetchUnreadMessages')
-          this.conversationIsSet = true
+  methods: {
+    async getLastReadConversation() {
+      if (!this.$stores.auth.isImpersonate) {
+        const response = await apiFetch('/user/last-read-conversation')
+        if (response.last_read_conversation) {
+          navigateTo(`/messages/${response.last_read_conversation.id}`, { replace: true })
         }
       }
-    }
+    },
   },
-  beforeDestroy () {
-    this.$store.commit('messaging/setNewMessagesCount', 0)
-  }
-}
+})
 </script>

@@ -1,9 +1,6 @@
 <template>
   <section class="section-cities bg-[#fafaff]">
-    <div
-      class="container px-4 mx-auto pb-24"
-      :class="[{ 'pb-0': !cities.length }]"
-    >
+    <div class="container px-4 mx-auto pb-24" :class="[{ 'pb-0': !cities.length }]">
       <template v-if="cities.length">
         <div class="text-4xl font-extrabold text-center">
           <h2
@@ -15,32 +12,38 @@
 
         <div class="mt-12 flex flex-wrap gap-4 items-center justify-center">
           <nuxt-link
-            v-for="city in cities"
-            :key="city.zipcode"
-            class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition will-change-transform hover:scale-105"
-            :to="`/missions-benevolat?type=Mission en présentiel&aroundLatLng=${city.coordonates}&city=${city.name}&aroundRadius=35000`"
+            no-prefetch
+            v-for="(city, i) in cities"
+            :key="i"
+            class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition hover:scale-105"
+            :to="`/missions-benevolat?type=Mission en présentiel&aroundLatLng=${aroundLatLng}&city=${city.value}&aroundRadius=35000`"
           >
-            {{ city.name }}
+            {{ city.value }} ({{ city.count }})
           </nuxt-link>
         </div>
       </template>
     </div>
 
-    <hr class="opacity-25">
+    <hr class="opacity-25" />
   </section>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     territoire: {
       type: Object,
-      required: true
+      required: true,
     },
     cities: {
       type: Array,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+  computed: {
+    aroundLatLng() {
+      return `${this.territoire.latitude},${this.territoire.longitude}`
+    },
+  },
+})
 </script>

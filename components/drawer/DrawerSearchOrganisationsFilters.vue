@@ -1,14 +1,10 @@
 <template>
-  <DrawerLeft :is-open="isOpen" @close="$emit('close')">
+  <BaseDrawerLeft :is-open="isOpen" @close="$emit('close')">
     <template #title>
-      <div class="font-bold">
-        Filtres de recherche
-      </div>
+      <div class="font-bold">Filtres de recherche</div>
     </template>
     <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Mots-clés
-      </div>
+      <div class="relative font-medium text-[15px]">Mots-clés</div>
       <SearchFilter />
     </div>
     <FacetFilter
@@ -16,7 +12,7 @@
       facet-name="publics_beneficiaires"
       label="Publics aidés"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+      :facets="$stores.algoliaSearch.facetResults('publics_beneficiaires')"
       legend="Filtrer par public aidé"
     />
     <FacetFilter
@@ -24,7 +20,7 @@
       facet-name="domaines.name"
       label="Domaines"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('domaines.name')"
+      :facets="$stores.algoliaSearch.facetResults('domaines.name')"
       legend="Filtrer par domaine d'action"
     />
     <FacetFilter
@@ -32,7 +28,7 @@
       facet-name="statut_juridique"
       label="Types d’organisation"
       :show-more-limit="5"
-      :facets="$store.getters['algoliaSearch/facetResults']('statut_juridique')"
+      :facets="$stores.algoliaSearch.facetResults('statut_juridique')"
       legend="Filtrer par type d'organisation'"
     />
     <FacetFilter
@@ -40,7 +36,7 @@
       facet-name="reseaux.name"
       label="Réseaux"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('reseaux.name')"
+      :facets="$stores.algoliaSearch.facetResults('reseaux.name')"
       legend="Filtrer par réseau"
     />
     <FacetFilter
@@ -48,7 +44,7 @@
       facet-name="department_name"
       label="Départements"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
+      :facets="$stores.algoliaSearch.facetResults('department_name')"
       legend="Filtrer par département"
     />
 
@@ -56,58 +52,57 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          nbMobileActiveFilters ? 'justify-between' : 'justify-end'
+          getNbMobileActiveFilters() ? 'justify-between' : 'justify-end',
         ]"
       >
-        <Link
-          v-if="nbMobileActiveFilters"
-          @click.native="deleteFilters()"
-        >
+        <DsfrLink v-if="getNbMobileActiveFilters()" @click.native="deleteFilters()">
           Réinitialiser
-        </Link>
-        <Button @click.native="$emit('close')">
-          <template v-if="$store.state.algoliaSearch.results.nbHits == 0">
-            Aucun résultat
-          </template>
-          <template v-else-if="$store.state.algoliaSearch.results.nbHits == 1">
+        </DsfrLink>
+        <DsfrButton @click.native="$emit('close')">
+          <template v-if="$stores.algoliaSearch.results.nbHits == 0"> Aucun résultat </template>
+          <template v-else-if="$stores.algoliaSearch.results.nbHits == 1">
             Voir les résultats
           </template>
           <template v-else>
-            Voir les {{ $store.state.algoliaSearch.results.nbHits }} résultats
+            Voir les {{ $stores.algoliaSearch.results.nbHits }} résultats
           </template>
-        </Button>
+        </DsfrButton>
       </div>
     </template>
-  </DrawerLeft>
+  </BaseDrawerLeft>
 </template>
 
 <script>
-import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
-import FacetFilter from '~/components/section/search/FacetFilter.vue'
-import Link from '@/components/dsfr/Link.vue'
-import Button from '@/components/dsfr/Button.vue'
+import FacetFilter from '@/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FacetFilter,
-    Link,
-    Button,
-    SearchFilter
+    SearchFilter,
   },
-  mixins: [AlgoliaOrganisationsQueryBuilder],
+  setup() {
+    const { getNbMobileActiveFilters } = useAlgoliaOrganisationsQueryBuilder()
+
+    return {
+      getNbMobileActiveFilters,
+    }
+  },
   props: {
-    isOpen: { type: Boolean, default: false }
+    isOpen: { type: Boolean, default: false },
   },
   methods: {
-    deleteFilters () {
-      const filteredQueries = (({ city, aroundLatLng }) => ({ city, aroundLatLng }))(this.$route.query)
+    deleteFilters() {
+      const filteredQueries = (({ city, aroundLatLng }) => ({
+        city,
+        aroundLatLng,
+      }))(this.$route.query)
 
       this.$router.push({
         path: this.$route.path,
-        query: filteredQueries
+        query: filteredQueries,
       })
-    }
-  }
-}
+    },
+  },
+})
 </script>

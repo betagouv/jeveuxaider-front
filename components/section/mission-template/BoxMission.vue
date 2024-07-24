@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
-        Missions
-      </div>
-      <Link :to="`/admin/missions?filter[template.id]=${missionTemplate.id}&template_name=${missionTemplate.title}`" icon="ChevronRightIcon">
+      <div class="uppercase font-semibold text-gray-600">Missions</div>
+      <BaseLink
+        :to="`/admin/missions?filter[ofTemplate]=${missionTemplate.id}&template_name=${missionTemplate.title}`"
+        icon="RiArrowRightSLine"
+      >
         Consulter
-      </Link>
+      </BaseLink>
     </div>
-    <Box variant="flat" padding="xs" :loading="!stats">
+    <BaseBox variant="flat" padding="xs" :loading="!stats">
       <template v-if="stats">
         <div class="flex items-center">
           <div class="text-4xl font-semibold pr-4">
@@ -16,29 +17,30 @@
           </div>
           <div>
             <div class="font-semibold">
-              {{ stats.missions_available_count | pluralize('mission', 'missions', false) }} en ligne
+              {{ $filters.pluralize(stats.missions_available_count, 'mission', 'missions', false) }}
+              en ligne
             </div>
             <div class="text-gray-500 -mt-1">
-              sur {{ stats.missions_count| pluralize('mission') }}
+              sur {{ $filters.pluralize(stats.missions_count, 'mission') }}
             </div>
           </div>
         </div>
       </template>
-    </Box>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     missionTemplate: {
       type: Object,
-      required: true
+      required: true,
     },
     stats: {
       type: Object,
-      default: null
-    }
-  }
-}
+      default: null,
+    },
+  },
+})
 </script>

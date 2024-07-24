@@ -1,36 +1,25 @@
 <template>
-  <Button
-    size="lg"
-    icon="RiExternalLinkLine"
-    icon-position="right"
-    @click.native="onClick"
-  >
-    Je propose mon aide
-  </Button>
+  <a :href="url" target="_blank" class="inline-block" @click="onClick">
+    <DsfrButton size="lg" icon="RiExternalLinkLine" icon-position="right" class="w-full">
+      Je propose mon aide
+    </DsfrButton>
+  </a>
 </template>
 
 <script>
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  components: {
-    Button
-  },
+export default defineNuxtComponent({
   props: {
     url: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
-    onClick () {
-      window.plausible &&
-        window.plausible('Click CTA - Mission API Engagement', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
-
-      window.open(this.url, '_blank').focus()
-    }
-  }
-}
+    onClick() {
+      this.$plausible.trackEvent('Click CTA - Mission API Engagement', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
+    },
+  },
+})
 </script>

@@ -1,23 +1,17 @@
 <template>
   <div>
     <div class="flex space-x-4">
-      <FormControl
-        html-for="commitment__duration"
-        class="flex-1"
-      >
-        <SelectAdvanced
+      <BaseFormControl html-for="commitment__duration" class="flex-1">
+        <BaseSelectAdvanced
           v-model="commitment__duration"
           name="commitment__duration"
           placeholder="1 heure"
           :options="$labels.duration"
           @changed="handleChange()"
         />
-      </FormControl>
-      <FormControl
-        html-for="commitment__time_period"
-        class="min-w-[120px]"
-      >
-        <SelectAdvanced
+      </BaseFormControl>
+      <BaseFormControl html-for="commitment__time_period" class="min-w-[120px]">
+        <BaseSelectAdvanced
           v-model="commitment__time_period"
           name="commitment__time_period"
           placeholder="par an"
@@ -25,34 +19,34 @@
           :options="$labels.time_period"
           @changed="handleChange()"
         />
-      </FormControl>
+      </BaseFormControl>
     </div>
   </div>
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-
-export default {
-  mixins: [AlgoliaQueryBuilder],
-  data () {
+export default defineNuxtComponent({
+  data() {
     return {
       isOpen: false,
       commitment__duration: this.$route.query.duration,
-      commitment__time_period: this.$route.query.time_period
+      commitment__time_period: this.$route.query.time_period,
     }
   },
   computed: {
-    activeValue () {
+    activeValue() {
       if (!this.commitment__duration && !this.commitment__time_period) {
         return null
       }
       if (this.commitment__duration && !this.commitment__time_period) {
-        return this.$options.filters.label(this.commitment__duration, 'duration')
+        return this.$filters.label(this.commitment__duration, 'duration')
       }
-      return `${this.$options.filters.label(this.commitment__duration, 'duration')} par ${this.$options.filters.label(this.commitment__time_period, 'time_period')}`
+      return `${this.$filters.label(
+        this.commitment__duration,
+        'duration'
+      )} par ${this.$filters.label(this.commitment__time_period, 'time_period')}`
     },
-    commitmentTotal () {
+    commitmentTotal() {
       let $hours = 1
       switch (this.commitment__duration) {
         case '1_hour':
@@ -79,6 +73,9 @@ export default {
 
       let $multiplier = 1
       switch (this.commitment__time_period) {
+        case 'day':
+          $multiplier = 365
+          break
         case 'week':
           $multiplier = 52
           break
@@ -89,18 +86,18 @@ export default {
           break
       }
       return $hours * $multiplier
-    }
+    },
   },
   watch: {
-    '$route.query.duration' (newVal) {
+    '$route.query.duration'(newVal) {
       this.commitment__duration = newVal
     },
-    '$route.query.time_period' (newVal) {
+    '$route.query.time_period'(newVal) {
       this.commitment__time_period = newVal
-    }
+    },
   },
   methods: {
-    handleChange () {
+    handleChange() {
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -108,11 +105,11 @@ export default {
           commitment__total: `<=${this.commitmentTotal}`,
           time_period: this.commitment__time_period,
           duration: this.commitment__duration,
-          page: undefined
-        }
+          page: undefined,
+        },
       })
     },
-    handleClickEffacer () {
+    handleClickEffacer() {
       this.commitment__duration = null
       this.commitment__time_period = null
       this.$router.push({
@@ -122,11 +119,11 @@ export default {
           commitment__total: undefined,
           time_period: undefined,
           duration: undefined,
-          page: undefined
-        }
+          page: undefined,
+        },
       })
       this.isOpen = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

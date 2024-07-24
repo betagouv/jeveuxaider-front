@@ -3,133 +3,129 @@
     <component
       :is="icon"
       v-if="icon && iconPosition === 'left'"
-      :class="[
-        'absolute inset-y-0 left-3 md:left-6 fill-current flex-none my-auto',
-        'w-4 h-4',
-        {'md:w-6 md:h-6': size === 'xl'},
-      ]"
+      :class="['absolute inset-y-0 left-4 fill-current flex-none my-auto', 'w-4 h-4']"
     />
 
     <input
-      v-model.trim="inputValue"
+      :value="modelValue"
       :type="type"
       :placeholder="placeholder"
       :class="[
-        'inner-border border-none rounded-t w-full h-full',
-        {'error': error},
-        {'success': success},
-
-        {'size-md': size === 'md'},
-        {'size-lg py-3': size === 'lg'},
-        {'size-xl py-6 px-6 sm:text-lg md:text-xl': size === 'xl'},
-
-        {'pl-10': icon && iconPosition === 'left' && ['md', 'lg'].includes(size)},
-        {'pr-10': icon && iconPosition === 'right' && ['md', 'lg'].includes(size)},
-        {'pl-10 md:pl-16': icon && iconPosition === 'left' && size === 'xl'},
-        {'pr-10 md:pr-16': icon && iconPosition === 'right' && size === 'xl'},
-
-        inputClass
+        'border-none rounded-t w-full h-full',
+        {
+          'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':
+            variant === 'default',
+        },
+        {
+          'bg-white shadow-[inset_0_-2px_0_0_#000091] focus:!shadow-[inset_0_-2px_0_0_#000091]':
+            variant === 'white',
+        },
+        { ' shadow-[inset_0_-2px_0_0_#3A3A3A]': !disabled },
+        { 'cursor-not-allowed shadow-[inset_0_-2px_0_0_#E5E5E5]': disabled },
+        { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
+        { '!shadow-[inset_0_-2px_0_0_#18753c]': success },
+        { 'py-3': size === 'lg' },
+        {
+          'pl-12': icon && iconPosition === 'left' && ['md', 'lg'].includes(size),
+        },
+        {
+          'pr-12': icon && iconPosition === 'right' && ['md', 'lg'].includes(size),
+        },
+        inputClass,
       ]"
       @keypress.space="onKeypressSpace"
-    >
+      :disabled="disabled"
+      :min="min"
+      :max="max"
+      @input="$emit('update:modelValue', $event.target.value)"
+      @blur="$emit('blur')"
+    />
 
     <component
       :is="icon"
       v-if="icon && iconPosition === 'right'"
-      :class="[
-        'absolute inset-y-0 right-3 md:right-6 fill-current flex-none my-auto',
-        'w-4 h-4',
-        {'md:w-6 md:h-6': size === 'xl'},
-      ]"
+      :class="['absolute inset-y-0 right-4 fill-current flex-none my-auto', 'w-4 h-4']"
     />
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
-      default: null
+      default: null,
     },
     size: {
       type: String,
       default: 'md',
-      validator: s => ['md', 'lg', 'xl'].includes(s)
+      validator: (s) => ['md', 'lg'].includes(s),
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     error: {
       type: Boolean,
-      default: null
+      default: false,
     },
     success: {
       type: Boolean,
-      default: null
+      default: false,
     },
     type: {
       type: String,
-      default: 'text'
+      default: 'text',
     },
     placeholder: {
       type: String,
-      default: null
+      default: null,
     },
     icon: {
       // See vue-remix-icons.js
       type: [String, null],
-      default: null
+      default: null,
     },
     iconPosition: {
       type: String,
       default: 'left',
-      validator: i => ['left', 'right'].includes(i)
+      validator: (i) => ['left', 'right'].includes(i),
     },
     inputClass: {
       type: String,
-      default: ''
-    }
-  },
-  computed: {
-    inputValue: {
-      get () {
-        return this.value
-      },
-      set (newValue) {
-        this.$emit('input', newValue)
-      }
-    }
+      default: '',
+    },
+    min: {
+      type: String,
+      default: null,
+    },
+    max: {
+      type: String,
+      default: null,
+    },
+    variant: {
+      type: String,
+      default: 'default',
+      validator: (i) => ['white', 'default'].includes(i),
+    },
   },
   methods: {
-    onKeypressSpace (event) {
+    onKeypressSpace(event) {
       if (this.type === 'email') {
         event.preventDefault()
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
-.inner-border {
-  box-shadow: inset 0 -2px 0 0 #000091;
-  &.error {
-    box-shadow: inset 0 -2px 0 0 #CE0500;
-  }
-  &.success {
-    box-shadow: inset 0 -2px 0 0 #18753C;
-  }
-}
-
 input {
-  outline: none;
-  &:focus-visible {
-    outline-style: solid;
-    outline-color: #0a76f6;
-    outline-width: 2px;
-    outline-offset: 2px;
-  }
-  &.size-xl {
-    outline-offset: 4px;
-  }
+  --tw-ring-shadow: 0 0 #000 !important;
 }
 
+/* @todo */
+/* input[type="search"]::-webkit-search-cancel-button {
+
+} */
 </style>

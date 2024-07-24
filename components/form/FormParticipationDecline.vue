@@ -1,33 +1,40 @@
 <template>
   <form id="form-participation-decline" class="space-y-4" @submit.prevent="handleSubmit">
-    <FormControl
-      html-for="reason"
-      label="Raison"
-      required
-    >
-      <RadioGroup v-model="form.reason" :options="$labels.participation_declined_reasons" />
-    </FormControl>
+    <BaseFormControl html-for="reason" label="Raison" required>
+      <BaseRadioGroup v-model="form.reason" :options="$labels.participation_declined_reasons" />
+    </BaseFormControl>
 
-    <div
-      v-if="form.reason == 'mission_terminated'"
-    >
-      <InformationCircleSolidIcon width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
+    <div v-if="form.reason == 'mission_terminated'">
+      <RiInformationFill width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
       <span class="text-sm text-gray-600">
         <template v-if="isBulkOperation">
-          Attention, ces missions sont actives !<br>Après avoir refusé ces participations, nous vous invitons à passer les missions au statut “Terminé” afin de clore le recrutement de nouveaux bénévoles.
+          Attention, ces missions sont actives !<br />Après avoir refusé ces participations, nous
+          vous invitons à passer les missions au statut “Terminé” afin de clore le recrutement de
+          nouveaux bénévoles.
         </template>
         <template v-else>
-          Attention, cette mission est active !<br>Après avoir refusé cette participation, nous vous invitons à passer la mission au statut “Terminé” afin de clore le recrutement de nouveaux bénévoles.
+          Attention, cette mission est active !<br />Après avoir refusé cette participation, nous
+          vous invitons à passer la mission au statut “Terminé” afin de clore le recrutement de
+          nouveaux bénévoles.
         </template>
       </span>
     </div>
 
-    <FormControl
+    <BaseFormControl
       html-for="content"
-      label="Précisions"
+      :label="operationsCount > 1 ? 'Message pour les bénévoles' : 'Message pour le bénévole'"
+      :info="
+        operationsCount > 1
+          ? 'La note sera visible par les bénévoles'
+          : 'La note sera visible par le bénévole'
+      "
     >
-      <Textarea v-model="form.content" name="content" placeholder="Vous pouvez compléter par un commentaire si vous le souhaitez. À noter : celui-ci pourra être consulté par le bénévole" />
-    </FormControl>
+      <BaseTextarea
+        v-model="form.content"
+        name="content"
+        placeholder="Ajoutez des précisions si nécessaire"
+      />
+    </BaseFormControl>
   </form>
 </template>
 
@@ -35,25 +42,29 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
-export default {
+export default defineNuxtComponent({
   mixins: [FormErrors],
   props: {
     isBulkOperation: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    operationsCount: {
+      type: Number,
+      default: 1,
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: {},
       formSchema: object({
-        reason: string().nullable().required('La raison est requise')
-      })
+        reason: string().nullable().required('La raison est requise'),
+      }),
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -69,7 +80,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

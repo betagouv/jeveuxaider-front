@@ -1,172 +1,205 @@
 <template>
-  <DrawerLeft :is-open="isOpen" @close="$emit('close')">
+  <BaseDrawerLeft :is-open="isOpen" @close="$emit('close')">
     <template #title>
-      <div class="font-bold">
-        Filtres de recherche
-      </div>
+      <div class="font-bold">Filtres de recherche</div>
     </template>
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Mots-clés
-      </div>
-      <SearchFilter />
-    </div>
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Disponibilités
-      </div>
-      <CommitmentMobileFilter />
-    </div>
-    <div v-if="isPresentiel" class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        En autonomie
-      </div>
-      <AutonomyMobileFilter />
-    </div>
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Mineurs
-      </div>
-      <MinorsMobileFilter />
-    </div>
+
     <FacetFilter
       show-more
-      facet-name="activity.name"
+      facet-name="commitment"
+      label="Disponibilités"
+      :show-more-limit="3"
+      :facets="$stores.algoliaSearch.facetResults('commitment')"
+      legend="Filtrer par disponibilité"
+      :facet-value-resolver="{
+        few_hours: 'Quelques heures',
+        few_days: 'Quelques jours',
+        few_hours_a_week: 'Quelques heures par semaine',
+        few_days_a_week: 'Quelques jours par semaine',
+        few_hours_a_month: 'Quelques heures par mois',
+        few_days_a_month: 'Quelques jours par mois',
+      }"
+    />
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">Dates</div>
+      <DatesMobileFilter />
+    </div>
+
+    <FacetFilter
+      show-more
+      facet-name="activities.name"
       label="Activités"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
+      :facets="$stores.algoliaSearch.facetResults('activities.name')"
       legend="Filtrer par type d'activité"
     />
+
+    <!-- <div v-if="isPresentiel" class="space-y-2">
+      <div class="relative font-medium text-[15px]">En autonomie</div>
+      <AutonomyMobileFilter />
+    </div> -->
+
+    <!-- <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">Missions courtes</div>
+      <PonctualMobileFilter />
+    </div> -->
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">Mineurs</div>
+      <MinorsMobileFilter />
+    </div>
+
     <FacetFilter
       show-more
       facet-name="structure.name"
       label="Organisations"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('structure.name')"
+      :facets="$stores.algoliaSearch.facetResults('structure.name')"
       legend="Filtrer par organisation"
     />
-    <FacetFilter
-      show-more
-      facet-name="tags"
-      label="Opérations nationales"
-      :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('tags')"
-      legend="Filtrer par opération nationale"
-    />
+
     <FacetFilter
       show-more
       facet-name="publics_beneficiaires"
       label="Publics aidés"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+      :facets="$stores.algoliaSearch.facetResults('publics_beneficiaires')"
       legend="Filtrer par public aidé"
     />
+
+    <FacetFilter
+      show-more
+      facet-name="tags"
+      label="Opérations nationales"
+      :show-more-limit="3"
+      :facets="$stores.algoliaSearch.facetResults('tags')"
+      legend="Filtrer par opération nationale"
+    />
+
     <FacetFilter
       show-more
       facet-name="domaines"
       label="Domaines"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('domaines')"
+      :facets="$stores.algoliaSearch.facetResults('domaines')"
       legend="Filtrer par domaine d'action"
     />
+
     <FacetFilter
       show-more
       facet-name="structure.reseaux.name"
       label="Réseaux"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('structure.reseaux.name')"
+      :facets="$stores.algoliaSearch.facetResults('structure.reseaux.name')"
       legend="Filtrer par réseau"
     />
+
     <FacetFilter
       show-more
       facet-name="department_name"
       label="Départements"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
+      :facets="$stores.algoliaSearch.facetResults('department_name')"
       legend="Filtrer par département"
     />
+
     <FacetFilter
       show-more
       facet-name="template_subtitle"
       label="Types de mission"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
+      :facets="$stores.algoliaSearch.facetResults('template_subtitle')"
       legend="Filtrer par type de mission"
     />
+
     <FacetFilter
       show-more
       facet-name="publisher_name"
       label="Plateformes"
       :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('publisher_name')"
+      :facets="$stores.algoliaSearch.facetResults('publisher_name')"
       legend="Filtrer par plateforme"
     />
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">Mots-clés</div>
+      <SearchFilter />
+    </div>
 
     <template #footer>
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          nbMobileSecondaryFilters > 0 ? 'justify-between' : 'justify-end'
+          getNbMobileSecondaryFilters() > 0 ? 'justify-between' : 'justify-end',
         ]"
       >
-        <Link
-          v-if="nbMobileSecondaryFilters > 0"
+        <DsfrLink
+          v-if="getNbMobileSecondaryFilters() > 0"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
           Réinitialiser
-        </Link>
-        <Button @click.native="$emit('close')">
-          <template v-if="$store.state.algoliaSearch.results.nbHits == 0">
-            Aucun résultat
-          </template>
-          <template v-else-if="$store.state.algoliaSearch.results.nbHits == 1">
+        </DsfrLink>
+        <DsfrButton @click.native="$emit('close')">
+          <template v-if="$stores.algoliaSearch.results.nbHits == 0"> Aucun résultat </template>
+          <template v-else-if="$stores.algoliaSearch.results.nbHits == 1">
             Voir les résultats
           </template>
           <template v-else>
-            Voir les {{ $store.state.algoliaSearch.results.nbHits }} résultats
+            Voir les {{ $stores.algoliaSearch.results.nbHits }} résultats
           </template>
-        </Button>
+        </DsfrButton>
       </div>
     </template>
-  </DrawerLeft>
+  </BaseDrawerLeft>
 </template>
 
 <script>
-import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
-import FacetFilter from '~/components/section/search/FacetFilter.vue'
+import FacetFilter from '@/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
-import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
-import AutonomyMobileFilter from '~/components/section/search/AutonomyMobileFilter.vue'
-import MinorsMobileFilter from '~/components/section/search/MinorsMobileFilter.vue'
-import Link from '@/components/dsfr/Link.vue'
-import Button from '@/components/dsfr/Button.vue'
+import CommitmentMobileFilter from '@/components/section/search/CommitmentMobileFilter.vue'
+import AutonomyMobileFilter from '@/components/section/search/AutonomyMobileFilter.vue'
+import MinorsMobileFilter from '@/components/section/search/MinorsMobileFilter.vue'
+import PonctualMobileFilter from '@/components/section/search/PonctualMobileFilter.vue'
+import DatesMobileFilter from '@/components/section/search/DatesMobileFilter.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FacetFilter,
     SearchFilter,
     CommitmentMobileFilter,
     AutonomyMobileFilter,
     MinorsMobileFilter,
-    Link,
-    Button
+    PonctualMobileFilter,
+    DatesMobileFilter,
   },
-  mixins: [AlgoliaMissionsQueryBuilder],
+  setup() {
+    const { getNbMobileSecondaryFilters } = useAlgoliaMissionsQueryBuilder()
+    return {
+      getNbMobileSecondaryFilters,
+    }
+  },
   props: {
-    isOpen: { type: Boolean, default: false }
+    isOpen: { type: Boolean, default: false },
   },
   computed: {
-    isPresentiel () { return !this.$route.query.type || this.$route.query.type == 'Mission en présentiel' }
+    isPresentiel() {
+      return !this.$route.query.type || this.$route.query.type == 'Mission en présentiel'
+    },
   },
   methods: {
-    deleteAllFiltersExceptLocalisation () {
-      const filteredQueries = (({ city, type, aroundLatLng }) => ({ city, type, aroundLatLng }))(this.$route.query)
+    deleteAllFiltersExceptLocalisation() {
+      const filteredQueries = (({ city, type, aroundLatLng }) => ({
+        city,
+        type,
+        aroundLatLng,
+      }))(this.$route.query)
 
       this.$router.push({
         path: this.$route.path,
-        query: filteredQueries
+        query: filteredQueries,
       })
-    }
-  }
-}
+    },
+  },
+})
 </script>

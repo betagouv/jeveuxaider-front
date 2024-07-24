@@ -1,85 +1,109 @@
 <template>
-  <Drawer :is-open="Boolean(profileId)" @close="$emit('close')">
+  <BaseDrawer :is-open="Boolean(profileId)" @close="$emit('close')">
     <template #title>
-      <Heading v-if="profile" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/utilisateurs/${profileId}`" class="hover:underline">
+      <BaseHeading v-if="profile" :level="3" class="text-jva-blue-500">
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profileId}`" class="hover:underline">
           {{ profile.full_name }}
         </nuxt-link>
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="profile">
       <div
-        v-if="$store.getters.contextRole == 'admin' && profile.tags"
+        v-if="$stores.auth.contextRole == 'admin' && profile.tags"
         class="mt-2 mb-4 flex flex-wrap gap-2"
       >
-        <Tag v-for="tag in profile.tags" :key="tag.id">
+        <DsfrTag v-for="tag in profile.tags" :key="tag.id">
           {{ tag.name }}
-        </Tag>
+        </DsfrTag>
       </div>
       <div class="mt-2 flex flex-wrap gap-1">
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}`">
-          <Button
-            type="tertiary"
-            icon="RiEyeLine"
-            size="sm"
-            tabindex="-1"
-          >
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profile.id}`">
+          <DsfrButton type="tertiary" icon="RiEyeLine" size="sm" tabindex="-1" icon-class="!mr-1">
             Détails
-          </Button>
+          </DsfrButton>
         </nuxt-link>
 
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}/edit`">
-          <Button
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profile.id}/edit`">
+          <DsfrButton
             type="tertiary"
             icon="RiPencilLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Modifier
-          </Button>
+          </DsfrButton>
         </nuxt-link>
 
-        <Button
-          v-if="['admin'].includes($store.getters.contextRole)"
-          type="tertiary"
-          size="sm"
-          icon="RiProfileLine"
-          @click.native="handleImpersonate()"
-        >
-          Prendre sa place
-        </Button>
+        <Actions :profile="profile" @updated="fetch()" buttonSize="sm" />
       </div>
       <div class="border-t -mx-6 my-6" />
-      <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole) && profile" :user-id="profile.user_id" class="mb-8" />
-      <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
-      <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
-      <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
-      <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="profile.user" />
-      <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" class="mb-8" />
-      <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" class="mb-8" />
+      <BoxUserBan
+        v-if="
+          ['admin'].includes($stores.auth.contextRole) && profile.user.context_role === 'volontaire'
+        "
+        ref="boxUserBan"
+        :user="profile.user"
+        class="mb-8"
+      />
+
+      <BoxRoles
+        v-if="
+          ['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole) && profile
+        "
+        :user-id="profile.user_id"
+        class="mb-8"
+      />
+      <BoxActions v-if="$stores.auth.contextRole === 'admin'" class="mb-8" :profile="profile" />
+      <BoxDisponibilities
+        class="mb-8"
+        :profile="profile"
+        :link-action="`/admin/utilisateurs/${profile.id}`"
+        link-label="Consulter"
+      />
+      <BoxInformations
+        class="mb-8"
+        :profile="profile"
+        :link-action="`/admin/utilisateurs/${profile.id}`"
+        link-label="Consulter"
+      />
+      <BoxUtm v-if="$stores.auth.contextRole === 'admin'" class="mb-8" :model="profile.user" />
+      <BoxOrganisations
+        v-if="profile.user.structures"
+        :structures="profile.user.structures"
+        class="mb-8"
+      />
+      <BoxTerritoires
+        v-if="profile.user.territoires"
+        :territoires="profile.user.territoires"
+        class="mb-8"
+      />
       <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
-        <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">
+        <DsfrLink
+          :to="`/admin/utilisateurs/${profile.id}`"
+          class="uppercase font-semibold text-sm text-jva-blue-500"
+        >
           Détails de l'utilisateur
-        </Link>
+        </DsfrLink>
       </div>
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-import BoxInformations from '@/components/section/profile/BoxInformations'
-import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-import BoxReseau from '@/components/section/profile/BoxReseau'
-import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
-import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
-import BoxActions from '@/components/section/profile/BoxActions'
-import BoxUtm from '@/components/section/BoxUtm'
-import Tag from '@/components/dsfr/Tag'
-import Button from '@/components/dsfr/Button.vue'
-import BoxRoles from '@/components/section/profile/BoxRoles'
+import BoxInformations from '@/components/section/profile/BoxInformations.vue'
+import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities.vue'
+import BoxReseau from '@/components/section/profile/BoxReseau.vue'
+import BoxTerritoires from '@/components/section/profile/BoxTerritoires.vue'
+import BoxOrganisations from '@/components/section/profile/BoxOrganisations.vue'
+import BoxActions from '@/components/section/profile/BoxActions.vue'
+import BoxUtm from '@/components/section/BoxUtm.vue'
+import BoxRoles from '@/components/section/profile/BoxRoles.vue'
+import BoxUserBan from '@/components/section/profile/BoxUserBan.vue'
+import Actions from '@/components/section/profile/Actions.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     BoxInformations,
     BoxDisponibilities,
@@ -87,36 +111,33 @@ export default {
     BoxTerritoires,
     BoxOrganisations,
     BoxUtm,
-    Tag,
-    Button,
     BoxActions,
-    BoxRoles
+    BoxRoles,
+    BoxUserBan,
+    Actions,
   },
   props: {
     profileId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      profile: null
+      profile: null,
     }
-  },
-  async fetch () {
-    if (!this.profileId) {
-      return null
-    }
-    const { data: profile } = await this.$axios.get(`/profiles/${this.profileId}`)
-    this.profile = profile
   },
   watch: {
-    profileId: '$fetch'
+    profileId: 'fetch',
   },
   methods: {
-    async handleImpersonate () {
-      await this.$store.dispatch('auth/impersonate', this.profile.user.id)
-    }
-  }
-}
+    async fetch() {
+      if (!this.profileId) {
+        return null
+      }
+      const profile = await apiFetch(`/profiles/${this.profileId}`)
+      this.profile = profile
+    },
+  },
+})
 </script>

@@ -1,28 +1,26 @@
 <template>
   <div class="relative">
-    <button :aria-expanded="isOpen || 'false'" class="flex w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
-      <slot name="button" :isOpen="isOpen" :activeValue="activeValue">
-        Toggle facet
-      </slot>
+    <button
+      :aria-expanded="isOpen || 'false'"
+      class="flex w-full"
+      @click="isOpen = !isOpen"
+      @keydown.esc="isOpen = false"
+    >
+      <slot name="button" :isOpen="isOpen" :activeValue="activeValue"> Toggle facet </slot>
     </button>
 
     <transition name="fade-in">
       <div
         v-if="isOpen"
-        v-click-outside="() => isOpen = false"
-        class="mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]"
+        v-click-outside="() => (isOpen = false)"
+        class="mt-2 absolute right-0 xl:right-auto z-20 bg-white border shadow-xl text-[15px] w-[350px]"
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 space-y-3">
-          <div class="font-medium">
-            Disponibilités
-          </div>
+          <div class="font-medium">Disponibilités</div>
           <div class="flex space-x-4">
-            <FormControl
-              html-for="commitment__duration"
-              class="flex-1"
-            >
-              <SelectAdvanced
+            <BaseFormControl html-for="commitment__duration" class="flex-1">
+              <BaseSelectAdvanced
                 v-model="commitment__duration"
                 name="commitment__duration"
                 aria-label="Disponibilités - Durée"
@@ -30,12 +28,9 @@
                 :options="$labels.duration"
                 @changed="handleChange()"
               />
-            </FormControl>
-            <FormControl
-              html-for="commitment__time_period"
-              class="min-w-[120px]"
-            >
-              <SelectAdvanced
+            </BaseFormControl>
+            <BaseFormControl html-for="commitment__time_period" class="min-w-[120px]">
+              <BaseSelectAdvanced
                 v-model="commitment__time_period"
                 name="commitment__time_period"
                 aria-label="Disponibilités - Fréquence"
@@ -44,7 +39,7 @@
                 :options="$labels.time_period"
                 @changed="handleChange()"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
         </div>
 
@@ -52,8 +47,10 @@
           <button
             class="text-sm"
             :class="[
-              {'text-gray-400 pointer-events-none': !activeValue},
-              {'text-jva-blue-500 cursor-pointer hover:underline': activeValue}
+              { 'text-gray-400 pointer-events-none': !activeValue },
+              {
+                'text-jva-blue-500 cursor-pointer hover:underline': activeValue,
+              },
             ]"
             :disabled="!activeValue"
             @click="handleClickEffacer()"
@@ -67,28 +64,28 @@
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-
-export default {
-  mixins: [AlgoliaQueryBuilder],
-  data () {
+export default defineNuxtComponent({
+  data() {
     return {
       isOpen: false,
       commitment__duration: this.$route.query.duration,
-      commitment__time_period: this.$route.query.time_period
+      commitment__time_period: this.$route.query.time_period,
     }
   },
   computed: {
-    activeValue () {
+    activeValue() {
       if (!this.commitment__duration && !this.commitment__time_period) {
         return null
       }
       if (this.commitment__duration && !this.commitment__time_period) {
-        return this.$options.filters.label(this.commitment__duration, 'duration')
+        return this.$filters.label(this.commitment__duration, 'duration')
       }
-      return `${this.$options.filters.label(this.commitment__duration, 'duration')} par ${this.$options.filters.label(this.commitment__time_period, 'time_period')}`
+      return `${this.$filters.label(
+        this.commitment__duration,
+        'duration'
+      )} par ${this.$filters.label(this.commitment__time_period, 'time_period')}`
     },
-    commitmentTotal () {
+    commitmentTotal() {
       let $hours = 1
       switch (this.commitment__duration) {
         case '1_hour':
@@ -134,18 +131,18 @@ export default {
           break
       }
       return $hours * $multiplier
-    }
+    },
   },
   watch: {
-    '$route.query.duration' (newVal) {
+    '$route.query.duration'(newVal) {
       this.commitment__duration = newVal
     },
-    '$route.query.time_period' (newVal) {
+    '$route.query.time_period'(newVal) {
       this.commitment__time_period = newVal
-    }
+    },
   },
   methods: {
-    handleChange () {
+    handleChange() {
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -153,11 +150,11 @@ export default {
           commitment__total: `<=${this.commitmentTotal}`,
           time_period: this.commitment__time_period,
           duration: this.commitment__duration,
-          page: undefined
-        }
+          page: undefined,
+        },
       })
     },
-    handleClickEffacer () {
+    handleClickEffacer() {
       this.commitment__duration = null
       this.commitment__time_period = null
       this.$router.push({
@@ -167,11 +164,11 @@ export default {
           commitment__total: undefined,
           time_period: undefined,
           duration: undefined,
-          page: undefined
-        }
+          page: undefined,
+        },
       })
       this.isOpen = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

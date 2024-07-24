@@ -1,13 +1,10 @@
 <template>
   <div>
-    <Button
-      variant="red"
-      @click.native="showModal = true"
-    >
+    <BaseButton variant="red" @click.native="showModal = true">
       Annuler ma participation
-    </Button>
+    </BaseButton>
 
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showModal"
       @cancel="showModal = false"
@@ -17,37 +14,36 @@
 </template>
 
 <script>
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
-
-export default {
-  components: {
-    ModalParticipationCancel
-  },
+export default defineNuxtComponent({
   props: {
     participation: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       showModal: false,
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleConfirm (payload) {
+    async handleConfirm(payload) {
       if (this.loading) {
         return
       }
       this.loading = true
-      const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel`, payload).catch(() => {})
-      const nbNewMessages = payload.content?.trim().length ? 2 : 1
-      this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
+      const participation = await apiFetch(
+        `/participations/${this.participation.id}/cancel-by-benevole`,
+        {
+          method: 'PUT',
+          body: payload,
+        }
+      ).catch(() => {})
       this.$emit('update', participation)
       this.loading = false
       this.showModal = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

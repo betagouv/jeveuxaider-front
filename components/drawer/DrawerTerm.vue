@@ -1,19 +1,25 @@
 <template>
-  <Drawer :is-open="Boolean(termId)" @close="$emit('close')">
+  <BaseDrawer :is-open="Boolean(termId)" @close="$emit('close')">
     <template #title>
-      <Heading v-if="term" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit?redirect=/admin/taxonomies/${$route.params.slug}`" class="hover:underline">
+      <BaseHeading v-if="term" :level="3" class="text-jva-blue-500">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit?redirect=/admin/taxonomies/${$route.params.slug}`"
+          class="hover:underline"
+        >
           {{ term.name }}
         </nuxt-link>
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="term">
       <OnlineIndicator :published="term.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit?redirect=/admin/taxonomies/${$route.params.slug}`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit?redirect=/admin/taxonomies/${$route.params.slug}`"
+          class="inline-flex"
+        >
+          <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <div
           v-tooltip="{
@@ -21,68 +27,75 @@
               term.related_count > 0
                 ? `Ce tag a ${term.related_count} liaison(s) . Il ne peut pas être supprimé.`
                 : false,
-            classes: 'theme-white',
+            theme: 'white',
             placement: 'bottom',
-            offset: 8
+            offset: 8,
           }"
         >
-          <Button
+          <BaseButton
             variant="white-red"
             size="sm"
-            icon="TrashIcon"
+            icon="RiDeleteBinLine"
             :disabled="term.related_count > 0 ? true : false"
             @click.native="handleDelete()"
           >
             Supprimer
-          </Button>
+          </BaseButton>
         </div>
       </div>
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :term="term" />
-      <!-- <BoxLiaisons class="mb-8" :term="term" /> -->
+      <!-- <BaseBoxLiaisons class="mb-8" :term="term" /> -->
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
-import BoxInformations from '@/components/section/term/BoxInformations'
-// import BoxLiaisons from '@/components/section/term/BoxLiaisons'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/term/BoxInformations.vue'
+// import BoxLiaisons from '@/components/section/term/BoxLiaisons.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     BoxInformations,
     // BoxLiaisons,
-    OnlineIndicator
+    OnlineIndicator,
   },
+  emits: ['deleted', 'loaded', 'close'],
   props: {
     termId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      term: null
+      term: null,
     }
-  },
-  async fetch () {
-    if (!this.termId) {
-      return null
-    }
-    const { data: term } = await this.$axios.get(`/terms/${this.termId}`)
-    this.term = term
-    this.$emit('loaded', term)
   },
   watch: {
-    termId: '$fetch'
+    termId: 'fetch',
   },
   methods: {
-    async handleDelete () {
-      await this.$axios.delete(`/terms/${this.termId}`).catch(err => console.log(err))
-      this.$router.go()
-    }
-  }
-}
+    async fetch() {
+      if (!this.termId) {
+        return null
+      }
+      const term = await apiFetch(`/terms/${this.termId}`)
+      this.term = term
+      this.$emit('loaded', term)
+    },
+    async handleDelete() {
+      await apiFetch(`/terms/${this.termId}`, {
+        method: 'DELETE',
+      })
+        .then((response) => {
+          this.$emit('deleted')
+          this.$emit('close')
+        })
+        .catch((err) => console.log(err))
+    },
+  },
+})
 </script>

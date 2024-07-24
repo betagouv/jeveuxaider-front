@@ -1,7 +1,18 @@
 <template>
   <div class="relative">
-    <span tabindex="-1" class="cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
-      <slot name="button" :isOpen="isOpen" :activeValuesCount="activeValuesCount" :firstValueSelected="firstValueSelected">
+    <span
+      ref="tag"
+      tabindex="-1"
+      class="cursor-pointer w-full"
+      @click="isOpen = !isOpen"
+      @keydown.esc="isOpen = false"
+    >
+      <slot
+        name="button"
+        :is-open="isOpen"
+        :active-values-count="activeValuesCount"
+        :first-value-selected="firstValueSelected"
+      >
         Toggle facet
       </slot>
     </span>
@@ -10,10 +21,14 @@
       <div
         v-if="isOpen"
         v-click-outside="onClickOutside"
-        :class="['mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]', optionsClass]"
+        :class="[
+          'mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]',
+          optionsPositionClass,
+          optionsClass,
+        ]"
         @keydown.esc="isOpen = false"
       >
-        <div class="p-4 space-y-3">
+        <div class="px-4 pt-4">
           <div :id="`label-search-${uuid}`" class="font-medium">
             {{ label }}
           </div>
@@ -22,57 +37,58 @@
             ref="facetSearch"
             v-model="facetQuery"
             :aria-labelledby="`label-search-${uuid}`"
-            @input="handleChangeSearchFacetValues"
+            @update:modelValue="handleChangeSearchFacetValues"
+            class="mt-3"
           />
 
-          <div class="relative overflow-hidden">
-            <div
-              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500 z-10"
-              :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
-            />
-
-            <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
-              <div class="py-1 mr-2 space-y-4 text-sm">
-                <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
-                  Aucun résultat avec les filtres actuels.
-                </div>
-
-                <fieldset class="relative" style="min-inline-size: auto;">
-                  <legend class="sr-only">
-                    {{ legend }}
-                  </legend>
-
-                  <div class="space-y-4">
-                    <div
-                      v-for="(facet) in [...activeValues, ...inactiveValues]"
-                      :key="facet.value"
-                      :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                      class="flex items-center pl-1 group"
-                    >
-                      <input
-                        :id="`facetFilter__${facetName}_${facet.value}`"
-                        :name="`facetFilter__${facetName}_${facet.value}`"
-                        :value="isActiveFilter(facetName, facet.value)"
-                        type="checkbox"
-                        :checked="isActiveFilter(facetName, facet.value)"
-                        class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                        @change="handleFacetToggle(facetName, facet.value)"
-                      >
-                      <label
-                        :for="`facetFilter__${facetName}_${facet.value}`"
-                        class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
-                      >
-                        <div class="truncate">
-                          {{ facet.value }}
-                        </div>
-                        <div class="text-gray-600 ml-1 font-light">
-                          {{ facet.count }}
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
+          <div
+            ref="scrollContainer"
+            class="max-h-[254px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-3"
+          >
+            <div class="py-1 mr-2 space-y-4 text-sm mx-2">
+              <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+                Aucun résultat avec les filtres actuels.
               </div>
+
+              <fieldset class="relative" style="min-inline-size: auto">
+                <legend class="sr-only">
+                  {{ legend }}
+                </legend>
+
+                <div class="space-y-2">
+                  <div
+                    v-for="facet in [...activeValues, ...inactiveValues]"
+                    :key="facet.value"
+                    :class="[
+                      {
+                        'text-jva-blue-500': isActiveFilter(facetName, facet.value),
+                      },
+                    ]"
+                    class="flex items-center group"
+                  >
+                    <input
+                      :id="`facetFilter__${facetName}_${facet.value}`"
+                      :name="`facetFilter__${facetName}_${facet.value}`"
+                      :value="isActiveFilter(facetName, facet.value)"
+                      type="checkbox"
+                      :checked="isActiveFilter(facetName, facet.value)"
+                      class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
+                      @change="handleFacetToggle(facetName, facet.value)"
+                    />
+                    <label
+                      :for="`facetFilter__${facetName}_${facet.value}`"
+                      class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
+                    >
+                      <div class="truncate">
+                        {{ resolveFacetValue(facet.value) }}
+                      </div>
+                      <div class="text-gray-600 ml-1 font-light">
+                        {{ facet.count }}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -81,8 +97,10 @@
           <button
             class="text-sm"
             :class="[
-              {'text-gray-400 pointer-events-none': !activeValuesCount},
-              {'text-jva-blue-500 cursor-pointer hover:underline': activeValuesCount}
+              { 'text-gray-400 pointer-events-none': !activeValuesCount },
+              {
+                'text-jva-blue-500 cursor-pointer hover:underline': activeValuesCount,
+              },
             ]"
             :disabled="!activeValuesCount"
             @click="deleteFacet()"
@@ -96,95 +114,114 @@
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
-import uuid from '@/mixins/uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FacetSearch
+    FacetSearch,
   },
-  mixins: [AlgoliaQueryBuilder, uuid],
   props: {
     facetName: { type: String, required: true },
     label: { type: String, required: true },
     optionsClass: { type: String, default: '' },
-    legend: { type: String, default: null }
+    legend: { type: String, default: null },
+    facetValueResolver: { type: Object, default: null },
   },
-  data () {
+  setup() {
+    const { isActiveFilter, deleteFilter, addFilter, searchForFacetValues } =
+      useAlgoliaMissionsQueryBuilder()
+    return {
+      isActiveFilter,
+      deleteFilter,
+      addFilter,
+      searchForFacetValues,
+    }
+  },
+  data() {
     return {
       isOpen: false,
       facetHits: null,
       facetQuery: null,
-      isScrollAtBottom: false
+      uuid: uuidv4(),
+      optionsPositionClass: '',
     }
   },
   computed: {
-    allValues () {
+    allValues() {
       if (this.facetHits) {
         return this.facetHits.map((facetHit) => {
           return {
             value: facetHit.value,
-            count: facetHit.count
+            count: facetHit.count,
           }
         })
       }
 
-      const facet = this.$store.getters['algoliaSearch/facetResults'](this.facetName)
+      const facet = this.$stores.algoliaSearch.facetResults(this.facetName)
       return Object.keys(facet).map((value) => {
         return {
           value,
-          count: facet[value]
+          count: facet[value],
         }
       })
     },
-    activeValues () {
+    activeValues() {
       return this.allValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
-    inactiveValues () {
+    inactiveValues() {
       return this.allValues.filter((facet) => {
         return !this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
-    firstValueSelected () {
-      return this.$route.query[this.facetName]?.split('|')[0]
+    firstValueSelected() {
+      return this.resolveFacetValue(this.$route.query[this.facetName]?.split('|')[0])
     },
-    activeValuesCount () {
+    activeValuesCount() {
       return this.$route.query[this.facetName]?.split('|').length
-    }
+    },
   },
   watch: {
-    async isOpen (newVal) {
+    async isOpen(newVal) {
       if (newVal) {
         await this.$nextTick()
-        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
-        this.$refs.scrollContainer.addEventListener('scroll', this.handleScroll)
-        this.$refs.facetSearch.$refs?.input?.focus()
-      } else {
-        this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
+        this.handleOptionsPosition()
+        this.$refs.facetSearch?.$refs?.input?.focus()
       }
     },
-    async facetHits () {
-      if (this.isOpen) {
-        await this.$nextTick()
-        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
+    async $route(newVal, oldVal) {
+      if (newVal.name !== oldVal.name) {
+        return
       }
-    },
-    async '$route' () {
       if (this.facetHits && this.facetQuery) {
         const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
         this.facetHits = res.facetHits
       }
-    }
+
+      // If a filter get moved to another line
+      if (this.isOpen) {
+        await this.$nextTick()
+        this.handleOptionsPosition()
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('resize', this.onWindowResize, false)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onWindowResize)
   },
   methods: {
-    deleteFacet () {
+    resolveFacetValue(value) {
+      return this.facetValueResolver ? this.facetValueResolver[value] : value
+    },
+    deleteFacet() {
       this.deleteFilter(this.facetName)
       this.isOpen = false
     },
-    async handleChangeSearchFacetValues (facetQuery) {
+    async handleChangeSearchFacetValues(facetQuery) {
       if (!facetQuery || facetQuery == '') {
         this.facetHits = null
         return
@@ -192,23 +229,32 @@ export default {
       const res = await this.searchForFacetValues(this.facetName, facetQuery)
       this.facetHits = res.facetHits
     },
-    handleScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      this.isScrollAtBottom = (scrollTop + clientHeight >= scrollHeight)
-    },
-    onClickOutside (e) {
+    onClickOutside(e) {
       this.isOpen = false
     },
-    async handleFacetToggle (facetName, facetValue) {
+    async handleFacetToggle(facetName, facetValue) {
       this.isActiveFilter(facetName, facetValue)
         ? await this.deleteFilter(facetName, facetValue, true)
         : await this.addFilter(facetName, facetValue, true)
-    }
-  }
-}
+    },
+    handleOptionsPosition() {
+      if (this.$refs.tag) {
+        const elOptionsX = this.$refs.tag?.getBoundingClientRect()?.x
+        const windowCenterX = window.innerWidth / 2
+        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+      }
+    },
+    onWindowResize() {
+      if (this.isOpen) {
+        this.handleOptionsPosition()
+      }
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
-.custom-gradient {
-  background-image: linear-gradient(180deg,hsla(0,0%,100%,0),#fff);
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-3;
 }
 </style>

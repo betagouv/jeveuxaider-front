@@ -1,14 +1,12 @@
 <template>
   <div class="overflow-hidden">
-    <hr class="opacity-25">
+    <hr class="opacity-25" />
 
     <section class="section-subscribe bg-[#EEEDF8] relative">
       <div class="relative z-10 container mx-auto px-4 lg:px-12">
         <div class="pt-16 pb-8 lg:py-28">
           <h2 class="max-w-2xl mb-12">
-            <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
-              Chacun pour tous
-            </p>
+            <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">Chacun pour tous</p>
 
             <p
               class="text-4xl xl:text-5xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px] text-jva-blue-500"
@@ -19,8 +17,8 @@
           </h2>
 
           <p class="md:text-xl text-gray-700 sm:max-w-md md:max-w-lg mb-8">
-            Trouvez des missions en quelques clics et devenez bénévole près de
-            chez vous ou à distance
+            Trouvez des missions en quelques clics et devenez bénévole près de chez vous ou à
+            distance
           </p>
 
           <div
@@ -45,7 +43,7 @@
                   placeholder="Renseignez votre e-mail"
                   class="w-full p-0 border-none !outline-none placeholder-gray-400 focus:ring-0"
                   @keypress.space.prevent
-                >
+                />
                 <div v-if="errors" class="text-sm text-jva-red-500">
                   <div v-for="(error, key) in errors" :key="key">
                     {{ error }}
@@ -77,18 +75,16 @@
             </div>
           </div>
 
-          <p
-            class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full"
-          >
-            En m'inscrivant j'accepte la
-            <Link to="/charte-reserve-civique">
+          <p class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full">
+            <span>En m’inscrivant j'accepte la </span>
+            <DsfrLink to="/politique-de-confidentialite">
               <strong>politique de confidentialité</strong>
-            </Link>
-            et la
-            <Link to="/politique-de-confidentialite">
+            </DsfrLink>
+            <span> et la </span>
+            <DsfrLink to="/charte-reserve-civique">
               <strong>charte</strong>
-            </Link>
-            de JeVeuxAider.gouv.fr
+            </DsfrLink>
+            <span> de la Réserve Civique.</span>
           </p>
         </div>
       </div>
@@ -99,14 +95,14 @@
         <img
           src="/images/territoires/subscribe-pattern.svg"
           class="ml-auto w-full h-full object-contain object-right-bottom absolute"
-        >
+        />
         <img
           src="/images/territoires/subscribe-illustration.png"
           srcset="/images/territoires/subscribe-illustration@2x.png 2x"
           :alt="`Suivez toute l'actualité du bénévolat
               ${territoire.suffix_title}`"
           class="ml-auto w-full h-full object-contain object-right-bottom relative"
-        >
+        />
       </div>
     </section>
   </div>
@@ -114,58 +110,61 @@
 
 <script>
 import * as yup from 'yup'
-import Link from '@/components/dsfr/Link.vue'
 
-export default {
-  components: {
-    Link
-  },
+export default defineNuxtComponent({
   props: {
     territoire: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: {},
       submitted: false,
-      errors: false
+      errors: false,
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
       this.loading = true
 
       const schema = yup.object().shape({
-        email: yup.string().required("Merci d'indiquer votre email").email("Le format de l'email n'est pas valide")
+        email: yup
+          .string()
+          .required("Merci d'indiquer votre email")
+          .email("Le format de l'email n'est pas valide"),
       })
 
       schema
         .validate(this.form)
         .then(async (valid) => {
-          await this.$axios.post('/sendinblue/contact', {
-            email: this.form.email,
-            zipcode: this.territoire.zips ? this.territoire.zips[0] : null,
-            department: this.territoire.department
+          await apiFetch('/sendinblue/contact', {
+            method: 'POST',
+            body: {
+              email: this.form.email,
+              zipcode: this.territoire.zips ? this.territoire.zips[0] : null,
+              department: this.territoire.department,
+            },
           })
           this.submitted = true
-        }).catch((err) => {
+        })
+        .catch((err) => {
           this.errors = err.errors
         })
         .finally(() => {
           this.loading = false
         })
     },
-    onBack () {
+    onBack() {
       this.form.email = ''
       this.submitted = false
       this.errors = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -2,54 +2,192 @@
   <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
     <div class="bg-gray-50 py-8">
       <div class="container">
-        <div class="grid grid-cols-1 md:grid-cols-5 text-xs gap-8">
-          <div class="md:col-span-2">
-            <div class="font-bold mb-8">
-              Le bénévolat en France
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <nuxt-link
-                v-for="city in cities"
-                :key="city.name"
-                :to="city.url"
-                class="hover:underline text-gray-600"
+        <div class="grid grid-cols-1 md:grid-cols-6 text-xs gap-8">
+          <div>
+            <div class="font-bold mb-8">Les activités bénévoles</div>
+            <div class="grid grid-cols-1 gap-4">
+              <nuxt-link no-prefetch class="link" to="/activites/maraude">Maraude</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/activites/soins-aux-animaux"
+                >Soins aux animaux</nuxt-link
               >
-                {{ city.name }}
-              </nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/activites/alphabetisation-apprentissage-du-francais-fle"
+                >Alphabétisation</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/ramassage-de-dechets"
+                >Ramassage de déchets</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/soutien-scolaire-et-formation"
+                >Soutien scolaire</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/aide-aux-demarches-administratives"
+                >Aides aux démarches administrative</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/droit-et-conseil-juridique"
+                >Droit et conseil juridique</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/ecoute-aide-psychologique"
+                >Ecoute / Aide psychologique</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/activites/evenementiel"
+                >Événementiel</nuxt-link
+              >
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <div class="font-bold mb-8">Le bénévolat en France</div>
+            <div class="grid grid-cols-2 gap-4">
+              <nuxt-link no-prefetch class="link" to="/villes/paris">Bénévolat Paris</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/lille">Bénévolat Lille</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/rouen">Bénévolat Rouen</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/toulouse"
+                >Bénévolat Toulouse</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/rennes">Bénévolat Rennes</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/grenoble"
+                >Bénévolat Grenoble</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/lyon">Bénévolat Lyon</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/montpellier"
+                >Bénévolat Montpellier</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/tours">Bénévolat Tours</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/marseille"
+                >Bénévolat Marseille</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/strasbourg"
+                >Bénévolat Strasbourg</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/dijon">Bénévolat Dijon</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/bordeaux"
+                >Bénévolat Bordeaux</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/angers">Bénévolat Angers</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nancy">Bénévolat Nancy</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nantes">Bénévolat Nantes</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nice">Bénévolat Nice</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/caen">Bénévolat Caen</nuxt-link>
             </div>
           </div>
 
           <div class="md:col-span-2">
-            <div class="font-bold mb-8">
-              Organisations populaires
-            </div>
+            <div class="font-bold mb-8">Organisations populaires</div>
             <div class="grid grid-cols-2 gap-4">
               <nuxt-link
-                v-for="organization in organizations"
-                :key="organization.name"
-                :to="organization.url"
-                class="hover:underline text-gray-600 truncate"
+                no-prefetch
+                class="link"
+                to="/reseaux/14-federation-francaise-des-banques-alimentaires"
+                >Banques Alimentaires</nuxt-link
               >
-                {{ organization.name }}
-              </nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/reseaux/104-oxfam-france">Oxfam</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/organisations/2747-makesense"
+                >Makesense</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/20-article-1">Article 1</nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/organisations/6144-explorjob-association-avdtm"
+                >AVDTM - ExplorJob</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/1784-jobirl">JobIRL</nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/reseaux/58-la-societe-protectrice-des-animaux-la-spa"
+                >La SPA</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/33-la-cravate-solidaire"
+                >La Cravate Solidaire</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/35-emmaus-france"
+                >Emmaüs France</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/8-secours-catholique"
+                >Secours Catholique</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/79-apf-france-handicap"
+                >APF France handicap</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/4-les-restos-du-coeur"
+                >Restos du coeur</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/17-federation-habitat-et-humanisme"
+                >Habitat et Humanisme</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/2-entourage">Entourage</nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/reseaux/15-federation-nationale-de-la-protection-civile"
+                >Protection Civile</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/4561-mon-emile-association"
+                >Mon Emile Association</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/56-apprentis-dauteuil"
+                >Apprentis d’Auteuil</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/46-pro-bono-lab"
+                >Pro Bono Lab</nuxt-link
+              >
             </div>
           </div>
           <div>
-            <div class="font-bold mb-8">
-              Liens utiles
-            </div>
+            <div class="font-bold mb-8">Liens utiles</div>
             <div class="grid grid-cols-1 gap-4">
-              <component
-                :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
-                v-for="(link) in usefullLinks"
-                :key="link.name"
-                :to="!link.external && link.url"
-                :href="link.url"
-                :target="link.external ? '_blank' : null"
-                class="hover:underline text-gray-600 truncate"
+              <a class="link" target="_blank" href="https://reserve-civique.crisp.help/fr/"
+                >Centre d'aide</a
               >
-                {{ link.name }}
-              </component>
+              <nuxt-link no-prefetch class="link" to="/charte-reserve-civique"
+                >Charte de la Réserve Civique</nuxt-link
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/manifeste/"
+                >Manifeste</a
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
+                >Actualités du bénévolat</a
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/communication/"
+                >Communication</a
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/organisations/"
+                >Partenaires</a
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/presse/"
+                >Presse</a
+              >
+              <a
+                class="link"
+                target="_blank"
+                href="https://www.jeveuxaider.gouv.fr/engagement/campagnes-mobilisation-nationale/"
+                >Campagnes de mobilisation nationale</a
+              >
+              <nuxt-link
+                no-prefetch
+                class="link"
+                :to="`/stats?start_date=${$dayjs()
+                  .subtract(1, 'year')
+                  .format('YYYY-MM-DD')}&end_date=${$dayjs().format('YYYY-MM-DD')}`"
+                >Statistiques</nuxt-link
+              >
             </div>
           </div>
         </div>
@@ -58,47 +196,43 @@
 
     <div class="bg-white py-8">
       <div class="container">
-        <div class="lg:flex">
-          <nuxt-link
-            to="/"
-            class="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
-          >
-            <img
-              src="@/assets/images/republique-francaise-logo.svg"
-              alt="République Française"
-              width="6500"
-              height="5870"
-              class="w-[76px] lg:w-[127px]"
+        <div class="lg:flex lg:justify-between lg:items-center lg:gap-8">
+          <div class="">
+            <nuxt-link
+              no-prefetch
+              to="/"
+              class="flex flex-col flex-wrap gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
             >
+              <img
+                src="@/assets/images/republique-francaise-logo.svg"
+                alt="République Française"
+                width="6500"
+                height="5870"
+                class="w-[76px] lg:w-[127px]"
+              />
 
-            <img
-              src="@/assets/images/jeveuxaider-logo.svg"
-              alt=""
-              width="251"
-              height="41"
-            >
-          </nuxt-link>
+              <img src="@/assets/images/jeveuxaider-logo.svg" alt="" width="251" height="41" />
+            </nuxt-link>
+          </div>
 
-          <div class="ml-auto lg:pl-16">
-            <div
-              class="text-[#383838] text-sm lg:max-w-lg leading-relaxed mt-8 mb-6"
-            >
-              Trouvez une mission d'intérêt général auprès d'un organisme
-              public
-              <br class="hidden md:block">
+          <div class="max-w-[600px]">
+            <div class="text-[#383838] text-sm lg:max-w-lg leading-relaxed mt-8 mb-6">
+              Trouvez une mission d'intérêt général auprès d'un organisme public
+              <br class="hidden md:block" />
               ou associatif et faites vivre les valeurs de la République.
             </div>
 
-            <div class="flex flex-wrap -mx-3 -my-2">
+            <div class="flex flex-wrap gap-3">
               <a
                 v-for="link in gouvLinks"
                 :key="link.url"
-                class="hover:underline font-bold text-sm px-3 py-2"
+                class="hover:underline flex items-center gap-1 font-bold text-sm text-[#3A3A3A] mr-2"
                 :href="link.url"
                 target="_blank"
                 rel="noopener"
               >
                 {{ link.name }}
+                <RiExternalLinkLine class="relative top-[-1px] h-4 w-4 fill-current" />
               </a>
             </div>
           </div>
@@ -106,24 +240,53 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <div class="bg-white py-4">
       <div class="container">
         <div class="text-gray-600 text-xs">
           <div class="divide-x">
-            <component
-              :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
-              v-for="(link, index) in footerLinks"
-              :key="link.name"
-              :to="!link.external && !link.component && link.url"
-              :href="link.url"
-              :target="link.external ? '_blank' : null"
-              class="cursor-pointer hover:underline px-3 my-1 inline-block"
-              :class="[{ 'pl-0': index === 0 }]"
+            <nuxt-link
+              no-prefetch
+              class="pl-0 cursor-pointer hover:underline pr-3 my-1 inline-block"
+              to="/accessibilite"
+              >Accessibilité : partiellement conforme</nuxt-link
             >
-              {{ link.name }}
-            </component>
+            <nuxt-link
+              no-prefetch
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              to="/politique-de-confidentialite"
+              >Données personnelles</nuxt-link
+            >
+            <nuxt-link
+              no-prefetch
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              to="/mentions-legales"
+              >Mentions légales</nuxt-link
+            >
+            <nuxt-link
+              no-prefetch
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              to="/conditions-generales-d-utilisation"
+              >CGU</nuxt-link
+            >
+            <nuxt-link
+              no-prefetch
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              to="/charte-bon-fonctionnement/responsables"
+              >Charte de bon fonctionnement</nuxt-link
+            >
+            <nuxt-link
+              no-prefetch
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              to="/plan-du-site"
+              >Plan du site</nuxt-link
+            >
+            <a
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
+              href="javascript:openAxeptioCookies()"
+              >Gestion des cookies</a
+            >
           </div>
 
           <div class="mt-6">
@@ -133,7 +296,9 @@
               target="_blank"
               class="inline-flex items-baseline"
             >
-              <span class="underline">licence etatlab-2.0</span> <ExternalSvg class="flex-none ml-1" width="10" height="10" /></a>
+              <span class="underline">licence etatlab-2.0</span>
+              <ExternalSvg class="flex-none ml-1" width="10" height="10" />
+            </a>
           </div>
         </div>
       </div>
@@ -142,259 +307,53 @@
 </template>
 
 <script>
-import ExternalSvg from '@/static/images/icons/external.svg?inline'
+import ExternalSvg from '@/components/icon/External.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    ExternalSvg
+    ExternalSvg,
   },
-  data () {
+  methods: {},
+  data() {
     return {
-      cities: [
-        {
-          name: 'Paris',
-          url: '/villes/paris'
-        },
-        {
-          name: 'Lille',
-          url: '/villes/lille'
-        },
-        {
-          name: 'Rouen',
-          url: '/villes/rouen'
-        },
-        {
-          name: 'Toulouse',
-          url: '/villes/toulouse'
-        },
-        {
-          name: 'Rennes',
-          url: '/villes/rennes'
-        },
-        {
-          name: 'Grenoble',
-          url: '/villes/grenoble'
-        },
-        {
-          name: 'Lyon',
-          url: '/villes/lyon'
-        },
-        {
-          name: 'Montpellier',
-          url: '/villes/montpellier'
-        },
-        {
-          name: 'Tours',
-          url: '/villes/tours'
-        },
-        {
-          name: 'Marseille',
-          url: '/villes/marseille'
-        },
-        {
-          name: 'Strasbourg',
-          url: '/villes/strasbourg'
-        },
-        {
-          name: 'Dijon',
-          url: '/villes/dijon'
-        },
-        {
-          name: 'Bordeaux',
-          url: '/villes/bordeaux'
-        },
-        {
-          name: 'Angers',
-          url: '/villes/angers'
-        },
-        {
-          name: 'Nancy',
-          url: '/villes/nancy'
-        },
-        {
-          name: 'Nantes',
-          url: '/villes/nantes'
-        },
-        {
-          name: 'Nice',
-          url: '/villes/nice'
-        },
-        {
-          name: 'Caen',
-          url: '/villes/caen'
-        }
-      ],
-      organizations: [
-        {
-          name: 'Makesense',
-          url: '/organisations/2747-makesense'
-        },
-        {
-          name: 'Article 1',
-          url: '/organisations/5265-article-1'
-        },
-        {
-          name: 'AVDTM - ExplorJob',
-          url: '/organisations/6144-avdtm-explorjob'
-        },
-        {
-          name: 'JobIRL',
-          url: '/organisations/1784-jobirl'
-        },
-        {
-          name: 'Lobby des Consciences',
-          url: '/organisations/7198-lobby-des-consciences'
-        },
-        {
-          name: 'Entraide Scolaire Amicale',
-          url: '/organisations/6638-entraide-scolaire-amicale'
-        },
-        {
-          name: 'Emmaüs Connect - Paris',
-          url: '/organisations/5605-emmaus-connect-paris'
-        },
-        {
-          name: 'Singa',
-          url: '/organisations/5575-singa'
-        },
-        {
-          name: 'Secours Catholique - Délégation du Val de Marne',
-          url: '/organisations/8818-secours-catholique-delegation-du-val-de-marne'
-        },
-        {
-          name: 'Etendart',
-          url: '/organisations/8507-etendart'
-        },
-        {
-          name: '1 Lettre 1 Sourire',
-          url: '/organisations/7490-1-lettre-1-sourire'
-        },
-        {
-          name: 'Association Solidarité Universelle Monde',
-          url: '/organisations/8281-association-solidarite-universelle-monde'
-        },
-        {
-          name: 'Restos du coeur',
-          url: '/organisations/7159-restos-du-coeur'
-        },
-        {
-          name: 'Apprentis d\'Auteuil',
-          url: '/organisations/7330-apprentis-dauteuil'
-        },
-        {
-          name: 'Entourage',
-          url: '/organisations/97-entourage'
-        },
-        {
-          name: 'Mon Emile Association',
-          url: '/organisations/4561-mon-emile-association'
-        },
-        {
-          name: 'Coallia',
-          url: '/organisations/6484-coallia'
-        },
-        {
-          name: 'Le Bon Samaritain',
-          url: '/organisations/6875-le-bon-samaritain'
-        }
-      ],
       gouvLinks: [
         {
           name: 'legifrance.gouv.fr',
-          url: 'https://legifrance.gouv.fr'
+          url: 'https://legifrance.gouv.fr',
         },
         {
           name: 'gouvernement.fr',
-          url: 'https://gouvernement.fr'
+          url: 'https://gouvernement.fr',
         },
         {
           name: 'service-public.fr',
-          url: 'https://service-public.fr'
+          url: 'https://service-public.fr',
         },
+
         {
           name: 'data.gouv.fr',
-          url: 'https://www.data.gouv.fr'
-        }
+          url: 'https://www.data.gouv.fr',
+        },
+        {
+          name: 'snu.gouv.fr',
+          url: 'https://www.snu.gouv.fr/',
+        },
+        {
+          name: 'service-civique.gouv.fr',
+          url: 'https://www.service-civique.gouv.fr/',
+        },
+        {
+          name: 'api-engagement.beta.gouv.fr',
+          url: 'https://api-engagement.beta.gouv.fr/',
+        },
       ],
-      footerLinks: [
-        {
-          name: 'Accessibilité : partiellement conforme',
-          url: '/accessibilite'
-        },
-        {
-          name: 'Données personnelles',
-          url: '/politique-de-confidentialite'
-        },
-        {
-          name: 'Mentions légales',
-          url: '/mentions-legales'
-        },
-        {
-          name: 'CGU',
-          url: '/conditions-generales-d-utilisation'
-        },
-        {
-          name: 'Charte de bon fonctionnement',
-          url: '/charte-bon-fonctionnement'
-        },
-        {
-          name: 'Plan du site',
-          url: '/plan-du-site'
-        },
-        {
-          name: 'Gestion des cookies',
-          url: 'javascript:openAxeptioCookies()',
-          component: 'a'
-        }
-      ],
-      usefullLinks: [
-        {
-          name: 'Centre d\'aide',
-          url: 'https://reserve-civique.crisp.help/fr/',
-          external: true
-        },
-        {
-          name: 'Charte de la Réserve Civique',
-          url: '/charte-reserve-civique'
-        },
-        {
-          name: 'Manifeste',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/manifeste/',
-          external: true
-        },
-        {
-          name: 'Actualités du bénévolat',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/',
-          external: true
-        },
-        {
-          name: 'Communication',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/communication/',
-          external: true
-        },
-        {
-          name: 'Partenaires',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/',
-          external: true
-        },
-        {
-          name: 'Presse',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/presse/',
-          external: true
-        },
-        {
-          name: 'Écoles et Universités',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/',
-          external: true
-        },
-        {
-          name: 'Statistiques',
-          url: '/stats'
-        }
-      ]
     }
-  }
-}
+  },
+})
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.link {
+  @apply hover:underline text-gray-600 truncate;
+}
+</style>

@@ -3,17 +3,20 @@
     <div
       class="flex"
       :class="[
-        {'flex-col space-y-2': variant == 'checkbox'},
-        {'flex-wrap -m-1': variant == 'button'},
-        classCheckbox
+        { 'flex-col space-y-2': variant == 'checkbox' },
+        { 'flex-wrap -m-1': variant == 'button' },
+        classCheckbox,
       ]"
     >
-      <Checkbox
+      <BaseCheckbox
         v-for="option in options"
         :key="option.key"
         :option="option"
-        class="relative flex items-start m-1"
-        :is-checked="isModel ? modelValue.some(item => item.id == option.key) : modelValue.includes(option.key)"
+        class="relative flex items-start m-1 max-w-full"
+        :size="size"
+        :is-checked="
+          isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
+        "
         :variant="variant"
         @change="onChange"
       />
@@ -25,60 +28,60 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
+  emits: ['update:modelValue'],
   props: {
-    value: { type: Array, default: () => [] },
+    modelValue: { type: Array, default: () => [] },
     options: { type: Array, required: true },
     error: { type: String, default: null },
     variant: {
       type: String,
       default: 'checkbox',
-      validator: s =>
-        ['checkbox', 'button'].includes(s)
+      validator: (s) => ['checkbox', 'button'].includes(s),
     },
     isModel: { type: Boolean, default: false },
-    classCheckbox: { type: String, default: '' }
+    classCheckbox: { type: String, default: '' },
+    size: {
+      type: String,
+      default: 'md',
+      validator: (s) => ['xs', 'md', 'lg'].includes(s),
+    },
   },
-  // computed: {
-  //   modelValue: {
-  //     get () {
-  //       return this.value || []
-  //     },
-  //     set (newValue) {
-  //       // this.$emit('input', newValue) ( ne marche pas dans un edit )
-  //     }
+  computed: {
+    value() {
+      return this.modelValue || []
+    },
+  },
+  // data() {
+  //   return {
+  //     modelValue: this.value || [],
   //   }
   // },
-  data () {
-    return {
-      modelValue: this.value || []
-    }
-  },
-  watch: {
-    value (newVal) {
-      this.modelValue = newVal
-    }
-  },
+  // watch: {
+  //   value(newVal) {
+  //     this.modelValue = newVal
+  //   },
+  // },
   methods: {
-    onChange (toggleItemKey) {
+    onChange(toggleItemKey) {
       if (this.isModel) {
-        const index = this.modelValue.findIndex(item => item.id == toggleItemKey)
+        const index = this.value.findIndex((item) => item.id == toggleItemKey)
         if (index > -1) {
-          this.modelValue.splice(index, 1)
+          this.value.splice(index, 1)
         } else {
-          this.modelValue.push({ id: toggleItemKey })
+          this.value.push({ id: toggleItemKey })
         }
-      } else if (this.modelValue.includes(toggleItemKey)) {
-        const index = this.modelValue.indexOf(toggleItemKey)
+      } else if (this.value.includes(toggleItemKey)) {
+        const index = this.value.indexOf(toggleItemKey)
         if (index > -1) {
-          this.modelValue.splice(index, 1)
+          this.value.splice(index, 1)
         }
       } else {
-        this.modelValue.push(toggleItemKey)
+        this.value.push(toggleItemKey)
       }
 
-      this.$emit('input', this.modelValue)
-    }
-  }
-}
+      this.$emit('update:modelValue', this.value)
+    },
+  },
+})
 </script>

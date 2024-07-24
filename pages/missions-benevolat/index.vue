@@ -1,68 +1,71 @@
 <template>
-  <div>
-    <div class="container md:px-8">
-      <Breadcrumb :links="[{ text: 'Missions de bénévolat' }]" />
-    </div>
-
+  <div class="mt-6">
     <AlgoliaSearch
+      id="recherche"
       :secondary-filters="[
-        'is_autonomy',
+        'search',
+        'is_ponctual',
+        'commitment',
+        'structure.name',
         'publics_beneficiaires',
         'is_minors',
-        'structure.name',
+        // 'is_autonomy',
         'tags',
         'domaines',
         'structure.reseaux.name',
         'department_name',
         'template_subtitle',
-        'publisher_name'
+        'publisher_name',
+        'date_type',
       ]"
+      :with-slideshow-remote="true"
+      class="pt-2 sm:pt-6"
     />
+    <SectionSearchBlocFaq />
   </div>
 </template>
 
 <script>
-import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import AlgoliaSearch from '@/components/section/search/missions/AlgoliaSearch.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     AlgoliaSearch,
-    Breadcrumb
   },
-  middleware: 'search',
-  data () {
-    return {
+  setup() {
+    definePageMeta({
+      middleware: ['old-search-redirections'],
+    })
+
+    const route = useRoute()
+    let title =
+      'Devenez bénévole dans une association en quelques clics | JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique'
+    if (route.query?.page) {
+      title = `${title} - Recherche page ${route.query?.page}`
     }
-  },
-  head () {
-    let title = 'Devenez bénévole dans une association en quelques clics | Je Veux Aider, la plateforme publique du bénévolat par la Réserve Civique'
-    if (this.$route.query?.page) {
-      title = `${title} - Recherche page ${this.$route.query?.page}`
-    }
-    return {
+
+    useHead({
       title,
       link: [
         {
           rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/missions-benevolat'
-        }
+          href: 'https://www.jeveuxaider.gouv.fr/missions-benevolat',
+        },
       ],
       meta: [
         {
           hid: 'description',
           name: 'description',
           content:
-            "50 000 places disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ... Trouvez la mission qui vous correspond, sur le terrain ou à distance, partout en France, dès 16 ans."
+            "Plus de 18 000 missions disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ... Trouvez la mission qui vous correspond, sur le terrain ou à distance, partout en France, dès 16 ans.",
         },
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/images/share-image.jpg'
-        }
-      ]
-    }
-  }
-
-}
+          content: '/images/share-image.jpg',
+        },
+      ],
+    })
+  },
+})
 </script>

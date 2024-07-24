@@ -1,119 +1,130 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
         Rejoignez le mouvement&nbsp;!
-      </Heading>
-      <div class="text-cool-gray-500 text-lg lg:text-xl">
+      </DsfrHeading>
+      <div class="text-cool-gray-500 text-lg lg:text-lg">
         Créez rapidement votre compte Bénévole
       </div>
     </div>
-    <div class="mx-auto max-w-md">
-      <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
-        <FormControl
-          label="Prénom"
-          html-for="first_name"
-          required
-          :error="errors.first_name"
-        >
-          <Input
-            v-model="form.first_name"
-            name="first_name"
-            placeholder="Jean"
-            @blur="validate('first_name')"
-          />
-        </FormControl>
-        <FormControl
-          label="Nom"
-          html-for="last_name"
-          required
-          :error="errors.last_name"
-        >
-          <Input
-            v-model="form.last_name"
-            name="last_name"
-            placeholder="Dupont"
-            @blur="validate('last_name')"
-          />
-        </FormControl>
-        <FormControl
+    <div class="mx-auto">
+      <form
+        id="inscription"
+        class="gap-6 mb-8 grid grid-cols-1 lg:grid-cols-2"
+        @submit.prevent="onSubmit"
+      >
+        <BaseFormControl
           label="Email"
           html-for="email"
           required
           :error="errors.email"
+          class="lg:col-span-2"
         >
-          <Input
+          <BaseInput
             v-model="form.email"
             type="email"
             name="email"
             placeholder="jean.dupont@gmail.com"
             @blur="validate('email')"
           />
-        </FormControl>
-        <FormControl
-          label="Code postal"
-          html-for="zip"
-          required
-          :error="errors.zip"
-        >
-          <Input
+        </BaseFormControl>
+        <BaseFormControl label="Prénom" html-for="first_name" required :error="errors.first_name">
+          <BaseInput
+            v-model="form.first_name"
+            name="first_name"
+            placeholder="Jean"
+            @blur="validate('first_name')"
+          />
+        </BaseFormControl>
+        <BaseFormControl label="Nom" html-for="last_name" required :error="errors.last_name">
+          <BaseInput
+            v-model="form.last_name"
+            name="last_name"
+            placeholder="Dupont"
+            @blur="validate('last_name')"
+          />
+        </BaseFormControl>
+
+        <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+          <BaseSelectAutocomplete
             v-model="form.zip"
             name="zip"
-            type="tel"
-            maxlength="5"
+            :options="zipAutocompleteOptions"
+            attribute-key="id"
+            attribute-label="label"
+            attribute-right-label="typeLabel"
             placeholder="56000"
+            search-input-placeholder="Recherche par ville ou code postal"
+            options-class="md:min-w-[320px]"
+            :min-length-to-search="3"
+            :loading="loadingFetchZips"
+            @selected="handleSelectedZip"
+            @fetch-suggestions="onFetchZipSuggestions($event)"
             @blur="validate('zip')"
           />
-        </FormControl>
-        <FormControl
-          label="Téléphone mobile"
-          html-for="mobile"
+        </BaseFormControl>
+        <BaseFormControl
+          label="Pays de résidence"
+          html-for="country"
           required
-          :error="errors.mobile"
+          :error="errors.country"
         >
-          <Input
+          <BaseSelectAdvanced
+            v-model="form.country"
+            name="country"
+            placeholder="Sélectionner un pays"
+            :options="[{ code: 'FR', name: 'France' }, ...countries]"
+            attribute-key="code"
+            attribute-label="name"
+            autocomplete="ctry"
+            @blur="validate('country')"
+          />
+        </BaseFormControl>
+        <BaseFormControl label="Téléphone mobile" html-for="mobile" required :error="errors.mobile">
+          <BaseInput
             v-model="form.mobile"
             name="mobile"
             placeholder="0612345678"
             @blur="validate('mobile')"
           />
-        </FormControl>
-        <FormControl
+        </BaseFormControl>
+        <BaseFormControl
           label="Date de naissance"
           html-for="birthday"
           required
           :error="errors.birthday"
         >
-          <InputDate v-model="form.birthday" required name="birthday" />
-        </FormControl>
-        <FormControl
-          label="Mot de passe"
-          html-for="password"
-          required
-          :error="errors.password"
-        >
-          <Input
+          <BaseInputDateNative
+            v-model="form.birthday"
+            required
+            name="birthday"
+            @blur="validate('birthday')"
+          />
+        </BaseFormControl>
+        <BaseFormControl label="Mot de passe" html-for="password" required :error="errors.password">
+          <BaseInput
             v-model="form.password"
             name="password"
             placeholder="Votre mot de passe"
             type="password"
             @blur="validate('password')"
           />
-        </FormControl>
-        <FormControl
+        </BaseFormControl>
+        <BaseFormControl
           label="Confirmation"
           html-for="password_confirmation"
           required
           :error="errors.password_confirmation"
         >
-          <Input
+          <BaseInput
             v-model="form.password_confirmation"
             name="password_confirmation"
             placeholder="Votre mot de passe"
             type="password"
             @blur="validate('password_confirmation')"
           />
-        </FormControl>
+        </BaseFormControl>
 
         <transition name="fade">
           <div v-if="canViewScAndCej" class="lg:col-span-2 space-y-6">
@@ -125,67 +136,75 @@
                 title="Contrat d'Engagement Jeune"
                 class="hidden lg:block flex-none w-[45px] object-contain object-left"
                 data-not-lazy
-              >
-              <Toggle
+              />
+              <BaseToggle
                 v-model="form.cej"
                 class="flex-1"
                 label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+                :description="
+                  form.cej
+                    ? 'Oui, je suis en Contrat d\'Engagement Jeune'
+                    : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
+                "
               />
             </div>
-            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
+            <BaseFormControl
+              v-if="form.cej"
+              label="Email de votre conseiller CEJ"
+              html-for="cej_email_adviser"
+              :error="errors.cej_email_adviser"
+              required
+            >
               <template #afterLabel>
                 <span
                   v-tooltip="{
-                    content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                    content:
+                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
                   }"
                   class="p-1 cursor-help group"
                 >
-                  <RiInformationFill class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current" />
+                  <RiInformationFill
+                    class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current"
+                  />
                 </span>
               </template>
-              <Input
+              <BaseInput
                 v-model="form.cej_email_adviser"
                 name="cej_email_adviser"
-                placeholder="jean.dupont@gmail.com"
+                placeholder="Saisissez l'email de votre conseiller CEJ"
                 @blur="validate('cej_email_adviser')"
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
         </transition>
       </form>
 
-      <Button
-        :loading="loading"
-        size="lg"
-        class="w-full"
-        @click.native.prevent="onSubmit"
-      >
+      <DsfrButton :loading="loading" size="lg" class="w-full" @click.native.prevent="onSubmit">
         S'inscrire
-      </Button>
+      </DsfrButton>
 
-      <div class="mt-6 mb-3">
+      <div class="mt-6">
         <p class="text-xs text-cool-gray-500 text-center">
-          <span>En m'inscrivant j'accepte la</span>
-          <Link
-            to="/politique-de-confidentialite"
+          <span>En m’inscrivant j'accepte les </span>
+          <DsfrLink
+            to="/conditions-generales-d-utilisation"
             :is-external="true"
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            politique de confidentialité
-          </Link>
-          <br class="hidden sm:block">
-          <span>et la</span>
-          <Link
+            <span>conditions générales d’utilisation</span>
+          </DsfrLink>
+          <br class="hidden sm:block" />
+          <span> et la </span>
+          <DsfrLink
             to="/charte-reserve-civique"
             :is-external="true"
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            charte
-          </Link>
-          <span>de JeVeuxAider.gouv.fr</span>
+            <span>charte</span>
+          </DsfrLink>
+          <span> de la Réserve Civique.</span>
         </p>
       </div>
     </div>
@@ -195,67 +214,123 @@
 <script>
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Link from '@/components/dsfr/Link.vue'
+import countries from '@/assets/countries.json'
+import { useToast } from 'vue-toastification'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
-export default {
+const errorIsOldEnoughErrorMessage =
+  'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
+
+export default defineNuxtComponent({
   name: 'SoftGateRegister',
-  components: {
-    Heading,
-    Button,
-    Link
-  },
-  mixins: [FormErrors],
+  mixins: [FormErrors, GeolocProfile],
   props: {
     datas: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: {
         ...this.datas,
-        utm_source: this.$cookies.get('utm_source'),
-        utm_campaign: this.$cookies.get('utm_campaign'),
-        utm_medium: this.$cookies.get('utm_medium')
+        country: 'FR',
+        birthday: '',
       },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
-        birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        mobile: string()
+          .min(10)
+          .matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect')
+          .required('Un téléphone mobile est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
+        country: string().required('Un pays est requis'),
+        birthday: date()
+          .typeError('La date indiquée est invalide')
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, (date) => {
+            if (!date) {
+              return true
+            }
+            const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+            return age >= 16
+          }),
+
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
-        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique'),
-        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
-          is: true,
-          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
-        })
-      })
+        password_confirmation: string()
+          .required('Une confirmation de mot de passe est requise')
+          .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
+        cej_email_adviser: string()
+          .nullable()
+          .email("Le format de l'email est incorrect")
+          .when('cej', {
+            is: true,
+            then: (schema) =>
+              schema
+                .required("L'email de votre conseiller CEJ est obligatoire")
+                .test(
+                  'email-extension',
+                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    const forbiddenExtensions = [
+                      'gmail.com',
+                      'icloud.com',
+                      'outlook.com',
+                      'orange.fr',
+                      'wanadoo.fr',
+                      'hotmail.com',
+                      'hotmail.fr',
+                      'free.fr',
+                      'sfr.fr',
+                      'laposte.net',
+                    ]
+                    const emailParts = value.split('@')
+                    const emailExtension = emailParts[1]
+                    return !forbiddenExtensions.includes(emailExtension)
+                  }
+                )
+                .test(
+                  'no-current-user-email',
+                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    return value !== this.form.email
+                  }
+                ),
+          }),
+      }),
+      countries,
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {
-    canViewScAndCej () {
+    canViewScAndCej() {
       if (this.form.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
       }
       return false
-    }
+    },
   },
   watch: {
-    'form.cej' (val) {
+    'form.cej'(val) {
       if (!val) {
         this.form.cej_email_adviser = null
       }
-    }
+    },
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -263,20 +338,35 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$store.dispatch('auth/registerVolontaire', this.form)
-          await this.$gtm.push({ event: 'benevole-inscription-soft-gate' })
-          window.plausible &&
-                window.plausible('Soft Gate - Étape 2 - Inscription')
+          await this.$stores.auth.registerVolontaire({
+            ...this.form,
+            utm_source: useCookie('utm_source')?.value,
+            utm_campaign: useCookie('utm_campaign')?.value,
+            utm_medium: useCookie('utm_medium')?.value,
+          })
+
+          await this.$gtm?.trackEvent({
+            event: 'benevole-inscription-soft-gate',
+          })
+          this.$plausible.trackEvent('Soft Gate - Étape 2 - Inscription')
 
           this.$emit('next')
         })
         .catch((errors) => {
+          if (errors.errors?.length === 1 && errors.errors[0] === errorIsOldEnoughErrorMessage) {
+            // Custom toast
+            this.setErrors(errors, false)
+            const toast = useToast()
+            toast.error(errorIsOldEnoughErrorMessage)
+            return
+          }
+
           this.setErrors(errors)
         })
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -1,21 +1,33 @@
 <template>
   <header id="header" ref="header" role="banner">
-    <a class="absolute translate-x-[-150%] focus:translate-x-0 p-2 m-2 sm:p-4 sm:m-4 bg-white shadow-xl z-50" href="#contenuprincipal">Aller au contenu</a>
+    <a
+      class="absolute translate-x-[-150%] focus:translate-x-0 p-2 m-2 sm:p-4 sm:m-4 bg-white shadow-xl z-[999]"
+      href="#contenuprincipal"
+      >Aller au contenu</a
+    >
     <HeaderBanner />
-    <portal-target name="header-top" multiple />
-    <div class="relative bg-white shadow-lg z-30">
+    <div id="teleport-header-top"></div>
+
+    <div class="relative bg-white shadow-lg z-50">
       <HeaderMobile class="block lg:hidden" :full-width="fullWidth" />
       <HeaderDesktop class="hidden lg:block" :full-width="fullWidth" />
     </div>
 
-    <client-only>
-      <portal to="body-end">
-        <transition name="fade">
-          <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
-          <LazyMissionShareOverlay v-if="$store.state.missionShare.showOverlay" />
-        </transition>
-      </portal>
-    </client-only>
+    <ClientOnly>
+      <Teleport to="#teleport-body-end">
+        <TransitionGroup name="fade">
+          <LazyMissionShareOverlay
+            key="mission-share-overlay"
+            v-if="$stores.missionShare.showOverlay"
+          />
+          <LazySoftGateOverlay key="soft-gate-overlay" v-if="$stores.softGate.showOverlay" />
+          <LazyArchivedUserOverlay
+            key="archived-user-overlay"
+            v-if="$stores.archivedUser.showOverlay"
+          />
+        </TransitionGroup>
+      </Teleport>
+    </ClientOnly>
   </header>
 </template>
 
@@ -23,22 +35,24 @@
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import HeaderMobile from '@/components/section/header/HeaderMobile.vue'
 import HeaderDesktop from '@/components/section/header/HeaderDesktop.vue'
-import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
-import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
+import LazySoftGateOverlay from '@/components/section/SoftGateOverlay.vue'
+import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay.vue'
+import LazyArchivedUserOverlay from '@/components/section/ArchivedUserOverlay.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     HeaderBanner,
     HeaderMobile,
     HeaderDesktop,
     LazySoftGateOverlay,
-    LazyMissionShareOverlay
+    LazyMissionShareOverlay,
+    LazyArchivedUserOverlay,
   },
   props: {
     fullWidth: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+})
 </script>

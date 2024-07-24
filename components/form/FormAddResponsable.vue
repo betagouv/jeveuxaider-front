@@ -1,18 +1,19 @@
 <template>
   <div>
-    <form id="form-add-responsable" novalidate name="form-add-responsable" @submit.prevent="handleSubmit">
-      <FormControl
-        label="Email"
-        html-for="email"
-        required
-      >
-        <Input
+    <form
+      id="form-add-responsable"
+      novalidate
+      name="form-add-responsable"
+      @submit.prevent="handleSubmit"
+    >
+      <BaseFormControl label="Email" html-for="email" required>
+        <BaseInput
           v-model="form.email"
           name="email"
           type="email"
           placeholder="responsable@example.fr"
         />
-      </FormControl>
+      </BaseFormControl>
     </form>
   </div>
 </template>
@@ -21,25 +22,25 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
-export default {
+export default defineNuxtComponent({
   mixins: [FormErrors],
   props: {
     endpoint: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: {},
       formSchema: object({
-        email: string().required('Un email est requis').email("Le format de l'email est incorrect")
-      })
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+      }),
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -47,12 +48,17 @@ export default {
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$axios.post(this.endpoint, this.form).then((res) => {
-            this.$toast.success('Le responsable a bien été ajouté')
-            this.$emit('submited', res.data)
-          }).catch((errors) => {
-            console.log('errors', errors)
+          await apiFetch(this.endpoint, {
+            method: 'POST',
+            body: this.form,
           })
+            .then((res) => {
+              this.$toast.success('Le responsable a bien été ajouté')
+              this.$emit('submited', res.data)
+            })
+            .catch((errors) => {
+              console.log('errors', errors)
+            })
         })
         .catch((errors) => {
           console.log('error', errors)
@@ -62,7 +68,7 @@ export default {
           // console.log('finally')
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

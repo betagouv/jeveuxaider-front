@@ -1,29 +1,37 @@
 <template>
   <button
     :type="type"
-    class="inline-flex items-center border font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition disabled:opacity-25 disabled:cursor-not-allowed"
+    class="inline-flex items-center border font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transition disabled:opacity-25 disabled:cursor-not-allowed fill-current"
     :class="[
       {
-        'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500': variant == 'primary',
-        'text-white bg-jva-green-500 hover:bg-jva-green-600 border-transparent focus:ring-jva-green-500': variant == 'green',
-        'jva-blue bg-cool-gray-100 hover:bg-cool-gray-50 border-gray-200 focus:ring-jva-blue-500': variant == 'secondary',
-        'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-cool-gray-500': variant == 'white',
-        'text-jva-blue-400 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-blue-400': variant == 'white-blue',
-        'text-jva-green-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-green-500': variant == 'white-green',
-        'text-jva-red-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-red-500': variant == 'white-red',
-        'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500': variant == 'red',
+        'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500':
+          variant == 'primary',
+        'text-white bg-jva-green-500 hover:bg-jva-green-600 border-transparent focus:ring-jva-green-500':
+          variant == 'green',
+        'jva-blue bg-cool-gray-100 hover:bg-cool-gray-50 border-gray-200 focus:ring-jva-blue-500':
+          variant == 'secondary',
+        'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-cool-gray-500':
+          variant == 'white',
+        'text-jva-blue-400 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-blue-400':
+          variant == 'white-blue',
+        'text-jva-green-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-green-500':
+          variant == 'white-green',
+        'text-jva-red-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-red-500':
+          variant == 'white-red',
+        'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500':
+          variant == 'red',
         'px-2 py-1 text-xs': size == 'xxs',
         'px-2.5 py-1.5 text-xs': size == 'xs',
         'px-3 py-2 text-sm leading-4': size == 'sm',
         'px-4 py-2 text-sm': size == 'md',
         'px-4 py-2 text-base': size == 'lg',
         'px-6 py-3 text-lg': size == 'xl',
-        'w-full justify-center' : full
+        'w-full justify-center': full,
       },
-      rounded ? 'rounded-full' : null
+      rounded ? 'rounded-full' : null,
     ]"
   >
-    <SpinIcon
+    <IconSpinIcon
       v-if="loading"
       class="animate-spin"
       :class="{
@@ -38,7 +46,7 @@
     />
 
     <component
-      :is="icon"
+      :is="iconComponent"
       v-if="icon && !loading"
       :class="{
         'h-4 w-4': ['xxs', 'xs', 'sm', 'md'].includes(size),
@@ -55,47 +63,53 @@
 </template>
 
 <script>
-import SpinIcon from '@/components/icon/SpinIcon'
-
-export default {
-  components: {
-    SpinIcon
-  },
+export default defineNuxtComponent({
+  components: {},
   props: {
     variant: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'green', 'secondary', 'white', 'white-green', 'white-blue', 'red', 'white-red'].includes(s)
+      validator: (s) =>
+        [
+          'primary',
+          'green',
+          'secondary',
+          'white',
+          'white-green',
+          'white-blue',
+          'red',
+          'white-red',
+        ].includes(s),
     },
     size: {
       type: String,
       default: 'md',
-      validator: s => ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'].includes(s)
+      validator: (s) => ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'].includes(s),
     },
     type: {
       type: String,
       default: 'button',
-      validator: s => ['button', 'submit'].includes(s)
+      validator: (s) => ['button', 'submit'].includes(s),
     },
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     icon: {
       type: String,
-      default: null
+      default: null,
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     full: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    classes () {
+    classes() {
       switch (this.as) {
         case 'h1':
           return 'text-4xl font-extrabold text-gray-900 tracking-tight'
@@ -106,7 +120,10 @@ export default {
         default:
           return 'text-4xl font-extrabold text-gray-900 tracking-tight'
       }
-    }
-  }
-}
+    },
+    iconComponent() {
+      return resolveComponent(this.icon)
+    },
+  },
+})
 </script>

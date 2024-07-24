@@ -1,112 +1,141 @@
 <template>
-  <Drawer :is-open="Boolean(organisationId)" @close="$emit('close')">
-    <AlertDialog
-      v-if="organisation"
-      theme="danger"
-      title="Supprimer l'organisation"
-      :text="`Vous êtes sur le point de supprimer l'organisation ${organisation.name}.`"
-      :is-open="showAlert"
-      @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
-    />
+  <BaseDrawer :is-open="Boolean(organisationId)" @close="$emit('close')">
     <template #title>
-      <Heading v-if="organisation" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/organisations/${organisationId}`" class="hover:underline">
+      <BaseHeading v-if="organisation" :level="3" class="text-jva-blue-500">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/organisations/${organisationId}`"
+          class="hover:underline"
+        >
           {{ organisation.name }}
         </nuxt-link>
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="organisation">
       <div v-if="loading">
         <LoadingIndicator class="mt-8" />
       </div>
       <div v-else>
-        <div class="mt-2">
-          <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
-        </div>
-        <div class="mt-4 flex flex-wrap gap-1">
-          <nuxt-link :to="`/admin/organisations/${organisation.id}`">
-            <Button
-              type="tertiary"
-              icon="RiEyeLine"
-              size="sm"
-              tabindex="-1"
-            >
-              Détails
-            </Button>
-          </nuxt-link>
-
-          <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
-            <Button
-              type="tertiary"
-              icon="RiPencilLine"
-              size="sm"
-              tabindex="-1"
-            >
-              Modifier
-            </Button>
-          </nuxt-link>
-
-          <Button
-            v-if="['admin'].includes($store.getters.contextRole)"
+        <DsfrLink
+          :to="`/organisations/${organisation.slug}`"
+          :is-external="true"
+          class="text-xs font-normal"
+        >
+          Voir l'organisation
+        </DsfrLink>
+        <Badges class="mt-5" :organisation="organisation" />
+        <div class="flex flex-wrap gap-1 mt-6">
+          <DsfrButton
+            :to="`/admin/organisations/${organisation.id}`"
             type="tertiary"
-            icon="RiDeleteBinLine"
-            :icon-only="true"
+            icon="RiEyeLine"
             size="sm"
-            @click="() => showAlert = true"
+          >
+            Détails
+          </DsfrButton>
+
+          <DsfrButton
+            :to="`/admin/organisations/${organisation.id}/edit`"
+            type="tertiary"
+            icon="RiPencilLine"
+            size="sm"
+          >
+            Modifier
+          </DsfrButton>
+
+          <Actions
+            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+            :organisation="organisation"
+            @organisationDeleted="handleDeleted"
+            buttonSize="sm"
           />
         </div>
         <div class="border-t -mx-6 my-6" />
-        <div class="text-sm  uppercase font-semibold text-gray-600">
-          Statut de l'organisation
-        </div>
-        <SelectOrganisationState v-if="canEditStatut" :value="organisation.state" class="mt-4" @selected="handleChangeState($event)" />
+        <div class="text-sm uppercase font-semibold text-gray-600">Statut de l'organisation</div>
+        <SelectOrganisationState
+          v-if="canEditStatut"
+          :organisation="organisation"
+          class="mt-4"
+          @selected="handleChangeState($event)"
+        />
         <div v-else class="mt-4 font-medium text-gray-800">
           {{ organisation.state }}
         </div>
         <div class="border-t -mx-6 my-6" />
         <BoxInformations class="mb-8" :organisation="organisation" show-title />
-        <BoxScoreLight v-if="['admin', 'referent'].includes($store.getters.contextRole)" class="mb-8" :structure-id="organisation.id" show-title />
-        <HistoryStateChanges v-if="['admin','referent'].includes($store.getters.contextRole)" :model-id="organisation.id" model-type="structure" class="mb-8" />
-        <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
-        <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
-        <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
-        <BoxResponsable
-          v-for="responsable in organisation.members"
-          :key="responsable.id"
+        <BoxScoreLight
+          v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
           class="mb-8"
-          :responsable="responsable.profile"
-          :conversable-id="organisation.id"
-          conversable-type="App\Models\Structure"
-          @updated="$fetch"
+          :structure-id="organisation.id"
+          show-title
         />
-        <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
+        <HistoryStateChanges
+          v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          :model-id="organisation.id"
+          model-type="structure"
+          class="mb-8"
+        />
+        <BoxReferents
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          class="mb-8"
+          :department="organisation.department"
+        />
+        <BoxMission
+          class="mb-8"
+          :organisation="organisation"
+          :organisation-stats="organisationStats"
+        />
+        <BoxParticipation
+          class="mb-8"
+          :organisation="organisation"
+          :organisation-stats="organisationStats"
+        />
+        <template v-for="responsable in organisation.members" :key="responsable.id">
+          <BoxResponsable
+            class="mb-8"
+            :responsable="responsable.profile"
+            :conversable-id="organisation.id"
+            conversable-type="App\Models\Structure"
+            :conversable="organisation"
+            @updated="fetch"
+          />
+        </template>
+        <BoxReseau
+          v-for="reseau in organisation.reseaux"
+          :key="reseau.id"
+          class="mb-8"
+          :reseau="reseau"
+        />
         <div class="flex justify-center mb-10">
-          <Link :to="`/admin/organisations/${organisation.id}`" class="uppercase font-semibold text-sm hover:underline">
+          <BaseLink
+            :to="`/admin/organisations/${organisation.id}`"
+            class="uppercase font-semibold text-sm hover:underline"
+          >
             Détails de l'organisation
-          </Link>
+          </BaseLink>
         </div>
       </div>
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
 import MixinOrganisation from '@/mixins/organisation'
-import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
-import BoxMission from '@/components/section/organisation/BoxMission'
-import BoxParticipation from '@/components/section/organisation/BoxParticipation'
-import BoxInformations from '@/components/section/organisation/BoxInformations'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import BoxReseau from '@/components/section/organisation/BoxReseau'
-import BoxReferents from '@/components/section/BoxReferents'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
-import Button from '@/components/dsfr/Button.vue'
+import SelectOrganisationState from '@/components/custom/SelectOrganisationState.vue'
+import BoxMission from '@/components/section/organisation/BoxMission.vue'
+import BoxParticipation from '@/components/section/organisation/BoxParticipation.vue'
+import BoxInformations from '@/components/section/organisation/BoxInformations.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
+import BoxReferents from '@/components/section/BoxReferents.vue'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import BoxScoreLight from '@/components/section/organisation/BoxScoreLight.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
+import Badges from '@/components/section/organisation/Badges.vue'
+import Actions from '@/components/section/organisation/Actions.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     SelectOrganisationState,
     BoxMission,
@@ -117,53 +146,70 @@ export default {
     LoadingIndicator,
     OnlineIndicator,
     BoxReferents,
-    Button,
     BoxScoreLight,
-    HistoryStateChanges
+    HistoryStateChanges,
+    Badges,
+    Actions,
   },
   mixins: [MixinOrganisation],
   props: {
     organisationId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      showAlert: false,
       organisation: null,
       organisationStats: null,
-      loading: false
+      loading: false,
     }
-  },
-  async fetch () {
-    this.loading = true
-    this.organisationStats = null
-    if (!this.organisationId) {
-      return null
-    }
-    const { data } = await this.$axios.get(`/structures/${this.organisationId}`)
-    this.organisation = data
-    this.loading = false
-    this.$axios.get(`/statistics/organisations/${this.organisationId}`).then(({ data: stats }) => { this.organisationStats = stats })
   },
   watch: {
-    organisationId: '$fetch'
+    organisationId: 'fetch',
   },
   methods: {
-    async handleChangeState (option) {
-      this.organisation.state = option.key
-      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).catch(() => {})
-      this.$fetch()
-      this.$emit('updated')
+    async fetch() {
+      this.loading = true
+      this.organisationStats = null
+      if (!this.organisationId) {
+        return null
+      }
+      const organisation = await apiFetch(`/structures/${this.organisationId}`)
+      this.organisation = organisation
+      this.loading = false
+      apiFetch(`/statistics/organisations/${this.organisationId}`).then((response) => {
+        this.organisationStats = response
+      })
     },
-    async handleConfirmDelete () {
-      await this.$axios.delete(`/structures/${this.organisationId}`).then((res) => {
-        this.showAlert = false
-        this.$emit('close')
-        this.$emit('refetch')
-      }).catch(() => {})
-    }
-  }
-}
+    async handleChangeState(option) {
+      if (option.key == 'Désinscrite') {
+        await apiFetch(`/structures/${this.organisation.id}/unregister`, {
+          method: 'POST',
+        })
+          .then((res) => {
+            this.fetch()
+            this.$emit('updated')
+          })
+          .catch(() => {})
+      } else {
+        this.organisation.state = option.key
+        apiFetch(`/structures/${this.organisation.id}`, {
+          method: 'PUT',
+          body: this.organisation,
+        })
+          .then((res) => {
+            this.fetch()
+            this.$emit('updated')
+          })
+          .catch(() => {})
+      }
+    },
+    handleDeleted() {
+      this.$emit('updated')
+      this.$emit('close')
+      this.$router.push('/admin/organisations')
+    },
+  },
+})
 </script>

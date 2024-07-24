@@ -1,23 +1,19 @@
 <template>
   <td
-    class="px-5 py-4 whitespace-nowrap text-sm text-gray-500"
-    :class="[
-      center ? 'text-center' : 'text-left',
-    ]"
+    class="px-5 py-4 whitespace-nowrap text-sm text-gray-600"
+    :class="[center ? 'text-center' : 'text-left']"
   >
     <slot />
   </td>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     center: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+})
 </script>
-
-<style></style>

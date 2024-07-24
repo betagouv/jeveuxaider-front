@@ -1,47 +1,61 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Répartition des mission par activités" class="mb-6" infos-bulle="Liste des activités les plus utilisées dans les missions validées sur la période" />
-    <StackedList v-if="items" :divided="false">
-      <StackedListItem
-        v-for="item, i in items"
-        :key="i"
-        :icon="`${(i+1)}.`"
-        icon-class="text-xl font-semibold text-gray-500"
-      >
-        <div class="text-gray-900 font-semibold" v-html="item.name" />
-        <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'mission validée', 'missions validées') }}
-        </div>
-      </StackedListItem>
-    </StackedList>
-  </Box>
+  <BaseBox padding="sm" :loading="loading" loading-text="Récupération des activités...">
+    <BoxHeadingStatistics
+      title="Répartition des missions par activités"
+      class="mb-6"
+      infos-bulle="Liste des activités les plus utilisées dans les missions validées sur la période"
+    />
+    <div v-if="items" class="flex flex-col gap-2">
+      <ListItemCount
+        v-for="item in items"
+        :key="item.id"
+        :label="item.name ? activityLabelWithIconResolver(item.id) : 'Sans activité'"
+        :count="item.count"
+        :total="total"
+        display="count_percent"
+      />
+    </div>
+  </BaseBox>
 </template>
 
 <script>
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
+import ListItemCount from '@/components/custom/ListItemCount.vue'
+import activities from '@/assets/activities.json'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    BoxHeadingStatistics
+    BoxHeadingStatistics,
+    ListItemCount,
   },
-  data () {
+  data() {
     return {
+      activities,
       loading: true,
-      items: null
+      items: null,
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get('/statistics/public/missions-by-activities', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.items = response.data
-    })
-  }
-}
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      await apiFetch('/statistics/public/missions-by-activities', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.items = response
+      })
+    },
+    activityLabelWithIconResolver(activityId) {
+      return this.activities.find((a) => a.id === activityId)?.label
+    },
+  },
+  computed: {
+    total() {
+      return this.items ? this.items.reduce((acc, curr) => acc + curr.count, 0) : 0
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

@@ -1,28 +1,24 @@
 <template>
   <div>
-    <HeaderBanner />
     <main id="contenuprincipal" role="main">
-      <Nuxt />
+      <NuxtPage />
     </main>
     <Footer />
-    <client-only>
-      <portal-target name="body-end" multiple />
-    </client-only>
+    <div id="teleport-body-end"></div>
   </div>
 </template>
 
 <script>
 import Footer from '@/components/layout/Footer.vue'
-import HeaderBanner from '@/components/layout/HeaderBanner.vue'
+import MixinPlausible from '@/mixins/plausible.js'
+import MixinHotjar from '@/mixins/hotjar.client.js'
 
 export default {
   components: {
-    HeaderBanner,
-    Footer
-  }
+    Footer,
+  },
+  mixins: [MixinPlausible, MixinHotjar],
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

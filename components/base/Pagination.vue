@@ -6,7 +6,7 @@
         class="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
         @click="$emit('page-change', currentPage - 1)"
       >
-        <ArrowNarrowLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+        <RiArrowLeftSLine class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
         Précédent
       </button>
     </div>
@@ -15,15 +15,13 @@
         <button
           :class="[
             'border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
-            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
           ]"
           @click="$emit('page-change', 1)"
         >
           1
         </button>
-        <div class="pt-[12px] px-4 text-gray-500">
-          ...
-        </div>
+        <div class="pt-[12px] px-4 text-gray-500">...</div>
       </template>
 
       <button
@@ -31,7 +29,9 @@
         :key="page"
         :class="[
           'border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
-          currentPage == page ? 'border-jva-blue-500 text-jva-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          currentPage == page
+            ? 'border-jva-blue-500 text-jva-blue-600'
+            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
         ]"
         @click="$emit('page-change', page)"
       >
@@ -39,13 +39,11 @@
       </button>
 
       <template v-if="withLastPage && showLastPage">
-        <div class="pt-[12px] px-4 text-gray-500">
-          ...
-        </div>
+        <div class="pt-[12px] px-4 text-gray-500">...</div>
         <button
           :class="[
             'border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
-            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
           ]"
           @click="$emit('page-change', totalPages)"
         >
@@ -60,51 +58,51 @@
         @click="$emit('page-change', currentPage + 1)"
       >
         Suivant
-        <ArrowNarrowRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+        <RiArrowRightSLine class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
       </button>
     </div>
   </nav>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     currentPage: {
       default: 1,
-      type: [Number, String]
+      type: [Number, String],
     },
     totalRows: {
       default: 0,
-      type: [Number, String]
+      type: [Number, String],
     },
     perPage: {
       default: 15,
-      type: Number
+      type: Number,
     },
     maxPages: {
       default: 5,
-      type: Number
+      type: Number,
     },
     withFirstPage: {
       type: Boolean,
-      default: true
+      default: true,
     },
     withLastPage: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   computed: {
-    totalPages () {
+    totalPages() {
       return Math.ceil(this.totalRows / this.perPage)
     },
-    maxPagesBeforeCurrentPage () {
+    maxPagesBeforeCurrentPage() {
       return Math.floor(this.maxPages / 2)
     },
-    maxPagesAfterCurrentPage () {
+    maxPagesAfterCurrentPage() {
       return Math.ceil(this.maxPages / 2) - 1
     },
-    startPage () {
+    startPage() {
       let startPage = 1
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
         return startPage
@@ -117,9 +115,9 @@ export default {
       }
       return startPage <= 0 ? 1 : startPage
     },
-    endPage () {
+    endPage() {
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
-        if ((this.totalRows / this.perPage) < this.maxPages) {
+        if (this.totalRows / this.perPage < this.maxPages) {
           return Math.ceil(this.totalRows / this.perPage)
         }
         return this.maxPages
@@ -131,15 +129,17 @@ export default {
         return this.currentPage + this.maxPagesAfterCurrentPage
       }
     },
-    pages () {
-      return Array.from(Array((this.endPage + 1) - this.startPage).keys()).map(i => this.startPage + i)
+    pages() {
+      return Array.from(Array(this.endPage + 1 - this.startPage).keys()).map(
+        (i) => this.startPage + i
+      )
     },
-    showFirstPage () {
+    showFirstPage() {
       return this.maxPages - this.endPage < 0
     },
-    showLastPage () {
+    showLastPage() {
       return this.endPage - this.totalPages < 0
-    }
-  }
-}
+    },
+  },
+})
 </script>

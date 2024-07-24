@@ -1,36 +1,44 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Informations
-    </div>
-    <Box variant="flat" padding="xs">
-      <DescriptionList>
-        <DescriptionListItem term="Crée le" :description="$dayjs(reseau.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(reseau.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Couleur" :description="reseau.color" />
-        <template v-if="['admin'].includes($store.getters.contextRole)">
-          <DescriptionListItemGauge
+    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">Informations</div>
+    <BaseBox variant="flat" padding="xs">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Crée le"
+          :description="$dayjs(reseau.created_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem
+          term="Modifié le"
+          :description="$dayjs(reseau.updated_at).format('D MMMM YYYY à HH:mm')"
+        />
+        <BaseDescriptionListItem term="Couleur" :description="reseau.color" />
+        <template v-if="['admin'].includes($stores.auth.contextRole)">
+          <BaseDescriptionListItemGauge
             term="Tx. complétion"
             :percentage="reseau.completion_rate"
           />
-          <DescriptionListItem
+          <BaseDescriptionListItem
             v-if="reseau.missing_fields.length"
             term="Champs manquants"
-            :description="reseau.missing_fields.map((option) => $options.filters.label(option, 'reseau_fields')).join(', ')"
+            :description="
+              reseau.missing_fields
+                .map((option) => $filters.label(option, 'reseau_fields'))
+                .join(', ')
+            "
           />
         </template>
-      </DescriptionList>
-    </Box>
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     reseau: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>

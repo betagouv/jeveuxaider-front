@@ -1,21 +1,16 @@
 <template>
-  <ul
-    class=""
-    :class="[
-      { 'divide-y': divided }
-    ]"
-  >
+  <ul :class="[{ 'divide-y': divided }]">
     <slot />
   </ul>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     divided: {
       type: Boolean,
-      default: true
-    }
-  }
-}
+      default: true,
+    },
+  },
+})
 </script>

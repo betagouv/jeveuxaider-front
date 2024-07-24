@@ -1,52 +1,61 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
-        Modifications
-      </div>
+      <div class="uppercase font-semibold text-gray-600">Modifications</div>
     </div>
-    <div v-if="queryActivityLogs && queryActivityLogs.total > 0" ref="history" class="text-sm space-y-2">
-      <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
+    <div
+      v-if="queryActivityLogs && queryActivityLogs.total > 0"
+      ref="history"
+      class="text-sm space-y-2"
+    >
+      <BaseBox
+        v-for="activity in queryActivityLogs.data"
+        :key="activity.id"
+        variant="flat"
+        padding="xs"
+      >
         <div class="font-medium">
-          {{ activity.data.full_name }}
+          {{ activity.causer?.profile.full_name }}
         </div>
         <div class="text-gray-500 mb-4">
           {{ formatActionLabel(activity) }}
         </div>
         <div class="flex space-y-2 flex-col">
-          <Disclosure v-for="change in changes(activity)" :key="change.property">
+          <BaseDisclosure v-for="change in changes(activity)" :key="change.property">
             <template #button="{ isOpen }">
               <div class="flex font-semibold text-sm items-center group">
                 <div class="flex-shrink-0 group-hover:text-gray-600">
                   {{ change.property }}
                 </div>
-                <div class="w-full border-t mt-1 ml-2 -mr-1" />
-                <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-                <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+                <div class="w-full border-t mt-1 mx-2" />
+                <RiIndeterminateCircleLine
+                  v-if="isOpen"
+                  class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+                />
+                <RiAddCircleLine
+                  v-else
+                  class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5"
+                />
               </div>
             </template>
             <div class="mt-3 space-y-3">
               <div>
-                <Badge color="gray-light" size="xs">
-                  Avant
-                </Badge>
+                <BaseBadge color="gray-light" size="xs"> Avant </BaseBadge>
                 <div class="text-gray-500 italic mt-2">
                   {{ change.before || '-' }}
                 </div>
               </div>
               <div>
-                <Badge color="gray-light" size="xs">
-                  Après
-                </Badge>
+                <BaseBadge color="gray-light" size="xs"> Après </BaseBadge>
                 <div class="text-gray-500 italic mt-2">
                   {{ change.after || '-' }}
                 </div>
               </div>
             </div>
-          </Disclosure>
+          </BaseDisclosure>
         </div>
-      </Box>
-      <Pagination
+      </BaseBox>
+      <BasePagination
         :current-page="queryActivityLogs.current_page"
         :total-rows="queryActivityLogs.total"
         :per-page="queryActivityLogs.per_page"
@@ -54,57 +63,70 @@
       />
     </div>
     <div v-else>
-      <Box variant="flat" padding="xs" class="text-sm">
-        Aucun historique disponible
-      </Box>
+      <BaseBox variant="flat" padding="xs" class="text-sm"> Aucun historique disponible </BaseBox>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     modelId: {
       type: Number,
-      required: true
+      required: true,
     },
     modelType: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       page: 1,
-      queryActivityLogs: null
+      queryActivityLogs: null,
     }
   },
-  async fetch () {
-    const { data: queryActivityLogs } = await this.$axios.get('/activity-logs', {
-      params: {
-        'filter[log_name]': 'default',
-        'filter[subject_id]': this.modelId,
-        'filter[subject_type]': this.modelType,
-        pagination: 10,
-        page: this.page
-      }
-    })
-    this.queryActivityLogs = queryActivityLogs
+  created() {
+    this.fetch()
   },
   computed: {
-    uselessProperties () {
-      return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at', 'commitment__total']
-    }
+    uselessProperties() {
+      return [
+        'user_id',
+        'latitude',
+        'longitude',
+        'country',
+        'api_id',
+        'updated_at',
+        'commitment__total',
+        'old__format',
+        'is_qpv',
+      ]
+    },
   },
   methods: {
-    handleChangePage (page) {
+    async fetch() {
+      const queryActivityLogs = await apiFetch('/activity-logs', {
+        params: {
+          'filter[log_name]': 'default',
+          'filter[subject_id]': this.modelId,
+          'filter[subject_type]': this.modelType,
+          'filter[description]': 'created,updated',
+          include: 'causer,causer.profile',
+          pagination: 10,
+          page: this.page,
+        },
+      })
+      this.queryActivityLogs = queryActivityLogs
+    },
+    handleChangePage(page) {
       this.page = page
-      this.$fetch()
+      this.fetch()
       this.$scrollTo(this.$refs.history, {
-        offset: -90
+        offset: -90,
       })
     },
-    formatActionLabel (activity) {
+    formatActionLabel(activity) {
       let label = 'Crée le '
       if (activity.description == 'updated') {
         label = 'Modifiée le '
@@ -114,7 +136,7 @@ export default {
       label = label + this.$dayjs(activity.created_at).format('D MMM YYYY')
       return label
     },
-    formatPropertyLabel (property) {
+    formatPropertyLabel(property) {
       switch (property) {
         case 'created_at':
           return 'Crée le'
@@ -156,6 +178,8 @@ export default {
           return 'Template de mission'
         case 'statut_juridique':
           return 'Statut juridique'
+        case 'structure_privee_type':
+          return 'Type organisation privée'
         case 'city':
           return 'Ville'
         case 'dates_infos':
@@ -177,7 +201,7 @@ export default {
         case 'email':
           return 'E-mail'
         case 'can_export_profiles':
-          return 'Peut exporter les profils'
+          return 'Peut exporter les utilisateurs'
         case 'referent_department':
           return 'Référent départemental'
         case 'referent_region':
@@ -185,9 +209,9 @@ export default {
         case 'disponibilities':
           return 'Disponibilités'
         case 'commitment__duration':
-          return 'Durée d\'engagement'
+          return "Durée d'engagement"
         case 'commitment__time_period':
-          return 'Période d\'engagement'
+          return "Période d'engagement"
         case 'start_date':
           return 'Date de début'
         case 'end_date':
@@ -216,6 +240,8 @@ export default {
           return 'Autonomie - Codes postaux'
         case 'autonomy_precisions':
           return 'Autonomie - Précisions'
+        case 'addresses_precisions':
+          return 'Précisions zone intervention'
         case 'date_type':
           return 'Type de dates'
         case 'recurrent_description':
@@ -242,27 +268,35 @@ export default {
           return 'Profile ID'
         case 'mission_id':
           return 'Mission ID'
+        case 'is_online':
+          return 'En ligne'
+        case 'is_registration_open':
+          return 'Inscription ouverte'
+        case 'activity_secondary_id':
+          return 'Activité secondaire'
+        case 'is_alsace_moselle':
+          return 'Alsace Moselle'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
-    changes (activity) {
+    changes(activity) {
       const changes = []
       for (const [key, value] of Object.entries(activity.properties.attributes)) {
         if (this.uselessProperties.includes(key)) {
           continue
         }
-        if (!activity.properties.old && !value) { // Valeurs vides
+        if (!activity.properties.old && !value) {
+          // Valeurs vides
           continue
         }
         changes.push({
           property: this.formatPropertyLabel(key),
           after: value,
-          before: activity.properties.old && activity.properties.old[key]
+          before: activity.properties.old && activity.properties.old[key],
         })
       }
       return changes
-    }
-  }
-
-}
+    },
+  },
+})
 </script>

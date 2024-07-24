@@ -2,56 +2,40 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations générales
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
           <div class="space-y-10">
-            <FormControl
-              html-for="name"
-              label="Nom"
-              required
-              :error="errors.name"
-            >
-              <Input
-                v-model="form.name"
-                name="name"
-                placeholder="Nom"
-              />
-            </FormControl>
-            <FormControl
-              label="Description"
-              html-for="description"
-            >
-              <Textarea
+            <BaseFormControl html-for="name" label="Nom" required :error="errors.name">
+              <BaseInput v-model="form.name" name="name" placeholder="Nom" />
+            </BaseFormControl>
+            <BaseFormControl label="Description" html-for="description">
+              <BaseTextarea
                 v-model="form.description"
                 name="description"
                 placeholder="Entrez une description..."
               />
-            </FormControl>
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
-          <Heading :level="3" class="mb-8">
-            Paramètres
-          </Heading>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <Toggle
+            <BaseToggle
               v-model="form.is_published"
               :label="form.is_published ? 'En ligne' : 'Hors ligne'"
               description="Pour rendre le tag accessible de tous"
             />
           </div>
-        </Box>
+        </BaseBox>
       </div>
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </Button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -61,34 +45,33 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
-export default {
+export default defineNuxtComponent({
   mixins: [FormErrors],
-  middleware: 'admin',
   props: {
     vocabulary: {
       type: String,
-      required: true
+      required: true,
     },
     term: {
       type: Object,
       default: () => {
         return {
-          is_published: false
+          is_published: false,
         }
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
       form: { ...this.term },
       formSchema: object({
-        name: string().min(2, 'Le nom est trop court').required('Le nom est requis')
-      })
+        name: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
+      }),
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -97,9 +80,15 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await this.$axios.put(`/vocabularies/${this.vocabulary}/terms/${this.form.id}`, this.form)
+            await apiFetch(`/vocabularies/${this.vocabulary}/terms/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
           } else {
-            await this.$axios.post(`/vocabularies/${this.vocabulary}/terms`, this.form)
+            await apiFetch(`/vocabularies/${this.vocabulary}/terms`, {
+              method: 'POST',
+              body: this.form,
+            })
           }
           this.$emit('submitted')
           this.$router.push(this.$route.query.redirect)
@@ -111,8 +100,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-
-  }
-}
+    },
+  },
+})
 </script>

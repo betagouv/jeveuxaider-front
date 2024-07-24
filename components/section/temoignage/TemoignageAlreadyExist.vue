@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-      <div
-        class="text-2xl sm:text-[38px] sm:leading-tight font-bold text-primary tracking-[-1px]"
-      >
+      <div class="text-2xl sm:text-[38px] sm:leading-tight font-bold text-primary tracking-[-1px]">
         Votre témoignage a déjà été enregistré.
       </div>
 
@@ -16,15 +14,10 @@
           Trouvez dès maintenant votre prochaine mission
         </div>
 
-        <nuxt-link to="/missions-benevolat">
-          <Button
-            id="search"
-            size="xl"
-            rounded
-            variant="green"
-          >
+        <nuxt-link no-prefetch to="/missions-benevolat">
+          <BaseButton id="search" size="xl" rounded variant="green">
             Trouver une mission
-          </button>
+          </BaseButton>
         </nuxt-link>
       </div>
     </div>
@@ -32,17 +25,17 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   computed: {
-    steps () {
-      return this.$store.getters['temoignage/steps']
+    steps() {
+      return this.$stores.temoignage.steps
     },
-    lastStep () {
+    lastStep() {
       return this.steps[this.steps.length - 1]
-    }
+    },
   },
-  created () {
-    this.$store.commit('temoignage/setStep', this.lastStep)
-  }
-}
+  created() {
+    this.$stores.temoignage.step = this.lastStep
+  },
+})
 </script>

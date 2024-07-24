@@ -21,18 +21,18 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     icon: { type: String, default: null },
     noIcon: { type: Boolean, default: false },
     type: {
       type: String,
       default: 'info',
-      validator: t => ['info', 'warning', 'error'].includes(t)
-    }
+      validator: (t) => ['info', 'warning', 'error'].includes(t),
+    },
   },
   computed: {
-    iconFromType () {
+    iconFromType() {
       switch (this.type) {
         case 'info':
           return 'RiInformationLine'
@@ -44,7 +44,7 @@ export default {
           return null
       }
     },
-    bgColor () {
+    bgColor() {
       switch (this.type) {
         case 'info':
           return 'bg-[#ECECFE]'
@@ -55,9 +55,9 @@ export default {
         default:
           return 'bg-[#ECECFE]'
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

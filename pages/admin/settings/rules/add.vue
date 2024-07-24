@@ -2,52 +2,53 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Administration', to: '/admin' },
         { text: 'Paramètres' },
         { text: 'Règles', to: `/admin/settings/rules` },
-        { text: 'Nouvelle règle' }
+        { text: 'Nouvelle règle' },
       ]"
     />
     <div class="py-6">
-      <SectionHeading title="Création d'une nouvelle règle">
+      <BaseSectionHeading title="Création d'une nouvelle règle">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
+            <BaseButton variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
               Enregistrer
-            </Button>
+            </BaseButton>
           </div>
         </template>
-      </Sectionheading>
+      </BaseSectionHeading>
 
-      <FormRule
-        ref="form"
-        class="mt-8"
-      />
+      <FormRule ref="form" class="mt-8" />
     </div>
   </div>
 </template>
 
 <script>
-import FormRule from '@/components/form/FormRule'
+import FormRule from '@/components/form/FormRule.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: { FormRule, Breadcrumb },
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -1,63 +1,77 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
-        Engagement
-      </div>
-      <Link v-if="showAction" :to="linkAction" icon="ChevronRightIcon">
+      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">Engagement</div>
+      <DsfrLink v-if="showAction" :to="linkAction" class="text-jva-blue-500">
         {{ linkLabel }}
-      </Link>
+      </DsfrLink>
     </div>
-    <Box :variant="boxVariant" :padding="boxPadding">
+    <BaseBox :variant="boxVariant" :padding="boxPadding">
       <slot name="box-before" />
-      <DescriptionList>
-        <DescriptionListItem term="Visibilité" :description="profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'" />
-        <DescriptionListItem term="Fréquence" :description="commitmentLabel" />
-        <DescriptionListItem v-if="profile.disponibilities" term="Périodes" :description="profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(', ')" />
-      </DescriptionList>
-    </Box>
+      <BaseDescriptionList>
+        <BaseDescriptionListItem
+          term="Visibilité"
+          :description="
+            profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'
+          "
+        />
+        <BaseDescriptionListItem term="Fréquence" :description="commitmentLabel" />
+        <BaseDescriptionListItem
+          v-if="profile.disponibilities"
+          term="Périodes"
+          :description="
+            profile.disponibilities
+              .map((item) => $filters.label(item, 'disponibilities'))
+              .join(', ')
+          "
+        />
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     profile: {
       type: Object,
-      required: true
+      required: true,
     },
     showAction: {
       type: Boolean,
-      default: true
+      default: true,
     },
     linkAction: {
       type: String,
-      default: '/profile/edit'
+      default: '/profile/edit',
     },
     linkLabel: {
       type: String,
-      default: 'Modifier'
+      default: 'Modifier',
     },
     showTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     boxVariant: {
       type: [String],
-      default: 'flat'
+      default: 'flat',
     },
     boxPadding: {
       type: [String, Boolean],
-      default: 'xs'
-    }
+      default: 'xs',
+    },
   },
   computed: {
-    commitmentLabel () {
+    commitmentLabel() {
       if (this.profile.commitment__time_period) {
-        return `${this.$options.filters.label(this.profile.commitment__duration, 'duration')} par ${this.$options.filters.label(this.profile.commitment__time_period, 'time_period')}`
+        return `${this.$filters.label(
+          this.profile.commitment__duration,
+          'duration'
+        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
       }
-      return this.$options.filters.label(this.profile.commitment__duration, 'duration')
-    }
-  }
-}
+      return this.$filters.label(this.profile.commitment__duration, 'duration')
+    },
+  },
+})
 </script>

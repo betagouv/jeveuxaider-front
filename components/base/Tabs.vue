@@ -3,7 +3,11 @@
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
       <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-      <select id="tabs" name="tabs" class="block w-full focus:ring-jva-blue-500 focus:border-jva-blue-500 border-gray-300 rounded-md">
+      <select
+        id="tabs"
+        name="tabs"
+        class="block w-full focus:ring-jva-blue-500 focus:border-jva-blue-500 border-gray-300 rounded-md"
+      >
         <option v-for="tab in filteredTabs" :key="tab.name" :selected="tab.current">
           {{ tab.name }}
         </option>
@@ -11,18 +15,35 @@
     </div>
     <div class="hidden sm:block">
       <div class="border-b border-gray-200 overflow-hidden">
-        <nav v-dragscroll class="overflow-hidden -mb-px flex space-x-4 xl:space-x-8" aria-label="Tabs">
+        <nav
+          v-dragscroll
+          class="overflow-hidden -mb-px flex space-x-4 xl:space-x-8"
+          aria-label="Tabs"
+        >
           <nuxt-link
+            no-prefetch
             v-for="tab in filteredTabs"
             :key="tab.name"
             :to="tab.to"
             :class="[
-              tab.current ? 'border-jva-blue-500 text-jva-blue-700' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-              'group inline-flex items-center py-4 px-1 border-b-2 font-bold text-md']"
+              tab.current
+                ? 'border-jva-blue-500 text-jva-blue-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+              'group inline-flex items-center py-4 px-1 border-b-2 font-bold text-md',
+            ]"
             :aria-current="tab.current ? 'page' : undefined"
           >
-            <component :is="tab.icon" v-if="tab.icon" :class="[tab.current ? 'text-jva-blue-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-0.5 mr-2 h-5 w-5']" aria-hidden="true" />
-            <span>{{ tab.name }}</span> <span v-if="tab.count" class="font-normal">&nbsp;({{ tab.count }})</span>
+            <component
+              :is="tab.icon"
+              v-if="tab.icon"
+              :class="[
+                tab.current ? 'text-jva-blue-500' : 'text-gray-400 group-hover:text-gray-500',
+                '-ml-0.5 mr-2 h-5 w-5 fill-current',
+              ]"
+              aria-hidden="true"
+            />
+            <span>{{ tab.name }}</span>
+            <span v-if="tab.count" class="font-normal">&nbsp;({{ tab.count }})</span>
           </nuxt-link>
         </nav>
       </div>
@@ -31,17 +52,22 @@
 </template>
 
 <script>
-export default {
+import { dragscroll } from 'vue-dragscroll'
+
+export default defineNuxtComponent({
+  directives: {
+    dragscroll,
+  },
   props: {
     tabs: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    filteredTabs () {
-      return this.tabs.filter(n => n)
-    }
-  }
-}
+    filteredTabs() {
+      return this.tabs.filter((n) => n)
+    },
+  },
+})
 </script>

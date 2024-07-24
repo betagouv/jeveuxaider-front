@@ -1,31 +1,27 @@
 <template>
   <div class="card--ukraine relative">
-    <div
-      class="relative overflow-hidden safari-fix-scale h-full flex flex-col"
-    >
+    <div class="relative overflow-hidden safari-fix-scale h-full flex flex-col">
       <img
         srcset="/images/card_ukraine.webp, /images/card_ukraine@2x.webp 2x"
         alt="Mobilisons-nous pour l'Ukraine"
         class="w-full object-cover object-center absolute min-h-[398px]"
         width="323"
         height="398"
-      >
+      />
 
-      <div
-        class="relative mt-auto p-6 sm:p-8 flex flex-col items-center text-center"
-      >
+      <div class="relative mt-auto p-6 sm:p-8 flex flex-col items-center text-center">
         <img
           src="/images/flag-ukraine.svg"
           alt="Drapeau ukrainien"
           width="67"
           height=""
           class="mb-4"
-        >
+        />
 
         <h3
           class="text-white font-extrabold text-shadow mb-6 text-2xl leading-tight sm:leading-none sm:text-3xl"
         >
-          Mobilisons-nous<br>pour l'Ukraine
+          Mobilisons-nous<br />pour l'Ukraine
         </h3>
 
         <div
@@ -46,12 +42,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {}
-}
-</script>
-
 <style lang="postcss" scoped>
 .card--ukraine {
   filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.1));
@@ -68,7 +58,6 @@ export default {
 }
 
 .text-shadow {
-  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25),
-    0px 4px 30px rgba(0, 0, 0, 0.85);
+  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25), 0px 4px 30px rgba(0, 0, 0, 0.85);
 }
 </style>

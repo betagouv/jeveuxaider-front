@@ -1,9 +1,10 @@
 <template>
   <div>
-    <Toggle
-      :value="isAutonomy"
-      label="Mission à réaliser de votre côté sans présence obligatoire."
-      @input="handleToggle"
+    <BaseToggle
+      size="md"
+      :modelValue="isAutonomy"
+      label="Missions à réaliser de votre côté sans présence obligatoire"
+      @update:modelValue="handleToggle"
     />
   </div>
 </template>
@@ -11,7 +12,7 @@
 <script>
 import MixinAutonomyFilter from '@/mixins/search/mission/autonomy-filter'
 
-export default {
-  mixins: [MixinAutonomyFilter]
-}
+export default defineNuxtComponent({
+  mixins: [MixinAutonomyFilter],
+})
 </script>

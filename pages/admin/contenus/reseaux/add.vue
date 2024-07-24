@@ -2,52 +2,53 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Administration', to: '/admin' },
         { text: 'Contenus' },
         { text: 'Réseaux', to: `/admin/contenus/reseaux` },
-        { text: 'Nouveau réseau' }
+        { text: 'Nouveau réseau' },
       ]"
     />
     <div class="pb-6">
-      <SectionHeading title="Création d'un nouveau réseau">
+      <BaseSectionHeading title="Création d'un nouveau réseau">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
+            <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
               Enregistrer
-            </Button>
+            </BaseButton>
           </div>
         </template>
-      </Sectionheading>
+      </BaseSectionHeading>
 
-      <FormReseau
-        ref="form"
-        class="my-8"
-      />
+      <FormReseau ref="form" class="my-8" />
     </div>
   </div>
 </template>
 
 <script>
-import FormReseau from '~/components/form/FormReseau'
+import FormReseau from '@/components/form/FormReseau.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: { FormReseau, Breadcrumb },
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -1,11 +1,19 @@
 export default {
   computed: {
-    canEditStatut () {
-      if (this.$store.getters.contextRole === 'responsable') {
-        return this.participation.mission.responsable_id === this.$store.getters.profile.id
+    canEditStatut() {
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return (
+          this.participation.mission.responsables.filter(
+            (r) => r.id === this.$stores.auth.profile?.id
+          ).length > 0
+        )
       }
-      const rolesWhoCanEdit = this.$options.filters.label(this.participation.state, 'participation_workflow_states', 'roles')
-      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
-    }
-  }
+      const rolesWhoCanEdit = this.$filters.label(
+        this.participation.state,
+        'participation_workflow_states',
+        'roles'
+      )
+      return !!rolesWhoCanEdit.includes(this.$stores.auth.contextRole)
+    },
+  },
 }

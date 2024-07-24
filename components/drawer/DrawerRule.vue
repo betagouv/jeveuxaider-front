@@ -1,14 +1,15 @@
 <template>
-  <Drawer :is-open="Boolean(ruleId)" @close="$emit('close')">
-    <AlertDialog
+  <BaseDrawer :is-open="Boolean(ruleId)" @close="$emit('close')">
+    <BaseAlertDialog
       v-if="rule"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer la règle"
-      :text="`Vous êtes sur le point de supprimer la règle' ${rule.name}.`"
       :is-open="showAlertDelete"
       @confirm="handleConfirmDelete()"
       @cancel="showAlertDelete = false"
-    />
+    >
+      Vous êtes sur le point de supprimer la règle {{ rule.name }}.
+    </BaseAlertDialog>
     <BatchDialog
       v-if="rule"
       title="Exécuter la règle"
@@ -19,126 +20,137 @@
       @batch-end="handleBatchEnd"
     />
     <template #title>
-      <Heading v-if="rule" :level="3" class="text-jva-blue-500">
+      <BaseHeading v-if="rule" :level="3" class="text-jva-blue-500">
         {{ rule.name }}
-      </Heading>
+      </BaseHeading>
     </template>
     <template v-if="rule">
-      <OnlineIndicator :published="rule.is_active" class="mt-2" published-label="Activée" unpublished-label="Désactivée" />
+      <OnlineIndicator
+        :published="rule.is_active"
+        class="mt-2"
+        published-label="Activée"
+        unpublished-label="Désactivée"
+      />
       <div class="flex gap-2 mt-4">
-        <Button
+        <BaseButton
           variant="white"
           size="sm"
           icon="RiPlayCircleLine"
           :disabled="rule.pendingItemsCount === 0"
-          @click.native="() => showAlertExecute = true"
+          @click.native="() => (showAlertExecute = true)"
         >
           Exécuter
-        </Button>
-        <nuxt-link :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
+        </BaseButton>
+        <nuxt-link no-prefetch :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
+          <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlertDelete = true" />
+        <BaseButton
+          variant="white"
+          size="sm"
+          icon="RiDeleteBinLine"
+          @click.native="() => (showAlertDelete = true)"
+        />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="mb-8">
-        <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-          Informations
-        </div>
-        <Box variant="flat" padding="xs">
-          <DescriptionList>
-            <DescriptionListItem term="Crée le" :description="$dayjs(rule.created_at).format('D MMMM YYYY à HH:mm')" />
-            <DescriptionListItem term="Modifié le" :description="$dayjs(rule.updated_at).format('D MMMM YYYY à HH:mm')" />
-            <DescriptionListItem term="Nom" :description="rule.name" />
-            <DescriptionListItem term="Déclencheur" :description="rule.event | label('rule_events')" />
-            <DescriptionListItem term="Dernière éxecution" :description="rule.last_triggered_at ? $dayjs(rule.last_triggered_at).fromNow() : '-'" />
-            <DescriptionListItem term="# Exécutions" :description="`${rule.triggers_count ?? 0} fois`" />
-          </DescriptionList>
-        </Box>
+        <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">Informations</div>
+        <BaseBox variant="flat" padding="xs">
+          <BaseDescriptionList>
+            <BaseDescriptionListItem
+              term="Crée le"
+              :description="$dayjs(rule.created_at).format('D MMMM YYYY à HH:mm')"
+            />
+            <BaseDescriptionListItem
+              term="Modifié le"
+              :description="$dayjs(rule.updated_at).format('D MMMM YYYY à HH:mm')"
+            />
+            <BaseDescriptionListItem term="Nom" :description="rule.name" />
+            <BaseDescriptionListItem
+              term="Déclencheur"
+              :description="$filters.label(rule.event, 'rule_events')"
+            />
+            <BaseDescriptionListItem
+              term="Dernière éxecution"
+              :description="rule.last_triggered_at ? $dayjs(rule.last_triggered_at).fromNow() : '-'"
+            />
+            <BaseDescriptionListItem
+              term="# Exécutions"
+              :description="`${rule.triggers_count ?? 0} fois`"
+            />
+          </BaseDescriptionList>
+        </BaseBox>
       </div>
-      <div class="">
-        <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-          Résultats
+      <div>
+        <div class="text-sm flex justify-between px-2 mb-2 items-center">
+          <div class="uppercase font-semibold text-gray-600">Éléments à traiter</div>
+          <BaseLink :to="`/admin/settings/rules/${rule.id}/pending-items`" icon="RiArrowRightSLine">
+            Voir les résultats
+          </BaseLink>
         </div>
-        <Box variant="flat" padding="xs">
-          <DescriptionList v-if="rule.totalItems !== false">
-            <DescriptionListItem term="# Résultats" :description="rule.totalItemsCount" />
-            <DescriptionListItem term="# À traiter" :description="rule.pendingItemsCount" />
-          </DescriptionList>
-          <div v-else class="">
-            Les conditions semblent invalides
-          </div>
-        </Box>
+        <BaseBox variant="flat" padding="xs">
+          <BaseDescriptionList v-if="rule.totalItems !== false">
+            <BaseDescriptionListItem term="# Résultats" :description="rule.totalItemsCount" />
+            <BaseDescriptionListItem term="# À traiter" :description="rule.pendingItemsCount" />
+          </BaseDescriptionList>
+          <div v-else>Les conditions semblent invalides</div>
+        </BaseBox>
       </div>
     </template>
-  </Drawer>
+  </BaseDrawer>
 </template>
 
 <script>
 import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import BatchDialog from '@/components/custom/BatchDialog.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     OnlineIndicator,
-    BatchDialog
+    BatchDialog,
   },
   props: {
     ruleId: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       rule: null,
       showAlertDelete: false,
       showAlertExecute: false,
       progress: 0,
-      interval: null
+      interval: null,
     }
-  },
-  async fetch () {
-    if (!this.ruleId) {
-      return null
-    }
-    const { data: rule } = await this.$axios.get(`/rules/${this.ruleId}?appends=totalItemsCount,pendingItemsCount`)
-    this.rule = rule
-    this.$emit('loaded', rule)
   },
   watch: {
-    ruleId: '$fetch'
+    ruleId: 'fetch',
   },
   methods: {
-    // async handleSubmit (endpoint, payload = {}) {
-    //   this.state = 'processing'
-    //   const { data: batchId } = await this.$axios.post(endpoint, { ...payload, ids: this.modelIds })
-    //   this.interval = setInterval(() => this.refreshBatchProgress(batchId), 1500)
-    // },
-    // async handleConfirmExecute () {
-    //   await this.$axios.post(`/rules/${this.ruleId}/batch`).then(({ data: batchId }) => {
-    //     console.log('handleConfirmExecute batchId', batchId)
-    //     setInterval(() => this.refreshBatchProgress(batchId), 1500)
-    //     // this.showAlertExecute = false
-    //     // this.$emit('close')
-    //     // this.$emit('refetch')
-    //     // this.$toast.success('La règle a bien été exécutée !')
-    //   }).catch(() => {})
-    // },
-    async handleConfirmDelete () {
-      await this.$axios.delete(`/rules/${this.ruleId}`).then((res) => {
-        this.showAlertDelete = false
-        this.$emit('close')
-        this.$emit('refetch')
-        this.$toast.success('La règle a bien été supprimée !')
-      }).catch(() => {})
+    async fetch() {
+      if (!this.ruleId) {
+        return null
+      }
+      const rule = await apiFetch(`/rules/${this.ruleId}?appends=totalItemsCount,pendingItemsCount`)
+      this.rule = rule
+      this.$emit('loaded', rule)
     },
-    handleBatchEnd () {
+    async handleConfirmDelete() {
+      await apiFetch(`/rules/${this.ruleId}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          this.showAlertDelete = false
+          this.$emit('close')
+          this.$emit('refetch')
+          this.$toast.success('La règle a bien été supprimée !')
+        })
+        .catch(() => {})
+    },
+    handleBatchEnd() {
       this.$emit('close')
       this.$emit('refetch')
-    }
-  }
-}
+    },
+  },
+})
 </script>

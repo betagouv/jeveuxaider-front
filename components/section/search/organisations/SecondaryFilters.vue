@@ -1,7 +1,7 @@
 <template>
-  <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
-    <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
-      <template v-for="filter,i in filtersName">
+  <div class="hidden sm:block lg:flex justify-between items-baseline !mt-8 lg:!mb-4">
+    <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
+      <template v-for="(filter, i) in filtersName">
         <FacetFilterToggle
           v-if="filter === 'publics_beneficiaires'"
           :key="i"
@@ -10,7 +10,7 @@
           legend="Filtrer par public aidé"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <Tag
+            <DsfrTag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
@@ -22,7 +22,7 @@
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </Tag>
+            </DsfrTag>
           </template>
         </FacetFilterToggle>
 
@@ -34,7 +34,7 @@
           legend="Filtrer par domaine d'action"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <Tag
+            <DsfrTag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
@@ -46,7 +46,7 @@
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </Tag>
+            </DsfrTag>
           </template>
         </FacetFilterToggle>
 
@@ -55,11 +55,10 @@
           :key="i"
           facet-name="reseaux.name"
           label="Réseaux"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par réseau"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <Tag
+            <DsfrTag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
@@ -71,7 +70,7 @@
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </Tag>
+            </DsfrTag>
           </template>
         </FacetFilterToggle>
 
@@ -80,11 +79,10 @@
           :key="i"
           facet-name="department_name"
           label="Départements"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par département"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <Tag
+            <DsfrTag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
@@ -96,7 +94,7 @@
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </Tag>
+            </DsfrTag>
           </template>
         </FacetFilterToggle>
 
@@ -105,11 +103,10 @@
           :key="i"
           facet-name="statut_juridique"
           label="Types d’organisation"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par type d'organisation'"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <Tag
+            <DsfrTag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
@@ -121,41 +118,42 @@
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </Tag>
+            </DsfrTag>
           </template>
         </FacetFilterToggle>
       </template>
     </div>
 
-    <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
-      <Link
-        :class="['text-jva-blue-500', {'pointer-events-none opacity-0': !hasActiveFilters}]"
+    <div class="flex mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
+      <DsfrLink
+        :class="['text-jva-blue-500', { 'pointer-events-none opacity-0': !hasActiveFilters() }]"
         @click.native="deleteAllFilters()"
       >
         Réinitialiser
-      </Link>
+      </DsfrLink>
     </div>
   </div>
 </template>
 
 <script>
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-import Link from '@/components/dsfr/Link.vue'
-import Tag from '@/components/dsfr/Tag.vue'
+import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
-    Link,
-    Tag
   },
-  mixins: [AlgoliaQueryBuilder],
+  setup() {
+    const { hasActiveFilters, deleteAllFilters } = useAlgoliaOrganisationsQueryBuilder()
+    return {
+      hasActiveFilters,
+      deleteAllFilters,
+    }
+  },
   props: {
     filtersName: {
       type: Array,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>

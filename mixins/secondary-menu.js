@@ -1,11 +1,11 @@
 export default {
-  data () {
+  data() {
     return {
-      selectedItem: this.$route.path
+      selectedItem: this.$route.path,
     }
   },
   computed: {
-    mobileItems () {
+    mobileItems() {
       const items = []
       this.items.forEach((item) => {
         if (item && item.childrens) {
@@ -17,16 +17,19 @@ export default {
         }
       })
       return items
-    }
+    },
   },
   methods: {
-    handleChangeItem (item) {
+    handleChangeItem(item) {
+      if (!item) {
+        return
+      }
+
       if (item.to) {
         this.$router.push(item.to)
-      }
-      if (item.href) {
+      } else if (item.href) {
         window.location.href = item.href
       }
-    }
-  }
+    },
+  },
 }

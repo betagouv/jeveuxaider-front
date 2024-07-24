@@ -1,87 +1,88 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerTemoignage :temoignage-id="drawerTemoignageId" @close="drawerTemoignageId = null" @updated="$fetch()" @refetch="$fetch()" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Témoignages' },
-        ]"
-      />
-    </portal>
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <DrawerTemoignage
+      :temoignage-id="drawerTemoignageId"
+      @close="drawerTemoignageId = null"
+      @updated="fetch()"
+      @refetch="fetch()"
+    />
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb :links="[{ text: 'Administration', to: '/admin' }, { text: 'Témoignages' }]" />
+      </Teleport>
+    </ClientOnly>
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'témoignage',
         'témoignages',
         false
       )}`"
+      :loading="queryLoading"
     />
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Rechercher par mots clés, email, nom"
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
-          :key="`tous-${$route.fullPath}`"
+        <!-- <Tag
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </Tag> -->
 
         <Tag
-          :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
+          "
           @click.native="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
         </Tag>
 
         <Tag
-          :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
+          "
           @click.native="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne
         </Tag>
 
-        <FilterSelectAdvanced
-          :key="`state-${$route.fullPath}`"
+        <BaseFilterSelectAdvanced
           name="state"
           placeholder="Toutes les notes"
           :options="$labels.testimonial_grade"
-          :value="$route.query['filter[grade]']"
+          :modelValue="$route.query['filter[grade]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @input="changeFilter('filter[grade]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[grade]', $event, true)"
         />
 
-        <template v-if="$store.getters.contextRole === 'admin'">
-          <FilterInputAutocomplete
-            :value="$route.query['filter[organisation]']"
+        <template v-if="$stores.auth.contextRole === 'admin'">
+          <BaseFilterInputAutocomplete
+            v-model="selectedOrganisation"
             label="Toutes les organisations"
-            name="autocomplete"
+            name="autocomplete-organisation"
             :options="autocompleteOptionsOrganisations"
+            :loading="loadingFetchOrganisations"
             @fetch-suggestions="onFetchSuggestionsOrganisations"
-            @selected="changeFilter('filter[organisation]', $event ? $event.name : undefined)"
+            @selected="onSelectOrganisation"
           />
         </template>
       </template>
@@ -96,6 +97,8 @@
         @click.native="drawerTemoignageId = temoignage.id"
       />
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -115,48 +118,42 @@ import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Tag from '@/components/dsfr/Tag.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardTemoignage,
     DrawerTemoignage,
     SearchFilters,
     Pagination,
     Breadcrumb,
-    Tag
+    Tag,
   },
-  mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: ['authenticated', 'agreedResponsableTerms'],
-  asyncData ({ store, error }) {
+  mixins: [QueryBuilder, MixinSuggestionsFilters],
+  setup() {
+    const { $stores } = useNuxtApp()
+
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['authenticated', 'agreed-responsable-terms'],
+    })
+
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(
-        store.getters.contextRole
+        $stores.auth.contextRole
       )
     ) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  computed: {},
+  data() {
     return {
       endpoint: '/temoignages',
-      queryParams: {
-      },
+      queryParams: {},
       drawerTemoignageId: null,
-      autocompleteOptionsOrganisations: []
-
     }
   },
-  methods: {
-    async onFetchSuggestionsOrganisations (value) {
-      const res = await this.$axios.get('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 6
-        }
-      })
-      this.autocompleteOptionsOrganisations = res.data.data
-    }
-  }
-}
+  methods: {},
+})
 </script>

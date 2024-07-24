@@ -1,13 +1,13 @@
 <template>
   <div>
-    <SelectWithDescription
+    <BaseSelectWithDescription
       :size="size"
       :options="$labels.participation_workflow_states"
-      :value="value"
+      :modelValue="modelValue"
       @selected="handleSelected($event)"
     />
 
-    <ModalParticipationDecline
+    <ModalParticipationDeclineByResponsable
       :participation="participation"
       :is-open="showModalDecline"
       @cancel="showModalDecline = false"
@@ -17,47 +17,45 @@
 </template>
 
 <script>
-import ModalParticipationDecline from '@/components/modal/ModalParticipationDecline.vue'
+import ModalParticipationDeclineByResponsable from '@/components/modal/ModalParticipationDeclineByResponsable.vue'
 
-export default {
+export default defineNuxtComponent({
+  emits: ['selected'],
   components: {
-    ModalParticipationDecline
+    ModalParticipationDeclineByResponsable,
   },
   props: {
-    value: {
+    modelValue: {
       type: String,
-      default: ''
+      default: '',
     },
     participation: {
       type: Object,
-      required: true
+      required: true,
     },
     size: {
       type: String,
       default: 'md',
-      validator: s => ['sm', 'md'].includes(s)
-    }
+      validator: (s) => ['sm', 'md'].includes(s),
+    },
   },
-  data () {
+  data() {
     return {
-      showModalDecline: false
+      showModalDecline: false,
     }
   },
   methods: {
-    handleSelected (payload) {
+    handleSelected(payload) {
       if (payload.key == 'Refusée') {
         this.showModalDecline = true
       } else {
-        this.$store.commit('messaging/incrementNewMessagesCount')
         this.$emit('selected', payload)
       }
     },
-    handleConfirmDecline (payload) {
+    handleConfirmDecline(payload) {
       this.$emit('selected', { key: 'Refusée', form: payload })
-      const nbNewMessages = payload.content?.trim().length ? 2 : 1
-      this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.showModalDecline = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

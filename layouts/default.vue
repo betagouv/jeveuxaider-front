@@ -1,24 +1,27 @@
 <template>
   <div class="h-full">
     <Header />
-    <portal-target name="mobile-filters" class="relative z-30" multiple />
+    <div id="teleport-mobile-filters" class="relative z-50"></div>
     <main id="contenuprincipal" role="main">
-      <Nuxt />
+      <NuxtPage />
     </main>
-    <portal-target name="drawer" class="relative z-20" multiple />
+    <div id="teleport-drawer" class="relative z-50"></div>
     <Footer />
-    <portal-target name="body-end" multiple />
+    <div id="teleport-body-end"></div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
+import MixinPlausible from '@/mixins/plausible.js'
+import MixinHotjar from '@/mixins/hotjar.client.js'
 
 export default {
   components: {
     Header,
-    Footer
-  }
+    Footer,
+  },
+  mixins: [MixinPlausible, MixinHotjar],
 }
 </script>

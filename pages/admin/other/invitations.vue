@@ -1,111 +1,201 @@
 <template>
   <div class="flex flex-col gap-8">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Autre' },
-          { text: 'Invitations' }
-        ]"
-      />
-    </portal>
-    <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Autre' },
+            { text: 'Invitations' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
+    <BaseDrawer
+      :is-open="showDrawerInvitation"
+      form-id="form-invitation"
+      submit-label="Envoyer l'invitation"
+      @close="showDrawerInvitation = false"
+    >
       <template #title>
-        <Heading :level="3">
-          Inviter un utilisateur
-        </Heading>
+        <BaseHeading :level="3"> Inviter un utilisateur </BaseHeading>
       </template>
-      <FormInvitation
-        class="mt-8"
-        @submited="handleSubmitInvitation"
-      />
-    </Drawer>
-    <AlertDialog
-      theme="danger"
+      <FormInvitation class="mt-8" @submited="handleSubmitInvitation" />
+    </BaseDrawer>
+    <BaseAlertDialog
+      icon="RiErrorWarningLine"
       title="Supprimer l'invitation"
-      :text="`L'invitation pour ${invitationSelected.email}  sera supprimée.`"
       :is-open="showAlertDeleted"
       @confirm="handleConfirmDeleteInvitation()"
-      @updated="$fetch"
+      @updated="fetch"
       @cancel="showAlertDeleted = false"
-    />
+    >
+      L'invitation pour {{ invitationSelected.email }} sera supprimée.
+    </BaseAlertDialog>
 
-    <SectionHeading :title="`${$options.filters.pluralize($options.filters.formatNumber(queryResult.total), 'invitation')} en attente`">
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
+        queryResult.total,
+        'invitation',
+        'invitations',
+        false
+      )} en attente`"
+      :loading="queryLoading"
+    >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <DsfrButton :loading="loading" icon="RiAddLine" @click.native="showDrawerInvitation = true">
+          <DsfrButton
+            :loading="loading"
+            icon="RiAddLine"
+            @click.native="showDrawerInvitation = true"
+          >
             Inviter un utilisateur
           </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <Table v-if="queryResult.total" :overflow="false">
-      <TableHead>
-        <TableHeadCell>E-mail</TableHeadCell>
-        <TableHeadCell center>
-          Rôle
-        </TableHeadCell>
-        <TableHeadCell center>
-          Contexte
-        </TableHeadCell>
-        <TableHeadCell center>
-          Envoyé le
-        </TableHeadCell>
-        <TableHeadCell center>
-          Action
-        </TableHeadCell>
-      </TableHead>
-      <TableBody>
-        <TableRow
-          v-for="invitation in queryResult.data"
-          :key="invitation.id"
-        >
-          <TableRowCell>
-            <div class="font-medium text-gray-900">
+    <CustomSearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
+        placeholder="Recherche par emails..."
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
+      />
+      <template #prefilters>
+        <div class="flex gap-3 items-center">
+          <span class="text-base">Trier par</span>
+          <BaseFilterSelectAdvanced
+            name="sort"
+            :options="[
+              { key: '-created_at', label: 'Les plus récentes' },
+              { key: 'created_at', label: 'Les plus anciennes' },
+              { key: '-last_sent_at', label: 'Les dernières envoyées' },
+            ]"
+            :modelValue="$route.query['sort']"
+            placeholder="Trier par"
+            @update:modelValue="changeFilter('sort', $event)"
+          />
+          <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
+        </div>
+
+        <BaseFilterSelectAdvanced
+          name="role"
+          placeholder="Rôles"
+          :options="[
+            { key: 'benevole', label: 'Bénévole' },
+            { key: 'responsable_organisation', label: 'Responsable d\'organisation' },
+            { key: 'responsable_antenne', label: 'Responsable d\'antenne' },
+            { key: 'responsable_reseau', label: 'Responsable de réseau' },
+            { key: 'responsable_territoire', label: 'Responsable de territoire' },
+            { key: 'referent_departemental', label: 'Référent départemental' },
+            { key: 'referent_regional', label: 'Référent régional' },
+          ]"
+          :modelValue="$route.query['filter[role]']"
+          clearable
+          @update:modelValue="changeFilter('filter[role]', $event)"
+        />
+        <BaseFilterSelectAdvanced
+          name="department"
+          :options="
+            $labels.departments.map((option) => {
+              return {
+                key: option.key,
+                label: `${option.key} - ${option.label}`,
+              }
+            })
+          "
+          :searchable="true"
+          multiple
+          :modelValue="$route.query['filter[department]']?.split(',')"
+          placeholder="Départements"
+          @update:modelValue="changeFilter('filter[department]', $event, true)"
+        />
+        <BaseFilterInputAutocomplete
+          v-model="selectedOrganisation"
+          label="Organisations"
+          name="autocomplete-organisations"
+          :options="autocompleteOptionsOrganisations"
+          :loading="loadingFetchOrganisations"
+          @fetch-suggestions="onFetchSuggestionsOrganisations"
+          @selected="onSelectOrganisation"
+        />
+        <BaseFilterInputAutocomplete
+          v-model="selectedReseau"
+          label="Réseaux"
+          name="autocomplete-reseau"
+          :options="autocompleteOptionsReseaux"
+          :loading="loadingFetchReseaux"
+          @fetch-suggestions="onFetchSuggestionsReseaux"
+          @selected="onSelectReseau"
+        />
+      </template>
+    </CustomSearchFilters>
+
+    <BaseTable v-if="queryResult.total" :overflow="false">
+      <BaseTableHead>
+        <BaseTableHeadCell>E-mail</BaseTableHeadCell>
+        <BaseTableHeadCell> Invité par </BaseTableHeadCell>
+        <BaseTableHeadCell> Action </BaseTableHeadCell>
+      </BaseTableHead>
+      <BaseTableBody>
+        <BaseTableRow v-for="invitation in queryResult.data" :key="invitation.id">
+          <BaseTableRowCell class="">
+            <div class="font-medium text-gray-900 truncate">
               {{ invitation.email }}
             </div>
-          </TableRowCell>
-          <TableRowCell center>
-            <div class="text-gray-500">
-              {{ roleLabel(invitation.role) }}
+            <div class="text-gray-500 text-xs truncate">
+              {{ roleLabel(invitation.role) }} - {{ roleContext(invitation) }}
             </div>
-          </TableRowCell>
-          <TableRowCell>
-            <div class="text-gray-500">
-              {{ roleContext(invitation) }}
+            <div class="text-gray-500 text-xs truncate"></div>
+          </BaseTableRowCell>
+          <BaseTableRowCell class="max-w-[300px]">
+            <div class="font-medium text-gray-900 truncate">
+              {{ invitation.user.profile.full_name }}
             </div>
-          </TableRowCell>
-          <TableRowCell center>
-            <div class="text-gray-500">
-              {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
+            <div class="text-gray-500 text-xs truncate">
+              Le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY HH:mm:ss') }}
             </div>
-          </TableRowCell>
-          <TableRowCell center>
-            <Dropdown :ref="`dropdown-${invitation.id}`">
+          </BaseTableRowCell>
+          <BaseTableRowCell class="max-w-[70px]">
+            <BaseDropdown>
               <template #button>
-                <Button size="xs" variant="white">
-                  Action
-                </Button>
+                <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
               </template>
               <template #items>
-                <div class="w-56 divide-y">
-                  <DropdownOptionsItem size="sm" @click.native="handleCopy(invitation)">
+                <div class="w-56 py-2">
+                  <BaseDropdownOptionsItem
+                    key="eee"
+                    size="sm"
+                    @click.native="handleCopy(invitation)"
+                  >
                     Copier le lien d'invitation
-                  </DropdownOptionsItem>
-                  <DropdownOptionsItem size="sm" @click.native="handleResendEmail(invitation)">
+                  </BaseDropdownOptionsItem>
+                  <BaseDropdownOptionsItem
+                    key="dfdf"
+                    size="sm"
+                    @click.native="handleResendEmail(invitation)"
+                  >
                     Renvoyer l'email
-                  </DropdownOptionsItem>
-                  <DropdownOptionsItem size="sm" @click.native="handleDelete(invitation)">
+                  </BaseDropdownOptionsItem>
+                  <BaseDropdownOptionsItem
+                    key="sqdds"
+                    size="sm"
+                    @click.native="handleDelete(invitation)"
+                  >
                     Supprimer l'invitation
-                  </DropdownOptionsItem>
+                  </BaseDropdownOptionsItem>
                 </div>
               </template>
-            </Dropdown>
-          </TableRowCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+            </BaseDropdown>
+          </BaseTableRowCell>
+        </BaseTableRow>
+      </BaseTableBody>
+    </BaseTable>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -120,22 +210,27 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import MixinInvitation from '@/mixins/invitation'
-import FormInvitation from '@/components/form/FormInvitation'
+import FormInvitation from '@/components/form/FormInvitation.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FormInvitation,
     Pagination,
     Breadcrumb,
-    DsfrButton
+    DsfrButton,
   },
-  mixins: [MixinInvitation, QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
-  data () {
+  mixins: [MixinInvitation, QueryBuilder, MixinSuggestionsFilters],
+  setup() {
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {
       loading: false,
       showDrawerInvitation: false,
@@ -143,30 +238,37 @@ export default {
       invitationSelected: {},
       showAlertDeleted: false,
       queryParams: {
-        'filter[role]': 'referent_departemental,referent_regional,responsable_antenne'
-      }
+        include: 'user.profile',
+      },
     }
   },
+  computed: {},
   methods: {
-    async handleConfirmDeleteInvitation () {
+    async handleConfirmDeleteInvitation() {
       await this.handleConfirmDelete()
-      this.$fetch()
+      this.fetch()
     },
-    handleSubmitInvitation () {
+    handleSubmitInvitation() {
       this.showDrawerInvitation = false
-      this.$fetch()
+      this.fetch()
     },
-    roleContext (invitation) {
-      if (invitation.role == 'referent_regional') {
-        return invitation.properties.referent_regional
+    roleContext(invitation) {
+      switch (invitation.role) {
+        case 'responsable_organisation':
+        case 'responsable_reseau':
+        case 'responsable_antenne':
+        case 'responsable_territoire':
+          return invitation.invitable.name
+        case 'referent_departemental':
+          return invitation.properties.referent_departemental
+        case 'referent_regional':
+          return invitation.properties.referent_regional
+        case 'benevole':
+          return 'Bénévole'
+        default:
+          return ''
       }
-      if (invitation.role == 'referent_departemental') {
-        return invitation.properties.referent_departemental + ' - ' + this.$options.filters.label(invitation.properties.referent_departemental, 'departments')
-      }
-      if (invitation.role == 'responsable_antenne') {
-        return invitation.properties.antenne_name
-      }
-    }
-  }
-}
+    },
+  },
+})
 </script>

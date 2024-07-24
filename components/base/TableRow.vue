@@ -7,9 +7,7 @@
 <script>
 export default {
   props: {
-    active: { type: Boolean, default: false }
-  }
+    active: { type: Boolean, default: false },
+  },
 }
 </script>
-
-<style></style>

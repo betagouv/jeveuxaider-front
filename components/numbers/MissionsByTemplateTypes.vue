@@ -1,19 +1,28 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Modèles de missions" class="mb-6" infos-bulle="Répartition des missions validées ou terminées, créées sur la période, en fonction de l’utilisation d’un modèle de mission" />
+  <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
+    <BoxHeadingStatistics
+      title="Modèles de missions"
+      class="mb-6"
+      infos-bulle="Répartition des missions validées ou terminées, créées sur la période, en fonction de l’utilisation d’un modèle de mission"
+    />
     <div class="w-full">
-      <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
+      <DoughnutChart
+        v-if="chartData"
+        :chart-data="chartData"
+        :chart-options="chartOptions"
+        :height="300"
+      />
     </div>
-  </Box>
+  </BaseBox>
 </template>
 
 <script>
-import DoughnutChart from '@/components/chart/DoughnutChart'
-import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
+import DoughnutChart from '@/components/chart/DoughnutChart.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
-export default {
+export default defineNuxtComponent({
   components: { DoughnutChart, BoxHeadingStatistics },
-  data () {
+  data() {
     return {
       loading: true,
       chartData: null,
@@ -22,12 +31,12 @@ export default {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom'
+            position: 'bottom',
           },
           datalabels: {
             color: 'white',
             font: {
-              weight: 'bold'
+              weight: 'bold',
             },
             formatter: (value, ctx) => {
               const datasets = ctx.chart.data.datasets
@@ -36,29 +45,33 @@ export default {
                 const percentage = Math.round((value / sum) * 100)
                 return percentage > 4 ? percentage + '%' : ''
               }
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     }
   },
-  async fetch () {
-    this.loading = true
-    await this.$axios.get('/statistics/missions-by-template-types', {
-      params: this.$store.state.statistics.params
-    }).then((response) => {
-      this.loading = false
-      this.chartData = {
-        labels: ['Avec modèle', 'Sans modèle'],
-        datasets: [
-          {
-            data: Object.values(response.data),
-            backgroundColor: ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8']
-
-          }
-        ]
-      }
-    })
-  }
-}
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      await apiFetch('/statistics/missions-by-template-types', {
+        params: this.$route.query,
+      }).then((response) => {
+        this.loading = false
+        this.chartData = {
+          labels: ['Avec modèle', 'Sans modèle'],
+          datasets: [
+            {
+              data: Object.values(response),
+              backgroundColor: ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8'],
+            },
+          ],
+        }
+      })
+    },
+  },
+})
 </script>

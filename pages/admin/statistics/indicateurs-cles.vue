@@ -1,25 +1,31 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Statistiques', to: '/admin/statistics' },
-          { text: 'Indicateurs clés' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            {
+              text: 'Administration',
+              to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
+            },
+            { text: 'Statistiques', to: '/admin/statistics' },
+            { text: 'Indicateurs clés' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
+    <BaseSectionHeading
       title="Indicateurs clés"
       secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
       <EvolutionsByYear ref="evolutionsByYear" />
@@ -31,38 +37,63 @@
 <script>
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     EvolutionsByYear,
     EvolutionsByMonth,
-    FiltersStatistics,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics',
-  asyncData ({ store, error }) {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-admin',
+      middleware: ['authenticated'],
+    })
+
+    const { $stores } = useNuxtApp()
+
     if (
-      !['admin', 'referent'].includes(
-        store.getters.contextRole
-      )
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
     ) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  data() {
     return {}
   },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department', 'daterange', 'reseau', 'structure']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['department', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['department', 'daterange']
+      }
+
+      return []
+    },
+  },
   methods: {
-    refetch () {
-      this.$refs.evolutionsByYear.$fetch()
-      this.$refs.evolutionsByMonth.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.evolutionsByYear.fetch()
+      this.$refs.evolutionsByMonth.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

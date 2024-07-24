@@ -1,0 +1,52 @@
+[
+  {
+    "key": 1,
+    "label": "Santé pour tous",
+    "emoji": "💊"
+  },
+  {
+    "key": 2,
+    "label": "Prévention et protection",
+    "emoji": "🚨"
+  },
+  {
+    "key": 3,
+    "label": "Art et Culture pour tous",
+    "emoji": "🎨"
+  },
+  {
+    "key": 4,
+    "label": "Sport pour tous",
+    "emoji": "🏀"
+  },
+  {
+    "key": 6,
+    "label": "Coopération internationale",
+    "emoji": "🌍"
+  },
+  {
+    "key": 7,
+    "label": "Solidarité et Insertion",
+    "emoji": "🍲"
+  },
+  {
+    "key": 8,
+    "label": "Mémoire et citoyenneté",
+    "emoji": "📯"
+  },
+  {
+    "key": 9,
+    "label": "Éducation pour tous",
+    "emoji": "📚"
+  },
+  {
+    "key": 10,
+    "label": "Protection de la nature",
+    "emoji": "🌿"
+  },
+  {
+    "key": 11,
+    "label": "Bénévolat de compétences",
+    "emoji": "💼"
+  }
+]

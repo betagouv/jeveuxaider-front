@@ -1,30 +1,43 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Plus de chiffres', to: '/admin/statistics' },
-          { text: 'Organisations' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            {
+              text: 'Administration',
+              to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
+            },
+            { text: 'Plus de chiffres', to: '/admin/statistics' },
+            { text: 'Organisations' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Organisations"
-    >
-      <template #action>
+    <BaseSectionHeading title="Organisations">
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics :filters="['department']" @refetch="refetch()" />
         </div>
-      </template>
-    </SectionHeading>
+      </template> -->
+    </BaseSectionHeading>
 
-    <Tabs
+    <BaseTabs
       :tabs="[
-        { name: 'Participations à valider', to: '/admin/statistics/organisations/participations-a-valider'},
-        { name: 'Missions périmées', to: '/admin/statistics/organisations/missions-perimees', current: true },
-        { name: 'Participations refusées / annulées', to: '/admin/statistics/organisations/participations-refusees-annulees'}
+        {
+          name: 'Participations à valider',
+          to: '/admin/statistics/organisations/participations-a-valider',
+        },
+        {
+          name: 'Missions périmées',
+          to: '/admin/statistics/organisations/missions-perimees',
+          current: true,
+        },
+        {
+          name: 'Participations refusées / annulées',
+          to: '/admin/statistics/organisations/participations-refusees-annulees',
+        },
       ]"
     />
 
@@ -35,38 +48,37 @@
 </template>
 
 <script>
-import MissionsOutdatedByOrganisations from '~/components/numbers/MissionsOutdatedByOrganisations.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import MissionsOutdatedByOrganisations from '@/components/numbers/MissionsOutdatedByOrganisations.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     MissionsOutdatedByOrganisations,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics',
-  middleware: 'authenticated',
-  asyncData ({ store, error }) {
-    if (
-      !['admin', 'referent'].includes(
-        store.getters.contextRole
-      )
-    ) {
-      return error({ statusCode: 403 })
+  setup() {
+    definePageMeta({
+      layout: 'statistics-admin',
+      middleware: ['authenticated'],
+    })
+
+    const { $stores } = useNuxtApp()
+
+    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  data() {
     return {}
   },
   methods: {
-    refetch () {
+    refetch() {
       this.$refs.missionsOutdatedByOrganisations.$fetch()
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

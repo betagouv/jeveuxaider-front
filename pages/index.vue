@@ -1,25 +1,29 @@
 <template>
-  <div class="bg-[#F9F6F2]">
+  <div>
     <BlocBanner />
-    <template v-if="$store.getters.isLogged">
+    <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
-      <PrintempsPourLaPlanete />
+      <!-- <ElectionsLegislatives /> -->
+      <!-- <LaTourneeDeLete /> -->
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <BlocActualitesEngagement />
       <BlocNewsletter />
     </template>
-    <template v-if="!$store.getters.isLogged">
-      <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 xl:gap-8 md:grid-cols-2 py-4 md:py-6 lg:py-8">
+    <template v-if="!$stores.auth.isLogged">
+      <div
+        class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 xl:gap-8 md:grid-cols-2 py-4 md:py-6 lg:py-8"
+      >
         <BlocInscriptionBenevole />
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <PrintempsPourLaPlanete />
+      <!-- <ElectionsLegislatives /> -->
+      <!-- <LaTourneeDeLete /> -->
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
-      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <BlocActualitesEngagement />
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />
@@ -28,12 +32,11 @@
 </template>
 
 <script>
-import BlocBanner from '~/components/section/home/BlocBanner.vue'
-import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBenevole.vue'
-import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
+import BlocBanner from '@/components/section/home/BlocBanner.vue'
+import BlocInscriptionBenevole from '@/components/section/home/BlocInscriptionBenevole.vue'
+import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
-import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
@@ -42,15 +45,52 @@ import BlocActeursEngagement from '@/components/section/home/BlocActeursEngageme
 import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
+import BlocActualitesEngagement from '@/components/section/home/BlocActualitesEngagement.vue'
+// import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
-export default {
+export default defineNuxtComponent({
+  setup() {
+    useHead({
+      title:
+        'JeVeuxAider.gouv.fr | Devenez bénévole dans une association en quelques clics | La plateforme publique du bénévolat par la Réserve Civique',
+      link: [
+        {
+          rel: 'canonical',
+          href: 'https://www.jeveuxaider.gouv.fr/',
+        },
+      ],
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            "Trouvez une mission de bénévolat dans une association, organisation publique ou une collectivité territoriale, sur le terrain ou à distance. Plus de 18 000 missions disponibles partout en France dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ...",
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: '/images/share-image.jpg',
+        },
+        {
+          hid: 'facebook-domain-verification',
+          name: 'facebook-domain-verification',
+          content: '8jnmyx2s1iopvryhthxappg6b3tryp',
+        },
+        {
+          hid: 'google-site-verification',
+          name: 'google-site-verification',
+          content: 'DISnitZp80zFZ1haUqW6hK05-JxAx5myd4DfCST2JAo',
+        },
+      ],
+    })
+  },
   components: {
     BlocBanner,
     BlocInscriptionBenevole,
     BlocInscriptionResponsable,
     BlocActivities,
     BlocCaDevraitVousPlaire,
-    PrintempsPourLaPlanete,
     BlocMissionsCourtes,
     BlocActionsBenevolesPopulaires,
     BlocTemoignages,
@@ -58,37 +98,9 @@ export default {
     BlocActeursEngagement,
     BlocNewsletter,
     BlocFaq,
-    BlocProfileActivities
+    BlocProfileActivities,
+    BlocActualitesEngagement,
+    ElectionsLegislatives,
   },
-  head () {
-    return {
-      title:
-        'Je Veux Aider | Devenez bénévole dans une association en quelques clics | La plateforme publique du bénévolat par la Réserve Civique',
-      link: [
-        {
-          rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/'
-        }
-      ],
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            "Trouvez une mission de bénévolat dans une association, organisation publique ou une commune, partout en France, sur le terrain ou à distance. 50 000 places disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ..."
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: '/images/share-image.jpg'
-        },
-        {
-          hid: 'facebook-domain-verification',
-          name: 'facebook-domain-verification',
-          content: '8jnmyx2s1iopvryhthxappg6b3tryp'
-        }
-      ]
-    }
-  }
-}
+})
 </script>

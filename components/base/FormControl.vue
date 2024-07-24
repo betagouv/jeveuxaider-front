@@ -1,36 +1,42 @@
 <template>
   <div class="w-full">
-    <FormLabel v-if="label" :html-for="htmlFor" :suffix="labelSuffix" :required="required" class="mb-2">
+    <BaseFormLabel
+      v-if="label"
+      :html-for="htmlFor"
+      :size="labelSize"
+      :suffix="labelSuffix"
+      :required="required"
+      class="mb-2"
+    >
       {{ label }}
       <slot name="afterLabel" />
-    </FormLabel>
+    </BaseFormLabel>
 
     <slot />
 
-    <FormError v-if="error">
+    <BaseFormInfo v-if="info && !error">{{ info }}</BaseFormInfo>
+    <BaseFormError v-if="error">
       {{ error }}
-    </FormError>
-    <FormSuccess v-if="success">
+    </BaseFormError>
+    <BaseFormSuccess v-if="success">
       {{ success }}
-    </FormSuccess>
+    </BaseFormSuccess>
 
     <slot name="description" />
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     htmlFor: { type: String, required: true },
+    info: { type: String, default: null },
     error: { type: String, default: null },
     success: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
-    required: { type: Boolean, default: false }
-  }
-}
+    labelSize: { type: String, default: 'xs' },
+    required: { type: Boolean, default: false },
+  },
+})
 </script>
-
-<style>
-
-</style>

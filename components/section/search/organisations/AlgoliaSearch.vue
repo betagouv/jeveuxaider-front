@@ -1,37 +1,36 @@
 <template>
-  <div>
-    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 mb-12">
+  <div v-if="$stores.algoliaSearch.indexKey === 'organisationsIndex'">
+    <div v-if="$stores.algoliaSearch.results" class="container md:px-8 mb-12">
       <div class="flex flex-col space-y-8 sm:space-y-12">
-        <SectionHeading
+        <BaseSectionHeading
           title="Trouver une organisation près de chez vous"
-          :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
-            $store.state.algoliaSearch.results.nbHits,
+          :secondary-title-bottom="`${$numeral(
+            $stores.algoliaSearch.results.nbHits
+          )} ${$filters.pluralize(
+            $stores.algoliaSearch.results.nbHits,
             'organisation est inscrite sur JeVeuxAider.gouv.fr',
             'organisations sont inscrites sur JeVeuxAider.gouv.fr',
             false
           )}`"
         />
 
-        <MobileFilters class="sm:hidden" />
+        <MobileFilters />
+        <PrimaryFilters />
+        <SecondaryFilters :filters-name="secondaryFilters" />
 
-        <div class="hidden sm:flex sm:flex-col relative z-10">
-          <PrimaryFilters />
-          <SecondaryFilters :filters-name="secondaryFilters" />
-        </div>
-
-        <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
-          Il n'y a aucun résultat avec les filtres actuels.<br>
-          <Link
-            class="text-jva-blue-500"
-            @click.native="deleteAllFilters()"
-          >
+        <div v-if="$stores.algoliaSearch.results.nbHits == 0" class="text-center">
+          Il n'y a aucun résultat avec les filtres actuels.<br />
+          <DsfrLink class="text-jva-blue-500" @click.native="deleteAllFilters()">
             Réinitialiser les filtres
-          </Link>
+          </DsfrLink>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <nuxt-link
-            v-for="item in $store.state.algoliaSearch.results.hits"
+        <div
+          class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto"
+        >
+          <NuxtLink
+            no-prefetch
+            v-for="item in $stores.algoliaSearch.results.hits"
             :key="item.id"
             class="flex min-w-0 transition"
             :to="
@@ -41,16 +40,17 @@
             "
             @click.native="handleClickCard(item)"
           >
-            <CardOrganisation
-              :organisation="item"
-              footer-key="missions_available_count"
-            />
-          </nuxt-link>
+            <CardOrganisation :organisation="item" footer-key="missions_available_count" />
+          </NuxtLink>
         </div>
 
-        <Pagination
-          :current-page="$store.state.algoliaSearch.results.page + 1"
-          :total-rows="$store.state.algoliaSearch.results.nbHits > 1000 ? 1000 : $store.state.algoliaSearch.results.nbHits"
+        <DsfrPagination
+          :current-page="$stores.algoliaSearch.results.page + 1"
+          :total-rows="
+            $stores.algoliaSearch.results.nbHits > 1000
+              ? 1000
+              : $stores.algoliaSearch.results.nbHits
+          "
           :per-page="18"
           :max-pages="10"
           :with-first-page="false"
@@ -63,80 +63,100 @@
 </template>
 
 <script>
-
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
-import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
-import PrimaryFilters from '~/components/section/search/organisations/PrimaryFilters.vue'
-import SecondaryFilters from '~/components/section/search/organisations/SecondaryFilters.vue'
-import MobileFilters from '~/components/section/search/organisations/MobileFilters.vue'
-import Link from '@/components/dsfr/Link.vue'
-import Pagination from '@/components/dsfr/Pagination.vue'
+import PrimaryFilters from '@/components/section/search/organisations/PrimaryFilters.vue'
+import SecondaryFilters from '@/components/section/search/organisations/SecondaryFilters.vue'
+import MobileFilters from '@/components/section/search/organisations/MobileFilters.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     CardOrganisation,
     PrimaryFilters,
     SecondaryFilters,
     MobileFilters,
-    Link,
-    Pagination
   },
-  mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {
     initialFilters: {
       type: String,
-      default: ''
+      default: '',
     },
     secondaryFilters: {
       type: Array,
       default: () => {
-        return [
-          'department_name'
-        ]
-      }
-    }
-  },
-  async fetch () {
-    await this.search()
+        return ['department_name']
+      },
+    },
   },
   watch: {
-    $route: '$fetch'
-  },
-  created () {
-    this.$store.commit('algoliaSearch/setIndexKey', 'organisationsIndex')
-    this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.organisationsIndex)
-    this.$store.commit('algoliaSearch/setAvailableFacets', ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name', 'statut_juridique'])
-    this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
-    this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
-  },
-  mounted () {
-    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
-      if (!this.$route.query.aroundLatLng) {
-        this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
+    async $route(newVal, oldVal) {
+      if (newVal.name !== oldVal.name) {
+        return
       }
-      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
+      await this.search()
+      this.handleNavigatorGeolocation()
+    },
+  },
+  async setup(props) {
+    const { $stores } = useNuxtApp()
+    const runtimeConfig = useRuntimeConfig()
+
+    $stores.algoliaSearch.reset()
+    $stores.algoliaSearch.indexKey = 'organisationsIndex'
+    $stores.algoliaSearch.indexName = runtimeConfig.public.algolia.organisationsIndex
+    $stores.algoliaSearch.availableFacets = [
+      'department_name',
+      'domaines.name',
+      'reseaux.name',
+      'publics_beneficiaires',
+      'activities.name',
+      'statut_juridique',
+    ]
+    $stores.algoliaSearch.initialFilters = props.initialFilters
+    $stores.algoliaSearch.searchParameters = props.searchParameters
+
+    const { search, deleteAllFilters, onNavigatorGeolocation, onNavigatorGeolocationError } =
+      useAlgoliaOrganisationsQueryBuilder()
+
+    await search()
+
+    return {
+      search,
+      deleteAllFilters,
+      onNavigatorGeolocation,
+      onNavigatorGeolocationError,
     }
   },
-  beforeDestroy () {
-    this.$store.dispatch('algoliaSearch/reset')
+  mounted() {
+    this.handleNavigatorGeolocation()
   },
   methods: {
-    handleChangePage (page) {
+    handleChangePage(page) {
       this.$router.push({
         path: this.$route.path,
-        query: { ...this.$route.query, page }
+        query: { ...this.$route.query, page },
       })
     },
-    handleClickCard (organisation) {
-      window.plausible &&
-        window.plausible('Click Card Organisations - Liste résultat', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
-    }
-  }
-}
+    handleClickCard(organisation) {
+      this.$plausible.trackEvent('Click Card Organisations - Liste résultat', {
+        props: { isLogged: this.$stores.auth.isLogged },
+      })
+    },
+    handleNavigatorGeolocation() {
+      if (
+        navigator.geolocation &&
+        !this.$stores.algoliaSearch.navigatorGeolocation &&
+        !this.$stores.algoliaSearch.aroundLatLng &&
+        !this.$stores.algoliaSearch.searchParameters?.aroundLatLng
+      ) {
+        if (!this.$route.query.aroundLatLng) {
+          this.$stores.algoliaSearch.loadingNavigatorGeolocation = true
+        }
+        navigator.geolocation.getCurrentPosition(
+          this.onNavigatorGeolocation,
+          this.onNavigatorGeolocationError
+        )
+      }
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

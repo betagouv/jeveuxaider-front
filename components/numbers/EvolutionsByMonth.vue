@@ -1,169 +1,227 @@
 <template>
-  <div class="space-y-12">
-    <div v-for="year,i in years" :key="i">
-      <h2 class="text-3xl font-semibold mb-6">
+  <div class="">
+    <!-- <div v-for="(year, i) in years" :key="i"> -->
+    <!-- <h2 class="text-3xl font-semibold mb-6">
         {{ year }}
-      </h2>
-      <Table>
-        <TableHead>
-          <TableHeadCell>Période</TableHeadCell>
-          <TableHeadCell>Utilisateurs inscrits</TableHeadCell>
-          <TableHeadCell>Structures validées</TableHeadCell>
-          <TableHeadCell>Missions postées</TableHeadCell>
-          <TableHeadCell>Mises en relation</TableHeadCell>
-          <TableHeadCell>Participations validées</TableHeadCell>
-          <TableHeadCell v-if="['admin'].includes($store.getters.contextRole)">
-            Taux de conversion
-          </TableHeadCell>
-          <TableHeadCell />
-        </TableHead>
-        <TableBody>
-          <TableRow v-for="item,y in resultsFilteredByYear(year)" :key="y">
-            <TableRowCell>
-              <span class="capitalize text-gray-600 font-semibold">
-                {{ $dayjs(item.created_at).format('MMMM') }}
-              </span>
-            </TableRowCell>
-            <TableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ item.profiles_total|formatNumber }}</span>
-                <PercentageVariation v-if="item.profiles_total_variation" :value="item.profiles_total_variation" />
-              </div>
-            </TableRowCell>
-            <TableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ item.structures_validated|formatNumber }}</span>
-                <PercentageVariation v-if="item.structures_validated_variation" :value="item.structures_validated_variation" />
-              </div>
-            </TableRowCell>
-            <TableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ item.missions_posted|formatNumber }}</span>
-                <PercentageVariation v-if="item.missions_posted_variation" :value="item.missions_posted_variation" />
-              </div>
-            </TableRowCell>
-            <TableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ item.participations_total|formatNumber }}</span>
-                <PercentageVariation v-if="item.participations_total_variation" :value="item.participations_total_variation" />
-              </div>
-            </TableRowCell>
-            <TableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ item.participations_validated|formatNumber }}</span>
-                <PercentageVariation v-if="item.participations_validated_variation" :value="item.participations_validated_variation" />
-              </div>
-            </TableRowCell>
-            <TableRowCell v-if="['admin'].includes($store.getters.contextRole)">
-              <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
-                {{ item.participations_conversion|formatNumber }}%
-              </span>
-              <span v-else>--</span>
-            </TableRowCell>
-            <TableRowCell>
-              <XIcon v-if="selectedMonth" class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
-              <SearchIcon v-else class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
-            </TableRowCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+      </h2> -->
+    <h2 class="text-3xl font-semibold mb-6">Par mois</h2>
+    <BaseTable>
+      <BaseTableHead>
+        <BaseTableHeadCell>Période</BaseTableHeadCell>
+        <BaseTableHeadCell v-if="!hideUsers">Utilisateurs inscrits</BaseTableHeadCell>
+        <BaseTableHeadCell v-if="!hideStructures">Structures validées</BaseTableHeadCell>
+        <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
+        <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
+        <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
+        <BaseTableHeadCell
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        >
+          Conversion
+        </BaseTableHeadCell>
+        <!-- <BaseTableHeadCell /> -->
+      </BaseTableHead>
+      <BaseTableBody>
+        <BaseTableRow v-for="(item, y) in results" :key="y">
+          <BaseTableRowCell>
+            <span class="capitalize text-gray-600 font-semibold">
+              {{ $dayjs(item.created_at).format('MMMM YYYY') }}
+            </span>
+          </BaseTableRowCell>
+          <BaseTableRowCell v-if="!hideUsers">
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.profiles_total) }}</span>
+              <!-- <PercentageVariation
+                  v-if="item.profiles_total_variation"
+                  :value="item.profiles_total_variation"
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell v-if="!hideStructures">
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.structures_validated) }}</span>
+              <!-- <PercentageVariation
+                  v-if="item.structures_validated_variation"
+                  :value="item.structures_validated_variation"
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.missions_posted) }}</span>
+              <!-- <PercentageVariation
+                  v-if="item.missions_posted_variation"
+                  :value="item.missions_posted_variation"
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.participations_total) }}</span>
+              <!-- <PercentageVariation
+                  v-if="item.participations_total_variation"
+                  :value="item.participations_total_variation"
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.participations_validated) }}</span>
+              <!-- <PercentageVariation
+                  v-if="item.participations_validated_variation"
+                  :value="item.participations_validated_variation"
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          >
+            <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
+              {{ $numeral(item.participations_conversion) }}%
+            </span>
+            <span v-else>--</span>
+          </BaseTableRowCell>
+          <!-- <BaseTableRowCell>
+            <RiCloseLine
+              v-if="selectedMonth"
+              class="h-4 cursor-pointer hover:text-jva-blue-500"
+              @click="toggleMonth(item.month)"
+            />
+            <MagnifyingGlassIcon
+              v-else
+              class="h-4 cursor-pointer hover:text-jva-blue-500"
+              @click="toggleMonth(item.month)"
+            />
+          </BaseTableRowCell>-->
+        </BaseTableRow>
+      </BaseTableBody>
+    </BaseTable>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
 import PercentageVariation from '@/components/custom/PercentageVariation.vue'
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    PercentageVariation
+    PercentageVariation,
+    MagnifyingGlassIcon,
   },
-  data () {
+  data() {
     return {
       loading: true,
       missions: null,
       participations: null,
       users: null,
       structures: null,
-      selectedMonth: null
+      selectedMonth: null,
     }
   },
-  async fetch () {
-    this.loading = true
-
-    await Promise.all([
-      this.fetchStructuresByMonth(),
-      this.fetchMissionsByMonth(),
-      this.fetchUsersByMonth(),
-      this.fetchParticipationsByMonth()
-    ]).finally(() => {
-      this.loading = false
-    })
+  created() {
+    this.fetch()
   },
   computed: {
-    years () {
-      const years = []
-      for (let year = 2020; year <= this.$dayjs().year(); year++) {
-        years.push(year)
-      }
-      return years.reverse()
+    hideUsers() {
+      return (
+        !!['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole) ||
+        !!this.$route.query.structure ||
+        !!this.$route.query.reseau
+      )
     },
-    results () {
-      return Object.values(_.merge(
-        _.keyBy(this.missions, 'created_at'),
-        _.keyBy(this.structures, 'created_at'),
-        _.keyBy(this.participations, 'created_at'),
-        _.keyBy(this.users, 'created_at')
-      ))
-    }
+    hideStructures() {
+      return (
+        !!['responsable'].includes(this.$stores.auth.contextRole) || !!this.$route.query.structure
+      )
+    },
+    // years() {
+    //   const years = []
+    //   for (let year = 2020; year <= this.$dayjs().year(); year++) {
+    //     years.push(year)
+    //   }
+    //   return years.reverse()
+    // },
+    results() {
+      return Object.values(
+        _merge(
+          _keyBy(this.missions, 'created_at'),
+          _keyBy(this.structures, 'created_at'),
+          _keyBy(this.participations, 'created_at'),
+          _keyBy(this.users, 'created_at')
+        )
+      )
+    },
   },
   methods: {
-    resultsFilteredByYear (year) {
-      if (this.selectedMonth) {
-        return this.results.filter(item => item.year == year && item.month == this.selectedMonth)
-      }
-      return this.results.filter(item => item.year == year)
+    async fetch() {
+      this.loading = true
+
+      await Promise.all([
+        this.fetchStructuresByMonth(),
+        this.fetchMissionsByMonth(),
+        this.fetchUsersByMonth(),
+        this.fetchParticipationsByMonth(),
+      ]).finally(() => {
+        this.loading = false
+      })
     },
-    toggleMonth (month) {
+    resultsFilteredByYear(year) {
+      if (this.selectedMonth) {
+        return this.results.filter((item) => item.year == year && item.month == this.selectedMonth)
+      }
+      return this.results.filter((item) => item.year == year)
+    },
+    toggleMonth(month) {
       if (!this.selectedMonth) {
         this.selectedMonth = month
       } else {
         this.selectedMonth = null
       }
     },
-    async fetchStructuresByMonth () {
-      await this.$axios.get('/statistics/structures-by-month', {
-        params: this.$store.state.statistics.params
+    async fetchStructuresByMonth() {
+      if (this.hideStructures) {
+        this.structures = []
+      } else {
+        await apiFetch('/statistics/structures-by-month', {
+          params: this.$route.query,
+        }).then((response) => {
+          this.structures = response
+        })
+      }
+    },
+    async fetchMissionsByMonth() {
+      await apiFetch('/statistics/missions-by-month', {
+        params: this.$route.query,
       }).then((response) => {
-        this.structures = response.data
+        this.missions = response
       })
     },
-    async fetchMissionsByMonth () {
-      await this.$axios.get('/statistics/missions-by-month', {
-        params: this.$store.state.statistics.params
+    async fetchUsersByMonth() {
+      if (this.hideUsers) {
+        this.users = []
+      } else {
+        await apiFetch('/statistics/users-by-month', {
+          params: this.$route.query,
+        }).then((response) => {
+          this.users = response
+        })
+      }
+    },
+    async fetchParticipationsByMonth() {
+      await apiFetch('/statistics/participations-by-month', {
+        params: this.$route.query,
       }).then((response) => {
-        this.missions = response.data
+        this.participations = response
       })
     },
-    async fetchUsersByMonth () {
-      await this.$axios.get('/statistics/users-by-month', {
-        params: this.$store.state.statistics.params
-      }).then((response) => {
-        this.users = response.data
-      })
-    },
-    async fetchParticipationsByMonth () {
-      await this.$axios.get('/statistics/participations-by-month', {
-        params: this.$store.state.statistics.params
-      }).then((response) => {
-        this.participations = response.data
-      })
-    }
-  }
-}
+  },
+})
 </script>
-
-<style>
-
-</style>

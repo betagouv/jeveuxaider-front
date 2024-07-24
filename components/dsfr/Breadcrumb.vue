@@ -1,49 +1,40 @@
 <template>
-  <nav
-    role="navigation"
-    :class="['fr-breadcrumb', theme]"
-    aria-label="vous êtes ici :"
-  >
+  <nav role="navigation" :class="['fr-breadcrumb', theme]" aria-label="vous êtes ici :">
     <button
       v-show="!hideButton"
-      :class="[
-        'fr-breadcrumb__button',
-        colorClass
-      ]"
+      :class="['fr-breadcrumb__button', colorClass]"
       :aria-expanded="hideButton"
-      :aria-controls="uuid"
+      :aria-controls="`breadcrumb-${uuid}`"
       @click="hideButton = !hideButton"
     >
       Voir le fil d’Ariane
     </button>
 
     <div
-      :id="uuid"
+      :id="`breadcrumb-${uuid}`"
       class="fr-collapse"
       :class="{ 'fr-collapse--expanded': hideButton }"
     >
       <ol class="fr-breadcrumb__list">
         <li class="relative bottom-[5px]">
-          <nuxt-link to="/" :class="['!bg-none', colorClass]" title="accueil">
-            <HomeIcon class="w-[13px] h-[13px] inline fill-current" />
+          <nuxt-link no-prefetch to="/" :class="['!bg-none', colorClass]" title="accueil">
+            <RiHome4Line class="w-[13px] h-[13px] inline fill-current" />
           </nuxt-link>
         </li>
 
-        <li
-          v-for="(link, index) in links"
-          :key="index"
-          class="fr-breadcrumb__item"
-        >
+        <li v-for="(link, index) in links" :key="index" class="fr-breadcrumb__item">
           <component
-            :is="link.is ? link.is : link.to ? 'nuxt-link' : 'span'"
+            :is="asComponent(link)"
             :class="[
               'fr-breadcrumb__link',
-              theme === 'white' ? 'text-white' : !link.to ? '!text-[#161616]' : colorClass
+              theme === 'white' ? 'text-white' : !link.to ? '!text-[#161616]' : colorClass,
             ]"
             :to="link.to"
             :aria-current="index === links.length - 1 ? 'page' : undefined"
-            v-text="link.text"
-          />
+            no-prefetch
+          >
+            {{ $filters.clamp(link.text, 120) }}
+          </component>
         </li>
       </ol>
     </div>
@@ -52,54 +43,68 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.main.min.css'
-import uuid from '@/mixins/uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-export default {
-  mixins: [uuid],
+export default defineNuxtComponent({
   props: {
     links: {
       type: Array,
-      default: () => [{ text: '' }]
+      default: () => [{ text: '' }],
     },
     theme: {
       type: String,
       default: 'default',
-      validator: t => ['default', 'white'].includes(t)
-    }
+      validator: (t) => ['default', 'white', 'black'].includes(t),
+    },
   },
-  data () {
+  data() {
     return {
-      hideButton: false
+      hideButton: false,
+      uuid: uuidv4(),
     }
   },
   computed: {
-    colorClass () {
-      return this.theme === 'white' ? 'text-white' : 'text-[#666666] hover:text-gray-700'
-    }
-  }
-}
+    colorClass() {
+      switch (this.theme) {
+        case 'white':
+          return 'text-white'
+        case 'black':
+          return 'text-black'
+        default:
+          return 'text-[#666666] hover:text-gray-700'
+      }
+    },
+  },
+  methods: {
+    asComponent(link) {
+      return link.is ? link.is : link.to ? resolveComponent('NuxtLink') : 'span'
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
-[href], button {
+[href],
+button {
   text-rendering: optimizeLegibility;
-  background-image: linear-gradient(0deg,currentColor,currentColor),linear-gradient(0deg,currentColor,currentColor);
+  background-image: linear-gradient(0deg, currentColor, currentColor),
+    linear-gradient(0deg, currentColor, currentColor);
   background-position: 0 100%, 0 calc(100% - 0.0625em);
-  background-repeat: no-repeat,no-repeat;
-  background-size: 0 0.125em,100% 0.0625em;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 0 0.125em, 100% 0.0625em;
 }
 
 a[href]:hover {
-  background-size: 100% 0.125em,100% 0.0625em;
+  background-size: 100% 0.125em, 100% 0.0625em;
 }
 
 a[href]:active {
-  background-color: #EDEDED;
+  background-color: #ededed;
 }
 
 .fr-collapse {
   overflow: hidden;
-  transition: all .3s;
+  transition: all 0.3s;
   max-height: 0;
 }
 
@@ -147,5 +152,4 @@ a[href]:active {
     color: white;
   }
 }
-
 </style>

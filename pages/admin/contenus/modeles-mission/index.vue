@@ -1,120 +1,125 @@
-
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" @refetch="$fetch()" />
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Contenus' },
-          { text: 'Modèles de mission' }
-        ]"
-      />
-    </portal>
-    <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+    <DrawerMissionTemplate
+      :mission-template-id="drawerMissionTemplateId"
+      @close="drawerMissionTemplateId = null"
+      @updated="fetch()"
+      @refetch="fetch()"
+    />
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            { text: 'Administration', to: '/admin' },
+            { text: 'Contenus' },
+            { text: 'Modèles de mission' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
+    <BaseSectionHeading
+      :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'modèle de mission',
         'modèles de mission',
         false
       )}`"
+      :loading="queryLoading"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/modeles-mission/add`)">
+          <DsfrButton icon="RiAddLine" @click="$router.push(`/admin/contenus/modeles-mission/add`)">
             Nouveau
-          </Button>
+          </DsfrButton>
         </div>
       </template>
-    </SectionHeading>
+    </BaseSectionHeading>
 
-    <SearchFilters>
-      <Input
-        name="search"
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
+        icon="RiSearchLine"
+        :modelValue="$route.query['filter[search]']"
+        @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
-          :key="`tous-${$route.fullPath}`"
+        <!-- <DsfrTag
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </DsfrTag> -->
 
-        <Tag
-          :key="`published-${$route.fullPath}`"
+        <DsfrTag
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[published]'] && $route.query['filter[published]'] == 'true'
+          "
           @click.native="changeFilter('filter[published]', 'true')"
         >
           En ligne
-        </Tag>
+        </DsfrTag>
 
-        <Tag
-          :key="`unpublished-${$route.fullPath}`"
+        <DsfrTag
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[published]'] && $route.query['filter[published]'] == 'false'
+          "
           @click.native="changeFilter('filter[published]', 'false')"
         >
           Hors ligne
-        </Tag>
+        </DsfrTag>
 
-        <Tag
-          v-if="$store.getters.contextRole === 'admin'"
-          :key="`from-reseau-${$route.fullPath}`"
+        <DsfrTag
+          v-if="$stores.auth.contextRole === 'admin'"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="
+            $route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'
+          "
           @click.native="changeFilter('filter[with_reseau]', 'yes')"
         >
           Réseaux
-        </Tag>
+        </DsfrTag>
 
-        <FilterSelectAdvanced
-          :key="`state-${$route.fullPath}`"
+        <BaseFilterSelectAdvanced
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.mission_template_workflow_states"
-          :value="$route.query['filter[state]']"
+          :modelValue="$route.query['filter[state]']?.split(',')"
           clearable
-          @input="changeFilter('filter[state]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[state]', $event, true)"
         />
-        <FilterSelectAdvanced
-          :key="`domaine-${$route.fullPath}`"
+        <BaseFilterSelectAdvanced
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
-          :value="$route.query['filter[domaine.id]']"
+          :modelValue="$route.query['filter[domaine.id]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @input="changeFilter('filter[domaine.id]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[domaine.id]', $event, true)"
         />
 
-        <template v-if="$store.getters.contextRole === 'admin'">
-          <FilterInputAutocomplete
-            :value="$route.query['filter[reseau.name]']"
+        <template v-if="$stores.auth.contextRole === 'admin'">
+          <BaseFilterInputAutocomplete
+            v-model="selectedReseau"
             label="Tous les réseaux"
-            name="autocomplete"
-            :options="autocompleteOptionsReseau"
-            @fetch-suggestions="onFetchSuggestionsReseau"
-            @selected="changeFilter('filter[reseau.name]', $event ? $event.name : undefined)"
+            name="autocomplete-reseau"
+            :options="autocompleteOptionsReseaux"
+            :loading="loadingFetchReseaux"
+            @fetch-suggestions="onFetchSuggestionsReseaux"
+            @selected="onSelectReseau"
           />
         </template>
       </template>
@@ -134,28 +139,40 @@
       >
         <template #badges>
           <div class="mb-2">
-            <Badge v-if=" missionTemplate.reseau" class="" color="gray-light">
+            <BaseBadge v-if="missionTemplate.reseau" color="gray-light">
               {{ missionTemplate.reseau.name }}
-            </Badge>
+            </BaseBadge>
           </div>
         </template>
         <div class="mt-3">
-          <Badge :color="missionTemplate.state" plain>
-            {{ missionTemplate.state | label('mission_template_workflow_states') }}
-          </Badge>
+          <BaseBadge :color="missionTemplate.state" plain>
+            {{ $filters.label(missionTemplate.state, 'mission_template_workflow_states') }}
+          </BaseBadge>
         </div>
         <template #footer>
           <div
             class="border-t font-semibold text-sm text-center py-4"
             :class="[
-              missionTemplate.published && missionTemplate.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
+              missionTemplate.published && missionTemplate.state === 'validated'
+                ? 'text-gray-900'
+                : 'text-gray-400',
             ]"
           >
-            {{ $options.filters.formatNumber(missionTemplate.places_left) }} {{ $options.filters.pluralize(missionTemplate.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
+            {{ $numeral(missionTemplate.places_left) }}
+            {{
+              $filters.pluralize(
+                missionTemplate.places_left,
+                'bénévole recherché',
+                'bénévoles recherchés',
+                false
+              )
+            }}
           </div>
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"
@@ -168,59 +185,54 @@
 </template>
 
 <script>
-
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
+import Card from '@/components/card/Card.vue'
+import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Button from '@/components/dsfr/Button.vue'
-import Tag from '@/components/dsfr/Tag.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
-export default {
+export default defineNuxtComponent({
   components: {
     Card,
     DrawerMissionTemplate,
     SearchFilters,
     Pagination,
-    Tag,
     Breadcrumb,
-    Button
   },
-  mixins: [QueryBuilder],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'authenticated',
-  asyncData ({ $axios, params, error, store }) {
-    if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
-      return error({ statusCode: 403 })
-    }
-    return {
+  mixins: [QueryBuilder, MixinSuggestionsFilters],
+  setup() {
+    const { $stores } = useNuxtApp()
+
+    definePageMeta({
+      layout: 'admin-with-sidebar-menu',
+      middleware: ['authenticated'],
+    })
+
+    if (!['admin', 'tete_de_reseau'].includes($stores.auth.contextRole)) {
+      return showError({ statusCode: 403 })
     }
   },
-  data () {
+  computed: {
+    // selectedReseau() {
+    //   return {
+    //     key: Number(this.$route.query['filter[reseau.id]']) || undefined,
+    //     label: this.$route.query['filter[reseau.name]'],
+    //   }
+    // },
+  },
+  data() {
     return {
       loading: false,
       endpoint: '/mission-templates',
       queryParams: {
         include: 'photo,reseau',
-        append: 'places_left'
+        append: 'places_left',
       },
       drawerMissionTemplateId: null,
-      autocompleteOptionsReseau: []
-
     }
   },
-  methods: {
-    async onFetchSuggestionsReseau (value) {
-      const res = await this.$axios.get('/reseaux', {
-        params: {
-          'filter[search]': value,
-          pagination: 6
-        }
-      })
-      this.autocompleteOptionsReseau = res.data.data
-    }
-  }
-}
+  methods: {},
+})
 </script>

@@ -1,11 +1,11 @@
 <template>
-  <div v-click-outside="() => show = false" class="relative inline-block text-left">
+  <div v-click-outside="() => (show = false)" class="relative inline-block text-left">
     <div
       id="menu-button"
       class="cursor-pointer"
+      :class="menuButtonClass"
       :aria-expanded="show"
       aria-haspopup="true"
-
       @keydown="onKeydown"
       @click="show = !show"
       @keydown.esc="show = false"
@@ -16,24 +16,24 @@
 
     <transition
       enter-active-class="transition ease-out duration-100"
-      enter-class="transform opacity-0 scale-95"
+      enter-from-class="transform opacity-0 scale-95"
       enter-to-class="transform opacity-100 scale-100"
       leave-active-class="transition ease-in duration-75"
-      leave-class="transform opacity-100 scale-100"
+      leave-from-class="transform opacity-100 scale-100"
       leave-to-class="transform opacity-0 scale-95"
     >
       <div
         v-if="show"
         :class="[
-          ' absolute  mt-2 shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30',
-          {'origin-top-right right-0': position == 'right', 'origin-top-left left-0': position == 'left'}
+          'absolute mt-2 shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30',
+          positionClass,
         ]"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
         @keydown.esc="show = false"
       >
-        <div class="" role="none">
+        <div role="none" @click="() => closeOnClick && close()">
           <slot name="items" />
         </div>
       </div>
@@ -42,28 +42,36 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
-    position: {
+    menuButtonClass: {
       type: String,
-      default: 'right'
-    }
+      default: null,
+    },
+    positionClass: {
+      type: String,
+      default: 'origin-top-right right-0',
+    },
+    closeOnClick: {
+      type: Boolean,
+      default: true,
+    },
   },
-  data () {
+  data() {
     return {
-      show: false
+      show: false,
     }
   },
   methods: {
-    close () {
+    close() {
       this.show = false
     },
-    onKeydown (e) {
+    onKeydown(e) {
       // todo: même logique de navigation que selectAdvanced :
       // tab = hide,
       // navigation au clavier
       // selection par défaut du premier de la liste
-    }
-  }
-}
+    },
+  },
+})
 </script>

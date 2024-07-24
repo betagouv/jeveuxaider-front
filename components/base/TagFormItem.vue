@@ -5,7 +5,7 @@
     <div class="flex-none text-sm text-jva-blue-500 font-bold truncate flex-shrink">
       <slot />
     </div>
-    <XIcon
+    <RiCloseLine
       v-if="removable"
       class="flex-none cursor-pointer w-4 h-4 text-jva-blue-500 hover:text-jva-blue-400"
       @click="$emit('removed', tag)"
@@ -14,20 +14,16 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     tag: {
       type: [String, Object],
-      required: true
+      required: true,
     },
     removable: {
       type: Boolean,
-      default: true
-    }
-  }
-}
+      default: true,
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

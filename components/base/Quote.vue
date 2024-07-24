@@ -1,12 +1,10 @@
 <template>
-  <div
-    class="p-6 md:p-8 xl:p-12 custom-gradient relative min-h-[120px]"
-  >
+  <div class="p-6 md:p-8 xl:p-12 custom-gradient relative min-h-[120px]">
     <img
       class="absolute right-0 bottom-0 p-6 pointer-events-none"
       src="/images/icons/quote.svg"
       alt=""
-    >
+    />
     <component :is="as" class="citation relative z-10 text-lg">
       <div v-if="htmlEncoded" class="formatted-text" v-html="htmlEncoded" />
       <div v-else class="formatted-text">
@@ -17,18 +15,18 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     as: {
       type: String,
-      default: 'div'
+      default: 'div',
     },
     htmlEncoded: {
       type: String,
-      default: undefined
-    }
-  }
-}
+      default: undefined,
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -43,6 +41,6 @@ export default {
 } */
 
 .custom-gradient {
-    background: linear-gradient(to right, #000091 5px, #ECECFE 5px);
-  }
+  background: linear-gradient(to right, #000091 5px, #ececfe 5px);
+}
 </style>

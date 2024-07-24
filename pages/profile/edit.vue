@@ -1,61 +1,93 @@
 <template>
-  <div class="container">
-    <Breadcrumb
-      :links="[
-        { text: 'Mon espace', to: '/profile' },
-        { text: 'Modification de mon profil' },
-      ]"
-    />
-    <div class="flex flex-col pb-12 gap-12">
-      <SectionHeading :title="$store.state.auth.user.profile.full_name">
-        <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button
-              type="submit"
-              variant="green"
-              size="xl"
-              :loading="loading"
-              @click.native="handleSubmit"
-            >
-              Enregistrer
-            </Button>
-          </div>
-        </template>
-      </Sectionheading>
-
-      <FormProfile
-        ref="form"
-        :profile="profile"
-        @role-changed="handleRoleChanged()"
-      />
+  <div class="">
+    <div class="container">
+      <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mon compte' }]" />
     </div>
+    <HeaderAction title="Mon compte">
+      <template #action="{ isPinned }">
+        <DsfrButton
+          class="hidden sm:flex"
+          :size="isPinned ? 'md' : 'lg'"
+          variant="primary"
+          :loading="loading"
+          :disabled="!formIsDirty"
+          @click.native="submitForm"
+        >
+          Enregistrer
+        </DsfrButton>
+      </template>
+    </HeaderAction>
+    <BaseContainer2Cols
+      class="mt-8"
+      grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+      class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+      class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
+    >
+      <template #left>
+        <div class="flex flex-col lg:pb-12 gap-8 xl:gap-12">
+          <UserProfileTabs selected-tab-key="profil">
+            <FormUserProfile
+              ref="form"
+              :profile="profile"
+              @change="formIsDirty = $event"
+              @submit="fetchProfile"
+            />
+          </UserProfileTabs>
+        </div>
+      </template>
+      <template #right>
+        <BoxCompleteProfile title="Complétez votre profil pour trouver une mission" />
+        <BaseBox class="@container">
+          <SectionProfileCommunicationPreferences :profile="profile" />
+        </BaseBox>
+        <HelpCenter />
+      </template>
+    </BaseContainer2Cols>
   </div>
 </template>
 
 <script>
-import FormProfile from '@/components/form/FormProfile.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import FormUserProfile from '@/components/form/FormUserProfile.vue'
+import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import HeaderAction from '@/components/section/current-user/HeaderActions.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FormProfile,
-    Breadcrumb
+    FormUserProfile,
+    UserProfileTabs,
+    BoxCompleteProfile,
+    HelpCenter,
+    HeaderAction,
   },
-  middleware: 'authenticated',
-  async asyncData ({ $axios, error, store }) {
-    const { data: profile } = await $axios.get(`/profiles/${store.state.auth.user.profile.id}`)
+  async setup() {
+    definePageMeta({
+      middleware: ['authenticated'],
+    })
+
+    const { $stores } = useNuxtApp()
+    const { data: profile, refresh: refreshProfile } = await useApiFetch(
+      `/profiles/${$stores.auth.user.profile.id}`
+    )
 
     return {
-      profile
+      profile,
+      refreshProfile,
     }
   },
-  data () {
+  data() {
     return {
-      loading: false
+      loading: false,
+      formIsDirty: false,
     }
   },
   methods: {
-    async handleSubmit () {
+    async fetchProfile() {
+      await this.refreshProfile()
+      this.formIsDirty = false
+    },
+    async submitForm() {
       if (this.loading) {
         return
       }
@@ -63,10 +95,11 @@ export default {
       await this.$refs.form.handleSubmit()
       this.loading = false
     },
-    async handleRoleChanged () {
-      const { data: profile } = await this.$axios.get(`/profiles/${this.profile.id}`)
-      this.profile = profile
+  },
+  beforeRouteLeave(to, from) {
+    if (this.formIsDirty) {
+      return window.confirm('Vous avez des modifications non enregistrées.\r\nQuitter quand-même ?')
     }
-  }
-}
+  },
+})
 </script>

@@ -1,16 +1,14 @@
 <template>
   <div class="relative">
     <client-only>
-      <portal
-        to="sidebar"
-      >
-        <div class="text-center lg:text-left text-xl lg:text-2xl font-bold mb-6 lg:mb-12">
-          Ça ne devrait pas prendre plus de 3 minutes 😉
-        </div>
-        <Steps
-          :steps="steps"
-        />
-      </portal>
+      <ClientOnly>
+        <Teleport to="#teleport-sidebar">
+          <div class="text-center lg:text-left text-xl lg:text-2xl font-bold mb-6 lg:mb-12">
+            Ça ne devrait pas prendre plus de 3 minutes 😉
+          </div>
+          <BaseSteps :steps="steps" />
+        </Teleport>
+      </ClientOnly>
     </client-only>
 
     <div class="mb-6 lg:mb-12 text-center text-white">
@@ -19,63 +17,73 @@
         <span class="font-bold">{{ form.name }}</span> !
       </h1>
     </div>
-    <div class="max-w-xl mx-auto">
-      <div
-        class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center "
-      >
+    <div class="max-w-2xl mx-auto">
+      <div class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center">
         Complétez les informations liées à votre collectivité territoriale
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 ">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <FormControl
+          <BaseFormControl
             label="Nom de votre collectivité territoriale"
             html-for="name"
             required
             :error="errors.name"
           >
-            <Input
+            <BaseInput
               v-model="form.name"
               name="name"
               placeholder="Nom de votre organisation"
               @blur="validate('name')"
             />
-          </FormControl>
-          <!-- <FormControl
+          </BaseFormControl>
+          <!-- <BaseFormControl
             html-for="suffix_title"
             label="Devenez bénévole ..."
             required
             :error="errors.suffix_title"
           >
-            <FormHelperText>
+            <BaseFormHelperText>
               Complétez la phrase pour votre page publique. Ex: Devenez bénévole à Bayonne
-            </FormHelperText>
-            <Input
+            </BaseFormHelperText>
+            <BaseInput
               v-model="form.suffix_title"
               name="suffix_title"
             />
-          </FormControl> -->
-          <FormControl label="Département de votre collectivité territoriale" html-for="department" required :error="errors.department">
-            <Combobox
+          </BaseFormControl> -->
+          <BaseFormControl
+            label="Département de votre collectivité territoriale"
+            html-for="department"
+            required
+            :error="errors.department"
+          >
+            <BaseCombobox
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
-              :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              :options="
+                $labels.departments.map((item) => {
+                  return { key: item.key, label: `${item.key} - ${item.label}` }
+                })
+              "
             />
-          </FormControl>
-          <FormControl label="Ajouter les codes postaux" html-for="autocomplete" required :error="errors.zips">
-            <FormHelperText>
+          </BaseFormControl>
+          <BaseFormControl
+            label="Ajouter les codes postaux"
+            html-for="autocomplete"
+            required
+            :error="errors.zips"
+          >
+            <BaseFormHelperText>
               En tant que collectivité territoriale, vous aurez accès aux statistiques des
-              organisations enregistrées avec vos codes postaux. Vous
-              aurez aussi la possibilité de gérer la page de votre collectivité territoriale
-              qui listera toutes les missions présentes sur votre territoire. Par
-              exemple pour Bayonne :
-              <a
-                href="https://jeveuxaider.gouv.fr/territoires/bayonne"
-                target="_blank"
-              >https://jeveuxaider.gouv.fr/territoires/bayonne</a>
-            </FormHelperText>
-            <InputAutocomplete
-              icon="LocationMarkerIcon"
+              organisations enregistrées avec vos codes postaux. Vous aurez aussi la possibilité de
+              gérer la page de votre collectivité territoriale qui listera toutes les missions
+              présentes sur votre territoire. Par exemple pour Bayonne :
+              <a href="https://jeveuxaider.gouv.fr/territoires/bayonne" target="_blank"
+                >https://jeveuxaider.gouv.fr/territoires/bayonne</a
+              >
+            </BaseFormHelperText>
+            <BaseInputAutocomplete
+              icon="RiSearchLine"
               name="autocomplete"
               label="Autocomplete"
               placeholder="Recherche de vos codes postaux"
@@ -90,26 +98,21 @@
             />
             <div v-if="form.zips.length">
               <div class="flex flex-wrap gap-2 mt-4">
-                <TagFormItem
+                <BaseTagFormItem
                   v-for="zip in form.zips"
                   :key="zip"
                   :tag="zip"
                   @removed="onRemovedTagItem"
                 >
                   {{ zip }}
-                </TagFormItem>
+                </BaseTagFormItem>
               </div>
             </div>
-          </FormControl>
+          </BaseFormControl>
 
-          <Button
-            size="lg"
-            class="w-full"
-            :loading="loading"
-            @click.native.prevent="onSubmit"
-          >
+          <DsfrButton size="lg" class="w-full" :loading="loading" @click.native.prevent="onSubmit">
             Continuer
-          </Button>
+          </DsfrButton>
         </form>
       </div>
     </div>
@@ -120,87 +123,100 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import MixinInputGeo from '@/mixins/input-geo'
-import Button from '@/components/dsfr/Button.vue'
 
-export default {
-  components: {
-    Button
-  },
+export default defineNuxtComponent({
   mixins: [FormErrors, MixinInputGeo],
-  layout: 'register-steps',
-  middleware: ['authenticated', 'agreedResponsableTerms'],
-  async asyncData ({ $axios, store, error, redirect }) {
-    if (
-      !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'
-    ) {
-      return error({ statusCode: 403 })
+  async setup() {
+    definePageMeta({
+      middleware: ['authenticated', 'agreed-responsable-terms'],
+      layout: 'register-steps',
+    })
+
+    const { $stores } = useNuxtApp()
+    const route = useRoute()
+
+    if (!$stores.auth.currentRole || $stores.auth.currentRole.contextable_type !== 'structure') {
+      return showError({ statusCode: 403 })
     }
-    const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
+    const organisation = await apiFetch(`/structures/${$stores.auth.currentRole.contextable_id}`)
 
     if (!organisation.territoire) {
-      redirect('/dashboard')
+      return await navigateTo('/dashboard')
     }
 
     return {
-      form: {
+      form: toRef({
         ...organisation.territoire,
-        zips: organisation.territoire?.zips?.length ? organisation.territoire.zips : (organisation.zip ? [organisation.zip] : []),
-        department: !organisation.territoire.department ? organisation.department : organisation.territoire.department
-      }
+        zips: organisation.territoire?.zips?.length
+          ? organisation.territoire.zips
+          : organisation.zip
+          ? [organisation.zip]
+          : [],
+        department: !organisation.territoire.department
+          ? organisation.department
+          : organisation.territoire.department,
+      }),
     }
   },
-  data () {
+  data() {
     return {
       loading: false,
       formSchema: object({
         name: string().required('Le nom est requis'),
         department: string().nullable().required('Un département est requis'),
-        zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
+        zips: array().min(1, 'Merci de renseigner au moins 1 code postal'),
       }),
-      inputGeoType: 'municipality'
     }
   },
   computed: {
-    steps () {
+    steps() {
       return [
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
-          href: '/inscription/responsable/step/profile'
+          href: '/inscription/responsable/step/profile',
         },
         {
           name: 'Votre profil',
           status: 'complete',
-          href: '/inscription/responsable/step/profile'
+          href: '/inscription/responsable/step/profile',
         },
         {
-          name: 'Informations sur l\'organisation',
+          name: "Informations sur l'organisation",
           status: 'complete',
-          href: '/inscription/responsable/step/organisation'
+          href: '/inscription/responsable/step/organisation',
         },
         {
-          name: 'Quelques mots sur l\'organisation',
+          name: "Quelques mots sur l'organisation",
           status: 'complete',
-          href: '/inscription/responsable/step/organisation-details'
-
+          href: '/inscription/responsable/step/organisation-details',
         },
         {
           name: 'Informations sur la collectivité territoriale',
-          status: 'current'
-        }
+          status: 'current',
+        },
       ]
-    }
+    },
   },
   methods: {
-    onRemovedTagItem (value) {
-      this.form.zips = this.form.zips.filter(item => item !== value)
+    onRemovedTagItem(value) {
+      this.form.zips = this.form.zips.filter((item) => item !== value)
     },
-    handleSelectedGeo (item) {
-      if (item && !this.form.zips.includes(item)) {
-        this.form.zips.push(item.postcode)
+    handleSelectedGeo(item) {
+      if (!item) {
+        return
       }
+
+      const zips = item.id.includes('all_zips')
+        ? item.postcodes.flatMap((p) => p.zip.split(','))
+        : item.postcode.split(',')
+      zips.forEach((zip) => {
+        if (!this.form.zips.includes(zip)) {
+          this.form.zips.push(zip)
+        }
+      })
     },
-    onSubmit () {
+    onSubmit() {
       if (this.loading) {
         return
       }
@@ -208,7 +224,10 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$axios.put(`/territoires/${this.form.id}`, this.form)
+          await apiFetch(`/territoires/${this.form.id}`, {
+            method: 'PUT',
+            body: this.form,
+          })
           this.$router.push('/inscription/responsable/step/collectivite-confirmation')
         })
         .catch((errors) => {
@@ -217,12 +236,13 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-
-}
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType: 'municipality',
+      })
+    },
+  },
+})
 </script>
-
-<style>
-
-</style>

@@ -1,35 +1,38 @@
 <template>
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
-      <Drawer
+      <BaseDrawer
         :is-open="showDrawerFormRole"
         form-id="form-roles"
         submit-label="Ajouter le rôle"
         @close="showDrawerFormRole = false"
       >
         <template #title>
-          <Heading :level="3">
-            Ajouter un rôle
-          </Heading>
+          <BaseHeading :level="3"> Ajouter un rôle </BaseHeading>
         </template>
         <FormProfileRole :profile="profile" @submited="handleSubmitRole" />
-      </Drawer>
-      <AlertDialog
-        theme="danger"
+      </BaseDrawer>
+      <BaseAlertDialog
+        icon="RiErrorWarningLine"
         title="Supprimer le rôle"
-        :text="`<strong>${profile.full_name}</strong> n'aura plus le rôle <strong>${$options.filters.label(roleSelected?.name, 'roles')} (${roleSelected?.pivot_model.name})</strong>`"
         :is-open="showAlertRoleDeleted"
         @confirm="handleConfirmDeleteRole"
         @cancel="showAlertRoleDeleted = false"
-      />
+      >
+        <strong>{{ profile.full_name }}</strong> n'aura plus le rôle
+        <strong
+          >{{ $filters.label(roleSelected?.name, 'roles') }} ({{
+            roleSelected?.pivot_model.name
+          }})</strong
+        >
+      </BaseAlertDialog>
       <div class="lg:col-span-3 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Informations personnelles
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="2" class="mb-8"> {{ profile.full_name }} </BaseHeading>
+          <BaseHeading :level="3" class="mb-8"> Informations personnelles </BaseHeading>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
-              <ImageCrop
+            <BaseFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
+              <BaseImageCrop
                 :default-value="form.avatar"
                 :preview-width="100"
                 :min-width="200"
@@ -37,69 +40,62 @@
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Prénom"
               html-for="first_name"
               required
               :error="errors.first_name"
             >
-              <Input
+              <BaseInput
                 v-model="form.first_name"
                 name="first_name"
                 placeholder="Jean"
                 @blur="validate('first_name')"
               />
-            </FormControl>
-            <FormControl
-              label="Nom"
-              html-for="last_name"
-              required
-              :error="errors.last_name"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Nom" html-for="last_name" required :error="errors.last_name">
+              <BaseInput
                 v-model="form.last_name"
                 name="last_name"
                 placeholder="Dupont"
                 @blur="validate('last_name')"
               />
-            </FormControl>
-            <FormControl
-              label="Email"
-              html-for="email"
-              required
-              :error="errors.email"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Email" html-for="email" required :error="errors.email">
+              <BaseInput
                 v-model="form.email"
                 type="email"
                 name="email"
                 placeholder="jean.dupont@gmail.com"
                 @blur="validate('email')"
               />
-            </FormControl>
-            <FormControl
-              label="Code postal"
-              html-for="zip"
-              required
-              :error="errors.zip"
-            >
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+              <BaseSelectAutocomplete
                 v-model="form.zip"
                 name="zip"
-                type="tel"
-                maxlength="5"
+                :options="zipAutocompleteOptions"
+                :min-length-to-search="3"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
                 placeholder="56000"
+                search-input-placeholder="Recherche par ville ou code postal"
+                options-class="md:min-w-[320px]"
+                :loading="loadingFetchZips"
+                @selected="handleSelectedZip"
+                @fetch-suggestions="onFetchZipSuggestions($event)"
                 @blur="validate('zip')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Téléphone mobile"
               html-for="mobile"
               required
               :error="errors.mobile"
             >
-              <Input
+              <BaseInput
                 v-model="form.mobile"
                 name="mobile"
                 type="tel"
@@ -107,9 +103,9 @@
                 placeholder="0612345678"
                 @blur="validate('mobile')"
               />
-            </FormControl>
-            <FormControl label="Téléphone fixe" html-for="phone" :error="errors.phone">
-              <Input
+            </BaseFormControl>
+            <BaseFormControl label="Téléphone fixe" html-for="phone" :error="errors.phone">
+              <BaseInput
                 v-model="form.phone"
                 name="phone"
                 type="tel"
@@ -117,34 +113,47 @@
                 placeholder="0123456789"
                 @blur="validate('phone')"
               />
-            </FormControl>
-            <FormControl
+            </BaseFormControl>
+            <BaseFormControl
               label="Date de naissance"
               html-for="birthday"
               required
               :error="errors.birthday"
             >
-              <InputDate v-model="form.birthday" required name="birthday" />
-            </FormControl>
-            <FormControl label="Profession" html-for="type" required :error="errors.type">
-              <SelectAdvanced
+              <BaseInputDateNative
+                v-model="form.birthday"
+                required
+                name="birthday"
+                @blur="validate('birthday')"
+              />
+            </BaseFormControl>
+            <BaseFormControl label="Profession" html-for="type" required :error="errors.type">
+              <BaseSelectAdvanced
                 v-model="form.type"
                 name="type"
                 placeholder="Sélectionnez votre profession"
                 :options="$labels.profile_type"
                 @blur="validate('type')"
               />
-            </FormControl>
-            <FormControl label="Décrivez vos motivations" html-for="description" class="md:col-span-2">
-              <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
-            </FormControl>
+            </BaseFormControl>
+            <BaseFormControl
+              label="Décrivez vos motivations"
+              html-for="description"
+              class="md:col-span-2"
+            >
+              <BaseTextarea
+                v-model="form.description"
+                name="description"
+                placeholder="Vos motivations en quelques mots..."
+              />
+            </BaseFormControl>
           </div>
-        </Box>
+        </BaseBox>
         <transition name="fade">
-          <Box v-if="canViewScAndCej" class="space-y-8">
-            <Heading :level="3" class="mb-8">
+          <BaseBox v-if="canViewScAndCej" class="space-y-8">
+            <BaseHeading :level="3" class="mb-8">
               Service Civique & Contrat d'Engagement Jeune
-            </Heading>
+            </BaseHeading>
             <div class="flex lg:space-x-8">
               <img
                 src="/images/service_civique.png"
@@ -153,22 +162,31 @@
                 title="Service Civique"
                 class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
                 data-not-lazy
-              >
-              <Toggle
+              />
+              <BaseToggle
                 v-model="form.service_civique"
                 class="flex-1"
                 label="Êtes-vous volontaire en Service Civique ?"
-                :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
+                :description="
+                  form.service_civique
+                    ? 'Oui, je suis volontaire'
+                    : 'Non, je ne suis pas volontaire'
+                "
               />
             </div>
-            <FormControl
+            <BaseFormControl
               v-if="form.service_civique"
               label="Date de début de votre Service Civique"
               html-for="service_civique_completion_date"
               :error="errors.service_civique_completion_date"
             >
-              <InputDate v-model="form.service_civique_completion_date" active-picker="MONTH" required name="service_civique_completion_date" />
-            </FormControl>
+              <BaseInputDate
+                v-model="form.service_civique_completion_date"
+                active-picker="MONTH"
+                required
+                name="service_civique_completion_date"
+              />
+            </BaseFormControl>
             <div class="flex lg:space-x-8">
               <img
                 src="/images/cej.png"
@@ -177,255 +195,293 @@
                 title="Contrat d'Engagement Jeune"
                 class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
                 data-not-lazy
-              >
-              <Toggle
+              />
+              <BaseToggle
                 v-model="form.cej"
                 class="flex-1"
                 label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+                :description="
+                  form.cej
+                    ? 'Oui, je suis en Contrat d\'Engagement Jeune'
+                    : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
+                "
               />
             </div>
-            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
+            <BaseFormControl
+              v-if="form.cej"
+              label="Email de votre conseiller CEJ"
+              html-for="cej_email_adviser"
+              :error="errors.cej_email_adviser"
+              required
+            >
               <template #afterLabel>
                 <span
                   v-tooltip="{
-                    content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                    content:
+                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
                   }"
                   class="p-1 cursor-help group"
                 >
-                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                  <RiErrorWarningLine
+                    class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]"
+                  />
                 </span>
               </template>
-              <Input
+              <BaseInput
                 v-model="form.cej_email_adviser"
                 name="cej_email_adviser"
-                placeholder="jean.dupont@gmail.com"
+                placeholder="Saisissez l'email de votre conseiller CEJ"
                 @blur="validate('cej_email_adviser')"
               />
-            </FormControl>
-          </Box>
+            </BaseFormControl>
+          </BaseBox>
         </transition>
-        <Box v-if="$store.getters.contextRole === 'admin'">
-          <Heading :level="3" class="mb-8">
-            Tags
-          </Heading>
-          <CheckboxGroup
+        <BaseBox v-if="$stores.auth.contextRole === 'admin'">
+          <BaseHeading :level="3" class="mb-8"> Tags </BaseHeading>
+          <BaseCheckboxGroup
             v-model="form.tags"
             name="tags"
             variant="button"
             is-model
             :options="tags"
           />
-        </Box>
+        </BaseBox>
       </div>
       <div class="md:col-span-2 space-y-12">
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Disponibilités
-          </Heading>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Disponibilités </BaseHeading>
 
           <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="handleSubmit">
-            <Toggle
+            <BaseToggle
               v-model="form.is_visible"
               :label="form.is_visible ? 'Visible des organisations' : 'Invisible des organisations'"
               description="Souhaitez-vous que les organisations de la plateforme vous proposent des missions ?"
             />
-            <FormControl
+            <BaseFormControl
               label="Sélectionnez vos disponibilités"
               html-for="disponibilities"
               required
               :error="errors.disponibilities"
             >
-              <CheckboxGroup
+              <BaseCheckboxGroup
                 v-model="form.disponibilities"
                 name="disponibilities"
                 variant="button"
                 :options="$labels.disponibilities"
               />
-            </FormControl>
+            </BaseFormControl>
             <div>
-              <FormLabel html-for="frequence" required>
+              <BaseFormLabel html-for="frequence" required>
                 À quelle fréquence souhaitez-vous vous engager&nbsp;?
-              </FormLabel>
+              </BaseFormLabel>
               <div class="flex flex-col sm:flex-row gap-2 lg:gap-4 sm:items-center">
                 <div class="lg:w-1/2">
-                  <SelectAdvanced
+                  <BaseSelectAdvanced
                     v-model="form.commitment__duration"
                     name="commitment__duration"
                     placeholder="Durée"
                     :options="$labels.duration"
                   />
-                  <FormError v-if="errors.commitment__duration">
+                  <BaseFormError v-if="errors.commitment__duration">
                     {{ errors.commitment__time_period }}
-                  </FormError>
+                  </BaseFormError>
                 </div>
-                <div class="flex-none text-sm">
-                  par
-                </div>
+                <div class="flex-none text-sm">par</div>
                 <div class="lg:w-1/2">
-                  <SelectAdvanced
+                  <BaseSelectAdvanced
                     v-model="form.commitment__time_period"
                     name="commitment__time_period"
                     placeholder="Fréquence"
                     :options="$labels.time_period"
                   />
-                  <FormError v-if="errors.commitment__time_period">
+                  <BaseFormError v-if="errors.commitment__time_period">
                     {{ errors.commitment__time_period }}
-                  </FormError>
+                  </BaseFormError>
                 </div>
               </div>
             </div>
           </form>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Activités
-          </Heading>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Activités </BaseHeading>
           <div v-if="form.activities.length" class="mt-6">
             <div class="flex flex-wrap gap-2">
-              <TagFormItem
-                v-for="item in activitiesOptions2.filter(activityOption => { return form.activities.find(e => e.id == activityOption.id)} )"
+              <BaseTagFormItem
+                v-for="item in activitiesOptions2.filter((activityOption) => {
+                  return form.activities.find((e) => e.id == activityOption.id)
+                })"
                 :key="item.id"
                 :tag="item"
                 @removed="onRemovedActivityItem"
               >
                 {{ item.name }}
-              </TagFormItem>
+              </BaseTagFormItem>
             </div>
           </div>
-          <Drawer :is-open="showDrawerActivity" form-id="form-activities" submit-label="Enregistrer" @close="showDrawerActivity = false">
+          <BaseDrawer
+            :is-open="showDrawerActivity"
+            form-id="form-activities"
+            submit-label="Enregistrer"
+            @close="showDrawerActivity = false"
+          >
             <template #title>
-              <Heading :level="3">
-                Ajouter une activité
-              </Heading>
+              <BaseHeading :level="3"> Ajouter une activité </BaseHeading>
             </template>
             <form id="form-activities" class="mt-8" @submit.prevent="handleSubmit">
-              <FormControl label="Renseignez les activités qui vous intéressent" html-for="activites">
+              <BaseFormControl
+                label="Renseignez les activités qui vous intéressent"
+                html-for="activites"
+              >
                 <div class="bg-white border">
-                  <Disclosure :default-open="true" class="py-4 border-b px-4">
+                  <BaseDisclosure :default-open="true" class="py-4 border-b px-4">
                     <template #button="{ isOpen }">
                       <div class="flex font-semibold text-sm items-center justify-between group">
                         <div class="flex-shrink-0 group-hover:text-gray-600">
                           Activités les plus populaires
                         </div>
-                        <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                        <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                        <RiSubstractLine
+                          v-if="isOpen"
+                          class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5"
+                        />
+                        <RiAddLine
+                          v-else
+                          class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5"
+                        />
                       </div>
                     </template>
                     <div class="mt-3 space-y-3">
-                      <CheckboxGroup
+                      <BaseCheckboxGroup
                         :key="'popular-' + form.activities.join(',')"
                         v-model="form.activities"
                         name="activites"
                         variant="button"
-                        :options="activitiesOptions.filter(activity => activity.popular)"
+                        :options="activitiesOptions.filter((activity) => activity.popular)"
                         is-model
                       />
                     </div>
-                  </Disclosure>
-                  <Disclosure v-for="(domain, i) in domainsOptions" :key="domain" class="py-4 px-4" :class="[{'border-b': i < domainsOptions.length - 1}]">
+                  </BaseDisclosure>
+                  <BaseDisclosure
+                    v-for="(domain, i) in domainsOptions"
+                    :key="domain"
+                    class="py-4 px-4"
+                    :class="[{ 'border-b': i < domainsOptions.length - 1 }]"
+                  >
                     <template #button="{ isOpen }">
                       <div class="flex font-semibold text-sm items-center justify-between group">
                         <div class="flex-shrink-0 group-hover:text-gray-600">
                           {{ domain }}
                         </div>
-                        <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                        <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                        <RiSubstractLine
+                          v-if="isOpen"
+                          class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5"
+                        />
+                        <RiAddLine
+                          v-else
+                          class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5"
+                        />
                       </div>
                     </template>
                     <div class="mt-3 space-y-3">
-                      <CheckboxGroup
+                      <BaseCheckboxGroup
                         :key="domain + form.activities.join(',')"
                         v-model="form.activities"
                         name="activites"
                         variant="button"
-                        :options="activitiesOptions.filter(activity => activity.domain.includes(domain))"
+                        :options="
+                          activitiesOptions.filter((activity) => activity.domain.includes(domain))
+                        "
                         is-model
                       />
                     </div>
-                  </Disclosure>
+                  </BaseDisclosure>
                 </div>
-              </FormControl>
+              </BaseFormControl>
             </form>
-          </Drawer>
-          <Button size="sm" :class="[{'mt-6': form.activities.length > 0}]" variant="white" @click.native="showDrawerActivity = true">
-            <PlusIcon class="mr-2" />Ajouter une activité
-          </Button>
-        </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Compétences
-          </Heading>
+          </BaseDrawer>
+          <BaseButton
+            size="sm"
+            :class="[{ 'mt-6': form.activities.length > 0 }]"
+            variant="white"
+            icon="RiAddLine"
+            @click.native="showDrawerActivity = true"
+          >
+            Ajouter une activité
+          </BaseButton>
+        </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> Compétences </BaseHeading>
 
-          <FormControl label="Renseignez vos compétences" html-for="algolia-search">
-            <AlgoliaSkillsInput
-              :items="form.skills"
-              @add-item="handleSelectItems"
+          <BaseFormControl label="Renseignez vos compétences" html-for="algolia-search">
+            <AlgoliaInputAutocomplete
+              index="termsIndex"
+              attribute-right-label="group"
+              :search-parameters="{
+                facetFilters: [['vocabulary_name:Skills']],
+                hitsPerPage: 6,
+              }"
+              @selected="handleSelectItems"
             />
-          </FormControl>
+          </BaseFormControl>
 
           <div v-if="form.skills.length" class="mt-6">
             <div class="flex flex-wrap gap-2">
-              <TagFormItem
+              <BaseTagFormItem
                 v-for="item in form.skills"
                 :key="item.id"
                 :tag="item"
                 @removed="onRemovedTagItem"
               >
                 {{ item.name }}
-              </TagFormItem>
+              </BaseTagFormItem>
             </div>
           </div>
-        </Box>
-        <Box v-if="$store.getters.contextRole === 'admin'">
-          <Heading :level="3" class="mb-8">
-            Rôles
-          </Heading>
+        </BaseBox>
+        <BaseBox v-if="$stores.auth.contextRole === 'admin'">
+          <BaseHeading :level="3" class="mb-8"> Rôles </BaseHeading>
 
           <div v-if="profile.user?.roles" class="grid grid-cols-1 divide-y -my-4">
             <div
               v-for="role in profile.user.roles"
               :key="role.id"
-              class="flex items-center justify-between  h-16"
+              class="flex items-center justify-between h-16"
               :class="[role.name != 'admin' && 'group hover:cursor-pointer']"
               @click="handleClickRole(role)"
             >
               <div class="text-gray-700 font-medium mr-4 truncate group-hover:underline">
                 <template v-if="role.pivot_model">
-                  <span v-if="role.pivot_model.number">{{ role.pivot_model.number }} -</span> {{ role.pivot_model.name }}
+                  <span v-if="role.pivot_model.number">{{ role.pivot_model.number }} -</span>
+                  {{ role.pivot_model.name }}
                 </template>
-                <template v-else-if="role.name == 'admin'">
-                  Modérateur
-                </template>
+                <template v-else-if="role.name == 'admin'"> Modérateur </template>
               </div>
               <div class="group-hover:hidden">
-                <Badge color="gray-light" size="xxs">
-                  {{ role.name | label('roles') }}
-                </Badge>
+                <BaseBadge color="gray-light" size="xxs">
+                  {{ $filters.label(role.name, 'roles') }}
+                </BaseBadge>
               </div>
-              <div class="text-jva-red-500 text-sm font-medium group-hover:block hidden w-[140px] text-right">
+              <div
+                class="text-jva-red-500 text-sm font-medium group-hover:block hidden w-[140px] text-right"
+              >
                 Supprimer ?
               </div>
             </div>
           </div>
-          <Button size="sm" class="mb-8 mt-6" variant="white" @click.native="showDrawerFormRole = true">
-            <PlusIcon class="mr-2" />Ajouter un rôle
-          </Button>
+          <BaseButton
+            size="sm"
+            class="mb-8 mt-6"
+            variant="white"
+            icon="RiAddLine"
+            @click.native="showDrawerFormRole = true"
+          >
+            Ajouter un rôle
+          </BaseButton>
           <div class="gap-8 grid grid-cols-1">
-            <Toggle
+            <BaseToggle
               v-model="form.can_export_profiles"
-              :description="form.can_export_profiles ? 'Oui' : 'Non'"
-              label="Export des utilisateurs"
+              label="Export des utilisateurs et des participations"
             />
           </div>
-        </Box>
-      </div>
-    </div>
-    <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
-      <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
-          Enregistrer
-        </Button>
+        </BaseBox>
       </div>
     </div>
   </div>
@@ -433,79 +489,137 @@
 
 <script>
 import { string, object, array, date } from 'yup'
-import { cloneDeep } from 'lodash'
-import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
-import FormProfileRole from '@/components/form/FormProfileRole'
+import FormProfileRole from '@/components/form/FormProfileRole.vue'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    AlgoliaSkillsInput,
-    FormProfileRole
+    FormProfileRole,
   },
-  mixins: [FormErrors, FormUploads, Emailable],
+  mixins: [FormErrors, FormUploads, Emailable, GeolocProfile],
   props: {
     profile: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       loading: false,
-      form: cloneDeep(this.profile),
+      form: _cloneDeep(this.profile),
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
-        birthday: date().test(
-          'test-birthday-required',
-          "Une date d'anniversaire est requise",
-          (birthday) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || birthday
-          }
-        ).nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        birthday: date()
+          .test('test-birthday-required', "Une date d'anniversaire est requise", (birthday) => {
+            return ['admin'].includes(this.$stores.auth.contextRole) || birthday
+          })
+          .test(
+            'is-old-enough',
+            'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans',
+            (date) => {
+              if (!date) {
+                return true
+              }
+              const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+              return age >= 16
+            }
+          )
+          .nullable()
+          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
-        type: string().nullable().test(
-          'test-profession-required',
-          'Une profession est requise',
-          (type) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || type
-          }
-        ),
-        mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').test(
-          'test-mobile-required',
-          'Un mobile est requis',
-          (mobile) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || mobile
-          }
-        ).transform(v => v === '' ? null : v),
-        phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
-        zip: string().nullable().min(5, 'Le format du code postal est incorrect').test(
-          'test-zip-required',
-          'Un code postal est requis',
-          (zip) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || zip
-          }
-        ),
-        disponibilities: array().transform(v => (!v ? [] : v)).test(
-          'test-disponibilities-required',
-          'Merci de sélectionner au moins 1 disponibilité',
-          (disponibilities) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || disponibilities.length >= 1
-          }
-        ),
-        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
-          is: true,
-          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
-        }),
-        service_civique_completion_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null))
+        type: string()
+          .nullable()
+          .test('test-profession-required', 'Une profession est requise', (type) => {
+            return ['admin'].includes(this.$stores.auth.contextRole) || type
+          }),
+        mobile: string()
+          .nullable()
+          .min(10, 'Le mobile doit contenir au moins 10 caractères')
+          .matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect')
+          .test('test-mobile-required', 'Un mobile est requis', (mobile) => {
+            return ['admin'].includes(this.$stores.auth.contextRole) || mobile
+          })
+          .transform((v) => (v === '' ? null : v)),
+        phone: string()
+          .nullable()
+          .min(10, 'Le téléphone doit contenir au moins 10 caractères')
+          .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
+          .transform((v) => (v === '' ? null : v)),
+        zip: string()
+          .transform((v) => (v === '' ? null : v))
+          .nullable()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .test('test-zip-required', 'Un code postal est requis', (zip) => {
+            return ['admin'].includes(this.$stores.auth.contextRole) || zip
+          }),
+        disponibilities: array()
+          .transform((v) => (!v ? [] : v))
+          .test(
+            'test-disponibilities-required',
+            'Merci de sélectionner au moins 1 disponibilité',
+            (disponibilities) => {
+              return (
+                ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
+              )
+            }
+          ),
+        cej_email_adviser: string()
+          .nullable()
+          .email("Le format de l'email est incorrect")
+          .when('cej', {
+            is: true,
+            then: (schema) =>
+              schema
+                .required("L'email de votre conseiller CEJ est obligatoire")
+                .test(
+                  'email-extension',
+                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    const forbiddenExtensions = [
+                      'gmail.com',
+                      'icloud.com',
+                      'outlook.com',
+                      'orange.fr',
+                      'wanadoo.fr',
+                      'hotmail.com',
+                      'hotmail.fr',
+                      'free.fr',
+                      'sfr.fr',
+                      'laposte.net',
+                    ]
+                    const emailParts = value.split('@')
+                    const emailExtension = emailParts[1]
+                    return !forbiddenExtensions.includes(emailExtension)
+                  }
+                )
+                .test(
+                  'no-current-user-email',
+                  "Vous devez saisir l'email du conseiller CEJ et non celui du bénévole",
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    return value !== this.form.email
+                  }
+                ),
+          }),
+        service_civique_completion_date: date()
+          .nullable()
+          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
       autocompleteReseauxOptions: [],
       activitiesOptions,
-      activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
+      activitiesOptions2: activitiesOptions.map((activity) => {
+        return { id: activity.key, name: activity.label }
+      }),
       showDrawerActivity: false,
       showDrawerFormRole: false,
       showAlertRoleDeleted: false,
@@ -518,42 +632,48 @@ export default {
         'Prévention et protection',
         'Protection de la nature',
         'Solidarité et insertion',
-        'Sport pour tous'
+        'Sport pour tous',
       ],
-      tags: []
+      tags: [],
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {
-    canViewScAndCej () {
+    canViewScAndCej() {
       if (this.form.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
       }
       return false
-    }
+    },
   },
   watch: {
-    'form.cej' (val) {
+    'form.cej'(val) {
       if (!val) {
         this.form.cej_email_adviser = null
       }
-    }
+    },
   },
-  async mounted () {
-    const { data } = await this.$axios.get('/vocabularies/profiles/terms', { params: { pagination: 50 } })
-    this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
+  async mounted() {
+    const terms = await apiFetch('/vocabularies/profiles/terms', {
+      params: { pagination: 50 },
+    })
+    this.tags = terms.data.map((tag) => {
+      return { key: tag.id, label: tag.name }
+    })
   },
   methods: {
-    handleSelectItems (item) {
-      this.$set(this.form, 'skills', [...this.form.skills, item])
+    handleSelectItems(item) {
+      this.form.skills = [...this.form.skills, item]
     },
-    onRemovedTagItem (item) {
-      this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    onRemovedTagItem(item) {
+      this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
     },
-    onRemovedActivityItem (item) {
-      this.form.activities = this.form.activities.filter(activity => activity.id !== item.id)
+    onRemovedActivityItem(item) {
+      this.form.activities = this.form.activities.filter((activity) => activity.id !== item.id)
     },
-    async handleSubmit () {
+    async handleSubmit() {
       if (this.loading) {
         return
       }
@@ -569,48 +689,56 @@ export default {
               return
             }
           }
+
           await this.uploadFiles('profile', this.form.id)
-          if (this.form.id === this.$store.state.auth.user.profile.id) {
-            await this.$store.dispatch('auth/updateProfile', {
-              id: this.$store.getters.profile.id,
-              ...this.form
+
+          if (this.form.id === this.$stores.auth.user.profile.id) {
+            await this.$stores.auth.updateProfile({
+              id: this.$stores.auth.profile?.id,
+              ...this.form,
             })
-            // this.loading = false
             this.$router.push('/profile')
           } else {
-            await this.$axios.put(`/profiles/${this.form.id}`, this.form)
+            await apiFetch(`/profiles/${this.form.id}`, {
+              method: 'PUT',
+              body: this.form,
+            })
             this.$router.push(`/admin/utilisateurs/${this.form.id}`)
           }
           this.$toast.success('Modifications enregistrées')
-          // this.$emit('submited', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)
-        // throw new Error('error')
         })
         .finally(() => {
           this.loading = false
         })
     },
-    async onFetchReseauxSuggestions (value) {
-      const res = await this.$axios.get('/reseaux', {
+    async onFetchReseauxSuggestions(value) {
+      const reseaux = await apiFetch('/reseaux', {
         params: {
           'filter[search]': value,
-          pagination: 6
-        }
+          pagination: 6,
+        },
       })
-      this.autocompleteReseauxOptions = res.data.data
+      this.autocompleteReseauxOptions = reseaux.data
     },
-    handleClickRole (role) {
+    handleClickRole(role) {
       switch (role.name) {
         case 'responsable':
-          window.open(`${window.location.origin}/admin/organisations/${role.pivot.rolable_id}#membres`)
+          window.open(
+            `${window.location.origin}/admin/organisations/${role.pivot.rolable_id}#membres`
+          )
           break
         case 'responsable_territoire':
-          window.open(`${window.location.origin}/admin/contenus/territoires/${role.pivot.rolable_id}#responsables`)
+          window.open(
+            `${window.location.origin}/admin/contenus/territoires/${role.pivot.rolable_id}#responsables`
+          )
           break
         case 'tete_de_reseau':
-          window.open(`${window.location.origin}/admin/contenus/reseaux/${role.pivot.rolable_id}#responsables`)
+          window.open(
+            `${window.location.origin}/admin/contenus/reseaux/${role.pivot.rolable_id}#responsables`
+          )
           break
         case 'referent':
         case 'referent_regional':
@@ -619,15 +747,17 @@ export default {
           break
       }
     },
-    async handleConfirmDeleteRole () {
-      await this.$axios.delete(`/users/${this.profile.user_id}/roles/${this.roleSelected.id}`)
+    async handleConfirmDeleteRole() {
+      await apiFetch(`/users/${this.profile.user_id}/roles/${this.roleSelected.id}`, {
+        method: 'DELETE',
+      })
       this.$emit('role-changed')
       this.showAlertRoleDeleted = false
     },
-    handleSubmitRole () {
+    handleSubmitRole() {
       this.$emit('role-changed')
       this.showDrawerFormRole = false
-    }
-  }
-}
+    },
+  },
+})
 </script>

@@ -6,7 +6,8 @@
       >
         <template v-if="form.grade > 3">
           <h1>
-            <span class="font-extrabold">{{ benevole.first_name }}</span>, comment s'est déroulée votre mission&nbsp;?
+            <span class="font-extrabold">{{ benevole.first_name }}</span
+            >, comment s'est déroulée votre mission&nbsp;?
           </h1>
 
           <div class="font-medium text-md sm:text-xl text-[#808080]">
@@ -23,27 +24,19 @@
         ref="testimonyForm"
         class="py-8 max-w-[638px] mx-auto grid gap-6 lg:gap-8"
         style="filter: drop-shadow(0px 20px 50px rgba(0, 0, 0, 0.15))"
-        @submit.prevent="onSubmit"
       >
-        <FormControl
-          html-for="testimony"
-        >
-          <Textarea
+        <BaseFormControl html-for="testimony">
+          <BaseTextarea
             v-model="form.testimony"
             name="testimony"
             :placeholder="placeholder"
             @blur="validate('testimony')"
           />
-        </FormControl>
+        </BaseFormControl>
 
-        <Button
-          type="submit"
-          full
-          size="xl"
-          @click="onSubmit"
-        >
+        <BaseButton type="submit" full size="xl" @click.prevent="onSubmit">
           {{ labelCta }}
-        </Button>
+        </BaseButton>
       </form>
     </div>
   </div>
@@ -53,61 +46,67 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
-export default {
+export default defineNuxtComponent({
+  emits: ['submit', 'destroy'],
   mixins: [FormErrors],
   props: {
     notificationTemoignage: {
       type: Object,
-      required: true
+      required: true,
     },
     mission: {
       type: Object,
-      required: true
+      required: true,
     },
     benevole: {
       type: Object,
-      required: true
+      required: true,
     },
     initialForm: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       form: { ...this.initialForm },
       formSchema: object({
-        testimony: string().min(50).required('Votre témoignage est requis')
-      })
+        testimony: string().min(50).required('Votre témoignage est requis'),
+      }),
     }
   },
   computed: {
-    placeholder () {
+    placeholder() {
       return this.form?.grade < 3
         ? 'Dites-nous comment améliorer la qualité de cette mission'
         : 'Partagez votre expérience avec la communauté de bénévoles'
     },
-    labelCta () {
-      return this.form?.grade < 3
-        ? 'Partager mon retour'
-        : 'Publier mon témoignage'
-    }
+    labelCta() {
+      return this.form?.grade < 3 ? 'Partager mon retour' : 'Publier mon témoignage'
+    },
   },
-  beforeDestroy () {
+  beforeUnmount() {
     this.$emit('destroy', this.form)
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          this.$store.dispatch('temoignage/nextStep')
-
-          await this.$axios.post('/temoignages', {
-            ...this.form,
-            participation_id: this.notificationTemoignage.participation_id
+          await apiFetch('/temoignages', {
+            method: 'POST',
+            body: {
+              ...this.form,
+              participation_id: this.notificationTemoignage.participation_id,
+            },
           })
-          this.$emit('submit', this.form)
+            .then(() => {
+              this.$emit('submit', this.form)
+              this.$stores.temoignage.nextStep()
+            })
+            .catch((errors) => {
+              this.setErrors(errors)
+            })
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -115,7 +114,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    }
-  }
-}
+    },
+  },
+})
 </script>

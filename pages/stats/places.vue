@@ -1,39 +1,30 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Statistiques', to: '/stats' },
-          { text: 'Places' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Places' }]" />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Places disponibles"
-    >
+    <BaseSectionHeading title="Places disponibles">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic :filters="['department']" @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
-    </SectionHeading>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
+    </BaseSectionHeading>
 
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />
-      <Heading as="h2" :level="2">
-        L'offre actuelle en détail
-      </Heading>
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <PlacesByActivities ref="placesByActivities" />
-          <PlacesByOrganisations ref="placesByOrganisations" />
-          <PlacesByReseaux ref="placesByReseaux" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <PlacesByDomaines ref="placesByDomaines" />
-          <PlacesByMissions ref="placesByMissions" />
-        </div>
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8"> L'offre actuelle en détail </BaseHeading>
+
+        <PlacesByActivities ref="placesByActivities" />
+        <PlacesByOrganisations ref="placesByOrganisations" />
+        <PlacesByReseaux ref="placesByReseaux" />
+        <PlacesByDomaines ref="placesByDomaines" />
+        <PlacesByMissions ref="placesByMissions" />
       </div>
     </div>
   </div>
@@ -45,11 +36,11 @@ import PlacesByOrganisations from '@/components/statistics/PlacesByOrganisations
 import PlacesByMissions from '@/components/statistics/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/statistics/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/statistics/PlacesByActivities.vue'
-import PlacesStatistics from '@/components/statistics/PlacesStatistics'
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import PlacesStatistics from '@/components/statistics/PlacesStatistics.vue'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
     FiltersStatisticsPublic,
     PlacesByReseaux,
@@ -58,25 +49,39 @@ export default {
     PlacesByDomaines,
     PlacesByActivities,
     PlacesStatistics,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics-public',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-public',
+    })
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department']
+    },
+  },
+  data() {
     return {}
   },
   methods: {
-    refetch () {
-      this.$refs.placesByActivities.$fetch()
-      this.$refs.placesByDomaines.$fetch()
-      this.$refs.placesByReseaux.$fetch()
-      this.$refs.placesByMissions.$fetch()
-      this.$refs.placesByOrganisations.$fetch()
-      this.$refs.placesStatistics.$fetch()
-    }
-  }
-}
+    refetch() {
+      this.$refs.placesByActivities?.fetch()
+      this.$refs.placesByDomaines?.fetch()
+      this.$refs.placesByReseaux?.fetch()
+      this.$refs.placesByMissions?.fetch()
+      this.$refs.placesByOrganisations?.fetch()
+      this.$refs.placesStatistics?.fetch()
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

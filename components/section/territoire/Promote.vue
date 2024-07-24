@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="section-promote bg-[#fafaff]"
-  >
+  <section class="section-promote bg-[#fafaff]">
     <div class="container px-4 mx-auto">
       <div>
         <div class="shadow-lg rounded-2xl overflow-hidden">
@@ -10,7 +8,7 @@
               src="/images/territoires/bg-promote.jpg"
               srcset="/images/territoires/bg-promote@2x.jpg 2x"
               class="bg-img absolute object-cover w-full h-full"
-            >
+            />
 
             <div
               class="absolute inset-0 w-full h-full opacity-[0.85]"
@@ -20,15 +18,13 @@
 
             <div class="relative text-white">
               <div class="flex items-stretch flex-col lg:flex-row">
-                <div
-                  class="flex-shrink-0 p-8 lg:p-10 xl:p-16 lg:border-r flex"
-                >
+                <div class="flex-shrink-0 p-8 lg:p-10 xl:p-16 lg:border-r flex">
                   <img
                     src="/images/territoires/jva_logo_territoires.svg"
                     alt="Je Veux Aider"
                     width="150px"
                     class="m-auto"
-                  >
+                  />
                 </div>
 
                 <div class="flex flex-col w-full">
@@ -44,32 +40,20 @@
                     <div
                       class="p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">
-                        460 000
-                      </div>
-                      <div class="text-lg">
-                        bénévoles<br>inscrits
-                      </div>
+                      <div class="font-extrabold text-4xl">550 000</div>
+                      <div class="text-lg">bénévoles<br />inscrits</div>
                     </div>
                     <div
                       class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">
-                        11 200
-                      </div>
-                      <div class="text-lg">
-                        organisations<br>partenaires
-                      </div>
+                      <div class="font-extrabold text-4xl">13 800</div>
+                      <div class="text-lg">organisations<br />partenaires</div>
                     </div>
                     <div
                       class="pb-4 sm:p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">
-                        15 000
-                      </div>
-                      <div class="text-lg">
-                        missions<br>disponibles
-                      </div>
+                      <div class="font-extrabold text-4xl">18 000</div>
+                      <div class="text-lg">missions<br />disponibles</div>
                     </div>
                   </div>
                 </div>
@@ -83,14 +67,14 @@
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     territoire: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>
 
 <style lang="postcss" scoped>

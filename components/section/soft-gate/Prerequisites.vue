@@ -1,56 +1,85 @@
 <template>
-  <div v-if="$store.state.softGate.selectedMission">
+  <div v-if="$stores.softGate.selectedMission">
     <div class="text-center mb-8">
-      <Heading as="div" size="lg" class="mb-2 lg:mb-4">
-        Avant toute chose
-      </Heading>
-      <div class="text-cool-gray-500 max-w-md mx-auto">
-        <span>Le responsable de l’organisation précise <br class="hidden sm:block"></span>
-        <span>{{ $store.state.softGate.selectedMission.prerequisites.length | pluralize('le ', 'les', false) }}</span>
-        <b> pré-requis </b>
-        <span>{{ $store.state.softGate.selectedMission.prerequisites.length | pluralize('suivant', 'suivants', false) }}</span>
-        <span> pour cette mission :</span>
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+        Pré-requis pour la mission
+      </DsfrHeading>
+      <div class="text-cool-gray-500 lg:text-lg max-w-sm mx-auto">
+        <span
+          >Cochez
+          {{ $filters.pluralize(options.length, 'le', 'les', false) }}
+          <span class="font-extrabold"> pré-requis </span>
+          {{ $filters.pluralize(options.length, 'suivant', 'suivants', false) }}
+          pour valider votre candidature</span
+        >
+      </div>
+    </div>
+    <div>
+      <div class="mt-8">
+        <BaseCheckboxGroup
+          v-model="checkedPrerequisites"
+          name="prerequisites"
+          variant="checkbox"
+          size="lg"
+          :options="options"
+        />
       </div>
 
-      <ol
-        :class="[
-          'hyphens-auto text-left max-w-md mx-auto inline-block mt-4',
-          {'list-decimal pl-6': $store.state.softGate.selectedMission.prerequisites.length > 1}
-        ]"
-      >
-        <li v-for="(prerequisite, key) in $store.state.softGate.selectedMission.prerequisites" :key="key">
-          {{ prerequisite }}
-        </li>
-      </ol>
-    </div>
-
-    <div class="max-w-md mx-auto flex flex-col gap-4">
-      <Button
-        size="lg"
-        @click.native="$emit('next')"
-      >
-        J'ai compris
-      </Button>
-
-      <Button type="tertiary" @click.native="$emit('close')">
-        Retour
-      </Button>
+      <div class="text-center mt-8">
+        <div>
+          <DsfrButton size="lg" @click.native="$emit('next')" :disabled="disabled" class="w-full">
+            Je confirme
+            {{ $filters.pluralize(options.length, 'ce', 'ces', false) }}
+            pré-requis
+          </DsfrButton>
+        </div>
+        <div class="mt-4">
+          <DsfrLink @click.native="$emit('close')" class="text-jva-blue-500"> Retour </DsfrLink>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Heading from '@/components/dsfr/Heading.vue'
-import Button from '@/components/dsfr/Button.vue'
-
-export default {
-  name: 'SoftGatePrerequisites',
-  components: {
-    Heading,
-    Button
+export default defineNuxtComponent({
+  props: {
+    checkDistance: {
+      type: Boolean,
+      default: false,
+    },
   },
-  data () {
-    return {}
-  }
-}
+  name: 'SoftGatePrerequisites',
+  data() {
+    return {
+      checkedPrerequisites: [],
+    }
+  },
+  computed: {
+    disabled() {
+      return this.options.length !== this.checkedPrerequisites.length
+    },
+    userZip() {
+      return `${this.$stores.auth.user.profile.zip} - ${this.$stores.auth.user.profile.city}`
+    },
+    options() {
+      if (this.checkDistance) {
+        this.prerequisites.push({
+          key: 'distance',
+          label: `Je suis en mesure de me déplacer bien que mon code postal (${this.userZip}) se situe à plus de 30 kms du lieu de la mission`,
+        })
+      }
+      return this.prerequisites
+    },
+    prerequisites() {
+      if (!this.$stores.softGate.selectedMission.prerequisites) {
+        return []
+      }
+      return this.$stores.softGate.selectedMission.prerequisites.map((prerequisite, key) => ({
+        key,
+        label: prerequisite,
+      }))
+    },
+  },
+})
 </script>

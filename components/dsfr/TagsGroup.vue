@@ -1,22 +1,19 @@
 <template>
   <div>
-    <div
-      :class="[
-        'flex flex-wrap gap-2',
-        wrapperClass
-      ]"
-    >
-      <Tag
+    <div :class="['flex flex-wrap gap-2 lg:gap-4', wrapperClass]">
+      <DsfrTag
         v-for="option in options"
         :key="option.key"
         as="button"
         context="selectable"
         size="md"
-        :is-selected="isModel ? modelValue.some(item => item.id == option.key) : modelValue.includes(option.key)"
+        :is-active="
+          isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
+        "
         @click.native.prevent="onClick(option.key)"
       >
         {{ option.label }}
-      </Tag>
+      </DsfrTag>
     </div>
     <div v-if="error" class="text-xs text-red-500 mt-1">
       {{ error }}
@@ -25,49 +22,41 @@
 </template>
 
 <script>
-import Tag from '@/components/dsfr/Tag.vue'
-
-export default {
-  components: {
-    Tag
-  },
+export default defineNuxtComponent({
+  emits: ['update:modelValue', 'updated'],
   props: {
-    value: { type: Array, default: () => [] },
+    modelValue: { type: Array, default: () => [] },
     options: { type: Array, required: true },
     error: { type: String, default: null },
     isModel: { type: Boolean, default: false },
-    wrapperClass: { type: String, default: '' }
+    wrapperClass: { type: String, default: '' },
   },
-  data () {
-    return {
-      modelValue: this.value || []
-    }
-  },
-  watch: {
-    value (newVal) {
-      this.modelValue = newVal
-    }
+  computed: {
+    value() {
+      return this.modelValue ?? []
+    },
   },
   methods: {
-    onClick (toggleItemKey) {
+    onClick(toggleItemKey) {
       if (this.isModel) {
-        const index = this.modelValue.findIndex(item => item.id == toggleItemKey)
+        const index = this.value.findIndex((item) => item.id == toggleItemKey)
         if (index > -1) {
-          this.modelValue.splice(index, 1)
+          this.value.splice(index, 1)
         } else {
-          this.modelValue.push({ id: toggleItemKey })
+          this.value.push({ id: toggleItemKey })
         }
-      } else if (this.modelValue.includes(toggleItemKey)) {
-        const index = this.modelValue.indexOf(toggleItemKey)
+      } else if (this.value.includes(toggleItemKey)) {
+        const index = this.value.indexOf(toggleItemKey)
         if (index > -1) {
-          this.modelValue.splice(index, 1)
+          this.value.splice(index, 1)
         }
       } else {
-        this.modelValue.push(toggleItemKey)
+        this.value.push(toggleItemKey)
       }
 
-      this.$emit('input', this.modelValue)
-    }
-  }
-}
+      this.$emit('update:modelValue', this.value)
+      this.$emit('updated', this.value)
+    },
+  },
+})
 </script>

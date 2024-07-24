@@ -1,28 +1,30 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
-        Réseau
-      </div>
-      <Link v-if="['admin', 'referent'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${missionTemplate.reseau.id}`" icon="ChevronRightIcon">
+      <div class="uppercase font-semibold text-gray-600">Réseau</div>
+      <BaseLink
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+        :to="`/admin/contenus/reseaux/${missionTemplate.reseau.id}`"
+        icon="RiArrowRightSLine"
+      >
         Consulter
-      </Link>
+      </BaseLink>
     </div>
-    <Box variant="flat" padding="xs">
-      <DescriptionList>
-        <DescriptionListItem term="Nom" :description="missionTemplate.reseau.name" />
-      </DescriptionList>
-    </Box>
+    <BaseBox variant="flat" padding="xs">
+      <BaseDescriptionList>
+        <BaseDescriptionListItem term="Nom" :description="missionTemplate.reseau.name" />
+      </BaseDescriptionList>
+    </BaseBox>
   </div>
 </template>
 
 <script>
-export default {
+export default defineNuxtComponent({
   props: {
     missionTemplate: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+})
 </script>

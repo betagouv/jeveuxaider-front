@@ -2,54 +2,50 @@
   <div class="w-full lg:min-h-screen flex flex-col lg:flex-row">
     <div class="bg-white lg:w-1/3">
       <div class="p-6 lg:p-12 border-b border-cool-gray-100 text-center">
-        <nuxt-link to="/" class="inline-block">
+        <NuxtLink no-prefetch to="/" class="inline-block">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt=""
             class="mx-auto"
             width="243"
             height="39"
-          >
-        </nuxt-link>
+          />
+        </NuxtLink>
       </div>
       <div class="p-6 lg:p-12">
-        <client-only>
-          <portal-target name="sidebar" />
-        </client-only>
+        <div id="teleport-sidebar"></div>
       </div>
     </div>
-    <div
-      id="step-container"
-      class="lg:w-2/3 relative bg-[#081992]"
-    >
+    <div id="step-container" class="lg:w-2/3 relative bg-[#081992]">
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
         alt="JeVeuxAider.gouv.fr"
-        srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
+        src="/images/bg-jva.jpg"
+        srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x"
         data-not-lazy
-      >
+      />
 
       <div class="p-6 lg:p-12">
-        <Nuxt class="" />
+        <NuxtPage />
       </div>
     </div>
 
-    <client-only>
-      <portal-target name="body-end" multiple />
-    </client-only>
+    <div id="teleport-body-end"></div>
   </div>
 </template>
 
 <script>
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
-  name: 'RegisterStepsLayout',
-  middleware: 'authenticated',
-  head: {
-    bodyAttrs: {
-      class: 'full-height-layout'
-    }
-  }
+  mixins: [MixinPlausible],
+  setup() {
+    useHead({
+      bodyAttrs: {
+        class: 'full-height-layout',
+      },
+    })
+  },
 }
 </script>
 

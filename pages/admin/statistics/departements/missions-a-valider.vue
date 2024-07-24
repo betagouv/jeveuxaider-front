@@ -1,30 +1,43 @@
 <template>
   <div class="flex flex-col gap-12">
-    <portal to="breadcrumb">
-      <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Plus de chiffres', to: '/admin/statistics' },
-          { text: 'Départements' },
-        ]"
-      />
-    </portal>
+    <ClientOnly>
+      <Teleport to="#teleport-breadcrumb">
+        <Breadcrumb
+          :links="[
+            {
+              text: 'Administration',
+              to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
+            },
+            { text: 'Plus de chiffres', to: '/admin/statistics' },
+            { text: 'Départements' },
+          ]"
+        />
+      </Teleport>
+    </ClientOnly>
 
-    <SectionHeading
-      title="Départements"
-    >
-      <template #action>
+    <BaseSectionHeading title="Départements">
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics :filters="['department']" @refetch="refetch()" />
         </div>
-      </template>
-    </SectionHeading>
+      </template> -->
+    </BaseSectionHeading>
 
-    <Tabs
+    <BaseTabs
       :tabs="[
-        { name: 'Organisations à valider', to: '/admin/statistics/departements/organisations-a-valider' },
-        { name: 'Missions à valider', to: '/admin/statistics/departements/missions-a-valider', current: true},
-        { name: 'Missions périmées', to: '/admin/statistics/departements/missions-perimees'}
+        {
+          name: 'Organisations à valider',
+          to: '/admin/statistics/departements/organisations-a-valider',
+        },
+        {
+          name: 'Missions à valider',
+          to: '/admin/statistics/departements/missions-a-valider',
+          current: true,
+        },
+        {
+          name: 'Missions périmées',
+          to: '/admin/statistics/departements/missions-perimees',
+        },
       ]"
     />
 
@@ -38,30 +51,32 @@
 <script>
 import MissionsWaitingByDepartments from '@/components/numbers/MissionsWaitingByDepartments.vue'
 import MissionsInProgressByDepartments from '@/components/numbers/MissionsInProgressByDepartments.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     MissionsWaitingByDepartments,
     MissionsInProgressByDepartments,
-    Breadcrumb
+    Breadcrumb,
   },
-  layout: 'statistics',
-  middleware: 'admin',
-  data () {
+  setup() {
+    definePageMeta({
+      layout: 'statistics-admin',
+      middleware: ['admin'],
+    })
+  },
+  data() {
     return {}
   },
   methods: {
-    refetch () {
+    refetch() {
       this.$refs.missionsWaitingByDepartments.$fetch()
       this.$refs.missionsInProgressByDepartments.$fetch()
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,59 +1,113 @@
 <template>
-  <Container2Cols>
+  <BaseContainer2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Ressources' },
-        ]"
+        :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Ressources' }]"
       />
     </template>
     <template #header>
-      <SectionHeading :title="`Ressources à votre disposition`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
+      <BaseSectionHeading
+        :title="`Ressources à votre disposition`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
+        :loading="queryLoading"
+      />
     </template>
     <template #left>
-      <Box>
-        <Heading as="h2" :level="2" class="mb-8 font-extrabold">
+      <BaseBox>
+        <BaseHeading as="h2" :level="2" class="mb-8 font-extrabold">
           Guides, webinaires, etc.
-        </Heading>
-        <Input
-          name="search"
-          placeholder="Recherche par mots clés..."
-          icon="SearchIcon"
-          variant="transparent"
-          :value="$route.query['filter[search]']"
-          clearable
-          @input="changeFilter('filter[search]', $event)"
-        />
-        <StackedList class="mt-8">
-          <template v-if="queryResult.data && queryResult.data.length">
-            <StackedListItem
-              v-for="ressource,i in queryResult.data"
-              :key="i"
-              arrow
-              @click.native="handleClickRessource(ressource)"
+        </BaseHeading>
+
+        <SearchFilters class="my-8" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
+            icon="RiSearchLine"
+            :modelValue="$route.query['filter[search]']"
+            @update:modelValue="changeFilter('filter[search]', $event)"
+          />
+
+          <template #prefilters>
+            <!-- <DsfrTag
+              :key="`toutes-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-active="!hasActiveFilters"
+              @click.native="deleteAllFilters"
             >
-              <div class="cursor-pointer">
-                <div class="font-bold">
-                  {{ ressource.title }}
+              Toutes
+            </DsfrTag> -->
+            <DsfrTag
+              :key="`type-file-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
+              @click.native="changeFilter('filter[type]', 'file')"
+            >
+              Fichiers
+            </DsfrTag>
+            <DsfrTag
+              :key="`type-link-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
+              @click.native="changeFilter('filter[type]', 'link')"
+            >
+              Liens
+            </DsfrTag>
+          </template>
+        </SearchFilters>
+
+        <div class="mt-8">
+          <ListLoader v-if="queryLoading" class="py-12" />
+          <template v-else>
+            <div
+              v-if="queryResult.data && queryResult.data.length"
+              class="grid grid-cols-1 divide-y"
+            >
+              <div
+                v-for="(ressource, i) in queryResult.data"
+                :key="i"
+                class="flex items-center px-4 py-8 gap-12"
+              >
+                <div class="flex-1">
+                  <div class="font-bold text-lg leading-6">
+                    {{ ressource.title }}
+                  </div>
+                  <BaseTextFormatted
+                    :max-lines="2"
+                    :text="ressource.description"
+                    class="text-[#808191] mt-4 leading-6"
+                    read-more-label="Plus de détails"
+                  />
                 </div>
-                <div class="text-gray-500 text-sm hover:text-gray-700">
+                <div class="">
                   <template v-if="ressource.type === 'link'">
-                    Lien externe <ExternalLinkIcon class="h-3 w-3 inline-block" />
+                    <DsfrButton
+                      icon="RiExternalLinkLine"
+                      type="secondary"
+                      icon-only
+                      @click="handleClickRessource(ressource)"
+                    />
                   </template>
                   <template v-if="ressource.type === 'file' && ressource.file">
-                    {{ ressource.file.file_name }}
+                    <DsfrButton
+                      icon="RiFileDownloadLine"
+                      type="secondary"
+                      icon-only
+                      @click="handleClickRessource(ressource)"
+                    />
                   </template>
                 </div>
               </div>
-            </StackedListItem>
-          </template>
-          <template v-else>
-            <div class="text-gray-700 text-base">
-              Aucun résultat
             </div>
+            <CustomEmptyState v-else />
           </template>
-        </StackedList>
+        </div>
 
         <Pagination
           class="mt-8"
@@ -62,46 +116,51 @@
           :per-page="queryResult.per_page"
           @page-change="changePage"
         />
-      </Box>
+      </BaseBox>
     </template>
     <template #right>
-      <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
+      <MoreNumbers v-if="['admin', 'referent'].includes($stores.auth.contextRole)" />
       <GuideLinks />
       <HelpCenter />
     </template>
-  </Container2Cols>
+  </BaseContainer2Cols>
 </template>
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
+import { ListLoader } from 'vue-content-loader'
 
-export default {
+export default defineNuxtComponent({
   components: {
     HelpCenter,
     GuideLinks,
     MoreNumbers,
     Pagination,
-    Breadcrumb
+    Breadcrumb,
+    SearchFilters,
+    ListLoader,
   },
   mixins: [QueryBuilder],
   middleware: ['authenticated', 'agreedResponsableTerms'],
-  data () {
+  data() {
     return {
       loading: false,
       endpoint: '/documents',
       queryParams: {
-        include: 'file'
+        'filter[is_published]': true,
+        include: 'file',
       },
-      drawerRessourceId: null
+      drawerRessourceId: null,
     }
   },
   methods: {
-    handleClickRessource (ressource) {
+    handleClickRessource(ressource) {
       if (ressource.type === 'file') {
         if (ressource.file.urls) {
           window.open(ressource.file.urls.original, '_blank').focus()
@@ -110,7 +169,7 @@ export default {
       if (ressource.type === 'link') {
         window.open(ressource.link, '_blank').focus()
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>

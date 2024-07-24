@@ -1,16 +1,18 @@
 <template>
-  <p class="text-xs text-[#CE0500] mt-4">
-    <IconFormError class="inline fill-current flex-none mr-1 object-contain w-4 h-4 translate-y-[-1px]" />
+  <p class="text-xs text-[#CE0500] mt-2">
+    <DsfrErrorIcon
+      class="inline fill-current flex-none mr-2 object-contain w-4 h-4 translate-y-[-1px]"
+    />
     <slot />
   </p>
 </template>
 
 <script>
-import IconFormError from '@/static/images/icons/dsfr/form/error.svg?inline'
+import DsfrErrorIcon from '@/components/icon/dsfr/Error.vue'
 
-export default {
+export default defineNuxtComponent({
   components: {
-    IconFormError
-  }
-}
+    DsfrErrorIcon,
+  },
+})
 </script>
