@@ -52,7 +52,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
+                        'overflow-y-auto custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
                           stickyFooter,
                       },
                       { scrollContainerClass: stickyFooter },
