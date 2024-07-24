@@ -4,32 +4,45 @@ import {
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock-upgrade'
 
+function _disable(el: HTMLElement) {
+  const isAlreadyLocked = el.getAttribute('is-scroll-locked')
+  if (isAlreadyLocked === 'true') {
+    return
+  }
+
+  el.setAttribute('is-scroll-locked', 'true')
+  const storedScrollY = window?.scrollY
+  disableBodyScroll(el, { reserveScrollBarGap: true })
+
+  if (storedScrollY) {
+    el.setAttribute('stored-scroll-Y', String(storedScrollY))
+  }
+}
+
+function _restoreScrollPosition(el: HTMLElement) {
+  const storedScrollY = el.getAttribute('stored-scroll-Y')
+  if (storedScrollY) {
+    window?.scrollTo(0, Number(storedScrollY))
+  }
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('scroll-lock', {
     mounted(el, binding) {
       if (binding.value) {
-        const storedScrollY = window.scrollY
-        disableBodyScroll(el, { reserveScrollBarGap: true })
-        el.setAttribute('stored-scroll-Y', storedScrollY)
+        _disable(el)
       }
     },
 
     updated(el, binding) {
       if (binding.value) {
-        const storedScrollY = window.scrollY
-        disableBodyScroll(el, { reserveScrollBarGap: true })
-        el.setAttribute('stored-scroll-Y', storedScrollY)
+        _disable(el)
       } else {
         if (binding.value === undefined) {
           return
         }
-
         enableBodyScroll(el)
-
-        const storedScrollY = el.getAttribute('stored-scroll-Y')
-        if (storedScrollY) {
-          window.scrollTo(0, storedScrollY)
-        }
+        _restoreScrollPosition(el)
       }
     },
 
@@ -37,13 +50,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (binding.value === undefined) {
         return
       }
-
-      enableBodyScroll(el)
-
-      const storedScrollY = el.getAttribute('stored-scroll-Y')
-      if (storedScrollY) {
-        window.scrollTo(0, storedScrollY)
-      }
+      clearAllBodyScrollLocks()
+      _restoreScrollPosition(el)
     },
   })
 })
