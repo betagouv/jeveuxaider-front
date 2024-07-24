@@ -6,24 +6,44 @@ import {
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('scroll-lock', {
-    // On mount (inserted)
     mounted(el, binding) {
       if (binding.value) {
+        const storedScrollY = window.scrollY
         disableBodyScroll(el, { reserveScrollBarGap: true })
+        el.setAttribute('stored-scroll-Y', storedScrollY)
       }
     },
 
     updated(el, binding) {
       if (binding.value) {
+        const storedScrollY = window.scrollY
         disableBodyScroll(el, { reserveScrollBarGap: true })
+        el.setAttribute('stored-scroll-Y', storedScrollY)
       } else {
+        if (binding.value === undefined) {
+          return
+        }
+
         enableBodyScroll(el)
+
+        const storedScrollY = el.getAttribute('stored-scroll-Y')
+        if (storedScrollY) {
+          window.scrollTo(0, storedScrollY)
+        }
       }
     },
 
-    // On unmount (removed)
-    beforeUnmount(el) {
+    unmounted(el, binding) {
+      if (binding.value === undefined) {
+        return
+      }
+
       enableBodyScroll(el)
+
+      const storedScrollY = el.getAttribute('stored-scroll-Y')
+      if (storedScrollY) {
+        window.scrollTo(0, storedScrollY)
+      }
     },
   })
 })
