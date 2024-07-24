@@ -22,7 +22,9 @@
         v-scroll-lock="!stickyFooter && isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-          <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
+          <div
+            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0"
+          >
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"
@@ -55,10 +57,10 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
                           stickyFooter,
                       },
-                      { scrollContainerClass: stickyFooter },
+                      stickyFooter ? scrollContainerClass : null,
                     ]"
                     v-scroll-lock="stickyFooter && isScrollLocked"
                   >
