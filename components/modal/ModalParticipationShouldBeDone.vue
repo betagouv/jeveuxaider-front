@@ -2,7 +2,6 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
         :title="modalTitle"
         :prevent-click-outside="true"

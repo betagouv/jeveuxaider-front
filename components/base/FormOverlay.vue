@@ -19,7 +19,7 @@
                   <RiCloseFill class="h-6 w-6 fill-current relative top-[1px] right-[0px]" />
                 </button>
               </div>
-              <div v-scroll-lock="true" class="bg-gray-100">
+              <div class="bg-gray-100">
                 <slot />
               </div>
             </div>

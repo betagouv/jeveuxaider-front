@@ -37,7 +37,6 @@
               <ClientOnly>
                 <Teleport to="#teleport-body-end">
                   <BaseModal
-                    v-scroll-lock="showModalScoreDetails"
                     :is-open="showModalScoreDetails"
                     hide-footer
                     @close="showModalScoreDetails = false"
