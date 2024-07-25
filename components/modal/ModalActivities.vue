@@ -56,7 +56,7 @@
         </div>
 
         <template #footer>
-          <DsfrButton type="secondary" @click="$emit('cancel')">Annuler</DsfrButton>
+          <DsfrButton type="secondary" @click="onCancel">Annuler</DsfrButton>
           <DsfrButton @click="onConfirm">Valider</DsfrButton>
         </template>
       </BaseModal>
@@ -119,9 +119,6 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onUpdate(fieldName, payload) {
-      this[fieldName] = payload
-    },
     onConfirm() {
       this.$emit(
         'confirm',
@@ -129,6 +126,22 @@ export default defineNuxtComponent({
           a.key > b.key ? 1 : a.key < b.key ? -1 : 0
         )
       )
+    },
+    onCancel() {
+      this.reset()
+      this.$emit('cancel')
+    },
+    reset() {
+      this.activities = this.initialActivities
+        .filter((act) => !popularActivities.includes(act.name))
+        .map((act) => {
+          return activitiesOptions.find((opt) => act.id === opt.id)
+        })
+      this.popularActivities = this.initialActivities
+        .filter((act) => popularActivities.includes(act.name))
+        .map((act) => {
+          return activitiesOptions.find((opt) => act.id === opt.id)
+        })
     },
   },
 })

@@ -43,6 +43,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         }
         enableBodyScroll(el)
         _restoreScrollPosition(el)
+        el.removeAttribute('is-scroll-locked')
       }
     },
 
@@ -52,6 +53,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
       clearAllBodyScrollLocks()
       _restoreScrollPosition(el)
+      el.removeAttribute('is-scroll-locked')
     },
   })
 })

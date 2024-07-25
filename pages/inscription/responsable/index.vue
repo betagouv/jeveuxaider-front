@@ -3,7 +3,6 @@
     <ClientOnly>
       <Teleport to="#teleport-body-end">
         <BaseModal
-          v-scroll-lock="showModalConfirmOrga"
           :is-open="showModalConfirmOrga"
           :prevent-click-outside="true"
           :overflow-hidden="false"
