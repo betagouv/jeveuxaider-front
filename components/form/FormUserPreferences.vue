@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white px-6 py-8 lg:p-10">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
-      <div class="flex gap-12">
+      <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
         </div>
@@ -72,11 +72,16 @@
               <BaseFormLabel html-for="type_missions" size="xl">
                 Vous êtes plutôt mission sur place ou à distance&nbsp;?
               </BaseFormLabel>
-              <DsfrFormControl html-for="type_missions" :error="errors.type_missions" class="mt-6">
+              <DsfrFormControl
+                html-for="type_missions"
+                :error="errors.type_missions"
+                class="mt-6 @container"
+              >
                 <DsfrRadioRichGroup
                   v-model="form.type_missions"
                   name="type_missions"
                   :options="$labels.profile_type_missions"
+                  option-class="w-full @md:w-auto"
                 />
               </DsfrFormControl>
             </div>
@@ -85,7 +90,7 @@
       </div>
 
       <hr />
-      <div class="flex gap-12">
+      <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
         </div>
@@ -94,29 +99,42 @@
             Quelles activités de bénévolat<br class="hidden sm:block" />
             vous intéressent ?
           </DsfrHeading>
-          <DsfrTagsGroup
-            v-model="form.activities"
-            name="activites"
-            variant="button"
-            :options="activitiesOptions"
-            is-model
-            class="mt-12"
+          <template v-if="!form.activities || form.activities.length === 0">
+            <div class="flex gap-2 lg:gap-3 mt-6">
+              <button
+                v-for="i in 3"
+                :key="i"
+                class="h-[42px] w-16 flex-none border border-dashed border-[#6A6AF4] rounded-[40px] flex items-center justify-center leading-none hover:scale-110 transition ease-out"
+                @click="isModalActivitiesOpen = true"
+              >
+                <span class="-translate-y-px text-jva-blue-500">+</span>
+              </button>
+            </div>
+          </template>
+          <div v-else class="@container mt-6 flex flex-wrap gap-2 lg:gap-3">
+            <CustomSelectedValue
+              v-for="activity in [...form.activities].sort((a, b) => a.name.localeCompare(b.name))"
+              :key="activity.id"
+              @delete="onActivityDelete(activity)"
+              class="w-full @md:w-auto"
+            >
+              {{ activity.name }}
+            </CustomSelectedValue>
+          </div>
+
+          <DsfrLink class="text-jva-blue-500 mt-4" @click="isModalActivitiesOpen = true"
+            >Ajouter des activités</DsfrLink
+          >
+
+          <ModalActivities
+            :initial-activities="form.activities"
+            :is-open="isModalActivitiesOpen"
+            @cancel="isModalActivitiesOpen = false"
+            @confirm="onModalActivitiesConfirm"
           />
         </div>
       </div>
-      <!-- <div class="hidden sm:block ">
-        <div class="text-center">
-          <DsfrButton
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!formIsDirty"
-            @click.native="handleSubmit()"
-          >
-            Enregistrer
-          </DsfrButton>
-        </div>
-      </div> -->
+
       <transition name="fade">
         <div
           v-if="formIsDirty"
@@ -145,21 +163,42 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
+import ModalActivities from '@/components/modal/ModalActivities'
 
 export default defineNuxtComponent({
   emits: ['change', 'submit'],
   mixins: [FormErrors, FormUploads, Emailable],
+  components: {
+    ModalActivities,
+  },
   props: {
     profile: {
       type: Object,
       required: true,
     },
   },
+  setup({ profile }) {
+    function getInitialForm(profileData) {
+      return {
+        ..._cloneDeep(profileData),
+        activities:
+          profileData.activities
+            ?.map((act) => {
+              return activitiesOptions.find((opt) => act.id === opt.id)
+            })
+            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
+      }
+    }
+
+    return {
+      initialForm: getInitialForm(profile),
+      getInitialForm,
+    }
+  },
   data() {
     return {
       loading: false,
-      form: _cloneDeep(this.profile),
-      activitiesOptions: activitiesOptions.sort((a, b) => a.name.localeCompare(b.name)),
+      form: _cloneDeep(this.initialForm),
       formSchema: object({
         commitment__duration: string().nullable().required('Merci de choisir une durée'),
         commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
@@ -186,19 +225,21 @@ export default defineNuxtComponent({
         'Sport pour tous',
       ],
       formIsDirty: false,
+      isModalActivitiesOpen: false,
     }
   },
   watch: {
     profile: {
       deep: true,
       handler(newProfile) {
-        this.form = _cloneDeep(newProfile)
+        this.initialForm = this.getInitialForm(newProfile)
+        this.form = _cloneDeep(this.initialForm)
       },
     },
     form: {
       deep: true,
       handler(newForm) {
-        this.formIsDirty = !_isEqual(newForm, this.profile)
+        this.formIsDirty = !_isEqual(newForm, this.initialForm)
       },
     },
     formIsDirty() {
@@ -236,6 +277,16 @@ export default defineNuxtComponent({
     },
     onRemovedSkillItem(item) {
       this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
+    },
+    onModalActivitiesConfirm(payload) {
+      this.form.activities = payload
+      this.isModalActivitiesOpen = false
+    },
+    onActivityDelete(payload) {
+      this.form.activities.splice(
+        this.form.activities.findIndex((act) => act.id === payload.id),
+        1
+      )
     },
   },
 })

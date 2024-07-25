@@ -52,7 +52,7 @@ export default {
             icon: '🔍',
             iconVariant: 'info',
             title: 'Trouvez votre prochaine mission',
-            subtitle: 'Vous avez du temps libre et souhaitez contribuer à la solidarité ?',
+            subtitle: 'Vous avez du temps libre et souhaitez contribuer à la solidarité ?',
             link: '/missions-benevolat',
           }
         case 'organisations_waiting_validation':
