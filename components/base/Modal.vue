@@ -44,7 +44,7 @@
                 v-click-outside="handleClickOutside"
                 :class="[
                   '@container',
-                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full',
+                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full pointer-events-auto',
                   { 'overflow-hidden': overflowHidden },
                   widthClass,
                   { 'max-h-[100svh] sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
@@ -145,59 +145,23 @@ export default defineNuxtComponent({
     FocusLoop,
   },
   props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-    icon: {
-      type: String,
-      default: null,
-    },
-    iconClass: {
-      type: String,
-      default: null,
-    },
-    preventClickOutside: {
-      type: Boolean,
-      default: false,
-    },
+    isOpen: { type: Boolean, default: false },
+    title: { type: String, default: '' },
+    icon: { type: String, default: null },
+    iconClass: { type: String, default: null },
+    preventClickOutside: { type: Boolean, default: false },
     // @todo: test si toujours utile
     overflowHidden: {
       type: Boolean,
       default: true,
     },
-    backgroundOverlay: {
-      type: String,
-      default: 'bg-gray-500',
-    },
-    widthClass: {
-      type: String,
-      default: 'max-w-3xl',
-    },
-    headerClass: {
-      type: String,
-      default: null,
-    },
-    contentClass: {
-      type: String,
-      default: null,
-    },
-    footerClass: {
-      type: String,
-      default: null,
-    },
-    scrollContainerClass: {
-      type: String,
-      default: null,
-    },
-    stickyFooter: {
-      type: Boolean,
-      default: false,
-    },
+    backgroundOverlay: { type: String, default: 'bg-gray-500' },
+    widthClass: { type: String, default: 'max-w-3xl' },
+    headerClass: { type: String, default: null },
+    contentClass: { type: String, default: null },
+    footerClass: { type: String, default: null },
+    scrollContainerClass: { type: String, default: null },
+    stickyFooter: { type: Boolean, default: false },
   },
   data() {
     return {
