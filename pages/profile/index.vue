@@ -62,8 +62,8 @@
         </template>
         <template #footer>
           <div class="mt-8 pt-8 border-t">
-            <nuxt-link to="/profile/edit" no-prefetch>
-              <DsfrButton type="secondary">Compléter mon profil</DsfrButton>
+            <nuxt-link to="/profile/edit" no-prefetch @click="onCompleteProfileClick">
+              <DsfrButton type="secondary" tabindex="-1">Compléter mon profil</DsfrButton>
             </nuxt-link>
           </div>
         </template>
@@ -123,6 +123,9 @@ export default defineNuxtComponent({
       if (action.type === 'is_minor') {
         this.showModalIsMinor = true
       }
+    },
+    onCompleteProfileClick() {
+      this.$plausible.trackEvent('Click completion profil - espace')
     },
   },
 })

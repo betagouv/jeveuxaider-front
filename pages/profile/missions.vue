@@ -90,8 +90,8 @@
         </template>
         <template #footer>
           <div class="mt-8">
-            <nuxt-link to="/profile/edit" no-prefetch>
-              <DsfrButton full type="secondary">Complétez mon profil</DsfrButton>
+            <nuxt-link to="/profile/edit" no-prefetch @click="onCompleteProfileClick">
+              <DsfrButton type="secondary" tabindex="-1">Complétez mon profil</DsfrButton>
             </nuxt-link>
           </div>
         </template>
@@ -141,6 +141,9 @@ export default defineNuxtComponent({
       } else {
         this.$router.push(`${participation.mission.full_url}`)
       }
+    },
+    onCompleteProfileClick() {
+      this.$plausible.trackEvent('Click completion profil - missions')
     },
   },
 })
