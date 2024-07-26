@@ -6,7 +6,7 @@
           :is-open="showModalConfirmOrga"
           :prevent-click-outside="true"
           :overflow-hidden="false"
-          background-overlay="bg-jva-blue-500"
+          overlay-class="bg-jva-blue-500"
           width-class="sm:max-w-xl"
           hide-footer
           @close="showModalConfirmOrga = false"

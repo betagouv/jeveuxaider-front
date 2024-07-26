@@ -26,7 +26,7 @@
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"
-              :class="[backgroundOverlay]"
+              :class="['initial:bg-gray-500', overlayClass]"
             />
             <!-- This element is to trick the browser into centering the modal contents. -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
@@ -155,7 +155,7 @@ export default defineNuxtComponent({
       type: Boolean,
       default: true,
     },
-    backgroundOverlay: { type: String, default: 'bg-gray-500' },
+    overlayClass: { type: String, default: null },
     widthClass: { type: String, default: 'max-w-3xl' },
     headerClass: { type: String, default: null },
     contentClass: { type: String, default: null },

@@ -57,7 +57,7 @@ export default defineNuxtComponent({
             :sticky-footer="true"
             class="pointer-events-none"
             header-class="sm:hidden"
-            background-overlay="hidden"
+            overlay-class="hidden"
             content-class="-mr-2"
             @close="$emit('cancel')"
           >
