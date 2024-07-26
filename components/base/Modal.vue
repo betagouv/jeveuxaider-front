@@ -44,10 +44,10 @@
                 v-click-outside="handleClickOutside"
                 :class="[
                   '@container',
-                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full pointer-events-auto',
+                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full initial:max-w-3xl pointer-events-auto',
                   { 'overflow-hidden': overflowHidden },
+                  { 'max-h-[100svh] initial:sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
                   widthClass,
-                  { 'max-h-[100svh] sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
                 ]"
               >
                 <div class="max-h-[inherit]">
@@ -55,7 +55,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
+                        'overflow-y-auto overflow-x-hidden overscroll-contain initial:custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
                           stickyFooter,
                       },
                       stickyFooter ? scrollContainerClass : null,
@@ -63,23 +63,25 @@
                     v-scroll-lock="stickyFooter ? isScrollLocked : undefined"
                   >
                     <!-- MODAL HEADER -->
-                    <div
-                      :class="[
-                        'initial:py-4 initial:px-6 initial:sm:px-8 flex justify-end',
-                        headerClass,
-                      ]"
-                    >
-                      <button
-                        type="button"
-                        class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1 -mr-4"
-                        @click="$emit('close')"
+                    <slot name="header">
+                      <div
+                        :class="[
+                          'initial:py-4 initial:px-6 initial:sm:px-8 flex justify-end',
+                          headerClass,
+                        ]"
                       >
-                        <span class="font-medium">Fermer</span>
-                        <RiCloseFill
-                          class="h-4 w-4 fill-current cursor-pointer mt-0.5 ml-1 flex-none"
-                        />
-                      </button>
-                    </div>
+                        <button
+                          type="button"
+                          class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1 -mr-4"
+                          @click="$emit('close')"
+                        >
+                          <span class="font-medium">Fermer</span>
+                          <RiCloseFill
+                            class="h-4 w-4 fill-current cursor-pointer mt-0.5 ml-1 flex-none"
+                          />
+                        </button>
+                      </div>
+                    </slot>
 
                     <!-- MODAL CONTENT -->
                     <div :class="['initial:py-4 initial:px-6 initial:sm:px-8', contentClass]">
@@ -112,7 +114,7 @@
                   <!-- MODAL FOOTER -->
                   <div
                     :class="[
-                      'flex flex-wrap justify-end initial:gap-2 initial:sm:gap-4',
+                      'flex initial:flex-wrap justify-end initial:gap-2 initial:sm:gap-4',
                       {
                         'sticky bottom-0 shadow-[0px_-3px_10px_0px_#00000014] bg-white initial:p-2 initial:sm:p-4':
                           stickyFooter,
@@ -156,7 +158,7 @@ export default defineNuxtComponent({
       default: true,
     },
     overlayClass: { type: String, default: null },
-    widthClass: { type: String, default: 'max-w-3xl' },
+    widthClass: { type: String, default: null },
     headerClass: { type: String, default: null },
     contentClass: { type: String, default: null },
     footerClass: { type: String, default: null },
@@ -183,7 +185,7 @@ export default defineNuxtComponent({
   min-height: 100dvh;
 }
 
-.custom-scrollbar-gray::-webkit-scrollbar-track {
+.overflow-y-auto::-webkit-scrollbar-track {
   @apply mt-3 mb-[72px] sm:mb-[88px];
 }
 </style>
