@@ -64,7 +64,11 @@
     </div>
 
     <template v-if="totalToShow !== 100">
-      <slot name="footer" />
+      <slot name="footer" v-bind="{ setIsOverlayOpen }" />
+      <SectionProfileOverlayProfileCompletion
+        :is-open="isOverlayOpen"
+        @close="isOverlayOpen = false"
+      />
     </template>
   </BaseBox>
 </template>
@@ -162,6 +166,9 @@ export default defineNuxtComponent({
         spread: 360,
         // origin: { x: 0.9, y: 0.1 },
       })
+    },
+    setIsOverlayOpen(val) {
+      this.isOverlayOpen = val
     },
   },
 })
