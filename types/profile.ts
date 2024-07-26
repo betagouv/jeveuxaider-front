@@ -35,4 +35,6 @@ type Profile = {
   domaines?: { [key: string]: any }[] // @todo
   activities?: { [key: string]: any }[] // @todo
   missions_offline?: Mission[]
+  type_missions?: 'all' | 'distance' | 'presentiel'
+  certifications?: 'permis_b' | 'psc1' | 'bafa'[]
 }
