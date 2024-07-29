@@ -29,7 +29,7 @@
                       @blur="validate('commitment__duration')"
                     />
                     <BaseFormError v-if="errors.commitment__duration">
-                      {{ errors.commitment__time_period }}
+                      {{ errors.commitment__duration }}
                     </BaseFormError>
                   </div>
                   <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
@@ -178,6 +178,9 @@ export default defineNuxtComponent({
     },
   },
   setup({ profile }) {
+    const { schemaDisponibilities, schemaCommitmentDuration, schemaCommitmentTimePeriod } =
+      useProfileValidation()
+
     function getInitialForm(profileData) {
       return {
         ..._cloneDeep(profileData),
@@ -193,6 +196,9 @@ export default defineNuxtComponent({
     return {
       initialForm: getInitialForm(profile),
       getInitialForm,
+      schemaDisponibilities,
+      schemaCommitmentDuration,
+      schemaCommitmentTimePeriod,
     }
   },
   data() {
@@ -200,19 +206,9 @@ export default defineNuxtComponent({
       loading: false,
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        commitment__duration: string().nullable().required('Merci de choisir une durée'),
-        commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
-        disponibilities: array()
-          .transform((v) => (!v ? [] : v))
-          .test(
-            'test-disponibilities-required',
-            'Merci de sélectionner au moins 1 disponibilité',
-            (disponibilities) => {
-              return (
-                ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
-              )
-            }
-          ),
+        commitment__duration: this.schemaCommitmentDuration,
+        commitment__time_period: this.schemaCommitmentTimePeriod,
+        disponibilities: this.schemaDisponibilities,
       }),
       domainsOptions: [
         'Art et culture pour tous',
