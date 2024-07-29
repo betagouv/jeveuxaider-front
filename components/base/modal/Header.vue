@@ -1,5 +1,6 @@
 <script>
 export default defineNuxtComponent({
+  emits: ['close'],
   props: {
     sticky: { type: Boolean, default: false },
     headerClass: { type: String, default: null },
