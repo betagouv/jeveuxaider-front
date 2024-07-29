@@ -14,20 +14,24 @@
         v-if="isOpen"
         :class="[
           'fixed z-50 inset-0',
-          { 'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyFooter },
+          {
+            'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyHeader && !stickyFooter,
+          },
         ]"
-        aria-labelledby="modal-title"
+        :aria-labelledby="`modal-title-${uuid}`"
         role="dialog"
         aria-modal="true"
-        v-scroll-lock="!stickyFooter ? isScrollLocked : undefined"
+        v-scroll-lock="!stickyHeader && !stickyFooter ? isScrollLocked : undefined"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
           <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
-            <div
-              class="fixed inset-0 bg-opacity-75 transition-opacity"
-              aria-hidden="true"
-              :class="['initial:bg-gray-500', overlayClass]"
-            />
+            <slot name="overlay">
+              <div
+                aria-hidden="true"
+                :class="['fixed inset-0 initial:bg-gray-500/75', overlayClass]"
+              />
+            </slot>
+
             <!-- This element is to trick the browser into centering the modal contents. -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
               >&#8203;</span
@@ -44,44 +48,44 @@
                 v-click-outside="handleClickOutside"
                 :class="[
                   '@container',
-                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full initial:max-w-3xl pointer-events-auto',
-                  { 'overflow-hidden': overflowHidden },
-                  { 'initial:max-h-[100svh] initial:sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
-                  widthClass,
+                  'initial:overflow-hidden inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full initial:max-w-3xl pointer-events-auto',
+                  {
+                    'initial:max-h-[100svh] initial:sm:max-h-[calc(100svh_-_4rem)]':
+                      stickyHeader || stickyFooter,
+                  },
+                  containerClass,
                 ]"
               >
-                <div class="max-h-[inherit]">
+                <div class="flex flex-col max-h-[inherit]">
+                  <!-- MODAL HEADER - STICKY -->
+                  <BaseModalHeader
+                    v-if="stickyHeader"
+                    :sticky="true"
+                    :header-class="headerClass"
+                    @close="$emit('close')"
+                  >
+                    <slot name="header" />
+                  </BaseModalHeader>
+
                   <div
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
-                          stickyFooter,
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:mr-1':
+                          stickyFooter || stickyHeader,
                       },
-                      stickyFooter ? scrollContainerClass : null,
                     ]"
-                    v-scroll-lock="stickyFooter ? isScrollLocked : undefined"
+                    v-scroll-lock="stickyFooter || stickyHeader ? isScrollLocked : undefined"
                   >
                     <!-- MODAL HEADER -->
-                    <slot name="header">
-                      <div
-                        :class="[
-                          'initial:py-4 initial:px-6 initial:sm:px-8 flex justify-end',
-                          headerClass,
-                        ]"
-                      >
-                        <button
-                          type="button"
-                          class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1 -mr-4"
-                          @click="$emit('close')"
-                        >
-                          <span class="font-medium">Fermer</span>
-                          <RiCloseFill
-                            class="h-4 w-4 fill-current cursor-pointer mt-0.5 ml-1 flex-none"
-                          />
-                        </button>
-                      </div>
-                    </slot>
+                    <BaseModalHeader
+                      v-if="!stickyHeader"
+                      :sticky="false"
+                      :header-class="headerClass"
+                      @close="$emit('close')"
+                    >
+                      <slot name="header" />
+                    </BaseModalHeader>
 
                     <!-- MODAL CONTENT -->
                     <div :class="['initial:py-4 initial:px-6 initial:sm:px-8', contentClass]">
@@ -100,7 +104,7 @@
                         <div :class="['min-w-0 w-full']">
                           <h3
                             v-if="title"
-                            id="modal-title"
+                            :id="`modal-title-${uuid}`"
                             :class="['text-2xl leading-8 font-bold text-gray-900']"
                           >
                             {{ title }}
@@ -109,25 +113,25 @@
                       </div>
                       <slot />
                     </div>
+
+                    <!-- MODAL FOOTER -->
+                    <BaseModalFooter
+                      v-if="!stickyFooter && $slots.footer"
+                      :sticky="false"
+                      :footer-class="footerClass"
+                    >
+                      <slot name="footer" />
+                    </BaseModalFooter>
                   </div>
 
-                  <!-- MODAL FOOTER -->
-                  <div
-                    :class="[
-                      'flex initial:flex-wrap justify-end initial:gap-2 initial:sm:gap-4',
-                      {
-                        'sticky bottom-0 shadow-[0px_-3px_10px_0px_#00000014] bg-white initial:p-2 initial:sm:p-4':
-                          stickyFooter,
-                      },
-                      {
-                        'initial:py-4 initial:px-6 initial:sm:px-8 initial:sm:pb-8': !stickyFooter,
-                      },
-                      footerClass,
-                    ]"
-                    v-if="$slots.footer"
+                  <!-- MODAL FOOTER - STICKY -->
+                  <BaseModalFooter
+                    v-if="stickyFooter && $slots.footer"
+                    :sticky="true"
+                    :footer-class="footerClass"
                   >
                     <slot name="footer" />
-                  </div>
+                  </BaseModalFooter>
                 </div>
               </div>
             </transition>
@@ -140,6 +144,7 @@
 
 <script>
 import { FocusLoop } from '@vue-a11y/focus-loop'
+import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   emits: ['close'],
@@ -152,22 +157,20 @@ export default defineNuxtComponent({
     icon: { type: String, default: null },
     iconClass: { type: String, default: null },
     preventClickOutside: { type: Boolean, default: false },
-    // @todo: test si toujours utile
-    overflowHidden: {
-      type: Boolean,
-      default: true,
-    },
+
+    stickyHeader: { type: Boolean, default: false },
+    stickyFooter: { type: Boolean, default: false },
+
     overlayClass: { type: String, default: null },
-    widthClass: { type: String, default: null },
+    containerClass: { type: String, default: null },
     headerClass: { type: String, default: null },
     contentClass: { type: String, default: null },
     footerClass: { type: String, default: null },
-    scrollContainerClass: { type: String, default: null },
-    stickyFooter: { type: Boolean, default: false },
   },
   data() {
     return {
       isScrollLocked: this.isOpen,
+      uuid: uuidv4(),
     }
   },
   methods: {
@@ -186,6 +189,6 @@ export default defineNuxtComponent({
 }
 
 .custom-scrollbar-gray::-webkit-scrollbar-track {
-  @apply mt-3 mb-[72px] sm:mb-[88px];
+  @apply my-3;
 }
 </style>

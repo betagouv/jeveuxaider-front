@@ -5,7 +5,7 @@
         :is-open="isOpen"
         title="Filtres de recherche"
         :prevent-click-outside="true"
-        :overflow-hidden="false"
+        container-class="overflow-visible"
         @close="$emit('cancel')"
       >
         <form id="form-filters" @submit.prevent="handleSubmit" class="py-6 flex flex-col gap-6">

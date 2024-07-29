@@ -9,7 +9,6 @@
     <BaseModal
       :is-open="showModalFirstMission"
       title="C’est votre première mission ! 🍾"
-      width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
       @close="showModalFirstMission = false"
@@ -59,7 +58,6 @@
     <BaseModal
       :is-open="showModalHasParticipationsWaiting"
       title="Vous avez des participations non traitées sur d’autres missions"
-      width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
       @close="showModalHasParticipationsWaiting = false"

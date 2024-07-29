@@ -5,10 +5,8 @@
         <BaseModal
           :is-open="showModalConfirmOrga"
           :prevent-click-outside="true"
-          :overflow-hidden="false"
-          overlay-class="bg-jva-blue-500"
-          width-class="sm:max-w-xl"
-          hide-footer
+          container-class="sm:max-w-xl"
+          overlay-class="bg-jva-blue-500/90"
           @close="showModalConfirmOrga = false"
         >
           <div v-if="modalConfirmOrgaStep == 1" class="flex flex-col justify-center items-center">
