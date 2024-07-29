@@ -46,7 +46,7 @@
                   '@container',
                   'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full initial:max-w-3xl pointer-events-auto',
                   { 'overflow-hidden': overflowHidden },
-                  { 'max-h-[100svh] initial:sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
+                  { 'initial:max-h-[100svh] initial:sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
                   widthClass,
                 ]"
               >
@@ -55,7 +55,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto overflow-x-hidden overscroll-contain initial:custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
                           stickyFooter,
                       },
                       stickyFooter ? scrollContainerClass : null,
@@ -185,7 +185,7 @@ export default defineNuxtComponent({
   min-height: 100dvh;
 }
 
-.overflow-y-auto::-webkit-scrollbar-track {
+.custom-scrollbar-gray::-webkit-scrollbar-track {
   @apply mt-3 mb-[72px] sm:mb-[88px];
 }
 </style>
