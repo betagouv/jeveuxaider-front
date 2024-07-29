@@ -1,5 +1,6 @@
 <script>
 export default defineNuxtComponent({
+  emits: ['close'],
   props: {
     isOpen: { type: Boolean, default: false },
   },
@@ -13,18 +14,73 @@ export default defineNuxtComponent({
       isMotMotivationCompleted,
       isProfilePictureCompleted,
       isSkillsAndCertificationsCompleted,
+      isMissionTypeCompleted,
+      isActivitiesCompleted,
     } = useProfileCompletion()
 
-    return {
-      profile,
-      totalPoints,
-      isContactInformationsCompleted,
-      isDisponibilitiesCompleted,
-      isPreferencesCompleted,
-      isMotMotivationCompleted,
-      isProfilePictureCompleted,
-      isSkillsAndCertificationsCompleted,
+    const steps = []
+    if (!isDisponibilitiesCompleted.value) {
+      steps.push('disponibilities')
     }
+    if (!isMissionTypeCompleted.value) {
+      steps.push('missionType')
+    }
+    if (!isActivitiesCompleted.value) {
+      steps.push('activities')
+    }
+
+    if (!!profile.value.type || !isMotMotivationCompleted.value) {
+      steps.push('moreAboutYou')
+    }
+    if (!isSkillsAndCertificationsCompleted.value) {
+      steps.push('skillsAndCertifications')
+    }
+    if (!isProfilePictureCompleted.value) {
+      steps.push('picture')
+    }
+    steps.push('communicationPreferences')
+
+    return {
+      steps,
+      totalPoints,
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      currentStep: this.steps?.[0],
+    }
+  },
+  computed: {
+    currentStepIndex() {
+      return this.steps.findIndex((s) => s === this.currentStep)
+    },
+  },
+  methods: {
+    async handleValidation() {
+      if (this.loading) {
+        return
+      }
+      await this.$refs.form.handleValidation()
+    },
+    async handleSubmit(step, payload) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$stores.auth.updateProfile({
+        id: this.$stores.auth.profile?.id,
+        ...payload,
+      })
+      this.goToNextStep()
+      this.loading = false
+    },
+    goToNextStep() {
+      this.currentStep = this.steps[this.currentStepIndex + 1]
+    },
+    handlePrevious() {
+      this.currentStep = this.steps[this.currentStepIndex - 1]
+    },
   },
 })
 </script>
@@ -92,13 +148,34 @@ export default defineNuxtComponent({
           </template>
 
           <template #footer>
-            <DsfrButton type="secondary" class="flex-grow">Précédent</DsfrButton>
-            <DsfrButton type="primary" class="flex-grow">Suivant</DsfrButton>
+            <!-- todo -->
+            <DsfrButton
+              type="secondary"
+              class="flex-grow"
+              :disabled="currentStep === steps[0]"
+              @click="handlePrevious"
+              >Précédent</DsfrButton
+            >
+            <DsfrButton
+              :loading="loading"
+              type="primary"
+              class="flex-grow"
+              @click="handleValidation"
+              >Suivant</DsfrButton
+            >
           </template>
 
           <!-- CONTENT -->
           <div class="px-4 py-8">
-            <div class="@container max-w-[585px] mx-auto h-[1500px]">todo</div>
+            <div class="@container max-w-[585px] mx-auto">
+              <SectionProfileOverlayCompletionDisponibilities
+                v-if="currentStep === 'disponibilities'"
+                ref="form"
+                @submit="handleSubmit('disponibilities', $event)"
+              />
+
+              <div v-else-if="currentStep === 'activities'">todo activities</div>
+            </div>
           </div>
         </BaseModal>
       </transition>

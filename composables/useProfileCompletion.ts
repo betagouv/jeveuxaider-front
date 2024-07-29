@@ -15,6 +15,8 @@ export function useProfileCompletion() {
     isSkillsAndCertificationsCompleted: computed(() =>
       isSkillsAndCertificationsCompleted(profile.value)
     ),
+    isActivitiesCompleted: computed(() => isActivitiesCompleted(profile.value)),
+    isMissionTypeCompleted: computed(() => isMissionTypeCompleted(profile.value)),
   }
 }
 
@@ -49,7 +51,7 @@ function isDisponibilitiesCompleted(profile?: Profile) {
 }
 
 function isPreferencesCompleted(profile?: Profile) {
-  return profile?.activities && profile?.activities.length > 0 && !!profile?.type_missions
+  return isActivitiesCompleted(profile) && isMissionTypeCompleted(profile)
 }
 
 function isMotMotivationCompleted(profile?: Profile) {
@@ -65,4 +67,12 @@ function isSkillsAndCertificationsCompleted(profile?: Profile) {
     (profile?.skills && profile?.skills.length > 0) ||
     (profile?.certifications && profile?.certifications.length > 0)
   )
+}
+
+function isActivitiesCompleted(profile?: Profile) {
+  return profile?.activities && profile?.activities.length > 0
+}
+
+function isMissionTypeCompleted(profile?: Profile) {
+  return !!profile?.type_missions
 }

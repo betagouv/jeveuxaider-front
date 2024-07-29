@@ -65,10 +65,7 @@
 
     <template v-if="totalToShow !== 100">
       <slot name="footer" v-bind="{ setIsOverlayOpen }" />
-      <SectionProfileOverlayProfileCompletion
-        :is-open="isOverlayOpen"
-        @close="isOverlayOpen = false"
-      />
+      <SectionProfileOverlayCompletion :is-open="isOverlayOpen" @close="isOverlayOpen = false" />
     </template>
   </BaseBox>
 </template>
