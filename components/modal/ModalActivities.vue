@@ -7,7 +7,7 @@
         :prevent-click-outside="true"
         :sticky-footer="true"
         header-class="-mr-2"
-        content-class="-mr-2"
+        content-class="-mr-2 pt-0 pb-6 sm:pb-8"
         @close="$emit('cancel')"
       >
         <div class="">
