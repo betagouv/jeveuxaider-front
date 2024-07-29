@@ -178,7 +178,7 @@
                 class="link"
                 target="_blank"
                 href="https://www.jeveuxaider.gouv.fr/engagement/campagnes-mobilisation-nationale/"
-                >Campagnes de mobilisation nationale</a
+                >Campagnes de mobilisation</a
               >
               <nuxt-link
                 no-prefetch
