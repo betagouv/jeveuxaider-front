@@ -40,68 +40,67 @@ export default defineNuxtComponent({
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <div v-if="isOpen" class="fixed inset-0 w-full h-full z-[60] bg-jva-blue-500/95">
-          <!-- OVERLAY CLOSE - DESKTOP -->
-          <button
-            class="hidden sm:flex items-center absolute right-8 top-6 pl-2 pr-1 py-1 hover:bg-jva-blue-300/50"
-            @click="$emit('close')"
-          >
-            <span class="text-white mr-1">Fermer</span>
-            <RiCloseFill class="text-white h-6 w-6 fill-current relative top-[1px] right-[0px]" />
-          </button>
-
-          <!-- @todo: sticky header instead of hack custom-scrollbar-transparent -->
-          <BaseModal
-            :is-open="isOpen"
-            :prevent-click-outside="true"
-            :sticky-footer="true"
-            class="pointer-events-none"
-            overlay-class="hidden"
-            scroll-container-class="mr-0 custom-scrollbar-transparent"
-            content-class=""
-            width-class="sm:max-h-[calc(100svh_-_8rem)]"
-            footer-class="flex-nowrap"
-            @close="$emit('cancel')"
-          >
-            <template #header>
-              <div class="">
-                <!-- HEADER - MOBILE -->
-                <div class="sm:hidden p-2 flex items-center justify-between">
-                  <DsfrHeading class="text-[#666666]" size="xs">{{ totalPoints }}%</DsfrHeading>
-                  <DsfrButton
-                    type="tertiary"
-                    :icon-only="true"
-                    icon="RiCloseFill"
-                    size="lg"
-                    class="size-12"
-                    @click="$emit('close')"
-                  />
-                </div>
-
-                <!-- HEADER - DESKTOP -->
-                <div class="hidden sm:block p-6 relative">
-                  <DsfrHeading class="text-center" size="xs">Complétez votre profil</DsfrHeading>
-                  <DsfrHeading class="text-[#666666] absolute right-6 top-6" size="xs"
-                    >{{ totalPoints }}%</DsfrHeading
-                  >
-                </div>
-
-                <!-- GAUGE -->
-                <BaseGauge :percentage="totalPoints" color="gradient" size="lg" />
-              </div>
-            </template>
-
-            <template #footer>
-              <DsfrButton type="secondary" class="flex-grow">Précédent</DsfrButton>
-              <DsfrButton type="primary" class="flex-grow">Suivant</DsfrButton>
-            </template>
-
-            <!-- CONTENT -->
-            <div class="px-4 py-8">
-              <div class="@container max-w-[585px] mx-auto h-[1500px]">todo</div>
+        <BaseModal
+          :is-open="isOpen"
+          :prevent-click-outside="true"
+          :sticky-header="true"
+          :sticky-footer="true"
+          container-class="sm:max-h-[calc(100svh_-_8rem)]"
+          @close="$emit('close')"
+        >
+          <template #overlay>
+            <div class="fixed inset-0 bg-jva-blue-500/95" aria-hidden="true">
+              <!-- OVERLAY CLOSE - DESKTOP -->
+              <button
+                class="hidden sm:flex items-center absolute right-8 top-6 pl-2 pr-1 py-1 transition ease-out hover:bg-jva-blue-300/50"
+                @click="$emit('close')"
+              >
+                <span class="text-white mr-1">Fermer</span>
+                <RiCloseFill
+                  class="text-white h-6 w-6 fill-current relative top-[1px] right-[0px]"
+                />
+              </button>
             </div>
-          </BaseModal>
-        </div>
+          </template>
+
+          <template #header>
+            <div class="shadow-[0px_3px_10px_0px_#00000014] bg-white">
+              <!-- HEADER - MOBILE -->
+              <div class="sm:hidden p-2 flex items-center justify-between">
+                <DsfrHeading class="text-[#666666]" size="xs">{{ totalPoints }}%</DsfrHeading>
+                <DsfrButton
+                  type="tertiary"
+                  :icon-only="true"
+                  icon="RiCloseFill"
+                  size="lg"
+                  class="size-12"
+                  @click="$emit('close')"
+                />
+              </div>
+
+              <!-- HEADER - DESKTOP -->
+              <div class="hidden sm:block p-6 relative">
+                <DsfrHeading class="text-center" size="xs">Complétez votre profil</DsfrHeading>
+                <DsfrHeading class="text-[#666666] absolute right-6 top-6" size="xs"
+                  >{{ totalPoints }}%</DsfrHeading
+                >
+              </div>
+
+              <!-- GAUGE -->
+              <BaseGauge :percentage="totalPoints" color="gradient" size="lg" />
+            </div>
+          </template>
+
+          <template #footer>
+            <DsfrButton type="secondary" class="flex-grow">Précédent</DsfrButton>
+            <DsfrButton type="primary" class="flex-grow">Suivant</DsfrButton>
+          </template>
+
+          <!-- CONTENT -->
+          <div class="px-4 py-8">
+            <div class="@container max-w-[585px] mx-auto h-[1500px]">todo</div>
+          </div>
+        </BaseModal>
       </transition>
     </Teleport>
   </ClientOnly>
