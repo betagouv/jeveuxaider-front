@@ -3,7 +3,7 @@
     <div v-if="!canCreateMission" v-tooltip="tooltipCantCreateMission">
       <DsfrButton icon="RiAddLine" :size="size" :disabled="true"> Publier une mission </DsfrButton>
     </div>
-    <DsfrButton v-else icon="RiAddLine" :size="size" tabindex="-1" @click.native="handleClick">
+    <DsfrButton v-else icon="RiAddLine" :size="size" @click="handleClick">
       Publier une mission
     </DsfrButton>
     <BaseModal
