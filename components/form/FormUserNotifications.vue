@@ -148,7 +148,7 @@
           </DsfrHeading>
           <div class="text-[#666666] mt-4 mb-8">
             Si vous êtes disponible et si votre profil les intéressent, elles pourront vous envoyer
-            des propositions de missions (5 par mois maximum)
+            des propositions de missions (2 par mois maximum)
           </div>
           <DsfrRadioRichGroup
             v-model="form.is_visible"
