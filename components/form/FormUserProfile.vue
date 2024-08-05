@@ -219,7 +219,7 @@
       <template v-if="canViewScAndCej">
         <hr />
         <div class="">
-          <DsfrHeading size="lg"> Autres plateformes </DsfrHeading>
+          <DsfrHeading size="lg"> Autres dispositifs </DsfrHeading>
           <div class="mt-12 flex flex-col gap-8 lg:gap-12">
             <div class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">
