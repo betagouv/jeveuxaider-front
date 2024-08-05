@@ -178,27 +178,20 @@ export default defineNuxtComponent({
     },
   },
   setup({ profile }) {
-    const { schemaDisponibilities, schemaCommitmentDuration, schemaCommitmentTimePeriod } =
-      useProfileValidation()
-
-    function getInitialForm(profileData) {
-      return {
-        ..._cloneDeep(profileData),
-        activities:
-          profileData.activities
-            ?.map((act) => {
-              return activitiesOptions.find((opt) => act.id === opt.id)
-            })
-            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
-      }
-    }
-
-    return {
-      initialForm: getInitialForm(profile),
-      getInitialForm,
+    const {
+      initialForm,
       schemaDisponibilities,
       schemaCommitmentDuration,
       schemaCommitmentTimePeriod,
+      schemaActivities,
+    } = useProfileValidation()
+
+    return {
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitmentDuration,
+      schemaCommitmentTimePeriod,
+      schemaActivities,
     }
   },
   data() {
@@ -209,6 +202,7 @@ export default defineNuxtComponent({
         commitment__duration: this.schemaCommitmentDuration,
         commitment__time_period: this.schemaCommitmentTimePeriod,
         disponibilities: this.schemaDisponibilities,
+        activities: this.schemaActivities,
       }),
       domainsOptions: [
         'Art et culture pour tous',
@@ -225,11 +219,10 @@ export default defineNuxtComponent({
     }
   },
   watch: {
-    profile: {
+    initialForm: {
       deep: true,
-      handler(newProfile) {
-        this.initialForm = this.getInitialForm(newProfile)
-        this.form = _cloneDeep(this.initialForm)
+      handler(newVal) {
+        this.form = _cloneDeep(newVal)
       },
     },
     form: {

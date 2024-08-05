@@ -68,12 +68,14 @@
                   </BaseModalHeader>
 
                   <div
+                    ref="scrollContainer"
                     :class="[
                       'flex flex-col',
                       {
                         'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:mr-1':
                           stickyFooter || stickyHeader,
                       },
+                      scrollContainerClass,
                     ]"
                     v-scroll-lock="stickyFooter || stickyHeader ? isScrollLocked : undefined"
                   >
@@ -164,6 +166,7 @@ export default defineNuxtComponent({
 
     overlayClass: { type: String, default: null },
     containerClass: { type: String, default: null },
+    scrollContainerClass: { type: String, default: null },
     headerClass: { type: String, default: null },
     contentClass: { type: String, default: null },
     footerClass: { type: String, default: null },

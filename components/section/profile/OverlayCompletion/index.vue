@@ -28,7 +28,6 @@ export default defineNuxtComponent({
     if (!isActivitiesCompleted.value) {
       steps.push('activities')
     }
-
     if (!!profile.value.type || !isMotMotivationCompleted.value) {
       steps.push('moreAboutYou')
     }
@@ -77,9 +76,16 @@ export default defineNuxtComponent({
     },
     goToNextStep() {
       this.currentStep = this.steps[this.currentStepIndex + 1]
+      this.scrollToTop()
     },
-    handlePrevious() {
+    goToPreviousStep() {
       this.currentStep = this.steps[this.currentStepIndex - 1]
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      if (this.$refs.modal?.$refs.scrollContainer) {
+        this.$refs.modal.$refs.scrollContainer.scrollTop = 0
+      }
     },
   },
 })
@@ -97,15 +103,17 @@ export default defineNuxtComponent({
         leave-to-class="opacity-0"
       >
         <BaseModal
+          ref="modal"
           :is-open="isOpen"
           :prevent-click-outside="true"
           :sticky-header="true"
           :sticky-footer="true"
           container-class="sm:max-h-[calc(100svh_-_8rem)]"
+          scroll-container-class="h-[100svh] flex-grow sm:h-[initial]"
           @close="$emit('close')"
         >
           <template #overlay>
-            <div class="fixed inset-0 bg-jva-blue-500/95" aria-hidden="true">
+            <div class="fixed inset-0 bg-jva-blue-500/95">
               <!-- OVERLAY CLOSE - DESKTOP -->
               <button
                 class="hidden sm:flex items-center absolute right-8 top-6 pl-2 pr-1 py-1 transition ease-out hover:bg-jva-blue-300/50"
@@ -153,7 +161,7 @@ export default defineNuxtComponent({
               type="secondary"
               class="flex-grow"
               :disabled="currentStep === steps[0]"
-              @click="handlePrevious"
+              @click="goToPreviousStep"
               >Précédent</DsfrButton
             >
             <DsfrButton
@@ -166,15 +174,30 @@ export default defineNuxtComponent({
           </template>
 
           <!-- CONTENT -->
-          <div class="px-4 py-8">
-            <div class="@container max-w-[585px] mx-auto">
+          <div class="sm:px-4 sm:py-8">
+            <div
+              :class="[
+                '@container mx-auto initial:max-w-[585px]',
+                { 'max-w-full': currentStep === 'activities' },
+              ]"
+            >
               <SectionProfileOverlayCompletionDisponibilities
                 v-if="currentStep === 'disponibilities'"
                 ref="form"
                 @submit="handleSubmit('disponibilities', $event)"
               />
 
-              <div v-else-if="currentStep === 'activities'">todo activities</div>
+              <SectionProfileOverlayCompletionMissionType
+                v-else-if="currentStep === 'missionType'"
+                ref="form"
+                @submit="handleSubmit('missionType', $event)"
+              />
+
+              <SectionProfileOverlayCompletionActivities
+                v-else-if="currentStep === 'activities'"
+                ref="form"
+                @submit="handleSubmit('activities', $event)"
+              />
             </div>
           </div>
         </BaseModal>

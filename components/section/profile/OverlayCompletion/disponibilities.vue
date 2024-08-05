@@ -2,31 +2,22 @@
 import { useProfileCompletion } from '~/composables/useProfileCompletion'
 import { useProfileValidation } from '~/composables/useProfileValidation'
 import FormErrors from '@/mixins/form/errors'
-import activitiesOptions from '@/assets/activities.json'
 import { object } from 'yup'
 
 export default defineNuxtComponent({
   mixins: [FormErrors],
   setup() {
     const { profile } = useProfileCompletion()
-    const { schemaDisponibilities, schemaCommitmentDuration, schemaCommitmentTimePeriod } =
-      useProfileValidation()
-
-    function getInitialForm(profileData) {
-      return {
-        ..._cloneDeep(profileData),
-        activities:
-          profileData.activities
-            ?.map((act) => {
-              return activitiesOptions.find((opt) => act.id === opt.id)
-            })
-            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
-      }
-    }
+    const {
+      schemaDisponibilities,
+      schemaCommitmentDuration,
+      schemaCommitmentTimePeriod,
+      initialForm,
+    } = useProfileValidation()
 
     return {
       profile,
-      initialForm: getInitialForm(profile.value),
+      initialForm,
       schemaDisponibilities,
       schemaCommitmentDuration,
       schemaCommitmentTimePeriod,

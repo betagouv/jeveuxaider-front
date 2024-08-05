@@ -29,9 +29,9 @@ function getTotalPoints(profile?: Profile) {
   if (!!profile?.type) points += 5
   if (!!profile?.description) points += 5
   if (!!profile?.avatar) points += 5
-  if (!!profile?.type_missions) points += 10
   if (isDisponibilitiesCompleted(profile)) points += 15
-  if (isPreferencesCompleted(profile)) points += 20
+  if (isActivitiesCompleted(profile)) points += 10
+  if (isMissionTypeCompleted(profile)) points += 10
   if (isSkillsAndCertificationsCompleted(profile)) points += 10
   return points
 }
