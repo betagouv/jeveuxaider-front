@@ -43,11 +43,11 @@
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
       <CustomTodoListItem :isCompleted="isDisponibilitiesCompleted">
-        Définissez votre disponibilité
+        Indiquez votre disponibilité
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
       <CustomTodoListItem :isCompleted="isPreferencesCompleted">
-        Définissez vos préférences de mission
+        Indiquez vos préférences de mission
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
       <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
