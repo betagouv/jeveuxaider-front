@@ -752,8 +752,8 @@ const labels: TypeLabels = {
   mission_workflow_states: [
     {
       key: 'Brouillon',
-      to: ['Brouillon', 'En attente de validation'],
-      roles: ['admin', 'responsable'],
+      to: ['Brouillon'],
+      roles: ['admin'],
       label: 'Brouillon',
       description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche.",
     },
