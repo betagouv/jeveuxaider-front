@@ -6,7 +6,7 @@
           src="/images/profiles/badge-identity.svg"
           alt=""
           title=""
-          class="h-[125px] lg:h-[176px] mx-auto mb-8"
+          class="h-[125px] lg:h-[150px] mx-auto mb-8"
           data-not-lazy
         />
       </div>

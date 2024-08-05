@@ -105,6 +105,26 @@ export default defineNuxtComponent({
       }
       return this.isOneOfAddressesDistanceMoreThan(30000)
     },
+    profile() {
+      return this.$stores.auth?.user?.profile
+    },
+    isProfileCompleted() {
+      if (!this.profile) return false
+      return (
+        !!this.profile?.email &&
+        !!this.profile?.mobile &&
+        !!this.profile?.type &&
+        !!this.profile?.birthday &&
+        !!this.profile?.zip &&
+        !!this.profile?.commitment__duration &&
+        this.profile?.disponibilities?.length > 0 &&
+        this.profile?.activities?.length > 0 &&
+        !!this.profile?.type_missions &&
+        !!this.profile?.description &&
+        !!this.profile?.avatar &&
+        (this.profile?.skills?.length > 0 || this.profile?.certifications?.length > 0)
+      )
+    },
   },
   methods: {
     isOneOfAddressesDistanceMoreThan(maxDistance) {
@@ -167,7 +187,11 @@ export default defineNuxtComponent({
         }
       }
 
-      this.step = 'complete-profile'
+      if (!this.isProfileCompleted) {
+        this.step = 'complete-profile'
+      } else {
+        this.onClose()
+      }
     },
     handleNextResolver() {
       if (this.hasPrerequisites) {
