@@ -30,7 +30,8 @@
       @back="step = 'select-creneaux'"
     />
     <SoftGateInvitations v-if="step == 'invitations'" @next="onStepInvitationsNext" />
-    <SoftGateShare v-if="step == 'share'" @next="onClose" :emails="emails" />
+    <SoftGateCompleteProfile v-if="step == 'complete-profile'" @next="onClose" />
+    <!-- <SoftGateShare v-if="step == 'share'" @next="onClose" :emails="emails" /> -->
   </BaseOverlay>
 </template>
 
@@ -42,8 +43,10 @@ import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood.vue'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate.vue'
 import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux.vue'
 import SoftGateInvitations from '@/components/section/soft-gate/Invitations.vue'
-import SoftGateShare from '@/components/section/soft-gate/Share.vue'
+// import SoftGateShare from '@/components/section/soft-gate/Share.vue'
+import SoftGateCompleteProfile from '@/components/section/soft-gate/CompleteProfile.vue'
 import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites.vue'
+import Toast from '@/components/Toast.vue'
 
 export default defineNuxtComponent({
   name: 'SoftGateOverlay',
@@ -55,7 +58,8 @@ export default defineNuxtComponent({
     SoftGateParticipate,
     SoftGateSelectCreneaux,
     SoftGateInvitations,
-    SoftGateShare,
+    SoftGateCompleteProfile,
+    // SoftGateShare,
     SoftGatePrerequisites,
   },
   data() {
@@ -142,7 +146,28 @@ export default defineNuxtComponent({
     },
     onStepInvitationsNext(payload) {
       this.emails = payload
-      this.step = 'share'
+
+      if (this.emails.length > 0) {
+        if (this.emails.length > 1) {
+          this.$toast.success({
+            component: Toast,
+            props: {
+              title: 'Les invitations ont été envoyées',
+              message: `${this.emails.join(', ')} vont bientôt recevoir un email`,
+            },
+          })
+        } else {
+          this.$toast.success({
+            component: Toast,
+            props: {
+              title: 'L’invitation a été envoyée',
+              message: `${this.emails[0]} va bientôt recevoir un email`,
+            },
+          })
+        }
+      }
+
+      this.step = 'complete-profile'
     },
     handleNextResolver() {
       if (this.hasPrerequisites) {
@@ -172,7 +197,7 @@ export default defineNuxtComponent({
       this.datas = datas
     },
     onClose() {
-      if (['invitations', 'share'].includes(this.step)) {
+      if (['invitations', 'complete-profile'].includes(this.step)) {
         this.$stores.softGate.closeOverlay()
         this.$router.push('/profile/missions')
       } else {

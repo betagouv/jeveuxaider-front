@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div>
+    <div v-if="title" class="mb-2 font-bold">
+      {{ title }}
+    </div>
+    <div class="">
       {{ message }}
     </div>
-    <ul v-if="errors" class="text-sm list-disc pl-4">
+    <ul v-if="errors" class="text-sm list-disc pl-4 mt-2">
       <!-- from setErrors() -->
       <template v-if="Array.isArray(errors)">
         <li v-for="(error, index) in errors" :key="index">
@@ -26,6 +29,10 @@ export default defineNuxtComponent({
     message: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      default: null,
     },
     errors: {
       type: [Object, Array],
