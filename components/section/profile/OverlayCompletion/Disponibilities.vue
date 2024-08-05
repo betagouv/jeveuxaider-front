@@ -62,7 +62,7 @@ export default defineNuxtComponent({
       <DsfrHeading size="lg" class="text-center"> Quelles sont vos disponibilités ? </DsfrHeading>
 
       <div class="mt-8 flex flex-col sm:flex-row gap-4 lg:gap-6">
-        <div class="lg:w-1/2">
+        <div class="sm:w-1/2">
           <DsfrSelect
             id="commitment__duration"
             v-model="form.commitment__duration"
@@ -76,7 +76,7 @@ export default defineNuxtComponent({
           </BaseFormError>
         </div>
         <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
-        <div class="lg:w-1/2">
+        <div class="sm:w-1/2">
           <DsfrSelect
             v-model="form.commitment__time_period"
             id="commitment__time_period"

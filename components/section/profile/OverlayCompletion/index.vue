@@ -29,12 +29,19 @@ export default defineNuxtComponent({
       steps.push('activities')
     }
     if (!!profile.value.type || !isMotMotivationCompleted.value) {
+      steps.push('stepSelection')
       steps.push('moreAboutYou')
     }
     if (!isSkillsAndCertificationsCompleted.value) {
+      if (!steps.includes('stepSelection')) {
+        steps.push('stepSelection')
+      }
       steps.push('skillsAndCertifications')
     }
     if (!isProfilePictureCompleted.value) {
+      if (!steps.includes('stepSelection')) {
+        steps.push('stepSelection')
+      }
       steps.push('picture')
     }
     steps.push('communicationPreferences')
@@ -156,21 +163,40 @@ export default defineNuxtComponent({
           </template>
 
           <template #footer>
-            <!-- todo -->
-            <DsfrButton
-              type="secondary"
-              class="flex-grow"
-              :disabled="currentStep === steps[0]"
-              @click="goToPreviousStep"
-              >Précédent</DsfrButton
-            >
-            <DsfrButton
-              :loading="loading"
-              type="primary"
-              class="flex-grow"
-              @click="handleValidation"
-              >Suivant</DsfrButton
-            >
+            <template v-if="currentStep === 'moreAboutYou'">
+              <!-- TODO -->
+              <DsfrButton
+                type="secondary"
+                class="flex-grow"
+                :disabled="currentStep === steps[0]"
+                @click="goToPreviousStep"
+                >Précédent</DsfrButton
+              >
+              <DsfrButton
+                :loading="loading"
+                type="primary"
+                class="flex-grow"
+                @click="handleValidation"
+                >Suivant</DsfrButton
+              >
+            </template>
+
+            <template v-else>
+              <DsfrButton
+                type="secondary"
+                class="flex-grow"
+                :disabled="currentStep === steps[0]"
+                @click="goToPreviousStep"
+                >Précédent</DsfrButton
+              >
+              <DsfrButton
+                :loading="loading"
+                type="primary"
+                class="flex-grow"
+                @click="handleValidation"
+                >Suivant</DsfrButton
+              >
+            </template>
           </template>
 
           <!-- CONTENT -->
@@ -197,6 +223,15 @@ export default defineNuxtComponent({
                 v-else-if="currentStep === 'activities'"
                 ref="form"
                 @submit="handleSubmit('activities', $event)"
+              />
+
+              <SectionProfileOverlayCompletionStepSelection
+                v-else-if="currentStep === 'stepSelection'"
+                @update="currentStep = $event"
+              />
+
+              <SectionProfileOverlayCompletionMoreAboutYou
+                v-else-if="currentStep === 'moreAboutYou'"
               />
             </div>
           </div>
