@@ -1,9 +1,13 @@
 <template>
-  <div class="w-full">
+  <div class="initial:w-full">
     <label
       v-if="label"
       :for="htmlFor"
-      :class="['block  relative text-[#161616]', $slots.description ? 'mb-1' : 'mb-2']"
+      :class="[
+        'block relative text-[#161616]',
+        $slots.description ? 'initial:mb-1' : 'initial:mb-2',
+        labelClass,
+      ]"
     >
       {{ label }}
       <span v-if="required" class="text-[#E2011C]"> * </span>
@@ -14,6 +18,7 @@
     <div v-if="$slots.description" class="mb-2">
       <slot name="description" />
     </div>
+
     <slot />
 
     <BaseFormInfo v-if="info && !error">{{ info }}</BaseFormInfo>
@@ -37,7 +42,7 @@ export default defineNuxtComponent({
     success: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
-    labelSize: { type: String, default: 'xs' },
+    labelClass: { type: String, default: null },
     required: { type: Boolean, default: false },
   },
 })
