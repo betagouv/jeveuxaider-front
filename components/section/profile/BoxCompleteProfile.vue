@@ -50,7 +50,7 @@
         Indiquez vos préférences de mission
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
-      <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
+      <CustomTodoListItem :isCompleted="isSkillsOrCertificationsCompleted">
         Indiquez vos compétences et certifications
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
@@ -101,7 +101,7 @@ export default defineNuxtComponent({
       isPreferencesCompleted,
       isMotMotivationCompleted,
       isProfilePictureCompleted,
-      isSkillsAndCertificationsCompleted,
+      isSkillsOrCertificationsCompleted,
     } = useProfileCompletion()
 
     return {
@@ -112,7 +112,7 @@ export default defineNuxtComponent({
       isPreferencesCompleted,
       isMotMotivationCompleted,
       isProfilePictureCompleted,
-      isSkillsAndCertificationsCompleted,
+      isSkillsOrCertificationsCompleted,
     }
   },
   created() {

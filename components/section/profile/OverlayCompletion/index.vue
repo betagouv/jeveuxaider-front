@@ -8,12 +8,10 @@ export default defineNuxtComponent({
     const {
       profile,
       totalPoints,
-      isContactInformationsCompleted,
       isDisponibilitiesCompleted,
-      isPreferencesCompleted,
       isMotMotivationCompleted,
       isProfilePictureCompleted,
-      isSkillsAndCertificationsCompleted,
+      isSkillCompleted,
       isMissionTypeCompleted,
       isActivitiesCompleted,
     } = useProfileCompletion()
@@ -31,15 +29,11 @@ export default defineNuxtComponent({
     if (!!profile.value.type || !isMotMotivationCompleted.value) {
       steps.push('stepSelection')
     }
-    if (!isSkillsAndCertificationsCompleted.value) {
-      if (!steps.includes('stepSelection')) {
-        steps.push('stepSelection')
-      }
+    if (!isSkillCompleted.value && !steps.includes('stepSelection')) {
+      steps.push('stepSelection')
     }
-    if (!isProfilePictureCompleted.value) {
-      if (!steps.includes('stepSelection')) {
-        steps.push('stepSelection')
-      }
+    if (!isProfilePictureCompleted.value && !steps.includes('stepSelection')) {
+      steps.push('stepSelection')
     }
     steps.push('communicationPreferences')
 
@@ -79,17 +73,13 @@ export default defineNuxtComponent({
       this.loading = false
     },
     goToNextStep() {
-      this.currentStep = ['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(
-        this.currentStep
-      )
+      this.currentStep = ['moreAboutYou', 'skills', 'picture'].includes(this.currentStep)
         ? 'stepSelection'
         : this.steps[this.currentStepIndex + 1]
       this.scrollToTop()
     },
     goToPreviousStep() {
-      this.currentStep = ['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(
-        this.currentStep
-      )
+      this.currentStep = ['moreAboutYou', 'skills', 'picture'].includes(this.currentStep)
         ? 'stepSelection'
         : this.steps[this.currentStepIndex - 1]
       this.scrollToTop()
@@ -180,8 +170,7 @@ export default defineNuxtComponent({
               :disabled="currentStep === steps[0]"
               @click="goToPreviousStep"
             >
-              <template
-                v-if="['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(currentStep)"
+              <template v-if="['moreAboutYou', 'skills', 'picture'].includes(currentStep)"
                 >Retour</template
               >
               <template v-else>Précédent</template>
@@ -198,8 +187,7 @@ export default defineNuxtComponent({
                 }
               "
             >
-              <template
-                v-if="['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(currentStep)"
+              <template v-if="['moreAboutYou', 'skills', 'picture'].includes(currentStep)"
                 >Valider</template
               >
               <template v-else-if="currentStep === 'stepSelection'">Terminer</template>
@@ -240,6 +228,12 @@ export default defineNuxtComponent({
 
               <SectionProfileOverlayCompletionMoreAboutYou
                 v-else-if="currentStep === 'moreAboutYou'"
+                ref="form"
+                @submit="handleSubmit($event)"
+              />
+
+              <SectionProfileOverlayCompletionSkills
+                v-else-if="currentStep === 'skills'"
                 ref="form"
                 @submit="handleSubmit($event)"
               />

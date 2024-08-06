@@ -152,33 +152,7 @@
           ici.
         </div>
         <div class="mt-8">
-          <DsfrFormControl html-for="algolia-search">
-            <AlgoliaInputAutocomplete
-              index="termsIndex"
-              variant="dsfr"
-              attribute-right-label="group"
-              :search-parameters="{
-                facetFilters: [['vocabulary_name:Skills']],
-                hitsPerPage: 6,
-              }"
-              @selected="handleSelectSkillItems"
-            />
-          </DsfrFormControl>
-
-          <div v-if="form.skills.length" class="mt-6">
-            <div class="flex flex-wrap gap-4">
-              <DsfrTag
-                v-for="item in form.skills"
-                :key="item.id"
-                :tag="item"
-                size="md"
-                context="deletable"
-                @delete="onRemovedSkillItem(item)"
-              >
-                {{ item.name }}
-              </DsfrTag>
-            </div>
-          </div>
+          <FormUserSkills v-model="form.skills" />
         </div>
       </div>
       <hr />
@@ -370,12 +344,14 @@ export default defineNuxtComponent({
     },
   },
   setup() {
-    const { schemaType, schemaCertifications, schemaDescription } = useProfileValidation()
+    const { schemaType, schemaCertifications, schemaDescription, schemaSkills } =
+      useProfileValidation()
 
     return {
       schemaType,
       schemaCertifications,
       schemaDescription,
+      schemaSkills,
     }
   },
   data() {
@@ -474,6 +450,7 @@ export default defineNuxtComponent({
           }),
         certifications: this.schemaCertifications,
         description: this.schemaDescription,
+        skills: this.schemaSkills,
       }),
       zipAutocompleteOptions: [],
       loadingFetchZips: false,
@@ -548,14 +525,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    handleSelectSkillItems(item) {
-      if (!this.form.skills.some((skill) => skill.id === item.id)) {
-        this.form.skills = [...this.form.skills, item]
-      }
-    },
-    onRemovedSkillItem(item) {
-      this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
     },
   },
 })

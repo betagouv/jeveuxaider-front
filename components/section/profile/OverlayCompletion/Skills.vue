@@ -6,18 +6,17 @@ import { object } from 'yup'
 export default defineNuxtComponent({
   mixins: [FormErrors],
   setup() {
-    const { schemaMissionType, initialForm } = useProfileValidation()
+    const { initialForm, schemaSkills } = useProfileValidation()
 
     return {
       initialForm,
-      schemaMissionType,
     }
   },
   data() {
     return {
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        type_missions: this.schemaMissionType,
+        skills: this.schemaSkills,
       }),
       loading: false,
     }
@@ -46,26 +45,8 @@ export default defineNuxtComponent({
 
 <template>
   <div class="flex flex-col gap-10">
-    <div>
-      <DsfrHeading size="lg" class="text-center">Sur place ou à distance ?</DsfrHeading>
+    <DsfrHeading size="lg" class="text-center">🧰 Vos compétences</DsfrHeading>
 
-      <p class="mt-4 text-center max-w-[450px] mx-auto">
-        Vous pouvez trouver aussi bien des missions sur le terrain, ou des missions à réaliser
-        depuis chez vous
-      </p>
-
-      <DsfrFormControl
-        html-for="type_missions"
-        :error="errors.type_missions"
-        class="mt-8 max-w-[384px] mx-auto"
-      >
-        <DsfrRadioRichGroup
-          v-model="form.type_missions"
-          name="type_missions"
-          :options="$labels.profile_type_missions"
-          option-class="w-full"
-        />
-      </DsfrFormControl>
-    </div>
+    <FormUserSkills v-model="form.skills" />
   </div>
 </template>

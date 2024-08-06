@@ -12,8 +12,8 @@ export function useProfileCompletion() {
     isPreferencesCompleted: computed(() => isPreferencesCompleted(profile.value)),
     isMotMotivationCompleted: computed(() => isMotMotivationCompleted(profile.value)),
     isProfilePictureCompleted: computed(() => isProfilePictureCompleted(profile.value)),
-    isSkillsAndCertificationsCompleted: computed(() =>
-      isSkillsAndCertificationsCompleted(profile.value)
+    isSkillsOrCertificationsCompleted: computed(() =>
+      isSkillsOrCertificationsCompleted(profile.value)
     ),
     isActivitiesCompleted: computed(() => isActivitiesCompleted(profile.value)),
     isMissionTypeCompleted: computed(() => isMissionTypeCompleted(profile.value)),
@@ -34,7 +34,7 @@ function getTotalPoints(profile?: Profile) {
   if (isDisponibilitiesCompleted(profile)) points += 15
   if (isActivitiesCompleted(profile)) points += 10
   if (isMissionTypeCompleted(profile)) points += 10
-  if (isSkillsAndCertificationsCompleted(profile)) points += 10
+  if (isSkillsOrCertificationsCompleted(profile)) points += 10
   return points
 }
 
@@ -64,7 +64,7 @@ function isProfilePictureCompleted(profile?: Profile) {
   return !!profile?.avatar
 }
 
-function isSkillsAndCertificationsCompleted(profile?: Profile) {
+function isSkillsOrCertificationsCompleted(profile?: Profile) {
   return isSkillCompleted(profile) || isCertificationCompleted(profile)
 }
 

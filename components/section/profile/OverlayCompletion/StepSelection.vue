@@ -2,11 +2,12 @@
 export default defineNuxtComponent({
   setup() {
     const { initialForm } = useProfileValidation()
-    const { isMotMotivationCompleted } = useProfileCompletion()
+    const { isMotMotivationCompleted, isSkillCompleted } = useProfileCompletion()
 
     return {
       initialForm,
       isMotMotivationCompleted,
+      isSkillCompleted,
     }
   },
   data() {
@@ -21,11 +22,11 @@ export default defineNuxtComponent({
           isCompleted: !!this.initialForm.type && this.isMotMotivationCompleted,
         },
         {
-          step: 'skillsAndCertifications',
+          step: 'skills',
           title: 'Vos compétences',
           description: ['À définir', 'XX compétences'],
           icon: '🧰',
-          isCompleted: true, // @todo
+          isCompleted: this.isSkillCompleted,
         },
         {
           step: 'picture',

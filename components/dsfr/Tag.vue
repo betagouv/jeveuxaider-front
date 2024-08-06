@@ -22,7 +22,11 @@
         'bg-jva-blue-500 text-white cursor-pointer hover:bg-[#1212FF]': context === 'deletable',
       },
     ]"
-    :aria-pressed="isActive"
+    :aria-pressed="isActive || context === 'deletable'"
+    :role="context === 'deletable' ? 'checkbox' : undefined"
+    :aria-checked="context === 'deletable' ? true : undefined"
+    @keydown.enter="onKeyDown"
+    @keydown.space="onKeyDown"
   >
     <template v-if="icon && iconPosition === 'left'">
       <component
@@ -156,6 +160,13 @@ export default defineNuxtComponent({
       iconComponent,
       iconClearableComponent,
     }
+  },
+  methods: {
+    onKeyDown() {
+      if (this.context === 'deletable') {
+        this.$emit('delete')
+      }
+    },
   },
 })
 </script>

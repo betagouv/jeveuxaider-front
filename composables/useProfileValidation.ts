@@ -31,6 +31,7 @@ export function useProfileValidation() {
       }),
     schemaCertifications: array().nullable(),
     schemaDescription: string().nullable(),
+    schemaSkills: array().nullable(),
   }
 }
 

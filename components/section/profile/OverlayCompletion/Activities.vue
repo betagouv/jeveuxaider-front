@@ -1,5 +1,4 @@
 <script>
-import { useProfileCompletion } from '~/composables/useProfileCompletion'
 import { useProfileValidation } from '~/composables/useProfileValidation'
 import FormErrors from '@/mixins/form/errors'
 import { object } from 'yup'
