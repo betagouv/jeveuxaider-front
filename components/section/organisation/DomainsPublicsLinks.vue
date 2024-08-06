@@ -10,7 +10,11 @@
       <p v-if="!organisation.domaines.length">Non renseigné</p>
 
       <ul v-else class="grid md:grid-cols-2 gap-3 xl:gap-x-6">
-        <li v-for="domaine in organisation.domaines" :key="domaine.id" class="flex items-start">
+        <li
+          v-for="domaine in organisation.domaines.filter((domaine) => domaine.id !== 5)"
+          :key="domaine.id"
+          class="flex items-start"
+        >
           <div class="flex-none w-6 h-6 mr-3">
             <img
               :src="$filters.label(domaine.id, 'domaines', 'icon')"

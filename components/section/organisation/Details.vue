@@ -43,7 +43,7 @@
             <h3 class="text-2xl font-bold mb-4">Causes défendues</h3>
             <div v-if="organisation.domaines" class="flex flex-wrap gap-4">
               <Tag
-                v-for="(domaine, i) in organisation.domaines"
+                v-for="(domaine, i) in organisation.domaines.filter((domaine) => domaine.id !== 5)"
                 :key="i"
                 size="md"
                 :custom-theme="true"
