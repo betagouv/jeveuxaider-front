@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div :class="['flex flex-wrap initial:gap-2 initial:lg:gap-3', wrapperClass]">
+    <div
+      :id="name"
+      :name="name"
+      :class="['flex flex-wrap initial:gap-2 initial:lg:gap-3', wrapperClass]"
+    >
       <DsfrTag
         v-for="option in options"
         :key="option.key"
         as="button"
         context="selectable"
         size="md"
-        :is-active="
-          isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
-        "
+        :is-active="isActive(option)"
+        role="checkbox"
+        :aria-checked="isActive(option)"
         @click.native.prevent="onClick(option.key)"
       >
         {{ option.label }}
@@ -25,6 +29,7 @@
 export default defineNuxtComponent({
   emits: ['update:modelValue', 'updated'],
   props: {
+    name: { type: String, required: true },
     modelValue: { type: Array, default: () => [] },
     options: { type: Array, required: true },
     error: { type: String, default: null },
@@ -56,6 +61,11 @@ export default defineNuxtComponent({
 
       this.$emit('update:modelValue', this.value)
       this.$emit('updated', this.value)
+    },
+    isActive(option) {
+      return this.isModel
+        ? this.value.some((item) => item.id == option.key)
+        : this.value.includes(option.key)
     },
   },
 })
