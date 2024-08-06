@@ -21,7 +21,6 @@
                 <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
                   <div class="lg:w-1/2">
                     <DsfrSelect
-                      id="commitment__duration"
                       v-model="form.commitment__duration"
                       name="commitment__duration"
                       placeholder="Durée"
@@ -36,7 +35,6 @@
                   <div class="lg:w-1/2">
                     <DsfrSelect
                       v-model="form.commitment__time_period"
-                      id="commitment__time_period"
                       name="commitment__time_period"
                       placeholder="Fréquence"
                       :options="$labels.time_period"
@@ -158,11 +156,10 @@
 </template>
 
 <script>
-import { object, array, string } from 'yup'
+import { object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
-import activitiesOptions from '@/assets/activities.json'
 import ModalActivities from '@/components/modal/ModalActivities'
 
 export default defineNuxtComponent({
@@ -177,7 +174,7 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  setup({ profile }) {
+  setup() {
     const {
       initialForm,
       schemaDisponibilities,

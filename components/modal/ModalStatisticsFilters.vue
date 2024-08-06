@@ -43,7 +43,6 @@
             :error="errors.department"
           >
             <DsfrSelect
-              id="department"
               name="department"
               v-model="form.department"
               placeholder="Sélectionner un département"
