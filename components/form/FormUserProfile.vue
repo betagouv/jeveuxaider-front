@@ -135,7 +135,6 @@
           <DsfrFormControl label="Profession" html-for="type" required :error="errors.type">
             <DsfrSelect
               v-model="form.type"
-              id="type"
               name="type"
               placeholder="Sélectionnez votre profession"
               :options="$labels.profile_type"
@@ -370,6 +369,13 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  setup() {
+    const { schemaType } = useProfileValidation()
+
+    return {
+      schemaType,
+    }
+  },
   data() {
     return {
       loading: false,
@@ -392,12 +398,7 @@ export default defineNuxtComponent({
               return age >= 16
             }
           ),
-        // email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
-        type: string()
-          .nullable()
-          .test('test-profession-required', 'Une profession est requise', (type) => {
-            return ['admin'].includes(this.$stores.auth.contextRole) || type
-          }),
+        type: this.schemaType,
         mobile: string()
           .nullable()
           .min(10, 'Le mobile doit contenir au moins 10 caractères')

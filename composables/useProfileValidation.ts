@@ -24,6 +24,11 @@ export function useProfileValidation() {
     schemaCommitmentTimePeriod: string().nullable().required('Merci de choisir une fréquence'),
     schemaMissionType: string().nullable(),
     schemaActivities: array().nullable(),
+    schemaType: string()
+      .nullable()
+      .test('test-profession-required', 'Une profession est requise', (type?: string | null) => {
+        return (authStore.contextRole && ['admin'].includes(authStore.contextRole)) || !!type
+      }),
   }
 }
 

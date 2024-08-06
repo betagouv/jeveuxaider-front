@@ -33,7 +33,7 @@ const props = defineProps({
     type: Boolean,
     default: null,
   },
-  customClass: {
+  selectClass: {
     type: String,
     default: '',
   },
@@ -54,7 +54,7 @@ const props = defineProps({
       :required="required"
       :disabled="disabled"
       :class="[
-        'border-none rounded-t w-full h-full truncate',
+        'border-none rounded-t initial:w-full h-full truncate',
         'bg-[#EEEEEE]  focus:!shadow-[inset_0_-2px_0_0_#3A3A3A] text-[#3a3a3a]',
         { ' shadow-[inset_0_-2px_0_0_#3A3A3A]': !disabled },
         { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
@@ -62,7 +62,7 @@ const props = defineProps({
         { 'py-3': size === 'lg' },
         { 'cursor-not-allowed shadow-[inset_0_-2px_0_0_#E5E5E5]': disabled },
 
-        customClass,
+        selectClass,
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="$emit('blur', $event.target.value)"

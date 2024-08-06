@@ -69,7 +69,7 @@ export default defineNuxtComponent({
       }
       await this.$refs.form.handleValidation()
     },
-    async handleSubmit(step, payload) {
+    async handleSubmit(payload) {
       if (this.loading) {
         return
       }
@@ -210,19 +210,19 @@ export default defineNuxtComponent({
               <SectionProfileOverlayCompletionDisponibilities
                 v-if="currentStep === 'disponibilities'"
                 ref="form"
-                @submit="handleSubmit('disponibilities', $event)"
+                @submit="handleSubmit($event)"
               />
 
               <SectionProfileOverlayCompletionMissionType
                 v-else-if="currentStep === 'missionType'"
                 ref="form"
-                @submit="handleSubmit('missionType', $event)"
+                @submit="handleSubmit($event)"
               />
 
               <SectionProfileOverlayCompletionActivities
                 v-else-if="currentStep === 'activities'"
                 ref="form"
-                @submit="handleSubmit('activities', $event)"
+                @submit="handleSubmit($event)"
               />
 
               <SectionProfileOverlayCompletionStepSelection
@@ -232,6 +232,8 @@ export default defineNuxtComponent({
 
               <SectionProfileOverlayCompletionMoreAboutYou
                 v-else-if="currentStep === 'moreAboutYou'"
+                ref="form"
+                @submit="handleSubmit($event)"
               />
             </div>
           </div>
