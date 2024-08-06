@@ -101,7 +101,7 @@ export default defineNuxtComponent({
           $hours = 7
           break
         case '2_days':
-          $hours = 21
+          $hours = 14
           break
         case '3_days':
           $hours = 21
@@ -111,6 +111,9 @@ export default defineNuxtComponent({
           break
         case '5_days':
           $hours = 35
+          break
+        case 'more_5_days':
+          $hours = 42
           break
         default:
           break

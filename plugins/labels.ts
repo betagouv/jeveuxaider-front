@@ -291,6 +291,7 @@ const labels: TypeLabels = {
     { key: '3_days', label: '3 jours' },
     { key: '4_days', label: '4 jours' },
     { key: '5_days', label: '5 jours' },
+    { key: 'more_5_days', label: 'Plus de 5 jours' },
   ],
   commitment_duration_min: [
     { key: '1_month', label: '1 mois' },
