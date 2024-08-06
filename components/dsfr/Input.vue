@@ -9,6 +9,7 @@
     <input
       :value="modelValue"
       :type="type"
+      :required="required"
       :placeholder="placeholder"
       :class="[
         'border-none rounded-t w-full h-full',
@@ -76,6 +77,10 @@ export default defineNuxtComponent({
     type: {
       type: String,
       default: 'text',
+    },
+    required: {
+      type: Boolean,
+      default: false,
     },
     placeholder: {
       type: String,

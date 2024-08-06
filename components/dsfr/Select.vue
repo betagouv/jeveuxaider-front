@@ -51,6 +51,7 @@ const props = defineProps({
       :name="name"
       :value="modelValue"
       :placeholder="placeholder"
+      :required="required"
       :disabled="disabled"
       :class="[
         'border-none rounded-t w-full h-full truncate',

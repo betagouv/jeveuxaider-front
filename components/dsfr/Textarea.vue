@@ -33,6 +33,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 })
 </script>
 
@@ -42,6 +46,7 @@ const props = defineProps({
       :id="name"
       :name="name"
       :value="modelValue"
+      :required="required"
       :rows="rows"
       :placeholder="placeholder"
       :class="[
