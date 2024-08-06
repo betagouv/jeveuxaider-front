@@ -51,11 +51,13 @@ const isChecked = (option) => option.key === props.modelValue
         { 'border-jva-blue-500 bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },
         optionClass,
       ]"
+      role="radio"
+      :aria-checked="isChecked(option)"
       @click="onClick(option)"
       @keydown.enter="onClick(option)"
       @keydown.space.prevent="onClick(option)"
     >
-      <div class="flex items-center gap-4">
+      <div inert class="flex items-center gap-4">
         <input
           :value="option.key"
           type="radio"

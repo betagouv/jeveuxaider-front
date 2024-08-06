@@ -164,7 +164,12 @@ export default defineNuxtComponent({
               </div>
 
               <!-- GAUGE -->
-              <BaseGauge :percentage="totalPoints" color="gradient" size="lg" />
+              <BaseGauge
+                :percentage="totalPoints"
+                color="gradient"
+                size="lg"
+                aria-label="Complétion du profil"
+              />
             </div>
           </template>
 
@@ -184,6 +189,7 @@ export default defineNuxtComponent({
 
             <DsfrButton
               :loading="loading"
+              :is-submit="true"
               type="primary"
               class="w-full flex-1"
               @click="

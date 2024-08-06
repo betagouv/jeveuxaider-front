@@ -103,7 +103,13 @@ export default defineNuxtComponent({
     </div>
     <div>
       <DsfrHeading size="lg" class="text-center"> Plutôt… </DsfrHeading>
-      <DsfrFormControl html-for="disponibilities" :error="errors.disponibilities" class="mt-8">
+      <DsfrFormControl
+        label="Cochez vos créneaux de disponibilité"
+        label-class="sr-only"
+        html-for="disponibilities"
+        :error="errors.disponibilities"
+        class="mt-8"
+      >
         <DsfrTagsGroup
           v-model="form.disponibilities"
           name="disponibilities"
