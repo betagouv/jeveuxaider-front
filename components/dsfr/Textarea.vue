@@ -29,7 +29,7 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  customClass: {
+  textareaClass: {
     type: String,
     default: '',
   },
@@ -59,7 +59,7 @@ const props = defineProps({
         },
         { '!border-[#ce0500]': error },
         { '!border-[#18753c]': success },
-        customClass,
+        textareaClass,
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
     />

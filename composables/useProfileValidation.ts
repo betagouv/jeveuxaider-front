@@ -29,6 +29,8 @@ export function useProfileValidation() {
       .test('test-profession-required', 'Une profession est requise', (type?: string | null) => {
         return (authStore.contextRole && ['admin'].includes(authStore.contextRole)) || !!type
       }),
+    schemaCertifications: array().nullable(),
+    schemaDescription: string().nullable(),
   }
 }
 

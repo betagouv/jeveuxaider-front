@@ -370,10 +370,12 @@ export default defineNuxtComponent({
     },
   },
   setup() {
-    const { schemaType } = useProfileValidation()
+    const { schemaType, schemaCertifications, schemaDescription } = useProfileValidation()
 
     return {
       schemaType,
+      schemaCertifications,
+      schemaDescription,
     }
   },
   data() {
@@ -470,6 +472,8 @@ export default defineNuxtComponent({
             is: true,
             then: (schema) => schema.required('La date de début de service civique est incorrecte'),
           }),
+        certifications: this.schemaCertifications,
+        description: this.schemaDescription,
       }),
       zipAutocompleteOptions: [],
       loadingFetchZips: false,

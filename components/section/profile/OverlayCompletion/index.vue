@@ -30,19 +30,16 @@ export default defineNuxtComponent({
     }
     if (!!profile.value.type || !isMotMotivationCompleted.value) {
       steps.push('stepSelection')
-      steps.push('moreAboutYou')
     }
     if (!isSkillsAndCertificationsCompleted.value) {
       if (!steps.includes('stepSelection')) {
         steps.push('stepSelection')
       }
-      steps.push('skillsAndCertifications')
     }
     if (!isProfilePictureCompleted.value) {
       if (!steps.includes('stepSelection')) {
         steps.push('stepSelection')
       }
-      steps.push('picture')
     }
     steps.push('communicationPreferences')
 
@@ -82,11 +79,19 @@ export default defineNuxtComponent({
       this.loading = false
     },
     goToNextStep() {
-      this.currentStep = this.steps[this.currentStepIndex + 1]
+      this.currentStep = ['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(
+        this.currentStep
+      )
+        ? 'stepSelection'
+        : this.steps[this.currentStepIndex + 1]
       this.scrollToTop()
     },
     goToPreviousStep() {
-      this.currentStep = this.steps[this.currentStepIndex - 1]
+      this.currentStep = ['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(
+        this.currentStep
+      )
+        ? 'stepSelection'
+        : this.steps[this.currentStepIndex - 1]
       this.scrollToTop()
     },
     scrollToTop() {
@@ -117,6 +122,7 @@ export default defineNuxtComponent({
           :sticky-footer="true"
           container-class="sm:max-h-[calc(100svh_-_8rem)]"
           scroll-container-class="h-[100svh] flex-grow sm:h-[initial]"
+          footer-class="flex-nowrap"
           @close="$emit('close')"
         >
           <template #overlay>
@@ -163,44 +169,40 @@ export default defineNuxtComponent({
           </template>
 
           <template #footer>
-            <template v-if="currentStep === 'moreAboutYou'">
-              <!-- TODO -->
-              <DsfrButton
-                type="secondary"
-                class="flex-grow"
-                :disabled="currentStep === steps[0]"
-                @click="goToPreviousStep"
-                >Précédent</DsfrButton
+            <DsfrButton
+              type="secondary"
+              class="w-full flex-1"
+              :disabled="currentStep === steps[0]"
+              @click="goToPreviousStep"
+            >
+              <template
+                v-if="['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(currentStep)"
+                >Retour</template
               >
-              <DsfrButton
-                :loading="loading"
-                type="primary"
-                class="flex-grow"
-                @click="handleValidation"
-                >Suivant</DsfrButton
-              >
-            </template>
+              <template v-else>Précédent</template>
+            </DsfrButton>
 
-            <template v-else>
-              <DsfrButton
-                type="secondary"
-                class="flex-grow"
-                :disabled="currentStep === steps[0]"
-                @click="goToPreviousStep"
-                >Précédent</DsfrButton
+            <DsfrButton
+              :loading="loading"
+              type="primary"
+              class="w-full flex-1"
+              @click="
+                () => {
+                  currentStep === 'stepSelection' ? goToNextStep() : handleValidation()
+                }
+              "
+            >
+              <template
+                v-if="['moreAboutYou', 'skillsAndCertifications', 'picture'].includes(currentStep)"
+                >Valider</template
               >
-              <DsfrButton
-                :loading="loading"
-                type="primary"
-                class="flex-grow"
-                @click="handleValidation"
-                >Suivant</DsfrButton
-              >
-            </template>
+              <template v-else-if="currentStep === 'stepSelection'">Terminer</template>
+              <template v-else>Suivant</template>
+            </DsfrButton>
           </template>
 
           <!-- CONTENT -->
-          <div class="sm:px-4 sm:py-8">
+          <div class="sm:px-4 py-3 sm:py-8">
             <div
               :class="[
                 '@container mx-auto initial:max-w-[585px]',

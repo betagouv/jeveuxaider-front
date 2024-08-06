@@ -2,10 +2,11 @@
 export default defineNuxtComponent({
   setup() {
     const { initialForm } = useProfileValidation()
-    const { isMotMotivationCompleted, isCertificationCompleted } = useProfileCompletion()
+    const { isMotMotivationCompleted } = useProfileCompletion()
 
     return {
       initialForm,
+      isMotMotivationCompleted,
     }
   },
   data() {
@@ -17,8 +18,7 @@ export default defineNuxtComponent({
           title: 'Dites-en un peu plus sur vous',
           description: ['À définir', 'Enchanté :)'],
           icon: '🐣',
-          isCompleted:
-            !!this.initialForm.type && isMotMotivationCompleted() && isCertificationCompleted(), // @todo
+          isCompleted: !!this.initialForm.type && this.isMotMotivationCompleted,
         },
         {
           step: 'skillsAndCertifications',
@@ -49,11 +49,15 @@ export default defineNuxtComponent({
       correspond.
     </p>
 
-    <div class="flex flex-col items-center justify-center mt-8 gap-4 max-w-[494px] mx-auto">
+    <div
+      class="flex flex-col items-center justify-center mt-8 gap-4 max-w-[494px] mx-auto"
+      role="menu"
+    >
       <button
         v-for="item in steps"
         :key="item.step"
-        class="group self-stretch border border-[#DDDDDD] shadow-[0px_6px_18px_0px_#00001229] p-6 pr-16"
+        role="menuitem"
+        class="group self-stretch border border-[#DDDDDD] shadow-[0px_6px_18px_0px_#00001229] p-6 pr-16 text-left"
         @click="$emit('update', item.step)"
       >
         <div class="flex gap-4 items-center relative">

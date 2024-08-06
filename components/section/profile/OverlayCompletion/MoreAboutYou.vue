@@ -8,12 +8,15 @@ export default defineNuxtComponent({
   mixins: [FormErrors],
   setup() {
     const { profile } = useProfileCompletion()
-    const { schemaType, initialForm } = useProfileValidation()
+    const { schemaType, schemaCertifications, schemaDescription, initialForm } =
+      useProfileValidation()
 
     return {
       profile,
       initialForm,
       schemaType,
+      schemaCertifications,
+      schemaDescription,
     }
   },
   data() {
@@ -21,6 +24,8 @@ export default defineNuxtComponent({
       form: _cloneDeep(this.initialForm),
       formSchema: object({
         type: this.schemaType,
+        certifications: this.schemaCertifications,
+        description: this.schemaDescription,
       }),
       loading: false,
     }
@@ -49,7 +54,7 @@ export default defineNuxtComponent({
 
 <template>
   <div class="flex flex-col gap-10">
-    <DsfrHeading size="lg" class="text-center">🐣 Dites-en un peu plus sur vous</DsfrHeading>
+    <DsfrHeading size="lg">🐣 Dites-en un peu plus sur vous</DsfrHeading>
 
     <DsfrFormControl label="Votre profession" html-for="type" required :error="errors.type">
       <DsfrSelect
@@ -61,6 +66,30 @@ export default defineNuxtComponent({
         @update:modelValue="validate('type')"
         @blur="validate('type')"
         selectClass="max-w-[340px]"
+      />
+    </DsfrFormControl>
+
+    <DsfrFormControl label="Vos certifications" html-for="certifications">
+      <DsfrTagsGroup
+        v-model="form.certifications"
+        name="certifications"
+        variant="button"
+        :options="$labels.profile_certifications"
+      />
+    </DsfrFormControl>
+
+    <DsfrFormControl label="Un petit mot sur vous" html-for="description">
+      <template #description>
+        <p class="text-[#666666] text-pretty mb-4">
+          Tout ce qui peut aider les organisations à mieux vous connaître.
+        </p>
+      </template>
+      <DsfrTextarea
+        v-model="form.description"
+        name="description"
+        :rows="5"
+        placeholder="Vos motivations en quelques mots..."
+        textarea-class="min-h-28"
       />
     </DsfrFormControl>
   </div>
