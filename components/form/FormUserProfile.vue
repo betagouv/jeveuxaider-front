@@ -216,12 +216,12 @@
           </DsfrFormControl>
         </div>
       </div>
-      <template v-if="canViewScAndCej">
+      <template v-if="canViewScAndCej || canViewFT">
         <hr />
         <div class="">
           <DsfrHeading size="lg"> Autres dispositifs </DsfrHeading>
           <div class="mt-12 flex flex-col gap-8 lg:gap-12">
-            <div class="flex flex-col gap-4 lg:gap-0">
+            <div v-if="canViewScAndCej" class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">
                 <img
                   src="/images/logo-service-civique.png"
@@ -261,7 +261,7 @@
                 </DsfrFormControl>
               </div>
             </div>
-            <div class="flex flex-col gap-4 lg:gap-0">
+            <div v-if="canViewScAndCej" class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">
                 <img
                   src="/images/logo-cej.png"
@@ -312,6 +312,60 @@
                     name="cej_email_adviser"
                     placeholder="…@…"
                     @blur="validate('cej_email_adviser')"
+                  />
+                </DsfrFormControl>
+              </div>
+            </div>
+            <div v-if="canViewFT" class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
+                <img
+                  src="/images/logo-france-travail.svg"
+                  alt="France Travail"
+                  title="France Travail"
+                  class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
+                  data-not-lazy
+                />
+                <div class="w-full lg:w-[520px]">
+                  <BaseToggle
+                    v-model="form.ft"
+                    position="right"
+                    label="Bénéficiez-vous d'une allocation RSA ?"
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
+                  />
+                </div>
+              </div>
+              <div v-if="form.ft" class="max-w-xl lg:pl-[141px]">
+                <DsfrFormControl
+                  v-if="form.ft"
+                  label="Email de votre conseiller France Travail"
+                  html-for="ft_email_adviser"
+                  :error="errors.ft_email_adviser"
+                  required
+                >
+                  <template #afterLabel>
+                    <span
+                      v-tooltip="{
+                        content:
+                          'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                      }"
+                      class="p-1 cursor-help group"
+                    >
+                      <RiErrorWarningLine
+                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
+                      />
+                    </span>
+                  </template>
+                  <DsfrInput
+                    v-model="form.ft_email_adviser"
+                    required
+                    type="email"
+                    name="ft_email_adviser"
+                    placeholder="…@…"
+                    @blur="validate('ft_email_adviser')"
                   />
                 </DsfrFormControl>
               </div>
@@ -418,6 +472,49 @@ export default defineNuxtComponent({
           .test('test-zip-required', 'Un code postal est requis', (zip) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || zip
           }),
+        ft_email_adviser: string()
+          .nullable()
+          .email("Le format de l'email est incorrect")
+          .when('ft', {
+            is: true,
+            then: (schema) =>
+              schema
+                .required("L'email de votre conseiller France Travail est obligatoire")
+                .test(
+                  'email-extension',
+                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    const forbiddenExtensions = [
+                      'gmail.com',
+                      'icloud.com',
+                      'outlook.com',
+                      'orange.fr',
+                      'wanadoo.fr',
+                      'hotmail.com',
+                      'hotmail.fr',
+                      'free.fr',
+                      'sfr.fr',
+                      'laposte.net',
+                    ]
+                    const emailParts = value.split('@')
+                    const emailExtension = emailParts[1]
+                    return !forbiddenExtensions.includes(emailExtension)
+                  }
+                )
+                .test(
+                  'no-current-user-email',
+                  "Vous devez saisir l'email de votre conseiller France Travail et non le vôtre",
+                  (value) => {
+                    if (!value || !this.$stores.auth.isLogged) {
+                      return true
+                    }
+                    return value !== this.$stores.auth.profile?.email
+                  }
+                ),
+          }),
         cej_email_adviser: string()
           .nullable()
           .email("Le format de l'email est incorrect")
@@ -486,6 +583,23 @@ export default defineNuxtComponent({
 
       return false
     },
+    canViewFT() {
+      if (this.profile.ft) {
+        return true
+      }
+      if (this.form?.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        if (userAge < 18) {
+          return false
+        }
+      }
+      if (this.form.department) {
+        if (['03', '23', '27', '80'].includes(this.form.department)) {
+          return true
+        }
+      }
+      return false
+    },
     formIsDirty() {
       const isUploadsDirty = !!(
         this.uploads.add.length ||
@@ -506,6 +620,11 @@ export default defineNuxtComponent({
     'form.cej'(val) {
       if (!val) {
         this.form.cej_email_adviser = null
+      }
+    },
+    'form.ft'(val) {
+      if (!val) {
+        this.form.ft_email_adviser = null
       }
     },
     formIsDirty(newVal) {
