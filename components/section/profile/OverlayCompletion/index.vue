@@ -46,6 +46,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       currentStep: this.steps?.[0],
+      scrollContainer: null,
     }
   },
   computed: {
@@ -85,8 +86,8 @@ export default defineNuxtComponent({
       this.scrollToTop()
     },
     scrollToTop() {
-      if (this.$refs.modal?.$refs.scrollContainer) {
-        this.$refs.modal.$refs.scrollContainer.scrollTop = 0
+      if (this.scrollContainer) {
+        this.scrollContainer.scrollTop = 0
       }
     },
   },
@@ -112,7 +113,17 @@ export default defineNuxtComponent({
           :sticky-footer="true"
           container-class="sm:max-h-[calc(100svh_-_8rem)]"
           scroll-container-class="h-[100svh] flex-grow sm:h-[initial]"
+          :content-class="[
+            // Workaround to deal with the height of the dropdown,
+            // @todo: implement a logic to teleport and place the dropdown at the end of the dom
+            { 'min-h-[500px]': currentStep === 'skills' },
+          ]"
           footer-class="flex-nowrap"
+          @open="
+            ({ scrollContainer }) => {
+              this.scrollContainer = scrollContainer
+            }
+          "
           @close="$emit('close')"
         >
           <template #overlay>
@@ -223,6 +234,7 @@ export default defineNuxtComponent({
 
               <SectionProfileOverlayCompletionStepSelection
                 v-else-if="currentStep === 'stepSelection'"
+                :scroll-container="scrollContainer"
                 @update="currentStep = $event"
               />
 

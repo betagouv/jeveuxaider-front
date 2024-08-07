@@ -10,6 +10,12 @@ export default defineNuxtComponent({
       isSkillCompleted,
     }
   },
+  props: {
+    scrollContainer: {
+      type: HTMLElement,
+      default: null,
+    },
+  },
   data() {
     return {
       currentStep: null,
@@ -24,7 +30,10 @@ export default defineNuxtComponent({
         {
           step: 'skills',
           title: 'Vos compétences',
-          description: ['À définir', 'XX compétences'],
+          description: [
+            'À définir',
+            this.$filters.pluralize(this.initialForm.skills.length, 'compétence'),
+          ],
           icon: '🧰',
           isCompleted: this.isSkillCompleted,
         },
@@ -37,6 +46,17 @@ export default defineNuxtComponent({
         },
       ],
     }
+  },
+  methods: {
+    handleClick(item) {
+      this.$emit('update', item.step)
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      if (this.scrollContainer) {
+        this.scrollContainer.scrollTop = 0
+      }
+    },
   },
 })
 </script>
@@ -59,7 +79,7 @@ export default defineNuxtComponent({
         :key="item.step"
         role="menuitem"
         class="group self-stretch border border-[#DDDDDD] shadow-[0px_6px_18px_0px_#00001229] p-6 pr-16 text-left"
-        @click="$emit('update', item.step)"
+        @click="handleClick(item)"
       >
         <div class="flex gap-4 items-center relative">
           <div class="text-[28px]">{{ item.icon }}</div>

@@ -150,7 +150,7 @@ import { FocusLoop } from '@vue-a11y/focus-loop'
 import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
-  emits: ['close'],
+  emits: ['open', 'close'],
   components: {
     FocusLoop,
   },
@@ -164,12 +164,12 @@ export default defineNuxtComponent({
     stickyHeader: { type: Boolean, default: false },
     stickyFooter: { type: Boolean, default: false },
 
-    overlayClass: { type: String, default: null },
-    containerClass: { type: String, default: null },
-    scrollContainerClass: { type: String, default: null },
-    headerClass: { type: String, default: null },
-    contentClass: { type: String, default: null },
-    footerClass: { type: String, default: null },
+    overlayClass: { type: [String, Array], default: null },
+    containerClass: { type: [String, Array], default: null },
+    scrollContainerClass: { type: [String, Array], default: null },
+    headerClass: { type: [String, Array], default: null },
+    contentClass: { type: [String, Array], default: null },
+    footerClass: { type: [String, Array], default: null },
   },
   data() {
     return {
@@ -181,6 +181,14 @@ export default defineNuxtComponent({
     handleClickOutside() {
       if (!this.preventClickOutside) {
         this.$emit('close')
+      }
+    },
+  },
+  watch: {
+    async isOpen(newVal) {
+      if (newVal) {
+        await this.$nextTick()
+        this.$emit('open', { scrollContainer: this.$refs.scrollContainer })
       }
     },
   },

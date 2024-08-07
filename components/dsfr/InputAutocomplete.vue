@@ -64,6 +64,8 @@
         />
       </div>
     </div>
+
+    <!-- todo: component pour gérer le teleport, placement et la taille -->
     <div
       v-show="searchTerm && showOptions"
       class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-x-hidden overflow-y-auto mt-1 overscroll-contain custom-scrollbar-gray"
