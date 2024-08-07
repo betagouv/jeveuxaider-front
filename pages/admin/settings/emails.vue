@@ -4,7 +4,7 @@
       :notification-key="drawerNotificationKey"
       :notification-label="drawerNotification && drawerNotification.label"
       :notification-description="drawerNotification && drawerNotification.description"
-      :notification-tags="drawerNotification && drawerNotification.tags"
+      :notification-tags="drawerNotification && drawerNotification.brevoTags"
       class="drawer-notification"
       @close="drawerNotificationKey = null"
     />
@@ -59,12 +59,14 @@
       @click.native="onClick(notification)"
     >
       <div class="mb-4 flex flex-wrap gap-2">
-        <DsfrBadge>{{ notification.receiver }}</DsfrBadge>
+        <DsfrBadge>{{ $filters.labelFromKey(receivers, notification.receiver) }}</DsfrBadge>
       </div>
       <div class="text-lg font-bold">{{ notification.label }}</div>
       <div class="mt-2">{{ notification.description }}</div>
       <div class="mt-4 flex flex-wrap gap-2">
-        <DsfrTag v-for="workflow in notification.workflows" type="gray">{{ workflow }}</DsfrTag>
+        <DsfrTag v-for="workflow in notification.workflows" type="gray">{{
+          $filters.labelFromKey(workflows, workflow)
+        }}</DsfrTag>
       </div>
     </div>
   </div>
@@ -139,7 +141,7 @@ export default defineNuxtComponent({
 const receivers = [
   {
     key: 'benevole',
-    label: 'Bénévole',
+    label: 'Bénévoles',
   },
   {
     key: 'responsable',
@@ -155,6 +157,10 @@ const receivers = [
   },
   {
     key: 'account',
+    label: 'Utilisateurs',
+  },
+  {
+    key: 'custom',
     label: 'Personnalisé',
   },
 ]
@@ -201,7 +207,7 @@ const workflows = [
     label: '10 - Relances',
   },
   {
-    key: 'france_travail_rsa',
+    key: 'france-travail',
     label: '11 - Bénéficiaire du RSA',
   },
   {
@@ -325,7 +331,7 @@ const notifications = [
     key: 'register_user_volontaire_cej',
     label: '[PRENOM], avec le Contrat d’Engagement Jeune, réalisez des missions de bénévolat !',
     description: 'Notification envoyée au bénévole 3 jours après avoir indiqué être engagé CEJ',
-    workflows: ['inscription-benevole', 'cej'],
+    workflows: ['relances', 'cej'],
     weight: 100,
   },
   {
@@ -937,20 +943,36 @@ const notifications = [
     weight: 100,
   },
   {
-    receiver: 'account',
+    receiver: 'custom',
     key: 'register_user_volontaire_cej_adviser',
     label: '[PRENOM-NOM] s’est inscrit sur JeVeuxAider.gouv.fr',
     description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit sur la plateforme",
-    workflows: ['compte-utilisateur', 'cej'],
-    weight: 100,
+    workflows: ['inscription-benevole', 'cej'],
+    weight: 2,
   },
   {
-    receiver: 'account',
+    receiver: 'custom',
+    key: 'register_user_volontaire_ft_adviser',
+    label: '[PRENOM-NOM] s’est inscrit sur JeVeuxAider.gouv.fr',
+    description: "Envoyé au conseiller RSA lorqu'un bénévole s'inscrit sur la plateforme",
+    workflows: ['inscription-benevole', 'france-travail'],
+    weight: 2,
+  },
+  {
+    receiver: 'custom',
     key: 'participation_validated_cej_adviser',
     label: '[PRENOM-NOM] s’est inscrit sur une mission de bénévolat',
     description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit à une mission",
     workflows: ['creation-participation', 'cej'],
-    weight: 100,
+    weight: 91,
+  },
+  {
+    receiver: 'custom',
+    key: 'participation_created_ft_adviser',
+    label: '[PRENOM-NOM] s’est inscrit sur une mission de bénévolat',
+    description: "Envoyé au conseiller RSA lorqu'un bénévole s'inscrit à une mission",
+    workflows: ['creation-participation', 'france-travail'],
+    weight: 91,
   },
   {
     receiver: 'account',
