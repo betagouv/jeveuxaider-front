@@ -12,17 +12,21 @@
       },
       {
         'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9] cursor-pointer':
-          ['clickable', 'selectable'].includes(context) && !isActive,
+          ['clickable', 'selectable', 'radio'].includes(context) && !isActive,
       },
       {
         'bg-jva-blue-500 text-white hover:bg-[#1212FF] active:bg-[#2323FF]':
-          ['clickable', 'selectable'].includes(context) && isActive,
+          ['clickable', 'selectable', 'radio'].includes(context) && isActive,
       },
       {
         'bg-jva-blue-500 text-white cursor-pointer hover:bg-[#1212FF]': context === 'deletable',
       },
     ]"
-    :aria-pressed="isActive"
+    :aria-pressed="ariaPressed"
+    :role="role"
+    :aria-checked="ariaChecked"
+    @keydown.enter="onKeyDown"
+    @keydown.space="onKeyDown"
   >
     <template v-if="icon && iconPosition === 'left'">
       <component
@@ -84,7 +88,7 @@
       />
     </template>
 
-    <template v-if="context === 'selectable' && isActive">
+    <template v-if="['selectable', 'radio'].includes(this.context) && isActive">
       <RiCheckboxCircleLine
         :class="[
           'absolute top-[-6px] right-[-6px] w-[18px] h-[18px] fill-current border-2 rounded-full text-jva-blue-500',
@@ -113,7 +117,7 @@ export default defineNuxtComponent({
     },
     context: {
       type: [String, null],
-      default: 'default', // default | clickable | selectable | deletable
+      default: 'default', // default | clickable | selectable | deletable | radio
     },
     icon: {
       type: [String, null],
@@ -156,6 +160,38 @@ export default defineNuxtComponent({
       iconComponent,
       iconClearableComponent,
     }
+  },
+  computed: {
+    role() {
+      switch (this.context) {
+        case 'deletable':
+          return 'checkbox'
+        case 'radio':
+          return 'radio'
+        default:
+          return undefined
+      }
+    },
+    ariaChecked() {
+      switch (this.context) {
+        case 'deletable':
+          return true
+        case 'radio':
+          return this.isActive
+        default:
+          return undefined
+      }
+    },
+    ariaPressed() {
+      return this.context === 'deletable' || this.isActive
+    },
+  },
+  methods: {
+    onKeyDown() {
+      if (this.context === 'deletable') {
+        this.$emit('delete')
+      }
+    },
   },
 })
 </script>
