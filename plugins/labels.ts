@@ -291,6 +291,7 @@ const labels: TypeLabels = {
     { key: '3_days', label: '3 jours' },
     { key: '4_days', label: '4 jours' },
     { key: '5_days', label: '5 jours' },
+    { key: 'more_5_days', label: 'Plus de 5 jours' },
   ],
   commitment_duration_min: [
     { key: '1_month', label: '1 mois' },
@@ -752,8 +753,8 @@ const labels: TypeLabels = {
   mission_workflow_states: [
     {
       key: 'Brouillon',
-      to: ['Brouillon', 'En attente de validation'],
-      roles: ['admin', 'responsable'],
+      to: ['Brouillon'],
+      roles: ['admin'],
       label: 'Brouillon',
       description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche.",
     },
