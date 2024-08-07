@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
-          <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
+          <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full sticky top-20" />
         </div>
         <div class="flex-1">
           <DsfrHeading size="lg"> Ma disponibilité </DsfrHeading>
@@ -15,38 +15,17 @@
             <div class="flex lg:space-x-10 items-center">
               <div>
                 <BaseFormLabel html-for="frequence" required size="xl">
-                  Combien de temps pourriez-vous allouer à des actions
-                  <br class="hidden lg:inline" />de bénévolat&nbsp;?
+                  Combien de temps pourriez-vous allouer à des actions de bénévolat&nbsp;?
                 </BaseFormLabel>
-                <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
-                  <div class="lg:w-1/2">
-                    <DsfrSelect
-                      id="commitment__duration"
-                      v-model="form.commitment__duration"
-                      name="commitment__duration"
-                      placeholder="Durée"
-                      :options="$labels.duration"
-                      @blur="validate('commitment__duration')"
-                    />
-                    <BaseFormError v-if="errors.commitment__duration">
-                      {{ errors.commitment__time_period }}
-                    </BaseFormError>
-                  </div>
-                  <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
-                  <div class="lg:w-1/2">
-                    <DsfrSelect
-                      v-model="form.commitment__time_period"
-                      id="commitment__time_period"
-                      name="commitment__time_period"
-                      placeholder="Fréquence"
-                      :options="$labels.time_period"
-                      @blur="validate('commitment__time_period')"
-                    />
-                    <BaseFormError v-if="errors.commitment__time_period">
-                      {{ errors.commitment__time_period }}
-                    </BaseFormError>
-                  </div>
-                </div>
+                <DsfrFormControl html-for="commitment" :error="errors.commitment" class="mt-4">
+                  <DsfrTagsGroup
+                    v-model="form.commitment"
+                    name="commitment"
+                    context="radio"
+                    :options="$labels.commitment"
+                    @updated="validate('commitment')"
+                  />
+                </DsfrFormControl>
               </div>
             </div>
             <div>
@@ -62,7 +41,6 @@
                 <DsfrTagsGroup
                   v-model="form.disponibilities"
                   name="disponibilities"
-                  variant="button"
                   :options="$labels.disponibilities"
                   @updated="validate('disponibilities')"
                 />
@@ -200,13 +178,20 @@ export default defineNuxtComponent({
       loading: false,
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        commitment__duration: string().nullable().required('Merci de choisir une durée'),
-        commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
+        commitment: string()
+          .nullable()
+          .test(
+            'is-commitment-required',
+            'Merci de choisir une fréquence parmi celles proposées',
+            (commitment) => {
+              return ['admin'].includes(this.$stores.auth.contextRole) || !!commitment
+            }
+          ),
         disponibilities: array()
           .transform((v) => (!v ? [] : v))
           .test(
             'test-disponibilities-required',
-            'Merci de sélectionner au moins 1 disponibilité',
+            'Merci de sélectionner au moins 1 créneau',
             (disponibilities) => {
               return (
                 ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
