@@ -8,27 +8,20 @@ export default defineNuxtComponent({
   mixins: [FormErrors],
   setup() {
     const { profile } = useProfileCompletion()
-    const {
-      schemaDisponibilities,
-      schemaCommitmentDuration,
-      schemaCommitmentTimePeriod,
-      initialForm,
-    } = useProfileValidation()
+    const { schemaDisponibilities, schemaCommitment, initialForm } = useProfileValidation()
 
     return {
       profile,
       initialForm,
       schemaDisponibilities,
-      schemaCommitmentDuration,
-      schemaCommitmentTimePeriod,
+      schemaCommitment,
     }
   },
   data() {
     return {
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        commitment__duration: this.schemaCommitmentDuration,
-        commitment__time_period: this.schemaCommitmentTimePeriod,
+        commitment: this.schemaCommitment,
         disponibilities: this.schemaDisponibilities,
       }),
       loading: false,
@@ -61,45 +54,21 @@ export default defineNuxtComponent({
     <div>
       <DsfrHeading size="lg" class="text-center"> Quelles sont vos disponibilités ? </DsfrHeading>
 
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 lg:gap-6">
-        <div class="sm:w-1/2">
-          <DsfrFormControl
-            label="Selectionner une durée"
-            label-class="sr-only"
-            html-for="commitment__duration"
-            required
-            :error="errors.commitment__duration"
-          >
-            <DsfrSelect
-              v-model="form.commitment__duration"
-              name="commitment__duration"
-              required
-              placeholder="Durée"
-              :options="$labels.duration"
-              @blur="validate('commitment__duration')"
-            />
-          </DsfrFormControl>
-        </div>
-        <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
-        <div class="sm:w-1/2">
-          <DsfrFormControl
-            label="Selectionner une fréquence"
-            label-class="sr-only"
-            html-for="commitment__time_period"
-            required
-            :error="errors.commitment__time_period"
-          >
-            <DsfrSelect
-              v-model="form.commitment__time_period"
-              name="commitment__time_period"
-              required
-              placeholder="Fréquence"
-              :options="$labels.time_period"
-              @blur="validate('commitment__time_period')"
-            />
-          </DsfrFormControl>
-        </div>
-      </div>
+      <DsfrFormControl
+        label="Sélectionnez votre possibilité d'engagement"
+        label-class="sr-only"
+        html-for="commitment"
+        :error="errors.commitment"
+        class="mt-8"
+      >
+        <DsfrTagsGroup
+          v-model="form.commitment"
+          name="commitment"
+          context="radio"
+          :options="$labels.commitment"
+          @updated="validate('commitment')"
+        />
+      </DsfrFormControl>
     </div>
     <div>
       <DsfrHeading size="lg" class="text-center"> Plutôt… </DsfrHeading>

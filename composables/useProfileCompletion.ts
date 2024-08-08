@@ -31,6 +31,7 @@ function getTotalPoints(profile?: Profile) {
   if (!!profile?.type) points += 5
   if (!!profile?.description) points += 5
   if (!!profile?.avatar) points += 5
+  // @todo: scinder les points dans les champs qui composent l'étape
   if (isDisponibilitiesCompleted(profile)) points += 15
   if (isActivitiesCompleted(profile)) points += 10
   if (isMissionTypeCompleted(profile)) points += 10
@@ -49,7 +50,7 @@ function isContactInformationsCompleted(profile?: Profile) {
 }
 
 function isDisponibilitiesCompleted(profile?: Profile) {
-  return !!profile?.commitment__duration && profile?.disponibilities?.length > 0
+  return !!profile?.commitment && profile?.disponibilities?.length > 0
 }
 
 function isPreferencesCompleted(profile?: Profile) {

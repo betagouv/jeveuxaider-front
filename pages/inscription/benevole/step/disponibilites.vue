@@ -81,6 +81,13 @@ export default defineNuxtComponent({
       layout: 'register-steps',
       middleware: ['authenticated'],
     })
+
+    const { schemaDisponibilities, schemaCommitment } = useProfileValidation()
+
+    return {
+      schemaDisponibilities,
+      schemaCommitment,
+    }
   },
   data() {
     return {
@@ -112,28 +119,9 @@ export default defineNuxtComponent({
         },
       ],
       form: _cloneDeep(this.$stores.auth.profile),
-      // @todo: useProfileValidation when branches are merged
       formSchema: object({
-        disponibilities: array()
-          .transform((v) => (!v ? [] : v))
-          .test(
-            'test-disponibilities-required',
-            'Merci de sélectionner au moins 1 créneau',
-            (disponibilities) => {
-              return (
-                ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
-              )
-            }
-          ),
-        commitment: string()
-          .nullable()
-          .test(
-            'is-commitment-required',
-            'Merci de choisir une fréquence parmi celles proposées',
-            (commitment) => {
-              return ['admin'].includes(this.$stores.auth.contextRole) || !!commitment
-            }
-          ),
+        disponibilities: this.schemaDisponibilities,
+        commitment: this.schemaCommitment,
       }),
     }
   },

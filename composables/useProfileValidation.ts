@@ -20,8 +20,22 @@ export function useProfileValidation() {
           )
         }
       ),
+    schemaCommitment: string()
+      .nullable()
+      .test(
+        'is-commitment-required',
+        'Merci de choisir une fréquence parmi celles proposées',
+        (commitment) => {
+          return (
+            (authStore.contextRole && ['admin'].includes(authStore.contextRole)) || !!commitment
+          )
+        }
+      ),
+
+    // @todo: delete
     schemaCommitmentDuration: string().nullable().required('Merci de choisir une durée'),
     schemaCommitmentTimePeriod: string().nullable().required('Merci de choisir une fréquence'),
+
     schemaMissionType: string().nullable(),
     schemaActivities: array().nullable(),
     schemaType: string()
