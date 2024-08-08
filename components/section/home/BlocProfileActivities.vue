@@ -120,17 +120,6 @@ export default defineNuxtComponent({
         })
         .catch(() => {})
     },
-    async detachActivityToProfile(activity) {
-      await apiFetch(`/profiles/${this.$stores.auth.profile?.id}/activity/${activity.id}/detach`, {
-        method: 'PUT',
-        body: this.mission,
-      })
-        .then(() => {
-          // await this.$stores.auth.fetchUser()
-          this.$toast.success(`${activity.label} a été retiré de vos préférences`)
-        })
-        .catch(() => {})
-    },
   },
 })
 </script>
