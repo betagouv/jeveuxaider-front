@@ -3,7 +3,7 @@
     :is="as"
     :type="as === 'button' ? 'button' : null"
     :class="[
-      'tag inline-flex items-center justify-center rounded-full relative transition',
+      'tag inline-flex items-center justify-center rounded-full relative transition select-none',
       'min-w-0 flex-shrink',
       { 'px-2 py-0.5 text-xs h-6': size == 'sm' },
       { 'px-3 py-1 text-sm h-8': size == 'md' },
@@ -88,11 +88,13 @@
       />
     </template>
 
-    <template v-if="['selectable', 'radio'].includes(this.context) && isActive">
+    <template v-if="['selectable', 'radio'].includes(context) && isActive">
       <RiCheckboxCircleLine
         :class="[
-          'absolute top-[-6px] right-[-6px] w-[18px] h-[18px] fill-current border-2 rounded-full text-jva-blue-500',
+          'absolute fill-current rounded-full text-jva-blue-500 top-[-6px] right-[-6px]',
           'border-gray-50 bg-gray-50',
+          { 'w-4 h-4 border': size === 'sm' },
+          { 'w-[18px] h-[18px] border-2': size === 'md' },
         ]"
       />
     </template>
