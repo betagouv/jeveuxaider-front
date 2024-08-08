@@ -6,7 +6,7 @@
         :key="option.key"
         as="button"
         :context="context"
-        size="md"
+        :size="size"
         :is-active="isActive(option)"
         @click.native.prevent="onClick(option.key)"
       >
@@ -23,19 +23,17 @@
 export default defineNuxtComponent({
   emits: ['update:modelValue', 'updated'],
   props: {
-    modelValue: {
-      type: [Array, String],
-      default: ({ context }) => (context === 'selectable' ? [] : null),
-    },
+    modelValue: { type: [Array, String] },
     options: { type: Array, required: true },
     error: { type: String, default: null },
     isModel: { type: Boolean, default: false },
     wrapperClass: { type: String, default: '' },
     context: { type: String, default: 'selectable' },
+    size: { type: String, default: 'md' },
   },
   data() {
     return {
-      value: this.modelValue,
+      value: this.modelValue ?? (this.context === 'selectable' ? [] : null),
     }
   },
   methods: {
