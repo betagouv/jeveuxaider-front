@@ -80,32 +80,15 @@
           <BaseFormLabel> Engagement minimum </BaseFormLabel>
           <BaseSelectAdvanced
             class="w-52"
-            name="duration"
+            name="commitment"
             placeholder="Choisir une durée"
-            :options="$labels.duration"
+            :options="$labels.commitment"
             variant="transparent"
             clearable
-            :modelValue="
-              $route.query['filter[minimum_commitment]'] &&
-              $route.query['filter[minimum_commitment]'].split(',')[0]
-            "
-            @update:modelValue="handleChangeCommitment('duration', $event)"
+            :modelValue="$route.query['filter[commitment]']"
+            @update:modelValue="changeFilter('filter[commitment]', $event)"
           />
         </div>
-        <div class="mb-4">par</div>
-        <BaseSelectAdvanced
-          name="timePeriod"
-          placeholder="-"
-          class="w-52"
-          :options="$labels.time_period"
-          variant="transparent"
-          clearable
-          :modelValue="
-            $route.query['filter[minimum_commitment]'] &&
-            $route.query['filter[minimum_commitment]'].split(',')[1]
-          "
-          @update:modelValue="handleChangeCommitment('timePeriod', $event)"
-        />
         <BaseFormControl label="Code Postal" html-for="zip">
           <BaseInput
             name="zip"
@@ -234,17 +217,6 @@ export default defineNuxtComponent({
         },
       })
       this.notifications = notifications
-    },
-    handleChangeCommitment(type, value) {
-      const commitment = this.$route.query['filter[minimum_commitment]']
-        ? this.$route.query['filter[minimum_commitment]'].split(',')
-        : []
-      if (type == 'duration') {
-        commitment[0] = value
-      } else {
-        commitment[1] = value
-      }
-      this.changeFilter('filter[minimum_commitment]', commitment.join(','))
     },
     async handleProposerMission(profile) {
       await apiFetch('/notifications-benevoles', {
