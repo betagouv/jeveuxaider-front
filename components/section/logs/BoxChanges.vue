@@ -193,6 +193,8 @@ export default defineNuxtComponent({
           return "Durée d'engagement"
         case 'commitment__time_period':
           return "Période d'engagement"
+        case 'commitment':
+          return 'Engagement'
         case 'start_date':
           return 'Date de début'
         case 'end_date':

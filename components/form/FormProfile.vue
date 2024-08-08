@@ -257,48 +257,37 @@
               :label="form.is_visible ? 'Visible des organisations' : 'Invisible des organisations'"
               description="Souhaitez-vous que les organisations de la plateforme vous proposent des missions ?"
             />
+
             <BaseFormControl
               label="Sélectionnez vos disponibilités"
               html-for="disponibilities"
-              required
               :error="errors.disponibilities"
+              required
+              class="mt-4"
             >
-              <BaseCheckboxGroup
+              <DsfrTagsGroup
                 v-model="form.disponibilities"
                 name="disponibilities"
-                variant="button"
                 :options="$labels.disponibilities"
+                size="sm"
+                @updated="validate('disponibilities')"
               />
             </BaseFormControl>
+
             <div>
-              <BaseFormLabel html-for="frequence" required>
+              <BaseFormLabel html-for="commitment" required>
                 À quelle fréquence souhaitez-vous vous engager&nbsp;?
               </BaseFormLabel>
-              <div class="flex flex-col sm:flex-row gap-2 lg:gap-4 sm:items-center">
-                <div class="lg:w-1/2">
-                  <BaseSelectAdvanced
-                    v-model="form.commitment__duration"
-                    name="commitment__duration"
-                    placeholder="Durée"
-                    :options="$labels.duration"
-                  />
-                  <BaseFormError v-if="errors.commitment__duration">
-                    {{ errors.commitment__time_period }}
-                  </BaseFormError>
-                </div>
-                <div class="flex-none text-sm">par</div>
-                <div class="lg:w-1/2">
-                  <BaseSelectAdvanced
-                    v-model="form.commitment__time_period"
-                    name="commitment__time_period"
-                    placeholder="Fréquence"
-                    :options="$labels.time_period"
-                  />
-                  <BaseFormError v-if="errors.commitment__time_period">
-                    {{ errors.commitment__time_period }}
-                  </BaseFormError>
-                </div>
-              </div>
+              <DsfrFormControl :error="errors.commitment">
+                <DsfrTagsGroup
+                  v-model="form.commitment"
+                  name="commitment"
+                  context="radio"
+                  size="sm"
+                  :options="$labels.commitment"
+                  @updated="validate('commitment')"
+                />
+              </DsfrFormControl>
             </div>
           </form>
         </BaseBox>
@@ -614,6 +603,7 @@ export default defineNuxtComponent({
         service_civique_completion_date: date()
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+        commitment: string().nullable(),
       }),
       autocompleteReseauxOptions: [],
       activitiesOptions,

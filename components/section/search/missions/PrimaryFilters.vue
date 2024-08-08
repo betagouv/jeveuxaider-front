@@ -155,7 +155,6 @@
 <script>
 import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
-import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
 import DatesFilter from '@/components/section/search/DatesFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
@@ -163,7 +162,6 @@ import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
 export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
-    CommitmentFilter,
     DatesFilter,
     LocalisationFilter,
     SearchFilter,
