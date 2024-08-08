@@ -587,16 +587,21 @@ export default defineNuxtComponent({
       if (this.profile.ft) {
         return true
       }
+      let isOldEnough = false
+      let isInDepartments = false
       if (this.form?.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-        if (userAge < 18) {
-          return false
+        if (userAge >= 18) {
+          isOldEnough = true
         }
       }
       if (this.form.department) {
         if (['03', '23', '27', '80'].includes(this.form.department)) {
-          return true
+          isInDepartments = true
         }
+      }
+      if (isOldEnough && isInDepartments) {
+        return true
       }
       return false
     },

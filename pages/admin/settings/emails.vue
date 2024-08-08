@@ -58,7 +58,6 @@
       class="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition duration-300"
       @click.native="onClick(notification)"
     >
-      <div>{{ notification.key }}</div>
       <div class="mb-4 flex flex-wrap gap-2">
         <DsfrBadge>{{ $filters.labelFromKey(receivers, notification.receiver) }}</DsfrBadge>
         <template v-if="notification.tags">

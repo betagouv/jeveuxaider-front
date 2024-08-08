@@ -127,54 +127,99 @@
         </BaseFormControl>
 
         <transition name="fade">
-          <div v-if="canViewScAndCej" class="lg:col-span-2 space-y-6">
-            <div class="flex lg:space-x-4">
-              <img
-                src="/images/cej.png"
-                srcset="/images/cej.png, /images/cej@2x.png 2x"
-                alt="Contrat d'Engagement Jeune"
-                title="Contrat d'Engagement Jeune"
-                class="hidden lg:block flex-none w-[45px] object-contain object-left"
-                data-not-lazy
-              />
-              <BaseToggle
-                v-model="form.cej"
-                class="flex-1"
-                label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                :description="
-                  form.cej
-                    ? 'Oui, je suis en Contrat d\'Engagement Jeune'
-                    : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
-                "
-              />
-            </div>
-            <BaseFormControl
-              v-if="form.cej"
-              label="Email de votre conseiller CEJ"
-              html-for="cej_email_adviser"
-              :error="errors.cej_email_adviser"
-              required
-            >
-              <template #afterLabel>
-                <span
-                  v-tooltip="{
-                    content:
-                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                  }"
-                  class="p-1 cursor-help group"
-                >
-                  <RiInformationFill
-                    class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current"
+          <div v-if="canViewCej || canViewFT" class="lg:col-span-2 space-y-6">
+            <div v-if="canViewCej" class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
+                <div class="w-full lg:w-[520px]">
+                  <BaseToggle
+                    v-model="form.cej"
+                    position="right"
+                    label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
                   />
-                </span>
-              </template>
-              <BaseInput
-                v-model="form.cej_email_adviser"
-                name="cej_email_adviser"
-                placeholder="Saisissez l'email de votre conseiller CEJ"
-                @blur="validate('cej_email_adviser')"
-              />
-            </BaseFormControl>
+                </div>
+              </div>
+              <div v-if="form.cej" class="">
+                <BaseFormControl
+                  label="Email de votre conseiller CEJ"
+                  html-for="cej_email_adviser"
+                  :error="errors.cej_email_adviser"
+                  required
+                >
+                  <template #afterLabel>
+                    <span
+                      v-tooltip="{
+                        content:
+                          'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                      }"
+                      class="p-1 cursor-help group"
+                    >
+                      <RiInformationFill
+                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
+                      />
+                    </span>
+                  </template>
+                  <BaseInput
+                    v-model="form.cej_email_adviser"
+                    required
+                    type="email"
+                    name="cej_email_adviser"
+                    placeholder="Saisissez l'email de votre conseiller France Travail"
+                    @blur="validate('cej_email_adviser')"
+                  />
+                </BaseFormControl>
+              </div>
+            </div>
+            <div v-if="canViewFT" class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
+                <div class="w-full lg:w-[520px]">
+                  <BaseToggle
+                    v-model="form.ft"
+                    position="right"
+                    label="Bénéficiez-vous d'une allocation RSA ?"
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
+                  />
+                </div>
+              </div>
+              <div v-if="form.ft" class="">
+                <BaseFormControl
+                  label="Email de votre conseiller France Travail"
+                  html-for="ft_email_adviser"
+                  :error="errors.ft_email_adviser"
+                  required
+                >
+                  <template #afterLabel>
+                    <span
+                      v-tooltip="{
+                        content:
+                          'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                      }"
+                      class="p-1 cursor-help group"
+                    >
+                      <RiInformationFill
+                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
+                      />
+                    </span>
+                  </template>
+                  <BaseInput
+                    v-model="form.ft_email_adviser"
+                    required
+                    type="email"
+                    name="ft_email_adviser"
+                    placeholder="Saisissez l'email de votre conseiller France Travail"
+                    @blur="validate('ft_email_adviser')"
+                  />
+                </BaseFormControl>
+              </div>
+            </div>
           </div>
         </transition>
       </form>
@@ -307,6 +352,49 @@ export default defineNuxtComponent({
                   }
                 ),
           }),
+        ft_email_adviser: string()
+          .nullable()
+          .email("Le format de l'email est incorrect")
+          .when('ft', {
+            is: true,
+            then: (schema) =>
+              schema
+                .required("L'email de votre conseiller France Travail est obligatoire")
+                .test(
+                  'email-extension',
+                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    const forbiddenExtensions = [
+                      'gmail.com',
+                      'icloud.com',
+                      'outlook.com',
+                      'orange.fr',
+                      'wanadoo.fr',
+                      'hotmail.com',
+                      'hotmail.fr',
+                      'free.fr',
+                      'sfr.fr',
+                      'laposte.net',
+                    ]
+                    const emailParts = value.split('@')
+                    const emailExtension = emailParts[1]
+                    return !forbiddenExtensions.includes(emailExtension)
+                  }
+                )
+                .test(
+                  'no-current-user-email',
+                  "Vous devez saisir l'email de votre conseiller France Travail et non le vôtre",
+                  (value) => {
+                    if (!value || !this.$stores.auth.isLogged) {
+                      return true
+                    }
+                    return value !== this.$stores.auth.profile?.email
+                  }
+                ),
+          }),
       }),
       countries,
       zipAutocompleteOptions: [],
@@ -314,7 +402,7 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    canViewScAndCej() {
+    canViewCej() {
       if (this.form.cej || this.form.service_civique) {
         return true
       }
@@ -324,11 +412,36 @@ export default defineNuxtComponent({
       }
       return false
     },
+    canViewFT() {
+      let isOldEnough = false
+      let isInDepartments = false
+      if (this.form?.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        if (userAge >= 18) {
+          isOldEnough = true
+        }
+      }
+      if (this.form.department) {
+        if (['03', '23', '27', '80'].includes(this.form.department)) {
+          isInDepartments = true
+        }
+      }
+      if (isOldEnough && isInDepartments) {
+        return true
+      }
+
+      return false
+    },
   },
   watch: {
     'form.cej'(val) {
       if (!val) {
         this.form.cej_email_adviser = null
+      }
+    },
+    'form.ft'(val) {
+      if (!val) {
+        this.form.ft_email_adviser = null
       }
     },
   },
