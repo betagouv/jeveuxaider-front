@@ -58,8 +58,14 @@
       class="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition duration-300"
       @click.native="onClick(notification)"
     >
+      <div>{{ notification.key }}</div>
       <div class="mb-4 flex flex-wrap gap-2">
         <DsfrBadge>{{ $filters.labelFromKey(receivers, notification.receiver) }}</DsfrBadge>
+        <template v-if="notification.tags">
+          <DsfrBadge v-for="(tag, i) in notification.tags" :key="i" type="gray">{{
+            tag
+          }}</DsfrBadge>
+        </template>
       </div>
       <div class="text-lg font-bold">{{ notification.label }}</div>
       <div class="mt-2">{{ notification.description }}</div>
@@ -168,55 +174,71 @@ const receivers = [
 const workflows = [
   {
     key: 'inscription-benevole',
-    label: '1 - Inscription bénévole à la plateforme',
+    label: 'Inscription bénévole à la plateforme',
   },
   {
     key: 'creation-participation',
-    label: '2 - Candidature à une mission',
+    label: 'Candidature à une mission',
   },
   {
     key: 'creation-organisation',
-    label: '3 - Création d’une organisation',
+    label: 'Création d’une organisation',
   },
   {
     key: 'creation-mission',
-    label: '4 - Création d’une mission',
+    label: 'Création d’une mission',
   },
   {
     key: 'actions-en-attente',
-    label: '5 - Actions en attente',
+    label: 'Actions en attente',
   },
   {
     key: 'messagerie',
-    label: '6 - Messagerie',
+    label: 'Messagerie',
   },
   {
     key: 'compte-utilisateur',
-    label: '7 - Compte utilisateur',
+    label: 'Compte utilisateur',
   },
   {
     key: 'moderation-compte-utilisateur',
-    label: '8 - Modération de compte utilisateur',
+    label: 'Modération des comptes utilisateurs',
+  },
+  {
+    key: 'moderation-participation',
+    label: 'Modération des participations',
+  },
+  {
+    key: 'moderation-mission',
+    label: 'Modération des missions',
+  },
+  {
+    key: 'moderation-organisation',
+    label: 'Modération des organisations',
   },
   {
     key: 'cej',
-    label: '9 - CEJ',
+    label: 'CEJ',
   },
   {
     key: 'relances',
-    label: '10 - Relances',
+    label: 'Relances',
   },
   {
     key: 'france-travail',
-    label: '11 - Bénéficiaire du RSA',
+    label: 'Bénéficiaire du RSA',
+  },
+  {
+    key: 'desinscription-organisation',
+    label: 'Désinscription d’une organisation',
   },
   {
     key: 'archivage',
-    label: '12 - Archivage',
+    label: 'Archivage',
   },
   {
     key: 'autres',
-    label: '13 - Autres',
+    label: 'Autres',
   },
 ]
 
@@ -333,6 +355,27 @@ const notifications = [
     description: 'Notification envoyée au bénévole 3 jours après avoir indiqué être engagé CEJ',
     workflows: ['relances', 'cej'],
     weight: 100,
+    tags: ['J+3'],
+  },
+  {
+    receiver: 'benevole',
+    key: 'user_no_participation_ft_j3',
+    label: '[PRENOM], réalisez des missions de bénévolat !',
+    description:
+      'Notification envoyée au bénévole 3 jours après avoir indiqué être bénéficiaire du RSA',
+    workflows: ['relances', 'france-travail'],
+    weight: 100,
+    tags: ['J+3'],
+  },
+  {
+    receiver: 'benevole',
+    key: 'user_no_participation_ft_j10',
+    label: '[PRENOM], réalisez des missions de bénévolat !',
+    description:
+      'Notification envoyée au bénévole 10 jours après avoir indiqué être bénéficiaire du RSA',
+    workflows: ['relances', 'france-travail'],
+    weight: 100,
+    tags: ['J+10'],
   },
   {
     receiver: 'benevole',
@@ -342,15 +385,27 @@ const notifications = [
       "Notification envoyée au bénévole engagé CEJ s'il n'a toujours pas de participation 10 jours après son inscription",
     workflows: ['relances', 'cej'],
     weight: 100,
+    tags: ['J+10'],
   },
   {
     receiver: 'benevole',
     key: 'benevole_cej_six_months_after',
     label: '[PRENOM], êtes-vous toujours en Contrat d’Engagement Jeune ?',
     description:
-      'Notification envoyée au bénévole engagé CEJ 6 mois et 1 an après ajout de la mention CEJ sur le profil',
+      'Notification envoyée au bénévole engagé CEJ 6 mois après ajout de la mention CEJ sur le profil',
     workflows: ['relances', 'cej'],
     weight: 100,
+    tags: ['M+6'],
+  },
+  {
+    receiver: 'benevole',
+    key: 'benevole_cej_one_year_after',
+    label: '[PRENOM], êtes-vous toujours en Contrat d’Engagement Jeune ?',
+    description:
+      'Notification envoyée au bénévole engagé CEJ 1 an après ajout de la mention CEJ sur le profil',
+    workflows: ['relances', 'cej'],
+    weight: 100,
+    tags: ['Y+1'],
   },
   {
     receiver: 'benevole',
@@ -361,6 +416,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-should-be-done'],
     workflows: ['creation-participation', 'relances'],
     weight: 100,
+    tags: ['J+1', 'M+1'],
   },
   {
     receiver: 'benevole',
@@ -371,6 +427,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-will-start'],
     workflows: ['creation-participation', 'relances'],
     weight: 100,
+    tags: ['J-1'],
   },
   {
     receiver: 'benevole',
@@ -407,19 +464,21 @@ const notifications = [
     key: 'benevole_is_inactive',
     label: 'Ah, vous voilà ! 💃',
     description:
-      "Le benevole est inactif (M+3) et n'a aucune mise en relation en cours ou validée dans les 6 mois",
+      "Le benevole est inactif depuis 3 mois et n'a aucune mise en relation en cours ou validée dans les 6 mois",
     brevoTags: ['app-benevole-inactif'],
     workflows: ['relances'],
-    weight: 100,
+    weight: 99,
+    tags: ['M+3'],
   },
   {
     receiver: 'benevole',
     key: 'benevole_is_inactive_second_reminder',
     label: 'Quelle mission est faite pour vous ?',
-    description: 'Le benevole est inactif (M+6)',
+    description: 'Le benevole est inactif depuis 6 mois',
     brevoTags: ['app-benevole-inactif-relance'],
     workflows: ['relances'],
     weight: 100,
+    tags: ['M+6'],
   },
   {
     receiver: 'benevole',
@@ -427,8 +486,9 @@ const notifications = [
     label: 'On ne va pas se quitter comme ça 😢',
     description: "Le bénévole est sur le point d'être archivé (M-1)",
     brevoTags: ['app-benevole-archivage'],
-    workflows: ['archivage'],
-    weight: 100,
+    workflows: ['archivage', 'relances'],
+    weight: 99,
+    tags: ['M-1'],
   },
   {
     receiver: 'benevole',
@@ -436,8 +496,9 @@ const notifications = [
     label: '[Prénom], c’est bientôt l’heure des au-revoir 😢',
     description: "Le bénévole est sur le point d'être archivé (J-7)",
     brevoTags: ['app-benevole-archivage-relance'],
-    workflows: ['archivage'],
+    workflows: ['archivage', 'relances'],
     weight: 100,
+    tags: ['J-7'],
   },
   {
     receiver: 'responsable',
@@ -487,17 +548,18 @@ const notifications = [
       "Notification envoyée au responsable d'organisation lorsque le statut passe de Brouillon à En attente de validation",
     brevoTags: ['app-responsable-organisation-en-attente-de-validation'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 30,
   },
   {
     receiver: 'responsable',
     key: 'responsable_still_in_draft',
     label: '[PRENOM], recrutez des bénévoles en 2 minutes',
     description:
-      "Notification envoyée aux membres de l'organisation lorsqu'elle est toujours en Brouillon. (J+1, J+7, J+15)",
+      "Notification envoyée aux membres de l'organisation lorsqu'elle est toujours en Brouillon.",
     brevoTags: ['app-responsable-organisation-en-brouillon'],
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
+    tags: ['J+1', 'J+7', 'J+15'],
   },
   {
     receiver: 'responsable',
@@ -507,7 +569,7 @@ const notifications = [
       'Notification envoyée au responsable lorsque son organisation est en cours de traitement',
     brevoTags: ['app-responsable-organisation-en-cours-de-traitement'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 32,
   },
   {
     receiver: 'responsable',
@@ -516,7 +578,7 @@ const notifications = [
     description: 'Notification envoyée au responsable lorsque son organisation est validée',
     brevoTags: ['app-responsable-organisation-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 33,
   },
   {
     receiver: 'responsable',
@@ -525,7 +587,7 @@ const notifications = [
     description: 'Notification envoyée au responsable lorsque son organisation est signalée',
     brevoTags: ['app-responsable-organisation-signalee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 34,
   },
   {
     receiver: 'responsable',
@@ -533,8 +595,8 @@ const notifications = [
     label: 'Votre organisation a été désinscrite',
     description: 'Notification envoyée à tous les membres de la structure',
     brevoTags: ['app-responsable-organisation-desinscrite'],
-    workflows: ['desinscription-organisation'],
-    weight: 100,
+    workflows: ['moderation-organisation', 'desinscription-organisation'],
+    weight: 36,
   },
   {
     receiver: 'responsable',
@@ -544,7 +606,7 @@ const notifications = [
       "Notification envoyée au responsable lorsqu'une mission est postée et est en attente de validation",
     brevoTags: ['app-responsable-mission-en-attente-de-validation'],
     workflows: ['creation-mission', 'moderation-mission'],
-    weight: 100,
+    weight: 40,
   },
   {
     receiver: 'responsable',
@@ -554,7 +616,7 @@ const notifications = [
       'Notification envoyée au responsable lorsque sa mission est en cours de traitement',
     brevoTags: ['app-responsable-mission-en-cours-de-traitement'],
     workflows: ['creation-mission', 'moderation-mission'],
-    weight: 100,
+    weight: 41,
   },
   {
     receiver: 'responsable',
@@ -563,7 +625,7 @@ const notifications = [
     description: 'Notification envoyée au responsable lorsque sa mission est validée',
     brevoTags: ['app-responsable-mission-validee'],
     workflows: ['creation-mission', 'moderation-mission'],
-    weight: 100,
+    weight: 42,
   },
   {
     receiver: 'responsable',
@@ -572,7 +634,7 @@ const notifications = [
     description: 'Notification envoyée au responsable lorsque sa mission est signalée',
     brevoTags: ['app-responsable-mission-signalee'],
     workflows: ['creation-mission', 'moderation-mission'],
-    weight: 100,
+    weight: 43,
   },
   {
     receiver: 'responsable',
@@ -582,7 +644,8 @@ const notifications = [
       'Notification envoyée au responsable lorsque sa mission a une date de fin passée depuis 5 jours',
     brevoTags: ['app-responsable-relance-mission-passee-1'],
     workflows: ['creation-mission', 'relances'],
-    weight: 100,
+    weight: 46,
+    tags: ['J+5'],
   },
   {
     receiver: 'responsable',
@@ -592,7 +655,8 @@ const notifications = [
       'Notification envoyée au responsable lorsque sa mission a une date de fin passée depuis 20 jours',
     brevoTags: ['app-responsable-relance-mission-passee-2'],
     workflows: ['creation-mission', 'relances'],
-    weight: 100,
+    weight: 47,
+    tags: ['J+20'],
   },
   {
     receiver: 'responsable',
@@ -602,7 +666,7 @@ const notifications = [
       "Notification envoyée au responsable lorsque sa mission nécessite au moins 5 places, et il n'y en a plus qu'une seule place restante.",
     brevoTags: ['app-responsable-mission-presque-complete'],
     workflows: ['creation-mission', 'relances'],
-    weight: 100,
+    weight: 45,
   },
   {
     receiver: 'responsable',
@@ -611,17 +675,17 @@ const notifications = [
     description: 'Notification envoyée au responsable lorsque sa mission est complète',
     brevoTags: ['app-responsable-mission-complete'],
     workflows: ['creation-mission', 'relances'],
-    weight: 100,
+    weight: 45,
   },
   {
     receiver: 'responsable',
     key: 'responsable_participation_created',
     label: 'Vous avez une nouvelle demande de participation 👊',
     description:
-      "Le responsable reçoit uen notification lorsqu'un bénévole souhaite participer à une mission",
+      "Notification envoyée au responsable lorsqu'un bénévole souhaite participer à une mission",
     brevoTags: ['app-responsable-participation-en-attente-de-validation'],
     workflows: ['creation-participation', 'moderation-participation'],
-    weight: 100,
+    weight: 21,
   },
   {
     receiver: 'responsable',
@@ -631,7 +695,7 @@ const notifications = [
       'Notification envoyée au responsable lorsque son organisation de type association est validée',
     brevoTags: ['app-responsable-association-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 33,
   },
   {
     receiver: 'responsable',
@@ -641,7 +705,7 @@ const notifications = [
       'Notification envoyée au responsable lorsque son organisation de type collectivité territoriale est validée',
     brevoTags: ['app-responsable-collectivite-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 33,
   },
   {
     receiver: 'responsable',
@@ -672,6 +736,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-restee-en-brouillon'],
     workflows: ['creation-mission', 'relances'],
     weight: 100,
+    tags: ['J+7'],
   },
   {
     receiver: 'responsable',
@@ -681,6 +746,7 @@ const notifications = [
     brevoTags: ['app-responsable-no-new-mission'],
     workflows: ['creation-mission', 'relances'],
     weight: 100,
+    tags: ['M+3'],
   },
   {
     receiver: 'responsable',
@@ -689,15 +755,15 @@ const notifications = [
     description:
       'Rappel envoyé au responsable si des participations doivent être traitées en priorité',
     brevoTags: ['app-responsable-rappel-participations-a-traiter-en-priorite'],
-    workflows: ['moderation-participation', 'relances'],
+    workflows: ['moderation-participation', 'actions-en-attente', 'relances'],
     weight: 100,
   },
   {
     receiver: 'responsable',
     key: 'structure_switch_responsable',
     label: '[PRENOM-NOM] vous a confié la gestion de nouvelles missions',
-    description: "Lorsque'un responsable quitte l'organisation ou se désinscrit",
-    workflows: ['desinscription-organisation'],
+    description: "Lorsqu'un responsable quitte l'organisation ou se désinscrit",
+    workflows: ['desinscription-organisation', 'moderation-organisation'],
     weight: 100,
   },
   {
@@ -705,7 +771,7 @@ const notifications = [
     key: 'structure_unregister_contact_admin',
     label: '[NOM-ORGA] souhaite se désinscrire...',
     description:
-      "Lorsque'un responsable ne peut pas se désinscrire (car participations reliées à sa structure)",
+      "Lorsqu'un responsable ne peut pas se désinscrire (car participations reliées à sa structure)",
     workflows: ['desinscription-organisation'],
     weight: 100,
   },
@@ -717,6 +783,7 @@ const notifications = [
       "Notification envoyée aux responsables lorsqu'ils ont activé le résumé quotidien dans leurs préférences de notification",
     workflows: ['relances'],
     weight: 100,
+    tags: ['Tous les jours'],
   },
   {
     receiver: 'responsable',
@@ -726,6 +793,7 @@ const notifications = [
       "Notification envoyée aux responsables lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification",
     workflows: ['relances'],
     weight: 100,
+    tags: ['Tous les mois'],
   },
   {
     receiver: 'responsable',
@@ -763,6 +831,7 @@ const notifications = [
     brevoTags: ['app-responsable-publication-mission'],
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
+    tags: ['J+10'],
   },
   {
     receiver: 'responsable',
@@ -773,42 +842,47 @@ const notifications = [
     brevoTags: ['app-responsable-publication-mission-relance'],
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
+    tags: ['J+30'],
   },
   {
     receiver: 'responsable',
     key: 'responsable_is_inactive',
     label: 'Ah, vous voilà ! 💃',
-    description: 'Le responsable est inactif (M+3)',
+    description: 'Le responsable est inactif depuis 3 mois',
     brevoTags: ['app-responsable-inactif'],
     workflows: ['moderation-compte-utilisateur', 'relances'],
     weight: 100,
+    tags: ['M+3'],
   },
   {
     receiver: 'responsable',
     key: 'responsable_is_inactive_second_reminder',
     label: 'Vous avez besoin de bénévoles sur des missions ponctuelles ?',
-    description: 'Le responsable est inactif (M+6)',
+    description: 'Le responsable est inactif depuis 6 mois',
     brevoTags: ['app-responsable-inactif-relance'],
     workflows: ['moderation-compte-utilisateur', 'relances'],
     weight: 100,
+    tags: ['M+6'],
   },
   {
     receiver: 'responsable',
     key: 'responsable_will_be_archived',
     label: 'On ne va pas se quitter comme ça 😢',
-    description: "Le responsable est sur le point d'être archivé (M-1)",
+    description: "Le responsable est sur le point d'être archivé dans 1 mois",
     brevoTags: ['app-responsable-archivage'],
     workflows: ['archivage', 'relances'],
-    weight: 100,
+    weight: 99,
+    tags: ['M-1'],
   },
   {
     receiver: 'responsable',
     key: 'responsable_will_be_archived_second_reminder',
     label: '[Prénom], votre compte est sur le point d’être désactivé',
-    description: "Le responsable est sur le point d'être archivé (J-7)",
+    description: "Le responsable est sur le point d'être archivé dans 7 jours",
     brevoTags: ['app-responsable-archivage-relance'],
     workflows: ['archivage', 'relances'],
     weight: 100,
+    tags: ['J-7'],
   },
   {
     receiver: 'referent',
@@ -835,7 +909,7 @@ const notifications = [
     description: "Notification envoyée aux référents du département lorsqu'une mission est postée",
     brevoTags: ['app-referent-mission-en-attente-de-validation'],
     workflows: ['creation-mission', 'moderation-mission'],
-    weight: 100,
+    weight: 41,
   },
   {
     receiver: 'referent',
@@ -845,7 +919,7 @@ const notifications = [
       "Notification envoyée aux référents du département lorsqu'une organisation s'inscrit et est en attente de validation",
     brevoTags: ['app-referent-organisation-en-attente-de-validation'],
     workflows: ['creation-organisation', 'moderation-organisation'],
-    weight: 100,
+    weight: 31,
   },
   {
     receiver: 'referent',
@@ -863,8 +937,9 @@ const notifications = [
     description:
       "Notification envoyée aux référents lorsqu'ils ont activé le résumé bi-hebdomadaire dans leurs préférences de notification",
     brevoTags: ['app-referent-bilan-quotidien'],
-    workflows: ['creation-organisation', 'moderation-organisation'],
+    workflows: ['actions-en-attente'],
     weight: 100,
+    tags: ['Tous les jours'],
   },
   {
     receiver: 'referent',
@@ -873,8 +948,9 @@ const notifications = [
     description:
       "Notification envoyée aux référents lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification",
     brevoTags: ['app-referent-bilan-mensuel'],
-    workflows: ['rapport'],
+    workflows: ['actions-en-attente'],
     weight: 100,
+    tags: ['Tous les mois'],
   },
   {
     receiver: 'account',
@@ -883,7 +959,7 @@ const notifications = [
     description: "L'utilisateur demande un code pour réactiver son compte archivé",
     brevoTags: ['app-user-activation-code'],
     workflows: ['archivage'],
-    weight: 100,
+    weight: 98,
   },
   {
     receiver: 'admin',
