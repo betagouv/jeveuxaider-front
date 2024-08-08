@@ -50,6 +50,16 @@
           multiple
           @update:modelValue="changeFilter('filter[receiver]', $event, true)"
         />
+        <BaseFilterSelectAdvanced
+          :modelValue="$route.query['filter[notification]']"
+          name="notification"
+          :options="[
+            { key: 'true', label: 'Avec notification' },
+            { key: 'false', label: 'Sans notification' },
+          ]"
+          placeholder="Notification"
+          @update:modelValue="changeFilter('filter[notification]', $event)"
+        />
       </template>
     </SearchFilters>
     <div
@@ -65,6 +75,9 @@
             tag
           }}</DsfrBadge>
         </template>
+        <DsfrBadge type="new" no-icon v-if="notification.databaseNotification"
+          ><RiNotification2Line class="h-4"
+        /></DsfrBadge>
       </div>
       <div class="text-lg font-bold">{{ notification.label }}</div>
       <div class="mt-2">{{ notification.description }}</div>
@@ -129,6 +142,12 @@ export default defineNuxtComponent({
       if (this.$route.query['filter[receiver]']) {
         notifications = notifications.filter((n) =>
           this.$route.query['filter[receiver]'].split(',').includes(n.receiver)
+        )
+      }
+
+      if (this.$route.query['filter[notification]']) {
+        notifications = notifications.filter(
+          (n) => n.databaseNotification.toString() == this.$route.query['filter[notification]']
         )
       }
 
@@ -251,6 +270,7 @@ const notifications = [
     brevoTags: ['app-benevole-inscription'],
     workflows: ['inscription-benevole'],
     weight: 1,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -260,6 +280,7 @@ const notifications = [
     brevoTags: ['app-benevole-mission-shared'],
     workflows: ['creation-participation'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -269,6 +290,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-created'],
     workflows: ['creation-participation'],
     weight: 20,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -279,6 +301,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-being-processed'],
     workflows: ['creation-participation'],
     weight: 22,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -289,6 +312,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-validee'],
     workflows: ['creation-participation'],
     weight: 23,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -299,6 +323,7 @@ const notifications = [
     brevoTags: ['app-benevole-mission-over-temoignage'],
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -306,9 +331,10 @@ const notifications = [
     label: 'Quel dommage… votre participation vient d’être déclinée',
     description:
       'Le responsable a refusé la candidature proposée par le bénévole. Ce dernier a une précision sur les raisons de refus de sa proposition de participation.',
-    brevoTags: ['app-benevole-participation-declined'],
+    brevoTags: ['app-benevole-participation-declinee'],
     workflows: ['creation-participation'],
     weight: 24,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -319,6 +345,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-declined-mission-terminated'],
     workflows: ['creation-participation'],
     weight: 26,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -329,6 +356,7 @@ const notifications = [
     brevoTags: ['app-benevole-participation-canceled'],
     workflows: ['creation-participation'],
     weight: 25,
+    databaseNotification: true,
   },
   {
     receiver: 'benevole',
@@ -338,6 +366,7 @@ const notifications = [
     brevoTags: ['app-benevole-nouveau-message'],
     workflows: ['messagerie'],
     weight: 50,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -346,6 +375,7 @@ const notifications = [
     description: 'Notification envoyée via la marketplace inversée',
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -355,6 +385,7 @@ const notifications = [
     workflows: ['relances', 'cej'],
     weight: 100,
     tags: ['J+3'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -365,6 +396,7 @@ const notifications = [
     workflows: ['relances', 'france-travail'],
     weight: 100,
     tags: ['J+3'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -375,6 +407,7 @@ const notifications = [
     workflows: ['relances', 'france-travail'],
     weight: 100,
     tags: ['J+10'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -385,6 +418,7 @@ const notifications = [
     workflows: ['relances', 'cej'],
     weight: 100,
     tags: ['J+10'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -395,6 +429,7 @@ const notifications = [
     workflows: ['relances', 'cej'],
     weight: 100,
     tags: ['M+6'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -405,6 +440,7 @@ const notifications = [
     workflows: ['relances', 'cej'],
     weight: 100,
     tags: ['Y+1'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -416,6 +452,7 @@ const notifications = [
     workflows: ['creation-participation', 'relances'],
     weight: 100,
     tags: ['J+1', 'M+1'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -427,6 +464,7 @@ const notifications = [
     workflows: ['creation-participation', 'relances'],
     weight: 100,
     tags: ['J-1'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -437,6 +475,7 @@ const notifications = [
     brevoTags: ['app-benevole-banni-ne-reside-pas-en-france'],
     workflows: ['moderation-compte-utilisateur'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -447,6 +486,7 @@ const notifications = [
     brevoTags: ['app-benevole-banni-moins-de-16-ans'],
     workflows: ['moderation-compte-utilisateur'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -457,6 +497,7 @@ const notifications = [
     brevoTags: ['app-benevole-banni-comportement-inadapte'],
     workflows: ['moderation-compte-utilisateur'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -468,6 +509,7 @@ const notifications = [
     workflows: ['relances'],
     weight: 99,
     tags: ['M+3'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -478,6 +520,7 @@ const notifications = [
     workflows: ['relances'],
     weight: 100,
     tags: ['M+6'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -488,6 +531,7 @@ const notifications = [
     workflows: ['archivage', 'relances'],
     weight: 99,
     tags: ['M-1'],
+    databaseNotification: false,
   },
   {
     receiver: 'benevole',
@@ -498,6 +542,7 @@ const notifications = [
     workflows: ['archivage', 'relances'],
     weight: 100,
     tags: ['J-7'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -508,6 +553,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-desactivee'],
     workflows: ['moderation-mission'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -518,6 +564,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-reactivee'],
     workflows: ['moderation-mission'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -528,6 +575,7 @@ const notifications = [
     brevoTags: ['app-responsable-missions-desactivees'],
     workflows: ['moderation-mission'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -535,9 +583,10 @@ const notifications = [
     label: 'Vos missions sont de nouveau actives 👏🏻',
     description:
       "Notification envoyée au responsable d'organisation lorsqu'un modérateur réactive toutes ses missions",
-    brevoTags: ['app-responsable-missions-desactivees'],
+    brevoTags: ['app-responsable-missions-reactivees'],
     workflows: ['moderation-mission'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -548,6 +597,7 @@ const notifications = [
     brevoTags: ['app-responsable-organisation-en-attente-de-validation'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 30,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -559,6 +609,7 @@ const notifications = [
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
     tags: ['J+1', 'J+7', 'J+15'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -569,6 +620,7 @@ const notifications = [
     brevoTags: ['app-responsable-organisation-en-cours-de-traitement'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 32,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -578,6 +630,7 @@ const notifications = [
     brevoTags: ['app-responsable-organisation-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 33,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -587,6 +640,7 @@ const notifications = [
     brevoTags: ['app-responsable-organisation-signalee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 34,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -596,6 +650,7 @@ const notifications = [
     brevoTags: ['app-responsable-organisation-desinscrite'],
     workflows: ['moderation-organisation', 'desinscription-organisation'],
     weight: 36,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -606,6 +661,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-en-attente-de-validation'],
     workflows: ['creation-mission', 'moderation-mission'],
     weight: 40,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -616,6 +672,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-en-cours-de-traitement'],
     workflows: ['creation-mission', 'moderation-mission'],
     weight: 41,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -625,6 +682,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-validee'],
     workflows: ['creation-mission', 'moderation-mission'],
     weight: 42,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -634,6 +692,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-signalee'],
     workflows: ['creation-mission', 'moderation-mission'],
     weight: 43,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -645,6 +704,7 @@ const notifications = [
     workflows: ['creation-mission', 'relances'],
     weight: 46,
     tags: ['J+5'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -656,6 +716,7 @@ const notifications = [
     workflows: ['creation-mission', 'relances'],
     weight: 47,
     tags: ['J+20'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -666,6 +727,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-presque-complete'],
     workflows: ['creation-mission', 'relances'],
     weight: 45,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -675,6 +737,7 @@ const notifications = [
     brevoTags: ['app-responsable-mission-complete'],
     workflows: ['creation-mission', 'relances'],
     weight: 45,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -685,6 +748,7 @@ const notifications = [
     brevoTags: ['app-responsable-participation-en-attente-de-validation'],
     workflows: ['creation-participation', 'moderation-participation'],
     weight: 21,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -695,6 +759,7 @@ const notifications = [
     brevoTags: ['app-responsable-association-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 33,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -705,6 +770,7 @@ const notifications = [
     brevoTags: ['app-responsable-collectivite-validee'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 33,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -715,6 +781,7 @@ const notifications = [
     brevoTags: ['app-responsable-participation-annulee-par-benevole'],
     workflows: ['moderation-participation'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -725,6 +792,7 @@ const notifications = [
     brevoTags: ['app-responsable-participation-validee-par-benevole'],
     workflows: ['creation-participation', 'moderation-participation'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -736,6 +804,7 @@ const notifications = [
     workflows: ['creation-mission', 'relances'],
     weight: 100,
     tags: ['J+7'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -746,6 +815,7 @@ const notifications = [
     workflows: ['creation-mission', 'relances'],
     weight: 100,
     tags: ['M+3'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -756,6 +826,7 @@ const notifications = [
     brevoTags: ['app-responsable-rappel-participations-a-traiter-en-priorite'],
     workflows: ['moderation-participation', 'actions-en-attente', 'relances'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -764,6 +835,8 @@ const notifications = [
     description: "Lorsqu'un responsable quitte l'organisation ou se désinscrit",
     workflows: ['desinscription-organisation', 'moderation-organisation'],
     weight: 100,
+    brevoTags: ['app-organisation-switch-responsable'],
+    databaseNotification: true,
   },
   {
     receiver: 'responsable',
@@ -773,6 +846,7 @@ const notifications = [
       "Lorsqu'un responsable ne peut pas se désinscrire (car participations reliées à sa structure)",
     workflows: ['desinscription-organisation'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -783,6 +857,7 @@ const notifications = [
     workflows: ['relances'],
     weight: 100,
     tags: ['Tous les jours'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -793,6 +868,7 @@ const notifications = [
     workflows: ['relances'],
     weight: 100,
     tags: ['Tous les mois'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -802,6 +878,7 @@ const notifications = [
     brevoTags: ['app-responsable-nouveau-message-participation'],
     workflows: ['messagerie'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -811,6 +888,7 @@ const notifications = [
     brevoTags: ['app-responsable-nouveau-message-organisation'],
     workflows: ['messagerie'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -820,6 +898,7 @@ const notifications = [
     brevoTags: ['app-responsable-nouveau-message-mission'],
     workflows: ['messagerie'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -831,6 +910,7 @@ const notifications = [
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
     tags: ['J+10'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -842,6 +922,7 @@ const notifications = [
     workflows: ['creation-organisation', 'relances'],
     weight: 100,
     tags: ['J+30'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -852,6 +933,7 @@ const notifications = [
     workflows: ['moderation-compte-utilisateur', 'relances'],
     weight: 100,
     tags: ['M+3'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -862,6 +944,7 @@ const notifications = [
     workflows: ['moderation-compte-utilisateur', 'relances'],
     weight: 100,
     tags: ['M+6'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -872,6 +955,7 @@ const notifications = [
     workflows: ['archivage', 'relances'],
     weight: 99,
     tags: ['M-1'],
+    databaseNotification: false,
   },
   {
     receiver: 'responsable',
@@ -882,6 +966,7 @@ const notifications = [
     workflows: ['archivage', 'relances'],
     weight: 100,
     tags: ['J-7'],
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -891,6 +976,7 @@ const notifications = [
     brevoTags: ['app-referent-nouveau-message-organisation'],
     workflows: ['messagerie'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -900,6 +986,7 @@ const notifications = [
     brevoTags: ['app-referent-nouveau-message-mission'],
     workflows: ['messagerie'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -909,6 +996,7 @@ const notifications = [
     brevoTags: ['app-referent-mission-en-attente-de-validation'],
     workflows: ['creation-mission', 'moderation-mission'],
     weight: 41,
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -919,6 +1007,7 @@ const notifications = [
     brevoTags: ['app-referent-organisation-en-attente-de-validation'],
     workflows: ['creation-organisation', 'moderation-organisation'],
     weight: 31,
+    databaseNotification: true,
   },
   {
     receiver: 'referent',
@@ -928,6 +1017,7 @@ const notifications = [
     brevoTags: ['app-referent-daily-todo'],
     workflows: ['actions-en-attente'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -939,6 +1029,7 @@ const notifications = [
     workflows: ['actions-en-attente'],
     weight: 100,
     tags: ['Tous les jours'],
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -950,6 +1041,7 @@ const notifications = [
     workflows: ['actions-en-attente'],
     weight: 100,
     tags: ['Tous les mois'],
+    databaseNotification: false,
   },
   {
     receiver: 'account',
@@ -959,6 +1051,7 @@ const notifications = [
     brevoTags: ['app-user-activation-code'],
     workflows: ['archivage'],
     weight: 98,
+    databaseNotification: false,
   },
   {
     receiver: 'admin',
@@ -967,6 +1060,7 @@ const notifications = [
     description: "Lorsqu'une demande de création de réseau est soumise",
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'referent',
@@ -976,6 +1070,7 @@ const notifications = [
       "Notification envoyée aux référents et/ou responsable lorsqu'un nouveau document est postée",
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: true,
   },
   // {
   //   receiver: 'account',
@@ -984,6 +1079,7 @@ const notifications = [
   //   description: "Lorsqu'un export est prêt à être téléchargé",
   //   workflows: ['autres'],
   //   weight: 100,
+  //  databaseNotification: false,
   // },
   {
     receiver: 'account',
@@ -992,6 +1088,7 @@ const notifications = [
     description: "Lorsqu'une inviation est envoyée. Le wording dépend du type d'invitation.",
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'admin',
@@ -1000,6 +1097,7 @@ const notifications = [
     description: "Lorsqu'un réseau créé un nouveau template de mission",
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'account',
@@ -1007,7 +1105,9 @@ const notifications = [
     label: 'Réinitialiser mon mot de passe',
     description: "Lorsqu'un utilisateur réinialise son mot de passe",
     workflows: ['compte-utilisateur'],
+    brevoTags: ['app-reset-password'],
     weight: 100,
+    databaseNotification: true,
   },
   {
     receiver: 'account',
@@ -1016,6 +1116,7 @@ const notifications = [
     description: "Lorsqu'un utilisateur supprime son compte",
     workflows: ['compte-utilisateur'],
     weight: 100,
+    databaseNotification: false,
   },
   {
     receiver: 'custom',
@@ -1024,6 +1125,7 @@ const notifications = [
     description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit sur la plateforme",
     workflows: ['inscription-benevole', 'cej'],
     weight: 2,
+    databaseNotification: false,
   },
   {
     receiver: 'custom',
@@ -1032,6 +1134,7 @@ const notifications = [
     description: "Envoyé au conseiller RSA lorqu'un bénévole s'inscrit sur la plateforme",
     workflows: ['inscription-benevole', 'france-travail'],
     weight: 2,
+    databaseNotification: false,
   },
   {
     receiver: 'custom',
@@ -1040,6 +1143,7 @@ const notifications = [
     description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit à une mission",
     workflows: ['creation-participation', 'cej'],
     weight: 91,
+    databaseNotification: false,
   },
   {
     receiver: 'custom',
@@ -1048,6 +1152,7 @@ const notifications = [
     description: "Envoyé au conseiller RSA lorqu'un bénévole s'inscrit à une mission",
     workflows: ['creation-participation', 'france-travail'],
     weight: 91,
+    databaseNotification: false,
   },
   {
     receiver: 'account',
@@ -1056,6 +1161,7 @@ const notifications = [
     description: "Lorsqu'une note est postée par un référent",
     workflows: ['autres'],
     weight: 100,
+    databaseNotification: false,
   },
 ]
 </script>
