@@ -28,7 +28,8 @@
             term="Profession"
             :description="$filters.label(profile.type, 'profile_type')"
           />
-          <BaseDescriptionListItem term="Disponibilités" :description="formattedCommitment" />
+          <BaseDescriptionListItem term="Disponibilités" :description="formattedDisponibilities" />
+          <BaseDescriptionListItem term="Engagement" :description="formattedCommitment" />
         </BaseDescriptionList>
       </div>
       <div class="py-8">
@@ -84,15 +85,14 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    formattedDisponibilities() {
+      return this.profile.disponibilities
+        ?.map((item) => this.$filters.label(item, 'disponibilities'))
+        ?.join(', ')
+    },
     formattedCommitment() {
-      if (this.profile.commitment__time_period) {
-        return `${this.$filters.label(
-          this.profile.commitment__duration,
-          'duration'
-        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
-      }
-      return this.profile.commitment__duration
-        ? this.$filters.label(this.profile.commitment__duration, 'duration')
+      return this.profile.commitment
+        ? this.$filters.label(this.profile.commitment, 'commitment')
         : null
     },
   },

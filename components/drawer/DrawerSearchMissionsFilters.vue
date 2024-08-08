@@ -157,7 +157,6 @@
 <script>
 import FacetFilter from '@/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
-import CommitmentMobileFilter from '@/components/section/search/CommitmentMobileFilter.vue'
 import AutonomyMobileFilter from '@/components/section/search/AutonomyMobileFilter.vue'
 import MinorsMobileFilter from '@/components/section/search/MinorsMobileFilter.vue'
 import PonctualMobileFilter from '@/components/section/search/PonctualMobileFilter.vue'
@@ -167,7 +166,6 @@ export default defineNuxtComponent({
   components: {
     FacetFilter,
     SearchFilter,
-    CommitmentMobileFilter,
     AutonomyMobileFilter,
     MinorsMobileFilter,
     PonctualMobileFilter,

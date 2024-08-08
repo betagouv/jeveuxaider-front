@@ -14,10 +14,10 @@
           <div class="mt-10 space-y-10">
             <div class="flex lg:space-x-10 items-center">
               <div>
-                <BaseFormLabel html-for="frequence" required size="xl">
+                <BaseFormLabel html-for="commitment" required size="xl">
                   Combien de temps pourriez-vous allouer à des actions de bénévolat&nbsp;?
                 </BaseFormLabel>
-                <DsfrFormControl html-for="commitment" :error="errors.commitment" class="mt-4">
+                <DsfrFormControl :error="errors.commitment" class="mt-4">
                   <DsfrTagsGroup
                     v-model="form.commitment"
                     name="commitment"
@@ -33,11 +33,7 @@
                 Cochez les créneaux pendant lesquels vous seriez <br class="hidden lg:inline" />
                 disponible&nbsp;?
               </BaseFormLabel>
-              <DsfrFormControl
-                html-for="disponibilities"
-                :error="errors.disponibilities"
-                class="mt-4"
-              >
+              <DsfrFormControl :error="errors.disponibilities" class="mt-4">
                 <DsfrTagsGroup
                   v-model="form.disponibilities"
                   name="disponibilities"

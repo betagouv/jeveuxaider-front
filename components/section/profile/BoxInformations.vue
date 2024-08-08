@@ -78,7 +78,18 @@
           <span v-else>-</span>
         </BaseDescriptionListItem>
 
-        <BaseDescriptionListItem term="Disponibilités" :description="formattedCommitment" />
+        <BaseDescriptionListItem
+          term="Disponibilités"
+          :description="
+            profile.disponibilities
+              ?.map((item) => $filters.label(item, 'disponibilities'))
+              ?.join(', ')
+          "
+        />
+        <BaseDescriptionListItem
+          term="Engagement"
+          :description="$filters.label(profile.commitment, 'commitment')"
+        />
         <BaseDescriptionListItem
           v-if="profile.activities"
           term="Activités"
@@ -132,19 +143,6 @@ export default defineNuxtComponent({
     boxPadding: {
       type: [String, Boolean],
       default: 'xs',
-    },
-  },
-  computed: {
-    formattedCommitment() {
-      if (this.profile.commitment__time_period) {
-        return `${this.$filters.label(
-          this.profile.commitment__duration,
-          'duration'
-        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
-      }
-      return this.profile.commitment__duration
-        ? this.$filters.label(this.profile.commitment__duration, 'duration')
-        : null
     },
   },
 })

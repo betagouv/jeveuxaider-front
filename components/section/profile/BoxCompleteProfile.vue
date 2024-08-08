@@ -146,7 +146,7 @@ export default defineNuxtComponent({
       )
     },
     isDisponibilitiesCompleted() {
-      return !!this.profile?.commitment__duration && this.profile?.disponibilities?.length > 0
+      return !!this.profile?.commitment && this.profile?.disponibilities?.length > 0
     },
     isPreferencesCompleted() {
       return this.profile?.activities?.length > 0 && !!this.profile?.type_missions

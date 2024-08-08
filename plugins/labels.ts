@@ -811,6 +811,7 @@ const labels: TypeLabels = {
     { key: 'disponibilities', label: 'Disponibilités' },
     { key: 'commitment__time_period', label: "Fréquence d'engagement" },
     { key: 'commitment__duration', label: "Durée d'engagement" },
+    { key: 'commitment', label: 'Engagement' },
     { key: 'description', label: 'Motivation' },
     { key: 'birthday', label: 'Date de naissance' },
     { key: 'skills', label: 'Compétences' },
