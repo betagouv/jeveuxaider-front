@@ -31,7 +31,7 @@
 <script>
 export default defineNuxtComponent({
   props: {
-    htmlFor: { type: String, required: true },
+    htmlFor: { type: String, default: null },
     info: { type: String, default: null },
     error: { type: String, default: null },
     success: { type: String, default: null },
@@ -39,6 +39,16 @@ export default defineNuxtComponent({
     labelSuffix: { type: String, default: null },
     labelSize: { type: String, default: 'xs' },
     required: { type: Boolean, default: false },
+  },
+  watch: {
+    label: {
+      handler(val) {
+        if (val && !this.htmlFor) {
+          console.error(`htmlFor prop is missing for label ${this.label}`)
+        }
+      },
+      immediate: true,
+    },
   },
 })
 </script>

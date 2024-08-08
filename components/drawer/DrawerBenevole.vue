@@ -22,10 +22,13 @@
                 profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'
               "
             />
-            <BaseDescriptionListItem term="Fréquence" :description="commitmentLabel" />
+            <BaseDescriptionListItem
+              term="Engagement"
+              :description="$filters.label(profile.commitment, 'commitment')"
+            />
             <BaseDescriptionListItem
               v-if="profile.disponibilities"
-              term="Périodes"
+              term="Disponibilités"
               :description="
                 profile.disponibilities
                   .map((item) => $filters.label(item, 'disponibilities'))
@@ -82,17 +85,6 @@ export default defineNuxtComponent({
     profile: {
       type: Object,
       default: null,
-    },
-  },
-  computed: {
-    commitmentLabel() {
-      if (this.profile.commitment__time_period) {
-        return `${this.$filters.label(
-          this.profile.commitment__duration,
-          'duration'
-        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
-      }
-      return this.$filters.label(this.profile.commitment__duration, 'duration')
     },
   },
 })

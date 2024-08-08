@@ -12,22 +12,8 @@
             {{ profile.secret_name }}
           </div>
 
-          <BaseBadge
-            v-if="profile.commitment__duration"
-            color="green"
-            size="xxs"
-            plain
-            class="mt-1"
-          >
-            <span>
-              {{ $filters.label(profile.commitment__duration, 'duration') }}
-            </span>
-            <template v-if="profile.commitment__time_period">
-              par
-              <span>
-                {{ $filters.label(profile.commitment__time_period, 'time_period') }}
-              </span>
-            </template>
+          <BaseBadge v-if="profile.commitment" color="green" size="xxs" plain class="mt-1">
+            {{ $filters.label(profile.commitment, 'commitment') }}
           </BaseBadge>
           <BaseBadge v-else plain size="xxs" class="mt-1"> Non renseigné </BaseBadge>
         </div>

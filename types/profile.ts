@@ -16,9 +16,10 @@ type Profile = {
   description: string
   department?: string
   type?: string
-  commitment__time_period?: string
-  commitment__duration?: string
-  commitment__total?: number
+  commitment__time_period?: string // @todo: delete
+  commitment__duration?: string // @todo: delete
+  commitment__total?: number // @todo: delete
+  commitment?: string
   can_export_profiles: boolean
   cej: boolean
   cej_updated_at?: string
