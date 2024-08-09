@@ -38,6 +38,7 @@ export default defineNuxtComponent({
     steps.push('communicationPreferences')
 
     return {
+      profile,
       steps,
       totalPoints,
     }
@@ -45,8 +46,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      currentStep: this.steps?.[0],
-      scrollContainer: null,
+      currentStep: this.steps[0],
     }
   },
   computed: {
@@ -86,9 +86,58 @@ export default defineNuxtComponent({
       this.scrollToTop()
     },
     scrollToTop() {
-      if (this.scrollContainer) {
-        this.scrollContainer.scrollTop = 0
+      if (this.$stores.profileOverlayCompletion.scrollContainer) {
+        this.$stores.profileOverlayCompletion.scrollContainer.scrollTop = 0
       }
+    },
+    async handleAvatarAddOrUpdate() {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
+      if (this.$stores.profileOverlayCompletion.avatar?.id) {
+        await this.onAvatarCropUpdate()
+      } else {
+        await this.onAvatarAdd()
+      }
+
+      await this.$stores.auth.fetchUser()
+      this.currentStep = 'stepSelection'
+      this.loading = false
+    },
+    async onAvatarAdd() {
+      const upload = this.$stores.profileOverlayCompletion.avatar
+      const form = new FormData()
+      form.append('file', upload.file)
+      form.append('manipulations', JSON.stringify(upload.manipulation))
+      await apiFetch(`/medias/profile/${this.profile.id}/profile__avatar`, {
+        method: 'POST',
+        body: form,
+      })
+    },
+    async onAvatarCropUpdate() {
+      await apiFetch(`/medias/${this.$stores.profileOverlayCompletion.id}`, {
+        method: 'PUT',
+        body: {
+          manipulations: this.$stores.profileOverlayCompletion.manipulation,
+        },
+      })
+    },
+    async onAvatarDelete() {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      if (this.$stores.profileOverlayCompletion.avatar.id) {
+        await apiFetch(`/medias/${this.$stores.profileOverlayCompletion.avatar.id}`, {
+          method: 'DELETE',
+        })
+      }
+      this.$stores.profileOverlayCompletion.avatar = null
+      await this.$stores.auth.fetchUser()
+      this.currentStep = 'stepSelection'
+      this.loading = false
     },
   },
 })
@@ -121,7 +170,7 @@ export default defineNuxtComponent({
           footer-class="flex-nowrap"
           @open="
             ({ scrollContainer }) => {
-              this.scrollContainer = scrollContainer
+              $stores.profileOverlayCompletion.scrollContainer = scrollContainer
             }
           "
           @close="$emit('close')"
@@ -194,7 +243,14 @@ export default defineNuxtComponent({
               class="w-full flex-1"
               @click="
                 () => {
-                  currentStep === 'stepSelection' ? goToNextStep() : handleValidation()
+                  switch (currentStep) {
+                    case 'stepSelection':
+                      return goToNextStep()
+                    case 'picture':
+                      return handleAvatarAddOrUpdate()
+                    default:
+                      return handleValidation()
+                  }
                 }
               "
             >
@@ -212,6 +268,7 @@ export default defineNuxtComponent({
               :class="[
                 '@container mx-auto initial:max-w-[585px]',
                 { 'max-w-full': currentStep === 'activities' },
+                { 'max-w-[400px]': currentStep === 'picture' },
               ]"
             >
               <SectionProfileOverlayCompletionDisponibilities
@@ -234,7 +291,6 @@ export default defineNuxtComponent({
 
               <SectionProfileOverlayCompletionStepSelection
                 v-else-if="currentStep === 'stepSelection'"
-                :scroll-container="scrollContainer"
                 @update="currentStep = $event"
               />
 
@@ -248,6 +304,11 @@ export default defineNuxtComponent({
                 v-else-if="currentStep === 'skills'"
                 ref="form"
                 @submit="handleSubmit($event)"
+              />
+
+              <SectionProfileOverlayCompletionPicture
+                v-else-if="currentStep === 'picture'"
+                @delete="onAvatarDelete"
               />
             </div>
           </div>

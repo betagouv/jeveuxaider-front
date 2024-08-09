@@ -12,12 +12,6 @@ export default defineNuxtComponent({
       isProfilePictureCompleted,
     }
   },
-  props: {
-    scrollContainer: {
-      type: HTMLElement,
-      default: null,
-    },
-  },
   data() {
     return {
       currentStep: null,
@@ -49,18 +43,27 @@ export default defineNuxtComponent({
       ],
     }
   },
+  mounted() {
+    if (this.$stores.auth.profile.avatar) {
+      this.$stores.profileOverlayCompletion.avatar = this.$stores.auth.profile.avatar
+    }
+  },
   methods: {
     handleClick(item) {
       this.$emit('update', item.step)
       this.scrollToTop()
     },
     scrollToTop() {
-      if (this.scrollContainer) {
-        this.scrollContainer.scrollTop = 0
+      if (this.$stores.profileOverlayCompletion.scrollContainer) {
+        this.$stores.profileOverlayCompletion.scrollContainer.scrollTop = 0
       }
     },
     onUploadAdd(files) {
-      console.log('onUploadAdd', files)
+      this.$stores.profileOverlayCompletion.avatar = {
+        file: files[0],
+        name: files[0].name,
+      }
+      this.$refs.uploadTrigger.$el.click()
     },
   },
 })
@@ -94,8 +97,15 @@ export default defineNuxtComponent({
       >
         <template #trigger="{ onClick }">
           <SectionProfileOverlayCompletionSubstep
+            ref="uploadTrigger"
             :item="steps.find((item) => item.step === 'picture')"
-            @click="onClick"
+            @click="
+              () => {
+                !!$stores.profileOverlayCompletion.avatar
+                  ? handleClick(steps.find((item) => item.step === 'picture'))
+                  : onClick()
+              }
+            "
             class="w-full"
           />
         </template>
