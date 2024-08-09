@@ -478,6 +478,7 @@ export default defineNuxtComponent({
       modalConfirmOrgaStep: 1, // 1 or 2
       autocompleteOptions: [],
       orgaTypeChosen: '',
+      // @todo: in useProfileValidation
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),

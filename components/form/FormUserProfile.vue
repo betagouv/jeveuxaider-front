@@ -360,6 +360,7 @@ export default defineNuxtComponent({
       form: {
         ..._cloneDeep(this.profile),
       },
+      // @todo: in useProfileValidation
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
