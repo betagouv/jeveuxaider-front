@@ -26,7 +26,7 @@ export default defineNuxtComponent({
     if (!isActivitiesCompleted.value) {
       steps.push('activities')
     }
-    if (!!profile.value.type || !isMotMotivationCompleted.value) {
+    if (!profile.value.type || !isMotMotivationCompleted.value) {
       steps.push('stepSelection')
     }
     if (!isSkillCompleted.value && !steps.includes('stepSelection')) {
@@ -35,7 +35,6 @@ export default defineNuxtComponent({
     if (!isProfilePictureCompleted.value && !steps.includes('stepSelection')) {
       steps.push('stepSelection')
     }
-    steps.push('communicationPreferences')
 
     return {
       profile,
@@ -74,6 +73,10 @@ export default defineNuxtComponent({
       this.loading = false
     },
     goToNextStep() {
+      if (this.currentStep === this.steps.at(-1)) {
+        this.$emit('close')
+        return
+      }
       this.currentStep = ['moreAboutYou', 'skills', 'picture'].includes(this.currentStep)
         ? 'stepSelection'
         : this.steps[this.currentStepIndex + 1]
@@ -164,8 +167,8 @@ export default defineNuxtComponent({
           scroll-container-class="h-[100svh] flex-grow sm:h-[initial]"
           :content-class="[
             // Workaround to deal with the height of the dropdown,
-            // @todo: implement a logic to teleport and place the dropdown at the end of the dom
-            { 'min-h-[500px]': currentStep === 'skills' },
+            // @todo: implement a logic to teleport and place the dropdown at the end of the Dom
+            { 'min-h-[420px]': currentStep === 'skills' },
           ]"
           footer-class="flex-nowrap"
           @open="
@@ -257,7 +260,9 @@ export default defineNuxtComponent({
               <template v-if="['moreAboutYou', 'skills', 'picture'].includes(currentStep)"
                 >Valider</template
               >
-              <template v-else-if="currentStep === 'stepSelection'">Terminer</template>
+              <template v-else-if="currentStep === 'stepSelection' || currentStep === steps.at(-1)"
+                >Terminer</template
+              >
               <template v-else>Suivant</template>
             </DsfrButton>
           </template>

@@ -47,6 +47,15 @@ export default defineNuxtComponent({
   <div class="flex flex-col gap-10">
     <DsfrHeading size="lg" class="text-center">🧰 Vos compétences</DsfrHeading>
 
-    <FormUserSkills v-model="form.skills" />
+    <FormUserSkills v-model="form.skills" tag-class="max-w-full sm:max-w-[280px]" />
+
+    <DsfrFormControl label="Avez-vous des certifications ?" html-for="certifications">
+      <DsfrTagsGroup
+        v-model="form.certifications"
+        name="certifications"
+        variant="button"
+        :options="$labels.profile_certifications"
+      />
+    </DsfrFormControl>
   </div>
 </template>

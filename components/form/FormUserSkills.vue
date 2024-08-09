@@ -22,7 +22,7 @@
           as="button"
           context="deletable"
           @delete="onRemovedSkillItem(item)"
-          class="max-w-[300px]"
+          :class="['initial:max-w-[300px]', tagClass]"
         >
           {{ item.name }}
         </DsfrTag>
@@ -35,6 +35,7 @@
 export default defineNuxtComponent({
   props: {
     modelValue: { type: Array, required: true },
+    tagClass: { type: [String, Array], default: null },
   },
   setup() {
     return {}

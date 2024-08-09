@@ -1,21 +1,33 @@
 <script>
 export default defineNuxtComponent({
+  emits: ['update'],
   setup() {
     const { initialForm } = useProfileValidation()
-    const { isMotMotivationCompleted, isSkillCompleted, isProfilePictureCompleted } =
-      useProfileCompletion()
+    const {
+      isMotMotivationCompleted,
+      isSkillsOrCertificationsCompleted,
+      isProfilePictureCompleted,
+    } = useProfileCompletion()
 
     return {
       initialForm,
       isMotMotivationCompleted,
-      isSkillCompleted,
+      isSkillsOrCertificationsCompleted,
       isProfilePictureCompleted,
     }
   },
   data() {
     return {
       currentStep: null,
-      steps: [
+    }
+  },
+  mounted() {
+    // @todo: directly in store
+    this.$stores.profileOverlayCompletion.avatar = this.$stores.auth.profile.avatar ?? null
+  },
+  computed: {
+    steps() {
+      return [
         {
           step: 'moreAboutYou',
           title: 'Dites-en un peu plus sur vous',
@@ -26,12 +38,9 @@ export default defineNuxtComponent({
         {
           step: 'skills',
           title: 'Vos compétences',
-          description: [
-            'À définir',
-            this.$filters.pluralize(this.initialForm.skills.length, 'compétence'),
-          ],
+          description: ['À définir', this.skillsStepTitle],
           icon: '🧰',
-          isCompleted: this.isSkillCompleted,
+          isCompleted: this.isSkillsOrCertificationsCompleted,
         },
         {
           step: 'picture',
@@ -40,13 +49,18 @@ export default defineNuxtComponent({
           icon: '📸',
           isCompleted: this.isProfilePictureCompleted,
         },
-      ],
-    }
-  },
-  mounted() {
-    if (this.$stores.auth.profile.avatar) {
-      this.$stores.profileOverlayCompletion.avatar = this.$stores.auth.profile.avatar
-    }
+      ]
+    },
+    skillsStepTitle() {
+      const data = []
+      if (this.initialForm.skills.length > 0) {
+        data.push(this.$filters.pluralize(this.initialForm.skills.length, 'compétence'))
+      }
+      if (this.initialForm.certifications.length > 0) {
+        data.push(this.$filters.pluralize(this.initialForm.certifications.length, 'certification'))
+      }
+      return data.join(', ')
+    },
   },
   methods: {
     handleClick(item) {

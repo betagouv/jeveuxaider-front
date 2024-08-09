@@ -147,10 +147,10 @@
       <hr />
       <div class="">
         <DsfrHeading size="lg"> Compétences </DsfrHeading>
-        <div class="text-[#666666] mt-2">
+        <p class="text-[#666666] mt-2">
           Si vous voulez mettre en avant certaines compétences auprès des organisations, ajoutez-les
           ici.
-        </div>
+        </p>
         <div class="mt-8">
           <FormUserSkills v-model="form.skills" />
         </div>

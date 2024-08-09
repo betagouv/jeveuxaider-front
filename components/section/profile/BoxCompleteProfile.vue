@@ -63,7 +63,7 @@
       </CustomTodoListItem>
     </div>
 
-    <template v-if="totalToShow !== 100">
+    <template v-if="totalPoints !== 100">
       <slot name="footer" v-bind="{ setIsOverlayOpen }" />
       <SectionProfileOverlayCompletion :is-open="isOverlayOpen" @close="isOverlayOpen = false" />
     </template>

@@ -33,7 +33,7 @@ function getTotalPoints(profile?: Profile) {
   if (!!profile?.avatar) points += 5
   // @todo: scinder les points dans les champs qui composent l'étape
   if (isDisponibilitiesCompleted(profile)) points += 15
-  if (isActivitiesCompleted(profile)) points += 10
+  if (isActivitiesCompleted(profile)) points += 20
   if (isMissionTypeCompleted(profile)) points += 10
   if (isSkillsOrCertificationsCompleted(profile)) points += 10
   return points

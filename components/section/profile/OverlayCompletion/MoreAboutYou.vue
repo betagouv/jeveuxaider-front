@@ -69,15 +69,6 @@ export default defineNuxtComponent({
       />
     </DsfrFormControl>
 
-    <DsfrFormControl label="Vos certifications" html-for="certifications">
-      <DsfrTagsGroup
-        v-model="form.certifications"
-        name="certifications"
-        variant="button"
-        :options="$labels.profile_certifications"
-      />
-    </DsfrFormControl>
-
     <DsfrFormControl label="Un petit mot sur vous" html-for="description">
       <template #description>
         <p class="text-[#666666] text-pretty mb-4">
