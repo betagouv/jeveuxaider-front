@@ -220,7 +220,9 @@
         <hr />
         <div class="">
           <DsfrHeading size="lg"> Autres dispositifs </DsfrHeading>
-          <div class="mt-12 flex flex-col gap-8 lg:gap-12">
+
+          <FormSubFormUserDispositifs :form="form" @update="fillForm" class="mt-8" />
+          <!-- <div class="mt-12 flex flex-col gap-8 lg:gap-12">
             <div v-if="canViewScAndCej" class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">
                 <img
@@ -370,7 +372,7 @@
                 </DsfrFormControl>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </template>
       <!-- <div class="hidden sm:block ">
@@ -622,21 +624,24 @@ export default defineNuxtComponent({
         this.form = _cloneDeep(newProfile)
       },
     },
-    'form.cej'(val) {
-      if (!val) {
-        this.form.cej_email_adviser = null
-      }
-    },
-    'form.ft'(val) {
-      if (!val) {
-        this.form.ft_email_adviser = null
-      }
-    },
+    // 'form.cej'(val) {
+    //   if (!val) {
+    //     this.form.cej_email_adviser = null
+    //   }
+    // },
+    // 'form.ft'(val) {
+    //   if (!val) {
+    //     this.form.ft_email_adviser = null
+    //   }
+    // },
     formIsDirty(newVal) {
       this.$emit('change', newVal)
     },
   },
   methods: {
+    fillForm(payload) {
+      this.form = { ...this.form, ...payload }
+    },
     async handleSubmit() {
       if (this.loading) {
         return

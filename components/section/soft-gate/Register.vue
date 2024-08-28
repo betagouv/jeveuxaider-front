@@ -128,7 +128,9 @@
 
         <transition name="fade">
           <div v-if="canViewCej || canViewFT" class="lg:col-span-2 space-y-6">
-            <div v-if="canViewCej" class="flex flex-col gap-4 lg:gap-0">
+            <!-- <FormSubFormUserDispositifs :form="form" @update="fillForm" /> -->
+
+            <!-- <div v-if="canViewCej" class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">
                 <div class="w-full lg:w-[520px]">
                   <BaseToggle
@@ -219,7 +221,7 @@
                   />
                 </BaseFormControl>
               </div>
-            </div>
+            </div> -->
           </div>
         </transition>
       </form>
@@ -433,19 +435,22 @@ export default defineNuxtComponent({
       return false
     },
   },
-  watch: {
-    'form.cej'(val) {
-      if (!val) {
-        this.form.cej_email_adviser = null
-      }
-    },
-    'form.ft'(val) {
-      if (!val) {
-        this.form.ft_email_adviser = null
-      }
-    },
-  },
+  // watch: {
+  //   'form.cej'(val) {
+  //     if (!val) {
+  //       this.form.cej_email_adviser = null
+  //     }
+  //   },
+  //   'form.ft'(val) {
+  //     if (!val) {
+  //       this.form.ft_email_adviser = null
+  //     }
+  //   },
+  // },
   methods: {
+    fillForm(payload) {
+      this.form = { ...this.form, ...payload }
+    },
     onSubmit() {
       if (this.loading) {
         return

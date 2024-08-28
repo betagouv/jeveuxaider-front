@@ -2,124 +2,66 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal :is-open="isOpen" :title="title" :prevent-click-outside="true" @close="onClose">
-        <div v-if="!selectedItem" class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div
-            v-if="dispositifsAvailable.includes('service_civique')"
-            class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
-            @click="onItemClick('service_civique')"
+        <template v-if="selectedItem === 'service_civique'">
+          <DsfrFormControl
+            label="Date de début de votre Service Civique"
+            html-for="service_civique_completion_date"
+            :error="errors.service_civique_completion_date"
+            required
           >
-            <img
-              src="/images/logo-service-civique.png"
-              srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
-              alt="Service Civique"
-              title="Service Civique"
-              class="hidden lg:block flex-none h-[50px] w-auto object-contain object-left"
-              data-not-lazy
+            <DsfrInput
+              v-model="form.service_civique_completion_date"
+              required
+              type="date"
+              name="service_civique_completion_date"
+              @blur="validate('service_civique_completion_date')"
             />
-            <div class="mt-2 font-medium">Service Civique</div>
-          </div>
-          <div
-            v-if="dispositifsAvailable.includes('cej')"
-            class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
-            @click="onItemClick('cej')"
+          </DsfrFormControl>
+        </template>
+        <template v-if="selectedItem === 'cej'">
+          <DsfrFormControl
+            label="Email de votre conseiller"
+            html-for="cej_email_adviser"
+            :error="errors.cej_email_adviser"
+            required
           >
-            <img
-              src="/images/logo-cej.png"
-              srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
-              alt="Contrat d'Engagement Jeune"
-              title="Contrat d'Engagement Jeune"
-              class="hidden lg:block flex-none h-[50px] w-auto object-contain object-left"
-              data-not-lazy
+            <BaseFormHelperText>
+              En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
+              courant des missions sur lesquelles vous proposez votre aide.
+            </BaseFormHelperText>
+            <DsfrInput
+              v-model="form.cej_email_adviser"
+              required
+              type="email"
+              name="cej_email_adviser"
+              placeholder="…@…"
+              @blur="validate('cej_email_adviser')"
             />
-            <div class="mt-2 font-medium">CEJ</div>
-          </div>
-          <div
-            v-if="dispositifsAvailable.includes('ft')"
-            class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
-            @click="onItemClick('ft')"
+          </DsfrFormControl>
+        </template>
+        <template v-if="selectedItem === 'ft'">
+          <DsfrFormControl
+            label="Email de votre conseiller"
+            html-for="ft_email_adviser"
+            :error="errors.ft_email_adviser"
+            required
           >
-            <img
-              src="/images/logo-france-travail.svg"
-              alt="France Travail"
-              title="France Travail"
-              class="hidden lg:block flex-none h-[50px] w-auto object-contain object-left"
-              data-not-lazy
+            <BaseFormHelperText>
+              En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
+              courant des missions sur lesquelles vous proposez votre aide.
+            </BaseFormHelperText>
+            <DsfrInput
+              v-model="form.ft_email_adviser"
+              required
+              type="email"
+              name="ft_email_adviser"
+              placeholder="…@…"
+              @blur="validate('ft_email_adviser')"
             />
-            <div class="mt-2 font-medium">France travail</div>
-          </div>
-        </div>
-        <div v-else class="">
-          <template v-if="selectedItem === 'service_civique'">
-            <DsfrFormControl
-              label="Date de début de votre Service Civique"
-              html-for="service_civique_completion_date"
-              :error="errors.service_civique_completion_date"
-              required
-            >
-              <DsfrInput
-                v-model="form.service_civique_completion_date"
-                required
-                type="date"
-                name="service_civique_completion_date"
-                @blur="validate('service_civique_completion_date')"
-              />
-            </DsfrFormControl>
-          </template>
-          <template v-if="selectedItem === 'cej'">
-            <DsfrFormControl
-              label="Email de votre conseiller"
-              html-for="cej_email_adviser"
-              :error="errors.cej_email_adviser"
-              required
-            >
-              <BaseFormHelperText>
-                En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
-                courant des missions sur lesquelles vous proposez votre aide.
-              </BaseFormHelperText>
-              <DsfrInput
-                v-model="form.cej_email_adviser"
-                required
-                type="email"
-                name="cej_email_adviser"
-                placeholder="…@…"
-                @blur="validate('cej_email_adviser')"
-              />
-            </DsfrFormControl>
-          </template>
-          <template v-if="selectedItem === 'ft'">
-            <DsfrFormControl
-              label="Email de votre conseiller"
-              html-for="ft_email_adviser"
-              :error="errors.ft_email_adviser"
-              required
-            >
-              <BaseFormHelperText>
-                En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
-                courant des missions sur lesquelles vous proposez votre aide.
-              </BaseFormHelperText>
-              <DsfrInput
-                v-model="form.ft_email_adviser"
-                required
-                type="email"
-                name="ft_email_adviser"
-                placeholder="…@…"
-                @blur="validate('ft_email_adviser')"
-              />
-            </DsfrFormControl>
-          </template>
-        </div>
-
+          </DsfrFormControl>
+        </template>
         <template #footer>
-          <template v-if="selectedItem">
-            <!-- <DsfrButton type="secondary" @click="$emit('update:selectedItem', null)">
-              Retour
-            </DsfrButton> -->
-            <DsfrLink @click="onDelete"> Supprimer </DsfrLink>
-            <DsfrButton v-if="selectedItem" @click="onSave"> Enregistrer </DsfrButton>
-          </template>
-          <template v-else>
-            <!-- <DsfrButton type="secondary" @click="$emit('cancel')"> Annuler </DsfrButton> -->
-          </template>
+          <DsfrButton v-if="selectedItem" @click="onSave"> Enregistrer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -131,6 +73,7 @@ import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
+  emits: ['fill', 'save', 'cancel'],
   components: {},
   mixins: [FormErrors],
   props: {
@@ -138,20 +81,17 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
-    profile: {
+    form: {
       type: Object,
-      default: () => {},
+      required: true,
     },
     selectedItem: {
       type: String,
-      default: null,
+      default: 'service_civique',
     },
   },
   data() {
     return {
-      form: {
-        ..._cloneDeep(this.profile),
-      },
       formSchema: object({
         ft_email_adviser: string()
           .nullable()
@@ -251,63 +191,38 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    dispositifsAvailable() {
-      const dispositifs = []
-      if (this.form?.birthday) {
-        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-        if (userAge >= 16 && userAge <= 30) {
-          dispositifs.push('service_civique')
-          dispositifs.push('cej')
-        }
-      }
-      if (this.form.department) {
-        if (['03', '23', '27', '80'].includes(this.form.department)) {
-          dispositifs.push('ft')
-        }
-      }
-      return dispositifs
-    },
     title() {
       if (this.selectedItem === 'service_civique') {
-        return 'Dispositif : Service Civique'
+        return 'Service Civique'
       } else if (this.selectedItem === 'cej') {
-        return 'Dispositif : Contrat d’Engagement Jeune'
+        return 'Contrat d’Engagement Jeune'
       } else if (this.selectedItem === 'ft') {
-        return 'Dispositif : France Travail'
+        return 'France Travail'
       }
       return 'Choisissez votre dispositif'
     },
   },
   methods: {
-    onItemClick(item) {
-      this.$emit('update:selectedItem', item)
-    },
-    onDelete() {
-      if (this.selectedItem === 'service_civique') {
-        this.form.service_civique = false
-        this.form.service_civique_completion_date = null
-      } else if (this.selectedItem === 'cej') {
-        this.form.cej = false
-        this.form.cej_email_adviser = null
-      } else if (this.selectedItem === 'ft') {
-        this.form.ft = false
-        this.form.ft_email_adviser = null
-      }
-      this.$emit('save', this.form)
-      this.onClose()
-    },
     async onSave() {
-      if (this.selectedItem === 'service_civique') {
-        this.form.service_civique = true
-      } else if (this.selectedItem === 'cej') {
-        this.form.cej = true
-      } else if (this.selectedItem === 'ft') {
-        this.form.ft = true
-      }
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          this.$emit('save', this.form)
+          if (this.selectedItem === 'service_civique') {
+            this.$emit('fill', {
+              service_civique: this.form.service_civique,
+              service_civique_completion_date: this.form.service_civique_completion_date,
+            })
+          } else if (this.selectedItem === 'cej') {
+            this.$emit('fill', {
+              cej: this.form.cej,
+              cej_email_adviser: this.form.cej_email_adviser,
+            })
+          } else if (this.selectedItem === 'ft') {
+            this.$emit('fill', {
+              ft: this.form.ft,
+              ft_email_adviser: this.form.ft_email_adviser,
+            })
+          }
           this.onClose()
         })
         .catch((errors) => {
@@ -315,7 +230,25 @@ export default defineNuxtComponent({
         })
     },
     onClose() {
-      this.$emit('update:selectedItem', null)
+      if (this.selectedItem === 'service_civique') {
+        if (!this.form.service_civique_completion_date) {
+          this.$emit('fill', {
+            service_civique: false,
+          })
+        }
+      } else if (this.selectedItem === 'cej') {
+        if (!this.form.cej_email_adviser) {
+          this.$emit('fill', {
+            cej: false,
+          })
+        }
+      } else if (this.selectedItem === 'ft') {
+        if (!this.form.ft_email_adviser) {
+          this.$emit('fill', {
+            ft: false,
+          })
+        }
+      }
       this.$emit('cancel')
     },
   },
