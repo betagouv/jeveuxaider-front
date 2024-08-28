@@ -1,13 +1,7 @@
 <template>
   <ClientOnly>
     <Teleport to="#teleport-body-end">
-      <BaseModal
-        :is-open="isOpen"
-        title="Ajouter un dispositif"
-        :prevent-click-outside="true"
-        @close="onClose"
-      >
-        {{ selectedItem }}
+      <BaseModal :is-open="isOpen" :title="title" :prevent-click-outside="true" @close="onClose">
         <div v-if="!selectedItem" class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div
             class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
@@ -70,25 +64,15 @@
           </template>
           <template v-if="selectedItem === 'cej'">
             <DsfrFormControl
-              v-if="form.cej"
-              label="Email de votre conseiller CEJ"
+              label="Email de votre conseiller"
               html-for="cej_email_adviser"
               :error="errors.cej_email_adviser"
               required
             >
-              <template #afterLabel>
-                <span
-                  v-tooltip="{
-                    content:
-                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                  }"
-                  class="p-1 cursor-help group"
-                >
-                  <RiErrorWarningLine
-                    class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
-                  />
-                </span>
-              </template>
+              <BaseFormHelperText>
+                En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
+                courant des missions sur lesquelles vous proposez votre aide.
+              </BaseFormHelperText>
               <DsfrInput
                 v-model="form.cej_email_adviser"
                 required
@@ -101,25 +85,15 @@
           </template>
           <template v-if="selectedItem === 'ft'">
             <DsfrFormControl
-              v-if="form.ft"
-              label="Email de votre conseiller France Travail"
+              label="Email de votre conseiller"
               html-for="ft_email_adviser"
               :error="errors.ft_email_adviser"
               required
             >
-              <template #afterLabel>
-                <span
-                  v-tooltip="{
-                    content:
-                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                  }"
-                  class="p-1 cursor-help group"
-                >
-                  <RiErrorWarningLine
-                    class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
-                  />
-                </span>
-              </template>
+              <BaseFormHelperText>
+                En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
+                courant des missions sur lesquelles vous proposez votre aide.
+              </BaseFormHelperText>
               <DsfrInput
                 v-model="form.ft_email_adviser"
                 required
@@ -137,7 +111,8 @@
             <!-- <DsfrButton type="secondary" @click="$emit('update:selectedItem', null)">
               Retour
             </DsfrButton> -->
-            <DsfrButton v-if="selectedItem" @click="onSubmit"> Enregistrer </DsfrButton>
+            <DsfrLink @click="onDelete"> Supprimer </DsfrLink>
+            <DsfrButton v-if="selectedItem" @click="onSave"> Enregistrer </DsfrButton>
           </template>
           <template v-else>
             <!-- <DsfrButton type="secondary" @click="$emit('cancel')"> Annuler </DsfrButton> -->
@@ -272,13 +247,53 @@ export default defineNuxtComponent({
       }),
     }
   },
+  computed: {
+    title() {
+      if (this.selectedItem === 'service_civique') {
+        return 'Dispositif : Service Civique'
+      } else if (this.selectedItem === 'cej') {
+        return 'Dispositif : Contrat d’Engagement Jeune'
+      } else if (this.selectedItem === 'ft') {
+        return 'Dispositif : France Travail'
+      }
+      return 'Choisissez votre dispositif'
+    },
+  },
   methods: {
     onItemClick(item) {
       this.$emit('update:selectedItem', item)
     },
-    onSubmit() {
+    onDelete() {
+      if (this.selectedItem === 'service_civique') {
+        this.form.service_civique = false
+        this.form.service_civique_completion_date = null
+      } else if (this.selectedItem === 'cej') {
+        this.form.cej = false
+        this.form.cej_email_adviser = null
+      } else if (this.selectedItem === 'ft') {
+        this.form.ft = false
+        this.form.ft_email_adviser = null
+      }
       this.$emit('save', this.form)
       this.onClose()
+    },
+    async onSave() {
+      if (this.selectedItem === 'service_civique') {
+        this.form.service_civique = true
+      } else if (this.selectedItem === 'cej') {
+        this.form.cej = true
+      } else if (this.selectedItem === 'ft') {
+        this.form.ft = true
+      }
+      await this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          this.$emit('save', this.form)
+          this.onClose()
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
     },
     onClose() {
       this.$emit('update:selectedItem', null)

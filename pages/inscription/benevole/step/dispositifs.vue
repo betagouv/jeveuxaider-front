@@ -18,7 +18,7 @@
     </div>
     <div class="max-w-2xl mx-auto">
       <div class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center">
-        Renseignez vos dispositifs {{ selectedItem }}
+        Renseignez vos dispositifs
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200">
         <div class="mb-8 text-md text-gray-500">
@@ -70,7 +70,7 @@
             <div class="flex-1">
               <div class="font-medium">Engagé en Contrat d'Engagement Jeune</div>
               <div class="italic text-[#666666] text-sm">
-                Conseiller CEJ :
+                Conseiller :
                 {{ form.cej_email_adviser }}
               </div>
             </div>
@@ -94,7 +94,7 @@
             <div class="flex-1">
               <div class="font-medium">Bénéficiaire d'une allocation RSA</div>
               <div class="italic text-[#666666] text-sm">
-                Conseiller France Travail :
+                Conseiller :
                 {{ form.ft_email_adviser }}
               </div>
             </div>
