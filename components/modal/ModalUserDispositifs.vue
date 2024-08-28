@@ -4,6 +4,7 @@
       <BaseModal :is-open="isOpen" :title="title" :prevent-click-outside="true" @close="onClose">
         <div v-if="!selectedItem" class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div
+            v-if="dispositifsAvailable.includes('service_civique')"
             class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
             @click="onItemClick('service_civique')"
           >
@@ -18,6 +19,7 @@
             <div class="mt-2 font-medium">Service Civique</div>
           </div>
           <div
+            v-if="dispositifsAvailable.includes('cej')"
             class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
             @click="onItemClick('cej')"
           >
@@ -32,6 +34,7 @@
             <div class="mt-2 font-medium">CEJ</div>
           </div>
           <div
+            v-if="dispositifsAvailable.includes('ft')"
             class="p-4 flex flex-col items-center border-2 border-[DDDDDD] hover:border-jva-blue-500 hover:bg-[#F5F5FE] cursor-pointer"
             @click="onItemClick('ft')"
           >
@@ -248,6 +251,22 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    dispositifsAvailable() {
+      const dispositifs = []
+      if (this.form?.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        if (userAge >= 16 && userAge <= 30) {
+          dispositifs.push('service_civique')
+          dispositifs.push('cej')
+        }
+      }
+      if (this.form.department) {
+        if (['03', '23', '27', '80'].includes(this.form.department)) {
+          dispositifs.push('ft')
+        }
+      }
+      return dispositifs
+    },
     title() {
       if (this.selectedItem === 'service_civique') {
         return 'Dispositif : Service Civique'
