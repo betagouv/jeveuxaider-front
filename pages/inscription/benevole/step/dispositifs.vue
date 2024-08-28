@@ -18,17 +18,19 @@
     </div>
     <div class="max-w-2xl mx-auto">
       <div class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center">
-        Renseignez vos dispositifs
+        Renseignez vos dispositifs {{ selectedItem }}
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200">
         <div class="mb-8 text-md text-gray-500">
-          Renseignez votre profil avec les dispositifs auxquelles vous appartenez.
+          Renseignez votre profil avec les dispositifs auxquelles vous appartenez. (Service Civique,
+          CEJ, France Travail, ...)
         </div>
 
         <div class="grid grid-cols-1 gap-4">
           <div
             v-if="hasServiceCiviqueChecked"
-            class="px-6 py-4 flex items-center gap-4 border-2 rounded-lg w-full"
+            class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full cursor-pointer"
+            @click="openServiceCiviqueModal"
           >
             <div>
               <img
@@ -44,14 +46,16 @@
               <div class="font-medium">Volontaire en Service Civique</div>
               <div class="italic text-[#666666] text-sm">
                 À partir du
-                {{ $dayjs(profile.service_civique_completion_date).format('DD/MM/YYYY') }}
+                {{ $dayjs(form.service_civique_completion_date).format('DD/MM/YYYY') }}
               </div>
             </div>
+            <RiPencilLine class="h-5 w-5 fill-[#666666] transition group-hover:scale-110" />
           </div>
 
           <div
             v-if="hasCejChecked"
-            class="px-6 py-4 flex items-center gap-4 border-2 rounded-lg w-full"
+            class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full cursor-pointer"
+            @click="openCejModal"
           >
             <div>
               <img
@@ -67,14 +71,16 @@
               <div class="font-medium">Engagé en Contrat d'Engagement Jeune</div>
               <div class="italic text-[#666666] text-sm">
                 Conseiller CEJ :
-                {{ profile.cej_email_adviser }}
+                {{ form.cej_email_adviser }}
               </div>
             </div>
+            <RiPencilLine class="h-5 w-5 fill-[#666666] transition group-hover:scale-110" />
           </div>
 
           <div
             v-if="hasFtChecked"
-            class="px-6 py-4 flex items-center gap-4 border-2 rounded-lg w-full"
+            class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full cursor-pointer"
+            @click="openFtModal"
           >
             <div>
               <img
@@ -89,14 +95,15 @@
               <div class="font-medium">Bénéficiaire d'une allocation RSA</div>
               <div class="italic text-[#666666] text-sm">
                 Conseiller France Travail :
-                {{ profile.ft_email_adviser }}
+                {{ form.ft_email_adviser }}
               </div>
             </div>
+            <RiPencilLine class="h-5 w-5 fill-[#666666] transition group-hover:scale-110" />
           </div>
 
           <button
-            class="px-6 py-4 flex items-center justify-center gap-2 border-2 rounded-lg border-dashed w-full cursor-pointer"
-            @click="showModal = true"
+            class="px-6 py-4 flex items-center justify-center gap-2 border rounded-lg border-dashed w-full cursor-pointer"
+            @click="openModal"
           >
             <RiAddFill class="h-5 w-5" /> <span>Ajouter un dispositif</span>
           </button>
@@ -115,6 +122,8 @@
     <ModalUserDispositifs
       :is-open="showModal"
       :profile="form"
+      v-model:selectedItem="selectedItem"
+      @save="onDispositifSave"
       @confirm="showModal = false"
       @cancel="showModal = false"
     />
@@ -138,6 +147,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       showModal: false,
+      selectedItem: null,
       steps: [
         {
           name: 'Rejoignez le mouvement',
@@ -187,6 +197,25 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    openServiceCiviqueModal() {
+      this.selectedItem = 'service_civique'
+      this.showModal = true
+    },
+    openCejModal() {
+      this.selectedItem = 'cej'
+      this.showModal = true
+    },
+    openFtModal() {
+      this.selectedItem = 'ft'
+      this.showModal = true
+    },
+    openModal() {
+      this.selectedItem = null
+      this.showModal = true
+    },
+    onDispositifSave(data) {
+      this.form = { ...this.form, ...data }
+    },
     async onSubmit() {
       if (this.loading) {
         return
