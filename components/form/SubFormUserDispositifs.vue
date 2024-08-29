@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 gap-4">
       <div
         v-if="dispositifsAvailable.includes('service_civique')"
-        class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
+        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
         <div>
           <img
@@ -19,10 +19,18 @@
           <div class="text-balance font-bold">Êtes-vous volontaire en Service Civique ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasServiceCiviqueFilled">
-              À partir du
-              {{ $dayjs(form.service_civique_completion_date).format('DD/MM/YYYY') }}
+              <div
+                @click="openServiceCiviqueModal"
+                class="group flex items-center gap-2 hover:cursor-pointer"
+              >
+                <span class="italic text-[#666666] text-sm"
+                  >À partir du
+                  {{ $dayjs(form.service_civique_completion_date).format('DD/MM/YYYY') }}</span
+                >
+                <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
+              </div>
             </template>
-            <template v-else> Si oui, renseignez la date de prise de service </template>
+            <template v-else> Pour le suivi de votre parcours </template>
           </div>
         </div>
         <div>
@@ -38,7 +46,7 @@
 
       <div
         v-if="dispositifsAvailable.includes('cej')"
-        class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full cursor-pointer"
+        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
         <div>
           <img
@@ -54,10 +62,14 @@
           <div class="text-balance font-bold">Êtes-vous engagé Contrat d'Engagement Jeune ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasCejFilled">
-              Conseiller :
-              {{ form.cej_email_adviser }}
+              <div @click="openCejModal" class="group flex items-center gap-2 hover:cursor-pointer">
+                <span class="italic text-[#666666] text-sm">
+                  Conseiller : {{ form.cej_email_adviser }}</span
+                >
+                <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
+              </div>
             </template>
-            <template v-else> Si oui, renseignez le mail de votre conseiller </template>
+            <template v-else> Pour le suivi de votre parcours CEJ </template>
           </div>
         </div>
         <div>
@@ -73,7 +85,7 @@
 
       <div
         v-if="dispositifsAvailable.includes('ft')"
-        class="group px-6 py-4 flex items-center gap-4 border rounded-lg w-full cursor-pointer"
+        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
         <div>
           <img
@@ -85,13 +97,17 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Bénéficiaire d'une allocation RSA</div>
+          <div class="text-balance font-bold">Êtes-vous bénéficiaire du RSA ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasFtFilled">
-              Conseiller :
-              {{ form.ft_email_adviser }}
+              <div @click="openFtModal" class="group flex items-center gap-2 hover:cursor-pointer">
+                <span class="italic text-[#666666] text-sm"
+                  >Conseiller : {{ form.ft_email_adviser }}</span
+                >
+                <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
+              </div>
             </template>
-            <template v-else> Si oui, renseignez le mail de votre conseiller </template>
+            <template v-else> Pour le suivi de votre parcours avec France Travail </template>
           </div>
         </div>
         <div>

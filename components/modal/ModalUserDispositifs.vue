@@ -61,7 +61,7 @@
           </DsfrFormControl>
         </template>
         <template #footer>
-          <DsfrButton v-if="selectedItem" @click="onSave"> Enregistrer </DsfrButton>
+          <DsfrButton v-if="selectedItem" @click="onSave"> Continuer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
