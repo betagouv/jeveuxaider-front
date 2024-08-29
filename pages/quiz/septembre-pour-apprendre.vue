@@ -6,7 +6,7 @@
       slogan="Rendons l’éducation accessible à tous"
       picture="quiz-mgen-step-0-min"
       mobile-picture="quiz-mgen-step-0-mobile-min"
-      missions-count="3 000"
+      missions-count="5 000"
       :logos="logos"
     />
     <QuizSearchBuilderStep1
