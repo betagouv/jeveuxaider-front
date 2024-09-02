@@ -75,6 +75,7 @@ export default defineNuxtComponent({
     goToNextStep() {
       if (this.currentStep === this.steps.at(-1)) {
         this.$emit('close')
+        this.currentStep = this.steps[0]
         return
       }
       this.currentStep = ['moreAboutYou', 'skills', 'picture'].includes(this.currentStep)
