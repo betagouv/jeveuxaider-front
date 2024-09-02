@@ -11,9 +11,7 @@
     <div class="container relative">
       <div class="flex flex-col justify-between items-center sm:flex-row gap-12">
         <div class="flex flex-col space-y-4 xl:space-y-8 max-w-[740px]">
-          <p class="font-bold text-jva-blue-500 uppercase xl:text-xl">
-            Rendons l’éducation accessible à tous
-          </p>
+          <p class="font-bold text-jva-blue-500 uppercase xl:text-xl">Du 1er au 30 septembre</p>
           <DsfrHeading as="h2" size="alt-sm">
             <span>Rejoignez Septembre pour Apprendre</span>
           </DsfrHeading>

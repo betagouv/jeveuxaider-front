@@ -33,6 +33,13 @@
       </DsfrButton>
     </template>
     <template #items>
+      <NuxtLink :to="`/admin/missions/${mission.id}/title`" class="inline sm:hidden">
+        <BaseDropdownOptionsItem>
+          <div class="flex items-center">
+            <RiPencilLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Modifier
+          </div>
+        </BaseDropdownOptionsItem>
+      </NuxtLink>
       <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
         @click.native="$emit('showModalSwitchIsOnline')"
