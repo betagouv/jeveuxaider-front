@@ -121,10 +121,10 @@ export default defineNuxtComponent({
       })
     },
     async onAvatarCropUpdate() {
-      await apiFetch(`/medias/${this.$stores.profileOverlayCompletion.id}`, {
+      await apiFetch(`/medias/${this.$stores.profileOverlayCompletion.avatar.id}`, {
         method: 'PUT',
         body: {
-          manipulations: this.$stores.profileOverlayCompletion.manipulation,
+          manipulations: this.$stores.profileOverlayCompletion.avatar.manipulation,
         },
       })
     },
