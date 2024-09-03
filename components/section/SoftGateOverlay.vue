@@ -186,11 +186,7 @@ export default defineNuxtComponent({
         }
       }
 
-      if (!this.isProfileCompleted) {
-        this.step = 'complete-profile'
-      } else {
-        this.onClose()
-      }
+      this.step = 'complete-profile'
     },
     handleNextResolver() {
       if (this.hasPrerequisites) {

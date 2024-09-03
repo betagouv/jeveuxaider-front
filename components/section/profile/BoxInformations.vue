@@ -52,6 +52,7 @@
         <BaseDescriptionListItem term="Nom" :description="profile.full_name" />
         <BaseDescriptionListItem term="Email" :description="profile.email" />
         <BaseDescriptionListItem term="Code postal" :description="profile.zip" />
+        <BaseDescriptionListItem term="Ville" :description="profile.city" />
         <BaseDescriptionListItem
           term="Profession"
           :description="$filters.label(profile.type, 'profile_type')"
@@ -94,6 +95,15 @@
           v-if="profile.activities"
           term="Activités"
           :description="profile.activities.map((item) => item.name).join(', ')"
+        />
+        <BaseDescriptionListItem
+          v-if="profile.certifications"
+          term="Compétences"
+          :description="
+            profile.certifications
+              .map((item) => $filters.label(item, 'profile_certifications'))
+              .join(', ')
+          "
         />
         <BaseDescriptionListItem
           v-if="profile.skills"

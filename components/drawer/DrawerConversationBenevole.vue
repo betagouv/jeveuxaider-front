@@ -24,6 +24,7 @@
             )}`"
           />
           <BaseDescriptionListItem term="Code postal" :description="profile.zip" />
+          <BaseDescriptionListItem term="Ville" :description="profile.city" />
           <BaseDescriptionListItem
             term="Profession"
             :description="$filters.label(profile.type, 'profile_type')"
@@ -48,6 +49,21 @@
             as="li"
           >
             {{ activity.name }}
+          </DsfrBadge>
+        </ul>
+        <div v-else class="text-cool-gray-500">Aucune sélectionnée</div>
+      </div>
+      <div class="py-8">
+        <div class="text-xl font-bold text-gray-900 mb-4">Certifications</div>
+        <ul v-if="profile.certifications?.length" class="flex flex-wrap gap-2">
+          <DsfrBadge
+            v-for="(certification, key) in profile.certifications"
+            :key="key"
+            :no-icon="true"
+            type="new"
+            as="li"
+          >
+            {{ $filters.label(certification, 'profile_certifications') }}
           </DsfrBadge>
         </ul>
         <div v-else class="text-cool-gray-500">Aucune sélectionnée</div>
