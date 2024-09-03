@@ -53,10 +53,10 @@ export default defineNuxtComponent({
     },
     skillsStepTitle() {
       const data = []
-      if (this.initialForm.skills.length > 0) {
+      if (this.initialForm.skills?.length > 0) {
         data.push(this.$filters.pluralize(this.initialForm.skills.length, 'compétence'))
       }
-      if (this.initialForm.certifications.length > 0) {
+      if (this.initialForm.certifications?.length > 0) {
         data.push(this.$filters.pluralize(this.initialForm.certifications.length, 'certification'))
       }
       return data.join(', ')
