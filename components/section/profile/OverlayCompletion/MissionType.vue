@@ -6,18 +6,18 @@ import { object } from 'yup'
 export default defineNuxtComponent({
   mixins: [FormErrors],
   setup() {
-    const { schemaMissionType, initialForm } = useProfileValidation()
+    const { schemaTypeMissions, initialForm } = useProfileValidation()
 
     return {
       initialForm,
-      schemaMissionType,
+      schemaTypeMissions,
     }
   },
   data() {
     return {
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        type_missions: this.schemaMissionType,
+        type_missions: this.schemaTypeMissions,
       }),
       loading: false,
     }
@@ -64,6 +64,7 @@ export default defineNuxtComponent({
           name="type_missions"
           :options="$labels.profile_type_missions"
           option-class="w-full"
+          @update:modelValue="validate('type_missions')"
         />
       </DsfrFormControl>
     </div>

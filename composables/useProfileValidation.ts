@@ -31,12 +31,6 @@ export function useProfileValidation() {
           )
         }
       ),
-
-    // @todo: delete
-    schemaCommitmentDuration: string().nullable().required('Merci de choisir une durée'),
-    schemaCommitmentTimePeriod: string().nullable().required('Merci de choisir une fréquence'),
-
-    schemaMissionType: string().nullable(),
     schemaActivities: array().nullable(),
     schemaType: string()
       .nullable()
@@ -46,6 +40,17 @@ export function useProfileValidation() {
     schemaCertifications: array().nullable(),
     schemaDescription: string().nullable(),
     schemaSkills: array().nullable(),
+    schemaTypeMissions: string()
+      .nullable()
+      .test(
+        'test-type-missions-required',
+        "Merci d'indiquer vos préférences de mission",
+        (type_missions?: string | null) => {
+          return (
+            (authStore.contextRole && ['admin'].includes(authStore.contextRole)) || !!type_missions
+          )
+        }
+      ),
   }
 }
 

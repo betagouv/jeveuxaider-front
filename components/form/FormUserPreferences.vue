@@ -56,6 +56,7 @@
                   name="type_missions"
                   :options="$labels.profile_type_missions"
                   option-class="w-full @md:w-auto"
+                  @update:modelValue="validate('type_missions')"
                 />
               </DsfrFormControl>
             </div>
@@ -151,14 +152,20 @@ export default defineNuxtComponent({
     },
   },
   setup() {
-    const { initialForm, schemaDisponibilities, schemaCommitment, schemaActivities } =
-      useProfileValidation()
+    const {
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitment,
+      schemaActivities,
+      schemaTypeMissions,
+    } = useProfileValidation()
 
     return {
       initialForm,
       schemaDisponibilities,
       schemaCommitment,
       schemaActivities,
+      schemaTypeMissions,
     }
   },
   data() {
@@ -169,6 +176,7 @@ export default defineNuxtComponent({
         disponibilities: this.schemaDisponibilities,
         commitment: this.schemaCommitment,
         activities: this.schemaActivities,
+        type_missions: this.schemaTypeMissions,
       }),
       domainsOptions: [
         'Art et culture pour tous',
