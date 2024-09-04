@@ -56,6 +56,7 @@
                   name="type_missions"
                   :options="$labels.profile_type_missions"
                   option-class="w-full @md:w-auto"
+                  @update:modelValue="validate('type_missions')"
                 />
               </DsfrFormControl>
             </div>
@@ -132,11 +133,10 @@
 </template>
 
 <script>
-import { object, array, string } from 'yup'
+import { object, string, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
-import activitiesOptions from '@/assets/activities.json'
 import ModalActivities from '@/components/modal/ModalActivities'
 
 export default defineNuxtComponent({
@@ -151,22 +151,21 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  setup({ profile }) {
-    function getInitialForm(profileData) {
-      return {
-        ..._cloneDeep(profileData),
-        activities:
-          profileData.activities
-            ?.map((act) => {
-              return activitiesOptions.find((opt) => act.id === opt.id)
-            })
-            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
-      }
-    }
+  setup() {
+    const {
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitment,
+      schemaActivities,
+      schemaTypeMissions,
+    } = useProfileValidation()
 
     return {
-      initialForm: getInitialForm(profile),
-      getInitialForm,
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitment,
+      schemaActivities,
+      schemaTypeMissions,
     }
   },
   data() {
@@ -174,26 +173,10 @@ export default defineNuxtComponent({
       loading: false,
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        commitment: string()
-          .nullable()
-          .test(
-            'is-commitment-required',
-            'Merci de choisir une fréquence parmi celles proposées',
-            (commitment) => {
-              return ['admin'].includes(this.$stores.auth.contextRole) || !!commitment
-            }
-          ),
-        disponibilities: array()
-          .transform((v) => (!v ? [] : v))
-          .test(
-            'test-disponibilities-required',
-            'Merci de sélectionner au moins 1 créneau',
-            (disponibilities) => {
-              return (
-                ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
-              )
-            }
-          ),
+        disponibilities: this.schemaDisponibilities,
+        commitment: this.schemaCommitment,
+        activities: this.schemaActivities,
+        type_missions: this.schemaTypeMissions,
       }),
       domainsOptions: [
         'Art et culture pour tous',
@@ -210,11 +193,10 @@ export default defineNuxtComponent({
     }
   },
   watch: {
-    profile: {
+    initialForm: {
       deep: true,
-      handler(newProfile) {
-        this.initialForm = this.getInitialForm(newProfile)
-        this.form = _cloneDeep(this.initialForm)
+      handler(newVal) {
+        this.form = _cloneDeep(newVal)
       },
     },
     form: {

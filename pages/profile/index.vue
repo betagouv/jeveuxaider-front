@@ -60,11 +60,11 @@
             En remplissant votre profil, vous augmentez vos chances de trouver une mission.
           </div>
         </template>
-        <template #footer>
+        <template #footer="{ setIsOverlayOpen }">
           <div class="mt-8 pt-8 border-t">
-            <nuxt-link to="/profile/edit" no-prefetch @click="onCompleteProfileClick">
-              <DsfrButton type="secondary" tabindex="-1">Compléter mon profil</DsfrButton>
-            </nuxt-link>
+            <DsfrButton type="secondary" @click="onCompleteProfileClick(setIsOverlayOpen)"
+              >Compléter mon profil</DsfrButton
+            >
           </div>
         </template>
       </BoxCompleteProfile>
@@ -124,8 +124,9 @@ export default defineNuxtComponent({
         this.showModalIsMinor = true
       }
     },
-    onCompleteProfileClick() {
+    onCompleteProfileClick(setIsOverlayOpen) {
       this.$plausible.trackEvent('Click completion profil - espace')
+      setIsOverlayOpen(true)
     },
   },
 })

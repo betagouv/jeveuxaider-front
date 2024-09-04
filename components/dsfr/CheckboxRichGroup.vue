@@ -22,7 +22,7 @@ function onClick(option) {
 }
 
 function isChecked(option) {
-  return values.value.find((value) => value.key === option.key)
+  return !!values.value.find((value) => value.key === option.key)
 }
 </script>
 
@@ -32,6 +32,8 @@ function isChecked(option) {
     <button
       v-for="option in options"
       :key="option.key"
+      role="checkbox"
+      :aria-checked="isChecked(option)"
       :class="[
         'text-left min-w-0 border initial:p-4 hover:bg-[#F5F5FE]/75 transition ease-out',
         { 'border-jva-blue-500 !bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },

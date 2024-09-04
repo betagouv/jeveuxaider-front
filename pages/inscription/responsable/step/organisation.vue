@@ -187,7 +187,12 @@
             required
             :error="errors.domaines"
           >
-            <DsfrTagsGroup v-model="form.domaines" :options="$labels.domaines" is-model />
+            <DsfrTagsGroup
+              name="domaines"
+              v-model="form.domaines"
+              :options="$labels.domaines"
+              is-model
+            />
           </BaseFormControl>
           <BaseFormControl
             v-if="form.statut_juridique != 'Collectivité'"
@@ -197,6 +202,7 @@
             :error="errors.publics_beneficiaires"
           >
             <DsfrTagsGroup
+              name="publics_beneficiaires"
               v-model="form.publics_beneficiaires"
               :options="$labels.mission_publics_beneficiaires"
             />

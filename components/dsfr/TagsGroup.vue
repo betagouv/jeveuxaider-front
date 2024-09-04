@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div :class="['flex flex-wrap initial:gap-2 initial:lg:gap-3', wrapperClass]">
+    <div
+      :id="name"
+      :name="name"
+      :class="['flex flex-wrap initial:gap-2 initial:lg:gap-3', wrapperClass]"
+    >
       <DsfrTag
         v-for="option in options"
         :key="option.key"
@@ -23,6 +27,7 @@
 export default defineNuxtComponent({
   emits: ['update:modelValue', 'updated'],
   props: {
+    name: { type: String, required: true },
     modelValue: { type: [Array, String] },
     options: { type: Array, required: true },
     error: { type: String, default: null },

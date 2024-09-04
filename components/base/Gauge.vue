@@ -1,5 +1,10 @@
 <template>
-  <div class="relative w-full">
+  <div
+    class="relative w-full"
+    role="progressbar"
+    :aria-label="ariaLabel"
+    :aria-valuenow="percentage"
+  >
     <div
       v-tooltip="tooltip"
       class="w-full bg-gray-200 overflow-hidden"
@@ -55,6 +60,10 @@ export default defineNuxtComponent({
     },
     track: {
       type: Number,
+      default: null,
+    },
+    ariaLabel: {
+      type: String,
       default: null,
     },
   },

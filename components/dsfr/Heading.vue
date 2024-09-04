@@ -2,6 +2,8 @@
   <component
     :is="as"
     :class="[
+      'initial:text-pretty',
+
       { 'font-bold': bold },
 
       { 'text-lg leading-6 lg:text-xl lg:leading-7': size === 'xs' }, // H6

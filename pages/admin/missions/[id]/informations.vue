@@ -29,7 +29,6 @@
             >
               <DsfrSelect
                 required
-                id="domaine_id"
                 name="domaine_id"
                 :modelValue="form.domaine_id"
                 placeholder="Sélectionner un domaine"
@@ -44,7 +43,6 @@
               :error="errors.domaine_secondary_id"
             >
               <DsfrSelect
-                id="domaine_secondary_id"
                 name="domaine_secondary_id"
                 :modelValue="form.domaine_secondary_id"
                 placeholder="Sélectionner un domaine"
@@ -96,7 +94,6 @@
             >
               <DsfrSelect
                 required
-                id="activity_id"
                 name="activity_id"
                 :modelValue="form.activity_id"
                 placeholder="Sélectionner une activité"
@@ -117,7 +114,6 @@
               :error="errors.activity_secondary_id"
             >
               <DsfrSelect
-                id="activity_secondary_id"
                 name="activity_secondary_id"
                 :modelValue="form.activity_secondary_id"
                 placeholder="Sélectionner une activité"
@@ -181,7 +177,6 @@
             >
               <DsfrSelect
                 required
-                id="domaine_id"
                 name="domaine_id"
                 :modelValue="form.domaine_id"
                 placeholder="Sélectionner un domaine"
@@ -202,7 +197,6 @@
               :error="errors.domaine_secondary_id"
             >
               <DsfrSelect
-                id="domaine_secondary_id"
                 name="domaine_secondary_id"
                 :modelValue="form.domaine_secondary_id"
                 placeholder="Sélectionner un domaine"
@@ -290,7 +284,6 @@
             >
               <DsfrSelect
                 required
-                id="activity_id"
                 name="activity_id"
                 :modelValue="form.activity_id"
                 placeholder="Sélectionner une activité"
@@ -311,7 +304,6 @@
               :error="errors.activity_secondary_id"
             >
               <DsfrSelect
-                id="activity_secondary_id"
                 name="activity_secondary_id"
                 :modelValue="form.activity_secondary_id"
                 placeholder="Sélectionner une activité"

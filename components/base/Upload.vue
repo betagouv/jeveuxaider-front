@@ -50,6 +50,7 @@
       class="sr-only"
       :accept="extensions"
       @change="onChange"
+      @cancel="$emit('cancel')"
     />
 
     <ul v-if="showFiles && files" role="list" class="divide-y divide-gray-200">
@@ -101,7 +102,7 @@ import { useToast } from 'vue-toastification'
 import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
-  emits: ['add', 'delete'],
+  emits: ['add', 'delete', 'cancel'],
   props: {
     multiple: {
       type: Boolean,
@@ -192,8 +193,12 @@ export default defineNuxtComponent({
       }
     },
     handleAdd(files) {
-      this.addFiles(files)
       this.dragging = false
+      if (files.length === 0) {
+        this.$emit('cancel')
+        return
+      }
+      this.addFiles(files)
     },
     // The input need to have the correct files, hence the use of new dataTransfert instead of just an array.
     // Use case : add a file, then delete, then add the same file again.

@@ -6,8 +6,6 @@
         :theme="modalTheme"
         :title="modalTitle"
         :prevent-click-outside="true"
-        :hide-footer="state === 'processing'"
-        :hide-close="true"
         @close="$emit('close')"
       >
         <slot
@@ -21,6 +19,8 @@
           <BaseGauge :percentage="progress" size="xl" class="rounded-full" color="green" />
           <div class="text-gray-600 mt-2">Progression: {{ progress }}%</div>
         </template>
+
+        <template #header><div class="mt-2" /></template>
 
         <template #footer>
           <template v-if="state === 'initial'">

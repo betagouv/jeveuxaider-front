@@ -65,7 +65,6 @@
         >
           <DsfrSelect
             required
-            id="commitment__duration"
             name="commitment__duration"
             v-model="form.commitment__duration"
             placeholder="Sélectionner une durée"
@@ -83,7 +82,6 @@
             >
               <DsfrSelect
                 required
-                id="commitment__duration"
                 name="commitment__duration"
                 v-model="form.commitment__duration"
                 placeholder="Sélectionner une durée"
@@ -99,7 +97,6 @@
             >
               <DsfrSelect
                 required
-                id="commitment__time_period"
                 name="commitment__time_period"
                 v-model="form.commitment__time_period"
                 placeholder="Sélectionner une fréquence"
@@ -119,7 +116,6 @@
           >
             <DsfrSelect
               required
-              id="commitment__duration_min"
               name="commitment__duration_min"
               v-model="form.commitment__duration_min"
               placeholder="Sélectionner une durée"

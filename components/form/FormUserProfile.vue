@@ -135,7 +135,6 @@
           <DsfrFormControl label="Profession" html-for="type" required :error="errors.type">
             <DsfrSelect
               v-model="form.type"
-              id="type"
               name="type"
               placeholder="Sélectionnez votre profession"
               :options="$labels.profile_type"
@@ -148,38 +147,12 @@
       <hr />
       <div class="">
         <DsfrHeading size="lg"> Compétences </DsfrHeading>
-        <div class="text-[#666666] mt-2">
+        <p class="text-[#666666] mt-2">
           Si vous voulez mettre en avant certaines compétences auprès des organisations, ajoutez-les
           ici.
-        </div>
+        </p>
         <div class="mt-8">
-          <DsfrFormControl html-for="algolia-search">
-            <AlgoliaInputAutocomplete
-              index="termsIndex"
-              variant="dsfr"
-              attribute-right-label="group"
-              :search-parameters="{
-                facetFilters: [['vocabulary_name:Skills']],
-                hitsPerPage: 6,
-              }"
-              @selected="handleSelectSkillItems"
-            />
-          </DsfrFormControl>
-
-          <div v-if="form.skills.length" class="mt-6">
-            <div class="flex flex-wrap gap-4">
-              <DsfrTag
-                v-for="item in form.skills"
-                :key="item.id"
-                :tag="item"
-                size="md"
-                context="deletable"
-                @delete="onRemovedSkillItem(item)"
-              >
-                {{ item.name }}
-              </DsfrTag>
-            </div>
-          </div>
+          <FormUserSkills v-model="form.skills" />
         </div>
       </div>
       <hr />
@@ -370,12 +343,24 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  setup() {
+    const { schemaType, schemaCertifications, schemaDescription, schemaSkills } =
+      useProfileValidation()
+
+    return {
+      schemaType,
+      schemaCertifications,
+      schemaDescription,
+      schemaSkills,
+    }
+  },
   data() {
     return {
       loading: false,
       form: {
         ..._cloneDeep(this.profile),
       },
+      // @todo: in useProfileValidation
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -392,12 +377,7 @@ export default defineNuxtComponent({
               return age >= 16
             }
           ),
-        // email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
-        type: string()
-          .nullable()
-          .test('test-profession-required', 'Une profession est requise', (type) => {
-            return ['admin'].includes(this.$stores.auth.contextRole) || type
-          }),
+        type: this.schemaType,
         mobile: string()
           .nullable()
           .min(10, 'Le mobile doit contenir au moins 10 caractères')
@@ -469,6 +449,9 @@ export default defineNuxtComponent({
             is: true,
             then: (schema) => schema.required('La date de début de service civique est incorrecte'),
           }),
+        certifications: this.schemaCertifications,
+        description: this.schemaDescription,
+        skills: this.schemaSkills,
       }),
       zipAutocompleteOptions: [],
       loadingFetchZips: false,
@@ -543,14 +526,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    handleSelectSkillItems(item) {
-      if (!this.form.skills.some((skill) => skill.id === item.id)) {
-        this.form.skills = [...this.form.skills, item]
-      }
-    },
-    onRemovedSkillItem(item) {
-      this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
     },
   },
 })

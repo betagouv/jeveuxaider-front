@@ -5,10 +5,8 @@
         <BaseModal
           :is-open="showModalConfirmOrga"
           :prevent-click-outside="true"
-          :overflow-hidden="false"
-          background-overlay="bg-jva-blue-500"
-          width-class="sm:max-w-xl"
-          hide-footer
+          container-class="sm:max-w-xl"
+          overlay-class="bg-jva-blue-500/90"
           @close="showModalConfirmOrga = false"
         >
           <div v-if="modalConfirmOrgaStep == 1" class="flex flex-col justify-center items-center">
@@ -480,6 +478,7 @@ export default defineNuxtComponent({
       modalConfirmOrgaStep: 1, // 1 or 2
       autocompleteOptions: [],
       orgaTypeChosen: '',
+      // @todo: in useProfileValidation
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),

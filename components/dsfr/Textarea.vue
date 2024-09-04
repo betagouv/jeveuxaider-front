@@ -29,9 +29,13 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  customClass: {
+  textareaClass: {
     type: String,
     default: '',
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>
@@ -42,6 +46,7 @@ const props = defineProps({
       :id="name"
       :name="name"
       :value="modelValue"
+      :required="required"
       :rows="rows"
       :placeholder="placeholder"
       :class="[
@@ -54,7 +59,7 @@ const props = defineProps({
         },
         { '!border-[#ce0500]': error },
         { '!border-[#18753c]': success },
-        customClass,
+        textareaClass,
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
     />

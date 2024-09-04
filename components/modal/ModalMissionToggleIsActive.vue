@@ -6,7 +6,6 @@
         icon="RiErrorWarningLine"
         :title="`${mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne'} la mission`"
         :prevent-click-outside="true"
-        :hide-close="true"
         @close="$emit('cancel')"
       >
         <div class="formatted-text">
