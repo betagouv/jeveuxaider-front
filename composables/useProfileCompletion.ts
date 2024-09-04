@@ -82,5 +82,5 @@ function isSkillCompleted(profile?: Profile) {
 }
 
 function isCertificationCompleted(profile?: Profile) {
-  return profile?.certifications && profile.certifications.length > 0
+  return profile?.certifications ? profile.certifications.length > 0 : false
 }

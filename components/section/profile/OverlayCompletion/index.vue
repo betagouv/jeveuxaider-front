@@ -5,47 +5,21 @@ export default defineNuxtComponent({
     isOpen: { type: Boolean, default: false },
   },
   setup() {
-    const {
-      profile,
-      totalPoints,
-      isDisponibilitiesCompleted,
-      isMotMotivationCompleted,
-      isProfilePictureCompleted,
-      isSkillCompleted,
-      isMissionTypeCompleted,
-      isActivitiesCompleted,
-    } = useProfileCompletion()
-
-    const steps = []
-    if (!isDisponibilitiesCompleted.value) {
-      steps.push('disponibilities')
-    }
-    if (!isMissionTypeCompleted.value) {
-      steps.push('missionType')
-    }
-    if (!isActivitiesCompleted.value) {
-      steps.push('activities')
-    }
-    if (!profile.value.type || !isMotMotivationCompleted.value) {
-      steps.push('stepSelection')
-    }
-    if (!isSkillCompleted.value && !steps.includes('stepSelection')) {
-      steps.push('stepSelection')
-    }
-    if (!isProfilePictureCompleted.value && !steps.includes('stepSelection')) {
-      steps.push('stepSelection')
-    }
+    const { profile, totalPoints } = useProfileCompletion()
 
     return {
       profile,
-      steps,
       totalPoints,
     }
+  },
+  created() {
+    this.initSteps()
   },
   data() {
     return {
       loading: false,
-      currentStep: this.steps[0],
+      currentStep: null,
+      steps: [],
     }
   },
   computed: {
@@ -54,6 +28,39 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    initSteps() {
+      const {
+        isDisponibilitiesCompleted,
+        isMotMotivationCompleted,
+        isProfilePictureCompleted,
+        isSkillCompleted,
+        isMissionTypeCompleted,
+        isActivitiesCompleted,
+      } = useProfileCompletion()
+
+      const steps = []
+      if (!isDisponibilitiesCompleted.value) {
+        steps.push('disponibilities')
+      }
+      if (!isMissionTypeCompleted.value) {
+        steps.push('missionType')
+      }
+      if (!isActivitiesCompleted.value) {
+        steps.push('activities')
+      }
+      if (!this.profile.type || !isMotMotivationCompleted.value) {
+        steps.push('stepSelection')
+      }
+      if (!isSkillCompleted.value && !steps.includes('stepSelection')) {
+        steps.push('stepSelection')
+      }
+      if (!isProfilePictureCompleted.value && !steps.includes('stepSelection')) {
+        steps.push('stepSelection')
+      }
+
+      this.steps = steps
+      this.currentStep = this.steps[0]
+    },
     async handleValidation() {
       if (this.loading) {
         return
@@ -74,8 +81,7 @@ export default defineNuxtComponent({
     },
     goToNextStep() {
       if (this.currentStep === this.steps.at(-1)) {
-        this.$emit('close')
-        this.currentStep = this.steps[0]
+        this.onModalClose()
         return
       }
       this.currentStep = ['moreAboutYou', 'skills', 'picture'].includes(this.currentStep)
@@ -143,6 +149,10 @@ export default defineNuxtComponent({
       this.currentStep = 'stepSelection'
       this.loading = false
     },
+    onModalClose() {
+      this.$emit('close')
+      this.initSteps()
+    },
   },
 })
 </script>
@@ -177,14 +187,14 @@ export default defineNuxtComponent({
               $stores.profileOverlayCompletion.scrollContainer = scrollContainer
             }
           "
-          @close="$emit('close')"
+          @close="onModalClose"
         >
           <template #overlay>
             <div class="fixed inset-0 bg-jva-blue-500/95">
               <!-- OVERLAY CLOSE - DESKTOP -->
               <button
                 class="hidden sm:flex items-center absolute right-8 top-6 pl-2 pr-1 py-1 transition ease-out hover:bg-jva-blue-300/50"
-                @click="$emit('close')"
+                @click="onModalClose"
               >
                 <span class="text-white mr-1">Fermer</span>
                 <RiCloseFill
@@ -205,7 +215,7 @@ export default defineNuxtComponent({
                   icon="RiCloseFill"
                   size="lg"
                   class="size-12"
-                  @click="$emit('close')"
+                  @click="onModalClose"
                 />
               </div>
 
