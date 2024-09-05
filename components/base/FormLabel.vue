@@ -1,7 +1,7 @@
 <template>
   <label
     :for="htmlFor"
-    class="block font-bold mb-2 relative"
+    class="block font-bold mb-2 relative initial:text-pretty"
     :class="[
       { 'text-xs uppercase text-gray-700': size === 'xs' },
       { 'text-xl normal-case text-black': size === 'xl' },

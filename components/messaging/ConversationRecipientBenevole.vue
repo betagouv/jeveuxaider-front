@@ -41,10 +41,10 @@
             {{ $dayjs(user.profile.birthday).fromNow('year') }}
           </p>
         </div>
-        <div v-if="user.profile.zip" class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div v-if="user.profile.city" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ user.profile.zip }}
+            {{ user.profile.city }}
           </p>
         </div>
         <div v-if="user.profile.type" class="flex gap-1 items-center text-sm text-cool-gray-500">

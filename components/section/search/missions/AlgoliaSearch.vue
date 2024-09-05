@@ -162,7 +162,7 @@ export default defineNuxtComponent({
       'commitment',
       'date_type',
     ]
-    $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']
+    $stores.algoliaSearch.availableNumericFilters = ['is_autonomy']
     $stores.algoliaSearch.initialFilters = props.initialFilters
     $stores.algoliaSearch.filters = recomputeFilters()
 

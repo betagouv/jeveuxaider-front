@@ -46,27 +46,6 @@
           Plus de missions
         </DsfrButton>
       </div>
-      <!-- <div class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
-        <p class="text-white font-bold text-xl xl:text-2xl">Quelles sont vos disponibilités ?</p>
-        <div class="flex flex-wrap gap-4">
-          <nuxt-link
-            no-prefetch
-            v-for="(link, i) in links"
-            :key="i"
-            :to="link.to"
-            class="rounded-full"
-            @click.native="onDisponibilityClick()"
-          >
-            <DsfrTag
-              size="md"
-              :custom-theme="true"
-              class="text-white border border-[#8080CD] cursor-ponter hover:bg-jva-blue-900 sm:hover:border-[#b8b8e8] active:!border-white"
-            >
-              {{ link.label }}
-            </DsfrTag>
-          </nuxt-link>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -77,36 +56,6 @@ import AlgoliaSlideshowMissions from '@/components/section/search/missions/Algol
 export default defineNuxtComponent({
   components: {
     AlgoliaSlideshowMissions,
-  },
-  data() {
-    return {
-      // links: [
-      //   {
-      //     label: '1 heure',
-      //     to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year',
-      //   },
-      //   {
-      //     label: '2 heures',
-      //     to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year',
-      //   },
-      //   {
-      //     label: 'Une demi-journée',
-      //     to: '/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year',
-      //   },
-      //   {
-      //     label: '1 jour',
-      //     to: '/missions-benevolat?commitment__total=<%3D7&duration=day&time_period=year',
-      //   },
-      //   {
-      //     label: '2 jours',
-      //     to: '/missions-benevolat?commitment__total=<%3D14&duration=2_days&time_period=year',
-      //   },
-      //   {
-      //     label: '3 jours',
-      //     to: '/missions-benevolat?commitment__total=<%3D21&duration=3_days&time_period=year',
-      //   },
-      // ],
-    }
   },
   methods: {
     onViewMoreClick() {

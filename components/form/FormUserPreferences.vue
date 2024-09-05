@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
-          <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
+          <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full sticky top-20" />
         </div>
         <div class="flex-1">
           <DsfrHeading size="lg"> Ma disponibilité </DsfrHeading>
@@ -14,39 +14,18 @@
           <div class="mt-10 space-y-10">
             <div class="flex lg:space-x-10 items-center">
               <div>
-                <BaseFormLabel html-for="frequence" required size="xl">
-                  Combien de temps pourriez-vous allouer à des actions
-                  <br class="hidden lg:inline" />de bénévolat&nbsp;?
+                <BaseFormLabel html-for="commitment" required size="xl">
+                  Combien de temps pourriez-vous allouer à des actions de bénévolat&nbsp;?
                 </BaseFormLabel>
-                <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
-                  <div class="lg:w-1/2">
-                    <DsfrSelect
-                      id="commitment__duration"
-                      v-model="form.commitment__duration"
-                      name="commitment__duration"
-                      placeholder="Durée"
-                      :options="$labels.duration"
-                      @blur="validate('commitment__duration')"
-                    />
-                    <BaseFormError v-if="errors.commitment__duration">
-                      {{ errors.commitment__time_period }}
-                    </BaseFormError>
-                  </div>
-                  <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
-                  <div class="lg:w-1/2">
-                    <DsfrSelect
-                      v-model="form.commitment__time_period"
-                      id="commitment__time_period"
-                      name="commitment__time_period"
-                      placeholder="Fréquence"
-                      :options="$labels.time_period"
-                      @blur="validate('commitment__time_period')"
-                    />
-                    <BaseFormError v-if="errors.commitment__time_period">
-                      {{ errors.commitment__time_period }}
-                    </BaseFormError>
-                  </div>
-                </div>
+                <DsfrFormControl :error="errors.commitment" class="mt-4">
+                  <DsfrTagsGroup
+                    v-model="form.commitment"
+                    name="commitment"
+                    context="radio"
+                    :options="$labels.commitment"
+                    @updated="validate('commitment')"
+                  />
+                </DsfrFormControl>
               </div>
             </div>
             <div>
@@ -54,15 +33,10 @@
                 Cochez les créneaux pendant lesquels vous seriez <br class="hidden lg:inline" />
                 disponible&nbsp;?
               </BaseFormLabel>
-              <DsfrFormControl
-                html-for="disponibilities"
-                :error="errors.disponibilities"
-                class="mt-4"
-              >
+              <DsfrFormControl :error="errors.disponibilities" class="mt-4">
                 <DsfrTagsGroup
                   v-model="form.disponibilities"
                   name="disponibilities"
-                  variant="button"
                   :options="$labels.disponibilities"
                   @updated="validate('disponibilities')"
                 />
@@ -82,6 +56,7 @@
                   name="type_missions"
                   :options="$labels.profile_type_missions"
                   option-class="w-full @md:w-auto"
+                  @update:modelValue="validate('type_missions')"
                 />
               </DsfrFormControl>
             </div>
@@ -158,11 +133,10 @@
 </template>
 
 <script>
-import { object, array, string } from 'yup'
+import { object, string, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
-import activitiesOptions from '@/assets/activities.json'
 import ModalActivities from '@/components/modal/ModalActivities'
 
 export default defineNuxtComponent({
@@ -177,22 +151,21 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  setup({ profile }) {
-    function getInitialForm(profileData) {
-      return {
-        ..._cloneDeep(profileData),
-        activities:
-          profileData.activities
-            ?.map((act) => {
-              return activitiesOptions.find((opt) => act.id === opt.id)
-            })
-            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
-      }
-    }
+  setup() {
+    const {
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitment,
+      schemaActivities,
+      schemaTypeMissions,
+    } = useProfileValidation()
 
     return {
-      initialForm: getInitialForm(profile),
-      getInitialForm,
+      initialForm,
+      schemaDisponibilities,
+      schemaCommitment,
+      schemaActivities,
+      schemaTypeMissions,
     }
   },
   data() {
@@ -200,19 +173,10 @@ export default defineNuxtComponent({
       loading: false,
       form: _cloneDeep(this.initialForm),
       formSchema: object({
-        commitment__duration: string().nullable().required('Merci de choisir une durée'),
-        commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
-        disponibilities: array()
-          .transform((v) => (!v ? [] : v))
-          .test(
-            'test-disponibilities-required',
-            'Merci de sélectionner au moins 1 disponibilité',
-            (disponibilities) => {
-              return (
-                ['admin'].includes(this.$stores.auth.contextRole) || disponibilities.length >= 1
-              )
-            }
-          ),
+        disponibilities: this.schemaDisponibilities,
+        commitment: this.schemaCommitment,
+        activities: this.schemaActivities,
+        type_missions: this.schemaTypeMissions,
       }),
       domainsOptions: [
         'Art et culture pour tous',
@@ -229,11 +193,10 @@ export default defineNuxtComponent({
     }
   },
   watch: {
-    profile: {
+    initialForm: {
       deep: true,
-      handler(newProfile) {
-        this.initialForm = this.getInitialForm(newProfile)
-        this.form = _cloneDeep(this.initialForm)
+      handler(newVal) {
+        this.form = _cloneDeep(newVal)
       },
     },
     form: {

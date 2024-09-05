@@ -86,14 +86,6 @@ export default defineNuxtComponent({
       return null
     },
   },
-  watch: {
-    //   '$route.query.duration'(newVal) {
-    //     this.commitment__duration = newVal
-    //   },
-    //   '$route.query.time_period'(newVal) {
-    //     this.commitment__time_period = newVal
-    //   },
-  },
   methods: {
     handleChange(value) {
       this.$emit('changed', value)

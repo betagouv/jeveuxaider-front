@@ -38,7 +38,6 @@
                 <Teleport to="#teleport-body-end">
                   <BaseModal
                     :is-open="showModalScoreDetails"
-                    hide-footer
                     @close="showModalScoreDetails = false"
                     title="Score d'engagement et de réactivité"
                   >

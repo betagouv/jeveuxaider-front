@@ -18,7 +18,7 @@
         </DsfrButton>
       </div>
       <div class="text-[#666666] text-xl">
-        Plus de
+        Près de
         <span class="font-bold">{{ missionsCount }} missions disponibles partout en France</span>
       </div>
     </div>

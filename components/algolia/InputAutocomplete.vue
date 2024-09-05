@@ -1,9 +1,10 @@
 <template>
+  <!-- @todo: accessibility -->
   <div>
     <BaseInputAutocomplete
       v-if="variant === 'base'"
       icon="RiSearchLine"
-      name="autocomplete"
+      :name="name"
       :placeholder="placeholder"
       :options="hits"
       :attribute-key="attributeKey"
@@ -18,7 +19,7 @@
     <DsfrInputAutocomplete
       v-if="variant === 'dsfr'"
       icon="RiSearchLine"
-      name="autocomplete"
+      :name="name"
       :placeholder="placeholder"
       :options="hits"
       :option-key-attribute="attributeKey"
@@ -69,6 +70,10 @@ export default defineNuxtComponent({
     minValueLength: {
       type: Number,
       default: 3,
+    },
+    name: {
+      type: String,
+      default: 'algolia-search',
     },
   },
   data() {

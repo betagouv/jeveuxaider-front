@@ -13,8 +13,8 @@
           <div class="flex-1">
             <div class="text-xl leading-snug font-bold text-balance">Ma disponibilité</div>
             <div class="text-base mt-2">
-              <template v-if="profile.commitment__duration">
-                {{ commitmentLabel }}
+              <template v-if="profile.commitment">
+                {{ $filters.label(profile.commitment, 'commitment') }}
               </template>
               <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
             </div>
@@ -63,8 +63,6 @@
 </template>
 
 <script>
-import { useToast } from 'vue-toastification'
-
 export default defineNuxtComponent({
   props: {
     profile: {
@@ -90,15 +88,6 @@ export default defineNuxtComponent({
     },
     hasParticipations() {
       return this.$stores.auth.user.statistics?.participations_count
-    },
-    commitmentLabel() {
-      if (this.profile.commitment__time_period) {
-        return `${this.$filters.label(
-          this.profile.commitment__duration,
-          'duration'
-        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
-      }
-      return this.$filters.label(this.profile.commitment__duration, 'duration')
     },
   },
 })

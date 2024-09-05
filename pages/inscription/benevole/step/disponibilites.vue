@@ -43,37 +43,22 @@
               name="disponibilities"
               variant="button"
               :options="$labels.disponibilities"
+              @updated="validate('disponibilities')"
             />
           </BaseFormControl>
           <div>
-            <BaseFormLabel html-for="frequence" required>
+            <BaseFormLabel html-for="commitment" required>
               À quelle fréquence souhaitez-vous vous engager&nbsp;?
             </BaseFormLabel>
-            <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
-              <div class="lg:w-1/2">
-                <BaseSelectAdvanced
-                  v-model="form.commitment__duration"
-                  name="commitment__duration"
-                  placeholder="Sélectionnez une durée"
-                  :options="$labels.duration"
-                />
-                <BaseFormError v-if="errors.commitment__duration">
-                  {{ errors.commitment__time_period }}
-                </BaseFormError>
-              </div>
-              <div class="flex-none text-sm">par</div>
-              <div class="lg:w-1/2">
-                <BaseSelectAdvanced
-                  v-model="form.commitment__time_period"
-                  name="commitment__time_period"
-                  placeholder="Sélectionnez une durée"
-                  :options="$labels.time_period"
-                />
-                <BaseFormError v-if="errors.commitment__time_period">
-                  {{ errors.commitment__time_period }}
-                </BaseFormError>
-              </div>
-            </div>
+            <DsfrFormControl :error="errors.commitment" class="mt-4">
+              <DsfrTagsGroup
+                v-model="form.commitment"
+                name="commitment"
+                context="radio"
+                :options="$labels.commitment"
+                @updated="validate('commitment')"
+              />
+            </DsfrFormControl>
           </div>
 
           <DsfrButton size="lg" :loading="loading" class="w-full" @click.native.prevent="onSubmit">
@@ -86,7 +71,7 @@
 </template>
 
 <script>
-import { object, array } from 'yup'
+import { object, array, string } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
@@ -96,6 +81,13 @@ export default defineNuxtComponent({
       layout: 'register-steps',
       middleware: ['authenticated'],
     })
+
+    const { schemaDisponibilities, schemaCommitment } = useProfileValidation()
+
+    return {
+      schemaDisponibilities,
+      schemaCommitment,
+    }
   },
   data() {
     return {
@@ -128,19 +120,14 @@ export default defineNuxtComponent({
       ],
       form: _cloneDeep(this.$stores.auth.profile),
       formSchema: object({
-        disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité'),
+        disponibilities: this.schemaDisponibilities,
+        commitment: this.schemaCommitment,
       }),
     }
   },
   created() {
     if (!this.$stores.auth.profile?.disponibilities) {
       this.form.disponibilities = ['flexible', 'jours_feries', 'weekend', 'vacances']
-    }
-    if (!this.$stores.auth.profile?.commitment__duration) {
-      this.form.commitment__duration = '2_hours'
-    }
-    if (!this.$stores.auth.profile?.commitment__time_period) {
-      this.form.commitment__time_period = 'year'
     }
   },
   methods: {

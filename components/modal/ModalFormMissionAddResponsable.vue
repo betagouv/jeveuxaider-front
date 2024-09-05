@@ -20,7 +20,6 @@
             required
           >
             <DsfrSelect
-              id="responsable_id"
               name="responsable_id"
               v-model="form.responsable_id"
               placeholder="Sélectionner un responsable"

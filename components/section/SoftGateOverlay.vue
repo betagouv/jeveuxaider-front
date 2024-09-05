@@ -116,8 +116,7 @@ export default defineNuxtComponent({
         !!this.profile?.type &&
         !!this.profile?.birthday &&
         !!this.profile?.zip &&
-        !!this.profile?.commitment__duration &&
-        this.profile?.disponibilities?.length > 0 &&
+        !!this.profile?.commitment &&
         this.profile?.activities?.length > 0 &&
         !!this.profile?.type_missions &&
         !!this.profile?.description &&
@@ -187,11 +186,7 @@ export default defineNuxtComponent({
         }
       }
 
-      if (!this.isProfileCompleted) {
-        this.step = 'complete-profile'
-      } else {
-        this.onClose()
-      }
+      this.step = 'complete-profile'
     },
     handleNextResolver() {
       if (this.hasPrerequisites) {

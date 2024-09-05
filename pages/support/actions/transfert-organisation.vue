@@ -20,7 +20,7 @@
       title="Choisissez une organisation"
       :is-open="showDialogOrganisations"
       button-label="Sélectionner"
-      :overflow-hidden="false"
+      container-class="overflow-visible"
       @confirm="handleSelectedOrganisation"
       @cancel="showDialogOrganisations = false"
     >

@@ -3,13 +3,12 @@
     <div v-if="!canCreateMission" v-tooltip="tooltipCantCreateMission">
       <DsfrButton icon="RiAddLine" :size="size" :disabled="true"> Publier une mission </DsfrButton>
     </div>
-    <DsfrButton v-else icon="RiAddLine" :size="size" tabindex="-1" @click.native="handleClick">
+    <DsfrButton v-else icon="RiAddLine" :size="size" @click="handleClick">
       Publier une mission
     </DsfrButton>
     <BaseModal
       :is-open="showModalFirstMission"
       title="C’est votre première mission ! 🍾"
-      width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
       @close="showModalFirstMission = false"
@@ -59,7 +58,6 @@
     <BaseModal
       :is-open="showModalHasParticipationsWaiting"
       title="Vous avez des participations non traitées sur d’autres missions"
-      width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
       @close="showModalHasParticipationsWaiting = false"

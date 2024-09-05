@@ -453,6 +453,7 @@ export default defineNuxtComponent({
         utm_medium: utmMediumCookie?.value,
         birthday: '',
       },
+      // @todo: in useProfileValidation
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),

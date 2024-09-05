@@ -24,11 +24,13 @@
             )}`"
           />
           <BaseDescriptionListItem term="Code postal" :description="profile.zip" />
+          <BaseDescriptionListItem term="Ville" :description="profile.city" />
           <BaseDescriptionListItem
             term="Profession"
             :description="$filters.label(profile.type, 'profile_type')"
           />
-          <BaseDescriptionListItem term="Disponibilités" :description="formattedCommitment" />
+          <BaseDescriptionListItem term="Disponibilités" :description="formattedDisponibilities" />
+          <BaseDescriptionListItem term="Engagement" :description="formattedCommitment" />
         </BaseDescriptionList>
       </div>
       <div class="py-8">
@@ -47,6 +49,21 @@
             as="li"
           >
             {{ activity.name }}
+          </DsfrBadge>
+        </ul>
+        <div v-else class="text-cool-gray-500">Aucune sélectionnée</div>
+      </div>
+      <div class="py-8">
+        <div class="text-xl font-bold text-gray-900 mb-4">Certifications</div>
+        <ul v-if="profile.certifications?.length" class="flex flex-wrap gap-2">
+          <DsfrBadge
+            v-for="(certification, key) in profile.certifications"
+            :key="key"
+            :no-icon="true"
+            type="new"
+            as="li"
+          >
+            {{ $filters.label(certification, 'profile_certifications') }}
           </DsfrBadge>
         </ul>
         <div v-else class="text-cool-gray-500">Aucune sélectionnée</div>
@@ -84,15 +101,14 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    formattedDisponibilities() {
+      return this.profile.disponibilities
+        ?.map((item) => this.$filters.label(item, 'disponibilities'))
+        ?.join(', ')
+    },
     formattedCommitment() {
-      if (this.profile.commitment__time_period) {
-        return `${this.$filters.label(
-          this.profile.commitment__duration,
-          'duration'
-        )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
-      }
-      return this.profile.commitment__duration
-        ? this.$filters.label(this.profile.commitment__duration, 'duration')
+      return this.profile.commitment
+        ? this.$filters.label(this.profile.commitment, 'commitment')
         : null
     },
   },

@@ -2,8 +2,6 @@
   <div class="hidden sm:block lg:flex justify-between gap-8 items-baseline !mt-8 lg:!mb-4">
     <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="(filter, i) in visibleFilters">
-        <!-- <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" /> -->
-
         <FacetFilterToggle
           v-if="filter === 'date_type'"
           :key="i"
@@ -65,39 +63,6 @@
             </DsfrTag>
           </template>
         </SecondarySearchFilter>
-
-        <!--
-        <FacetFilterToggle
-          v-if="filter === 'commitment'"
-          :key="i"
-          facet-name="commitment"
-          label="Durée d'engagement"
-          legend="Filtrer par durée d'engagement"
-          :facet-value-resolver="{
-            few_hours: 'Quelques heures',
-            few_days: 'Quelques jours',
-            few_hours_a_week: 'Quelques heures par semaine',
-            few_days_a_week: 'Quelques jours par semaine',
-            few_hours_a_month: 'Quelques heures par mois',
-            few_days_a_month: 'Quelques jours par mois',
-          }"
-        >
-          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-            <DsfrTag
-              :is-active="!!activeValuesCount"
-              context="clickable"
-              size="md"
-              as="button"
-              :aria-expanded="isOpen || 'false'"
-            >
-              <span v-if="!firstValueSelected">Durée d'engagement</span>
-              <div v-else>
-                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-              </div>
-            </DsfrTag>
-          </template>
-        </FacetFilterToggle> -->
 
         <FacetFilterToggle
           v-if="filter === 'structure.name'"
@@ -321,22 +286,16 @@
 
 <script>
 import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
-// import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
 import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
-import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
-import RadiosFilter from '@/components/section/search/RadiosFilter.vue'
 import DatesFilter from '@/components/section/search/DatesFilter.vue'
 import SecondarySearchFilter from '@/components/search/SecondarySearchFilter.vue'
 
 export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
-    // AutonomyFilter,
     MinorsFilter,
     PonctualFilter,
-    CommitmentFilter,
-    RadiosFilter,
     DatesFilter,
     SecondarySearchFilter,
   },
@@ -373,13 +332,6 @@ export default defineNuxtComponent({
         }
       }
 
-      // const dateTypes = this.$route.query?.date_type?.split('|')
-      // if (dateTypes?.includes('ponctual')) {
-      //   filters.push('is_ponctual')
-      //   if (dateTypes.length === 1) {
-      //     filters = filters.filter((f) => f !== 'date_type')
-      //   }
-      // }
       return filters || []
     },
     inactiveFilters() {

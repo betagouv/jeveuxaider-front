@@ -70,7 +70,6 @@
               aroundPrecision: 2000,
               aroundRadius: 'all',
               facetFilters: [facetFilterActivities],
-              numericFilters: [numericFiltersCommitmentTotal],
             }"
             @slide-click="onSlideClick"
           />
@@ -103,15 +102,9 @@ export default defineNuxtComponent({
     facetFilterActivities() {
       return this.activities.map((activity) => `activities.name:${activity.name}`)
     },
-    numericFiltersCommitmentTotal() {
-      const commitmentTotal = this.$stores.auth.profile?.commitment__total ?? 4
-      return [`commitment__total <= ${commitmentTotal}`]
-    },
     searchPageWithFilters() {
       const filters = []
-      filters.push(`commitment__total=<%3D${this.$stores.auth.profile?.commitment__total ?? '4'}`)
-      filters.push(`duration=${this.$stores.auth.profile?.commitment__duration ?? 'half_day'}`)
-      filters.push(`time_period=${this.$stores.auth.profile?.commitment__time_period ?? 'year'}`)
+      filters.push(`commitment=${this.$stores.auth.profile?.commitment ?? 'few_hours'}`)
       filters.push(
         `activities.name=${this.activities
           .map((activity) => encodeURIComponent(activity.name))

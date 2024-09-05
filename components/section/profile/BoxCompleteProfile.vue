@@ -50,7 +50,7 @@
         Indiquez vos préférences de mission
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
-      <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
+      <CustomTodoListItem :isCompleted="isSkillsOrCertificationsCompleted">
         Indiquez vos compétences et certifications
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
@@ -63,8 +63,9 @@
       </CustomTodoListItem>
     </div>
 
-    <template v-if="totalToShow !== 100">
-      <slot name="footer" />
+    <template v-if="totalPoints !== 100">
+      <slot name="footer" v-bind="{ setIsOverlayOpen }" />
+      <SectionProfileOverlayCompletion :is-open="isOverlayOpen" @close="isOverlayOpen = false" />
     </template>
   </BaseBox>
 </template>
@@ -88,6 +89,30 @@ export default defineNuxtComponent({
       loading: false,
       fakeTotal: null,
       showBox: true,
+      isOverlayOpen: false,
+    }
+  },
+  setup() {
+    const {
+      profile,
+      totalPoints,
+      isContactInformationsCompleted,
+      isDisponibilitiesCompleted,
+      isPreferencesCompleted,
+      isMotMotivationCompleted,
+      isProfilePictureCompleted,
+      isSkillsOrCertificationsCompleted,
+    } = useProfileCompletion()
+
+    return {
+      profile,
+      totalPoints,
+      isContactInformationsCompleted,
+      isDisponibilitiesCompleted,
+      isPreferencesCompleted,
+      isMotMotivationCompleted,
+      isProfilePictureCompleted,
+      isSkillsOrCertificationsCompleted,
     }
   },
   created() {
@@ -146,7 +171,7 @@ export default defineNuxtComponent({
       )
     },
     isDisponibilitiesCompleted() {
-      return !!this.profile?.commitment__duration && this.profile?.disponibilities?.length > 0
+      return !!this.profile?.commitment && this.profile?.disponibilities?.length > 0
     },
     isPreferencesCompleted() {
       return this.profile?.activities?.length > 0 && !!this.profile?.type_missions
@@ -180,6 +205,9 @@ export default defineNuxtComponent({
         spread: 360,
         // origin: { x: 0.9, y: 0.1 },
       })
+    },
+    setIsOverlayOpen(val) {
+      this.isOverlayOpen = val
     },
   },
 })

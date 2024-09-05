@@ -7,7 +7,7 @@
         :is-open="isOpen"
         :icon="icon"
         :prevent-click-outside="preventClickOutside"
-        :overflow-hidden="overflowHidden"
+        :container-class="containerClass"
         @close="$emit('cancel')"
       >
         <div class="text-gray-700 mb-4">
@@ -60,9 +60,9 @@ export default defineNuxtComponent({
       type: Boolean,
       default: true,
     },
-    overflowHidden: {
-      type: Boolean,
-      default: true,
+    containerClass: {
+      type: String,
+      default: null,
     },
   },
   computed: {},

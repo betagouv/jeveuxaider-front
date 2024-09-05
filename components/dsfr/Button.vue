@@ -6,7 +6,7 @@
     :href="tag === 'a' ? to : undefined"
     :type="isSubmit ? 'submit' : 'button'"
     :class="[
-      'font-medium border transition-all flex-none',
+      'font-medium border transition-all initial:flex-none',
       'inline-flex items-center justify-center whitespace-pre-wrap',
 
       disabled ? 'cursor-not-allowed' : 'cursor-pointer',

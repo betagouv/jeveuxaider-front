@@ -16,9 +16,7 @@ type Profile = {
   description: string
   department?: string
   type?: string
-  commitment__time_period?: string
-  commitment__duration?: string
-  commitment__total?: number
+  commitment?: string
   can_export_profiles: boolean
   cej: boolean
   cej_updated_at?: string
@@ -35,4 +33,6 @@ type Profile = {
   domaines?: { [key: string]: any }[] // @todo
   activities?: { [key: string]: any }[] // @todo
   missions_offline?: Mission[]
+  type_missions?: 'all' | 'distance' | 'presentiel'
+  certifications?: 'permis_b' | 'psc1' | 'bafa'[]
 }

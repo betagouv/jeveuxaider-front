@@ -210,8 +210,14 @@ export default defineNuxtComponent({
           return 'Disponibilités'
         case 'commitment__duration':
           return "Durée d'engagement"
+        case 'commitment__duration_min':
+          return "Durée d'engagement minimum"
         case 'commitment__time_period':
           return "Période d'engagement"
+        case 'is_motivation_required':
+          return 'Motivation requise'
+        case 'commitment':
+          return 'Engagement'
         case 'start_date':
           return 'Date de début'
         case 'end_date':
