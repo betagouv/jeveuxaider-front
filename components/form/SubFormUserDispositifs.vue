@@ -16,7 +16,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Êtes-vous volontaire en Service Civique ?</div>
+          <div class="text-balance font-bold">Volontaire en Service Civique ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasServiceCiviqueFilled">
               <div
@@ -30,7 +30,7 @@
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
-            <template v-else> Pour le suivi de votre parcours </template>
+            <template v-else> Permet le suivi de votre parcours </template>
           </div>
         </div>
         <div>
@@ -59,7 +59,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Êtes-vous engagé Contrat d'Engagement Jeune ?</div>
+          <div class="text-balance font-bold">Contrat d’Engagement Jeune ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasCejFilled">
               <div @click="openCejModal" class="group flex items-center gap-2 hover:cursor-pointer">
@@ -69,7 +69,7 @@
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
-            <template v-else> Pour le suivi de votre parcours CEJ </template>
+            <template v-else> Permet le suivi de votre parcours avec votre conseiller </template>
           </div>
         </div>
         <div>
@@ -97,7 +97,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Êtes-vous bénéficiaire du RSA ?</div>
+          <div class="text-balance font-bold">Accompagné dans le cadre du RSA ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasFtFilled">
               <div @click="openFtModal" class="group flex items-center gap-2 hover:cursor-pointer">
@@ -107,7 +107,7 @@
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
-            <template v-else> Pour le suivi de votre parcours avec France Travail </template>
+            <template v-else> Permet le suivi de votre parcours avec votre conseiller </template>
           </div>
         </div>
         <div>

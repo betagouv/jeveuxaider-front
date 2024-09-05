@@ -19,16 +19,16 @@
           </DsfrFormControl>
         </template>
         <template v-if="selectedItem === 'cej'">
+          <p class="mb-4">
+            Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de
+            bénévolat.
+          </p>
           <DsfrFormControl
             label="Email de votre conseiller"
             html-for="cej_email_adviser"
             :error="errors.cej_email_adviser"
             required
           >
-            <BaseFormHelperText>
-              En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
-              courant des missions sur lesquelles vous proposez votre aide.
-            </BaseFormHelperText>
             <DsfrInput
               v-model="form.cej_email_adviser"
               required
@@ -40,16 +40,17 @@
           </DsfrFormControl>
         </template>
         <template v-if="selectedItem === 'ft'">
+          <p class="mb-4">
+            Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de
+            bénévolat. Les missions de bénévolat réalisées pourront être comptabilisées dans les 15
+            heures d’activité hebdomadaire prévues à ce titre.
+          </p>
           <DsfrFormControl
             label="Email de votre conseiller"
             html-for="ft_email_adviser"
             :error="errors.ft_email_adviser"
             required
           >
-            <BaseFormHelperText>
-              En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au
-              courant des missions sur lesquelles vous proposez votre aide.
-            </BaseFormHelperText>
             <DsfrInput
               v-model="form.ft_email_adviser"
               required

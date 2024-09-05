@@ -13,7 +13,7 @@
       <div
         v-if="isOpen"
         :class="[
-          'fixed z-50 inset-0',
+          'fixed z-[70] inset-0',
           { 'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyFooter },
         ]"
         aria-labelledby="modal-title"
