@@ -34,7 +34,7 @@
               required
               type="email"
               name="cej_email_adviser"
-              placeholder="…@…"
+              placeholder="exemple@cej.fr"
               @blur="validate('cej_email_adviser')"
             />
           </DsfrFormControl>
@@ -56,13 +56,13 @@
               required
               type="email"
               name="ft_email_adviser"
-              placeholder="…@…"
+              placeholder="exemple@francetravail.fr"
               @blur="validate('ft_email_adviser')"
             />
           </DsfrFormControl>
         </template>
         <template #footer>
-          <DsfrButton v-if="selectedItem" @click="onSave"> Continuer </DsfrButton>
+          <DsfrButton v-if="selectedItem" @click="onContinue"> Continuer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -73,6 +73,19 @@
 import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
+const forbiddenExtensions = [
+  'gmail.com',
+  'icloud.com',
+  'outlook.com',
+  'orange.fr',
+  'wanadoo.fr',
+  'hotmail.com',
+  'hotmail.fr',
+  'free.fr',
+  'sfr.fr',
+  'laposte.net',
+]
+
 export default defineNuxtComponent({
   emits: ['fill', 'save', 'cancel'],
   components: {},
@@ -82,7 +95,7 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
-    form: {
+    initialForm: {
       type: Object,
       required: true,
     },
@@ -93,6 +106,9 @@ export default defineNuxtComponent({
   },
   data() {
     return {
+      form: {
+        ..._cloneDeep(this.initialForm),
+      },
       formSchema: object({
         ft_email_adviser: string()
           .nullable()
@@ -109,18 +125,6 @@ export default defineNuxtComponent({
                     if (!value) {
                       return true
                     }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
                     const emailParts = value.split('@')
                     const emailExtension = emailParts[1]
                     return !forbiddenExtensions.includes(emailExtension)
@@ -152,18 +156,7 @@ export default defineNuxtComponent({
                     if (!value) {
                       return true
                     }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
+
                     const emailParts = value.split('@')
                     const emailExtension = emailParts[1]
                     return !forbiddenExtensions.includes(emailExtension)
@@ -204,7 +197,7 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    async onSave() {
+    async onContinue() {
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {

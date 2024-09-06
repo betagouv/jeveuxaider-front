@@ -1,17 +1,21 @@
 <template>
-  <div>
+  <div v-if="dispositifsAvailable.length > 0">
+    <div v-if="showHeader" class="mb-8">
+      <hr />
+      <DsfrHeading size="lg" class="mt-8"> {{ headerTitle }} </DsfrHeading>
+    </div>
     <div class="grid grid-cols-1 gap-4">
       <div
         v-if="dispositifsAvailable.includes('service_civique')"
-        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
+        class="px-4 lg:px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
-        <div>
+        <div class="hidden lg:block">
           <img
             src="/images/logo-service-civique.png"
             srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
             alt="Service Civique"
             title="Service Civique"
-            class="hidden lg:block flex-none w-[65px] h-auto object-contain object-left"
+            class="flex-none w-[65px] h-auto object-contain object-left"
             data-not-lazy
           />
         </div>
@@ -46,15 +50,15 @@
 
       <div
         v-if="dispositifsAvailable.includes('cej')"
-        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
+        class="px-4 lg:px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
-        <div>
+        <div class="hidden lg:block">
           <img
             src="/images/logo-cej.png"
             srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
             alt="Contrat d'Engagement Jeune"
             title="Contrat d'Engagement Jeune"
-            class="hidden lg:block flex-none w-[65px] h-auto object-contain object-left"
+            class="flex-none w-[65px] h-auto object-contain object-left"
             data-not-lazy
           />
         </div>
@@ -63,9 +67,9 @@
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasCejFilled">
               <div @click="openCejModal" class="group flex items-center gap-2 hover:cursor-pointer">
-                <span class="italic text-[#666666] text-sm">
-                  Conseiller : {{ form.cej_email_adviser }}</span
-                >
+                <div class="italic text-[#666666] text-sm">
+                  <span class="hidden lg:inline">Conseiller :</span> {{ form.cej_email_adviser }}
+                </div>
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
@@ -85,9 +89,9 @@
 
       <div
         v-if="dispositifsAvailable.includes('ft')"
-        class="px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
+        class="px-4 lg:px-6 py-4 flex items-center gap-4 border rounded-lg w-full"
       >
-        <div>
+        <div class="hidden lg:block">
           <img
             src="/images/logo-france-travail.svg"
             alt="France Travail"
@@ -101,9 +105,9 @@
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasFtFilled">
               <div @click="openFtModal" class="group flex items-center gap-2 hover:cursor-pointer">
-                <span class="italic text-[#666666] text-sm"
-                  >Conseiller : {{ form.ft_email_adviser }}</span
-                >
+                <div class="italic text-[#666666] text-sm">
+                  <span class="hidden lg:inline">Conseiller :</span> {{ form.ft_email_adviser }}
+                </div>
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
@@ -123,7 +127,7 @@
     </div>
     <ModalUserDispositifs
       :is-open="showModal"
-      :form="form"
+      :initial-form="form"
       v-model:selectedItem="selectedItem"
       @fill="fillForm"
       @cancel="showModal = false"
@@ -144,6 +148,10 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
+    showHeader: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -153,6 +161,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    headerTitle() {
+      return this.dispositifsAvailable.length > 1 ? 'Autres dispositifs' : 'Autre dispositif'
+    },
     dispositifsAvailable() {
       const dispositifs = []
       if (this.form?.birthday) {
@@ -220,20 +231,21 @@ export default defineNuxtComponent({
       this.showModal = true
     },
     fillForm(payload) {
+      console.log('fillForm', payload)
       this.$emit('update', payload)
     },
-    async onSubmit() {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$stores.auth.updateProfile({
-        id: this.$stores.auth.profile?.id,
-        ...this.form,
-      })
-      this.loading = false
-      this.$plausible.trackEvent('Inscription bénévole - Étape - Dispositifs')
-    },
+    // async onSubmit() {
+    //   if (this.loading) {
+    //     return
+    //   }
+    //   this.loading = true
+    //   await this.$stores.auth.updateProfile({
+    //     id: this.$stores.auth.profile?.id,
+    //     ...this.form,
+    //   })
+    //   this.loading = false
+    //   this.$plausible.trackEvent('Inscription bénévole - Étape - Dispositifs')
+    // },
   },
 })
 </script>
