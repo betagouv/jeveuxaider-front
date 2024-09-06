@@ -87,7 +87,7 @@ const forbiddenExtensions = [
 ]
 
 export default defineNuxtComponent({
-  emits: ['fill', 'save', 'cancel'],
+  emits: ['cancel', 'update:modelValue'],
   components: {},
   mixins: [FormErrors],
   props: {
@@ -95,7 +95,7 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
-    initialForm: {
+    modelValue: {
       type: Object,
       required: true,
     },
@@ -104,11 +104,14 @@ export default defineNuxtComponent({
       default: 'service_civique',
     },
   },
+  // watch: {
+  //   form(newVal) {
+  //     this.$emit('update:modelValue', newVal)
+  //   },
+  // },
   data() {
     return {
-      form: {
-        ..._cloneDeep(this.initialForm),
-      },
+      form: this.modelValue,
       formSchema: object({
         ft_email_adviser: string()
           .nullable()
@@ -202,18 +205,19 @@ export default defineNuxtComponent({
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.selectedItem === 'service_civique') {
-            this.$emit('fill', {
-              service_civique: this.form.service_civique,
+            this.$emit('update:modelValue', {
+              ...this.form,
+              service_civique: true,
               service_civique_completion_date: this.form.service_civique_completion_date,
             })
           } else if (this.selectedItem === 'cej') {
-            this.$emit('fill', {
-              cej: this.form.cej,
+            this.$emit('update:modelValue', {
+              cej: true,
               cej_email_adviser: this.form.cej_email_adviser,
             })
           } else if (this.selectedItem === 'ft') {
-            this.$emit('fill', {
-              ft: this.form.ft,
+            this.$emit('update:modelValue', {
+              ft: true,
               ft_email_adviser: this.form.ft_email_adviser,
             })
           }
@@ -226,19 +230,22 @@ export default defineNuxtComponent({
     onClose() {
       if (this.selectedItem === 'service_civique') {
         if (!this.form.service_civique_completion_date) {
-          this.$emit('fill', {
+          this.$emit('update:modelValue', {
+            ...this.form,
             service_civique: false,
           })
         }
       } else if (this.selectedItem === 'cej') {
         if (!this.form.cej_email_adviser) {
-          this.$emit('fill', {
+          this.$emit('update:modelValue', {
+            ...this.form,
             cej: false,
           })
         }
       } else if (this.selectedItem === 'ft') {
         if (!this.form.ft_email_adviser) {
-          this.$emit('fill', {
+          this.$emit('update:modelValue', {
+            ...this.form,
             ft: false,
           })
         }

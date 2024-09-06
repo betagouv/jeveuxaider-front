@@ -2,7 +2,9 @@
   <div v-if="dispositifsAvailable.length > 0">
     <div v-if="showHeader" class="mb-8">
       <hr />
-      <DsfrHeading size="lg" class="mt-8"> {{ headerTitle }} </DsfrHeading>
+      <DsfrHeading size="lg" class="mt-8">
+        {{ headerTitle }}
+      </DsfrHeading>
     </div>
     <div class="grid grid-cols-1 gap-4">
       <div
@@ -24,7 +26,7 @@
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasServiceCiviqueFilled">
               <div
-                @click="openServiceCiviqueModal"
+                @click="showModalSC = true"
                 class="group flex items-center gap-2 hover:cursor-pointer"
               >
                 <span class="italic text-[#666666] text-sm"
@@ -66,7 +68,10 @@
           <div class="text-balance font-bold">Contrat d’Engagement Jeune ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasCejFilled">
-              <div @click="openCejModal" class="group flex items-center gap-2 hover:cursor-pointer">
+              <div
+                @click="showModalCEJ = true"
+                class="group flex items-center gap-2 hover:cursor-pointer"
+              >
                 <div class="italic text-[#666666] text-sm">
                   <span class="hidden lg:inline">Conseiller :</span> {{ form.cej_email_adviser }}
                 </div>
@@ -104,7 +109,10 @@
           <div class="text-balance font-bold">Accompagné dans le cadre du RSA ?</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasFtFilled">
-              <div @click="openFtModal" class="group flex items-center gap-2 hover:cursor-pointer">
+              <div
+                @click="showModalFT = true"
+                class="group flex items-center gap-2 hover:cursor-pointer"
+              >
                 <div class="italic text-[#666666] text-sm">
                   <span class="hidden lg:inline">Conseiller :</span> {{ form.ft_email_adviser }}
                 </div>
@@ -125,29 +133,41 @@
         </div>
       </div>
     </div>
-    <ModalUserDispositifs
-      :is-open="showModal"
+    <ModalUserDispositifsSC
+      :is-open="showModalSC"
       :initial-form="form"
-      v-model:selectedItem="selectedItem"
-      @fill="fillForm"
-      @cancel="showModal = false"
+      @cancel="showModalSC = false"
+      @continue="onContinueSC"
+    />
+    <ModalUserDispositifsCEJ
+      :is-open="showModalCEJ"
+      :initial-form="form"
+      @cancel="showModalCEJ = false"
+      @continue="onContinueCEJ"
+    />
+    <ModalUserDispositifsFT
+      :is-open="showModalFT"
+      :initial-form="form"
+      @cancel="showModalFT = false"
+      @continue="onContinueFT"
     />
   </div>
 </template>
 
 <script>
-import ModalUserDispositifs from '@/components/modal/ModalUserDispositifs'
+import ModalUserDispositifsSC from '@/components/modal/ModalUserDispositifsSC'
+import ModalUserDispositifsCEJ from '@/components/modal/ModalUserDispositifsCEJ'
+import ModalUserDispositifsFT from '@/components/modal/ModalUserDispositifsFT'
 
 export default defineNuxtComponent({
-  emits: ['update'],
+  emits: ['update', 'update:modelValue'],
   components: {
-    ModalUserDispositifs,
+    ModalUserDispositifsSC,
+    ModalUserDispositifsCEJ,
+    ModalUserDispositifsFT,
   },
   props: {
-    form: {
-      type: Object,
-      required: true,
-    },
+    modelValue: { type: Object, required: true },
     showHeader: {
       type: Boolean,
       default: false,
@@ -156,9 +176,18 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      showModal: false,
+      form: { ...this.modelValue },
+      showModalSC: false,
+      showModalCEJ: false,
+      showModalFT: false,
       selectedItem: null,
     }
+  },
+  watch: {
+    form(newVal) {
+      console.log('watch form', newVal)
+      this.$emit('update:modelValue', newVal)
+    },
   },
   computed: {
     headerTitle() {
@@ -191,61 +220,55 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    onContinueSC(payload) {
+      console.log('onContinueSC', payload)
+      console.log('onContinueSC full', { ...this.form, ...payload })
+      this.form = { ...this.form, ...payload }
+    },
+    onContinueCEJ(payload) {
+      console.log('onContinueCEJ', payload)
+      console.log('onContinueCEJ full', { ...this.form, ...payload })
+      this.form = { ...this.form, ...payload }
+    },
+    onContinueFT(payload) {
+      console.log('onContinueFT', payload)
+      console.log('onContinueFT full', { ...this.form, ...payload })
+      this.form = { ...this.form, ...payload }
+    },
     onUpdateServiceCivique(value) {
       this.form.service_civique = value
+      this.form.service_civique_completion_date = null
+      console.log('onUpdateServiceCivique', value)
       if (!value) {
-        this.form.service_civique_completion_date = null
-        this.$emit('update', this.form)
+        // this.$emit('update:modelValue', {
+        //   ...this.form,
+        // })
       } else {
-        this.openServiceCiviqueModal()
+        this.showModalSC = true
       }
     },
     onUpdateCej(value) {
       this.form.cej = value
+      this.form.cej_email_adviser = null
       if (!value) {
-        this.form.cej_email_adviser = null
-        this.$emit('update', this.form)
+        // this.$emit('update:modelValue', {
+        //   ...this.form,
+        // })
       } else {
-        this.openCejModal()
+        this.showModalCEJ = true
       }
     },
     onUpdateFt(value) {
       this.form.ft = value
+      this.form.ft_email_adviser = null
       if (!value) {
-        this.form.ft_email_adviser = null
-        this.$emit('update', this.form)
+        // this.$emit('update:modelValue', {
+        //   ...this.form,
+        // })
       } else {
-        this.openFtModal()
+        this.showModalFT = true
       }
     },
-    openServiceCiviqueModal() {
-      this.selectedItem = 'service_civique'
-      this.showModal = true
-    },
-    openCejModal() {
-      this.selectedItem = 'cej'
-      this.showModal = true
-    },
-    openFtModal() {
-      this.selectedItem = 'ft'
-      this.showModal = true
-    },
-    fillForm(payload) {
-      console.log('fillForm', payload)
-      this.$emit('update', payload)
-    },
-    // async onSubmit() {
-    //   if (this.loading) {
-    //     return
-    //   }
-    //   this.loading = true
-    //   await this.$stores.auth.updateProfile({
-    //     id: this.$stores.auth.profile?.id,
-    //     ...this.form,
-    //   })
-    //   this.loading = false
-    //   this.$plausible.trackEvent('Inscription bénévole - Étape - Dispositifs')
-    // },
   },
 })
 </script>

@@ -128,7 +128,7 @@
 
         <transition name="fade">
           <div class="lg:col-span-2 space-y-6">
-            <FormSubFormUserDispositifs :form="form" @update="fillForm" />
+            <FormSubFormUserDispositifs v-model="form" @update="fillForm" />
 
             <!-- <div v-if="canViewCej" class="flex flex-col gap-4 lg:gap-0">
               <div class="flex items-center lg:gap-x-10">

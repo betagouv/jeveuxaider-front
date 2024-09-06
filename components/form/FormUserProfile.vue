@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <FormSubFormUserDispositifs :form="form" @update="fillForm" show-header />
+      <FormSubFormUserDispositifs v-model="form" show-header />
 
       <transition name="fade">
         <div
@@ -294,39 +294,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    // canViewScAndCej() {
-    //   if (this.profile.cej || this.profile.service_civique) {
-    //     return true
-    //   }
-    //   if (this.form?.birthday) {
-    //     const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-    //     return userAge >= 16 && userAge <= 30
-    //   }
-
-    //   return false
-    // },
-    // canViewFT() {
-    //   if (this.profile.ft) {
-    //     return true
-    //   }
-    //   let isOldEnough = false
-    //   let isInDepartments = false
-    //   if (this.form?.birthday) {
-    //     const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-    //     if (userAge >= 18) {
-    //       isOldEnough = true
-    //     }
-    //   }
-    //   if (this.form.department) {
-    //     if (['03', '23', '27', '80'].includes(this.form.department)) {
-    //       isInDepartments = true
-    //     }
-    //   }
-    //   if (isOldEnough && isInDepartments) {
-    //     return true
-    //   }
-    //   return false
-    // },
     formIsDirty() {
       const isUploadsDirty = !!(
         this.uploads.add.length ||
@@ -344,16 +311,6 @@ export default defineNuxtComponent({
         this.form = _cloneDeep(newProfile)
       },
     },
-    // 'form.cej'(val) {
-    //   if (!val) {
-    //     this.form.cej_email_adviser = null
-    //   }
-    // },
-    // 'form.ft'(val) {
-    //   if (!val) {
-    //     this.form.ft_email_adviser = null
-    //   }
-    // },
     formIsDirty(newVal) {
       this.$emit('change', newVal)
     },
