@@ -98,7 +98,7 @@
         />
         <BaseDescriptionListItem
           v-if="profile.certifications"
-          term="Compétences"
+          term="Certifications"
           :description="
             profile.certifications
               .map((item) => $filters.label(item, 'profile_certifications'))
