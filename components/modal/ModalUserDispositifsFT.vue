@@ -116,6 +116,7 @@ export default defineNuxtComponent({
         })
     },
     onClose() {
+      console.log('onClose', this.form.ft_email_adviser)
       if (!this.form.ft_email_adviser) {
         this.$emit('continue', {
           ...this.form,

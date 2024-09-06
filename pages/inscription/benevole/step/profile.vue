@@ -64,7 +64,7 @@
               @blur="validate('phone')"
             />
           </BaseFormControl>
-          <FormSubFormUserDispositifs v-model="form" @update="fillForm" />
+          <FormSubFormUserDispositifs v-model="form" />
 
           <DsfrButton size="lg" :loading="loading" @click.native.prevent="onSubmit">
             Continuer
@@ -127,145 +127,13 @@ export default defineNuxtComponent({
           .min(10, 'Le téléphone doit contenir au moins 10 caractères')
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
-        cej_email_adviser: string()
-          .nullable()
-          .email("Le format de l'email est incorrect")
-          .when('cej', {
-            is: true,
-            then: (schema) =>
-              schema
-                .required("L'email de votre conseiller CEJ est obligatoire")
-                .test(
-                  'email-extension',
-                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
-                    const emailParts = value.split('@')
-                    const emailExtension = emailParts[1]
-                    return !forbiddenExtensions.includes(emailExtension)
-                  }
-                )
-                .test(
-                  'no-current-user-email',
-                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
-                  (value) => {
-                    if (!value || !this.$stores.auth.isLogged) {
-                      return true
-                    }
-                    return value !== this.$stores.auth.profile?.email
-                  }
-                ),
-          }),
-        ft_email_adviser: string()
-          .nullable()
-          .email("Le format de l'email est incorrect")
-          .when('ft', {
-            is: true,
-            then: (schema) =>
-              schema
-                .required("L'email de votre conseiller France Travail est obligatoire")
-                .test(
-                  'email-extension',
-                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
-                    const emailParts = value.split('@')
-                    const emailExtension = emailParts[1]
-                    return !forbiddenExtensions.includes(emailExtension)
-                  }
-                )
-                .test(
-                  'no-current-user-email',
-                  "Vous devez saisir l'email de votre conseiller France Travail et non le vôtre",
-                  (value) => {
-                    if (!value || !this.$stores.auth.isLogged) {
-                      return true
-                    }
-                    return value !== this.$stores.auth.profile?.email
-                  }
-                ),
-          }),
         service_civique_completion_date: date()
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
     }
   },
-  computed: {
-    // canViewScAndCej() {
-    //   if (this.form.cej || this.form.service_civique) {
-    //     return true
-    //   }
-    //   if (this.form.birthday) {
-    //     const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-    //     return userAge >= 16 && userAge <= 30
-    //   }
-    //   return false
-    // },
-    // canViewFT() {
-    //   let isOldEnough = false
-    //   let isInDepartments = false
-    //   if (this.form?.birthday) {
-    //     const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-    //     if (userAge >= 18) {
-    //       isOldEnough = true
-    //     }
-    //   }
-    //   if (this.form.department) {
-    //     if (['03', '23', '27', '80'].includes(this.form.department)) {
-    //       isInDepartments = true
-    //     }
-    //   }
-    //   if (isOldEnough && isInDepartments) {
-    //     return true
-    //   }
-    //   return false
-    // },
-  },
-  // watch: {
-  //   'form.cej'(val) {
-  //     if (!val) {
-  //       this.form.cej_email_adviser = null
-  //     }
-  //   },
-  //   'form.ft'(val) {
-  //     if (!val) {
-  //       this.form.ft_email_adviser = null
-  //     }
-  //   },
-  // },
   methods: {
-    fillForm(payload) {
-      this.form = { ...this.form, ...payload }
-    },
     onSubmit() {
       if (this.loading) {
         return

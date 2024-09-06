@@ -316,10 +316,6 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    fillForm(payload) {
-      console.log('fillForm formuserprofile', payload)
-      this.form = { ...this.form, ...payload }
-    },
     async handleSubmit() {
       if (this.loading) {
         return
