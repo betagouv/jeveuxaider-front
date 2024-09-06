@@ -45,7 +45,7 @@
             button-label-class="text-right"
             button-wrapper-class="items-end mt-1 sm:mt-0"
             :button-labels="{ on: 'Oui', off: 'Non' }"
-            @update:modelValue="onUpdateServiceCivique"
+            @update:modelValue="onToggleSC"
           />
         </div>
       </div>
@@ -87,7 +87,7 @@
             button-label-class="text-right"
             button-wrapper-class="items-end mt-1 sm:mt-0"
             :button-labels="{ on: 'Oui', off: 'Non' }"
-            @update:modelValue="onUpdateCej"
+            @update:modelValue="onToggleCEJ"
           />
         </div>
       </div>
@@ -128,7 +128,7 @@
             button-label-class="text-right"
             button-wrapper-class="items-end mt-1 sm:mt-0"
             :button-labels="{ on: 'Oui', off: 'Non' }"
-            @update:modelValue="onUpdateFt"
+            @update:modelValue="onToggleFT"
           />
         </div>
       </div>
@@ -180,7 +180,6 @@ export default defineNuxtComponent({
       showModalSC: false,
       showModalCEJ: false,
       showModalFT: false,
-      selectedItem: null,
     }
   },
   watch: {
@@ -221,51 +220,32 @@ export default defineNuxtComponent({
   },
   methods: {
     onContinueSC(payload) {
-      console.log('onContinueSC', payload)
-      console.log('onContinueSC full', { ...this.form, ...payload })
       this.form = { ...this.form, ...payload }
     },
     onContinueCEJ(payload) {
-      console.log('onContinueCEJ', payload)
-      console.log('onContinueCEJ full', { ...this.form, ...payload })
       this.form = { ...this.form, ...payload }
     },
     onContinueFT(payload) {
-      console.log('onContinueFT', payload)
-      console.log('onContinueFT full', { ...this.form, ...payload })
       this.form = { ...this.form, ...payload }
     },
-    onUpdateServiceCivique(value) {
+    onToggleSC(value) {
       this.form.service_civique = value
       this.form.service_civique_completion_date = null
-      console.log('onUpdateServiceCivique', value)
-      if (!value) {
-        // this.$emit('update:modelValue', {
-        //   ...this.form,
-        // })
-      } else {
+      if (value) {
         this.showModalSC = true
       }
     },
-    onUpdateCej(value) {
+    onToggleCEJ(value) {
       this.form.cej = value
       this.form.cej_email_adviser = null
-      if (!value) {
-        // this.$emit('update:modelValue', {
-        //   ...this.form,
-        // })
-      } else {
+      if (value) {
         this.showModalCEJ = true
       }
     },
-    onUpdateFt(value) {
+    onToggleFT(value) {
       this.form.ft = value
       this.form.ft_email_adviser = null
-      if (!value) {
-        // this.$emit('update:modelValue', {
-        //   ...this.form,
-        // })
-      } else {
+      if (value) {
         this.showModalFT = true
       }
     },
