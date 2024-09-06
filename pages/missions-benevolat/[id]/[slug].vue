@@ -324,7 +324,9 @@
               <div v-else-if="canRegister" class="relative text-center">
                 <ButtonJeProposeMonAide :mission="mission" class="w-full" />
               </div>
-
+              <div v-else-if="canRegisterWaitingList" class="relative text-center">
+                <CustomButtonMissionWaitingList :mission="mission" class="w-full" />
+              </div>
               <template v-else>
                 <DsfrButton disabled size="lg" class="w-full"> Inscription fermée </DsfrButton>
                 <DsfrButton
