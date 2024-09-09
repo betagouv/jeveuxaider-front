@@ -111,7 +111,6 @@ export default {
       }
     },
     canRegisterWaitingList() {
-      return true
       return (
         !this.mission.has_places_left &&
         this.mission.is_online &&

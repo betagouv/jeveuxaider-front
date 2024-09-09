@@ -172,6 +172,9 @@ export default defineNuxtComponent({
       if (!this.$stores.auth.isLogged) {
         return 'email'
       }
+      if (this.$stores.softGate.waitingList) {
+        return 'waiting-list'
+      }
       if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
         return 'anti-flood'
       }
@@ -213,6 +216,8 @@ export default defineNuxtComponent({
         this.step = 'prerequisites'
       } else if (this.hasCreneaux) {
         this.step = 'select-creneaux'
+      } else if (this.$stores.softGate.waitingList) {
+        this.step = 'waiting-list'
       } else {
         this.step = 'participate'
       }
