@@ -5,7 +5,13 @@
         :is-open="isOpen"
         title="Service Civique"
         :prevent-click-outside="true"
-        @close="$emit('close')"
+        @close="
+          () => {
+            errors = {}
+            form = { ...this.initialForm }
+            $emit('close')
+          }
+        "
       >
         <DsfrFormControl
           label="Date de début de votre Service Civique"

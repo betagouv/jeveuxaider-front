@@ -5,7 +5,13 @@
         :is-open="isOpen"
         title="Allocation RSA"
         :prevent-click-outside="true"
-        @close="$emit('close')"
+        @close="
+          () => {
+            errors = {}
+            form = { ...this.initialForm }
+            $emit('close')
+          }
+        "
       >
         <p class="mb-4">
           Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de

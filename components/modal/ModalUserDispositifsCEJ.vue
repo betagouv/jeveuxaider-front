@@ -5,7 +5,13 @@
         :is-open="isOpen"
         title="Contrat d'engagement jeune"
         :prevent-click-outside="true"
-        @close="$emit('close')"
+        @close="
+          () => {
+            errors = {}
+            form = { ...this.initialForm }
+            $emit('close')
+          }
+        "
       >
         <p class="mb-4">
           Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de
@@ -35,7 +41,7 @@
 </template>
 
 <script>
-import { string, object, date } from 'yup'
+import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 const forbiddenExtensions = [
