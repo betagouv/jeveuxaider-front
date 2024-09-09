@@ -92,6 +92,15 @@ export default defineNuxtComponent({
       notifications: [
         {
           tab: 'benevoles',
+          key: 'mission_has_available_place',
+          label: 'TEMP',
+          description:
+            'Le bénévole vient de s’inscrire sur JVA et reçoit une première proposition de mission',
+          tags: ['app-benevole-inscription'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
           key: 'benevole_register',
           label: 'Bienvenue sur JeVeuxAider.gouv.fr 💙',
           description:

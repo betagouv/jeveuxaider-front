@@ -12,12 +12,8 @@
       </DsfrButton>
     </div>
     <div>
-      <DsfrLink
-        v-if="isMissionInUserWaitingList"
-        to="/profile/missions?waitingList=true"
-        class="text-sm"
-      >
-        Gérer mes listes d'attente
+      <DsfrLink v-if="isMissionInUserWaitingList" class="text-sm" @click="onClickUnsubscribe">
+        Ne plus être notifié
       </DsfrLink>
     </div>
   </div>
@@ -62,6 +58,18 @@ export default defineNuxtComponent({
       this.$stores.softGate.selectedMission = this.mission
       this.$stores.softGate.waitingList = true
       this.$stores.softGate.showOverlay = true
+    },
+    onClickUnsubscribe() {
+      apiFetch(`/missions/${this.mission.id}/waiting-list`, {
+        method: 'DELETE',
+      })
+        .then(async () => {
+          this.$toast.success('Votre alerte a été retirée')
+          await this.$stores.auth.fetchUser()
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 })

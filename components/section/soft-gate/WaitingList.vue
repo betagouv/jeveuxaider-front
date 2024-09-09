@@ -49,13 +49,14 @@ export default defineNuxtComponent({
       apiFetch(`/missions/${this.selectedMission.id}/waiting-list`, {
         method: 'POST',
       })
-        .then(() => {
+        .then(async () => {
           this.$plausible.trackEvent('Soft Gate - Waiting list')
           this.$gtm?.trackEvent({
             event: 'benevole-participation-soft-gate-waiting-list',
           })
 
           this.$toast.success('Vous avez été ajouté à la liste d’attente')
+          await this.$stores.auth.fetchUser()
           this.$emit('next')
         })
         .finally(() => {
