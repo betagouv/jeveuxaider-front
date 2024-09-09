@@ -93,10 +93,9 @@ export default defineNuxtComponent({
         {
           tab: 'benevoles',
           key: 'mission_has_available_place',
-          label: 'TEMP',
-          description:
-            'Le bénévole vient de s’inscrire sur JVA et reçoit une première proposition de mission',
-          tags: ['app-benevole-inscription'],
+          label: '🙌 Ça y est ! Vous pouvez proposer votre aide !',
+          description: 'Le bénévole est alerté qu’une mission a des places disponibles',
+          tags: ['app-benevole-mission-has-available-place'],
           is_updated: true,
         },
         {
