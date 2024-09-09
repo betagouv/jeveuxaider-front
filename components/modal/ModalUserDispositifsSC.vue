@@ -56,7 +56,6 @@ export default defineNuxtComponent({
   data() {
     return {
       form: { ...this.initialForm },
-      // @todo
       formSchema: object({
         service_civique_completion_date: date()
           .typeError('La date indiquée est invalide')
