@@ -5,7 +5,7 @@
         :is-open="isOpen"
         title="Service Civique"
         :prevent-click-outside="true"
-        @close="onClose"
+        @close="$emit('close')"
       >
         <DsfrFormControl
           label="Date de début de votre Service Civique"
@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import { string, object, date } from 'yup'
+import { object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
-  emits: ['cancel', 'continue'],
+  emits: ['close', 'continue'],
   components: {},
   mixins: [FormErrors],
   props: {
@@ -50,6 +50,7 @@ export default defineNuxtComponent({
   data() {
     return {
       form: { ...this.initialForm },
+      // @todo
       formSchema: object({
         service_civique_completion_date: date()
           .typeError('La date indiquée est invalide')
@@ -62,6 +63,11 @@ export default defineNuxtComponent({
       }),
     }
   },
+  watch: {
+    initialForm(newVal) {
+      this.form = { ...newVal }
+    },
+  },
   methods: {
     async onContinue() {
       await this.formSchema
@@ -71,20 +77,10 @@ export default defineNuxtComponent({
             service_civique: true,
             service_civique_completion_date: this.form.service_civique_completion_date,
           })
-          this.onClose()
         })
         .catch((errors) => {
           this.setErrors(errors)
         })
-    },
-    onClose() {
-      if (!this.form.service_civique_completion_date) {
-        this.$emit('continue', {
-          ...this.form,
-          service_civique: false,
-        })
-      }
-      this.$emit('cancel')
     },
   },
 })

@@ -5,7 +5,7 @@
         :is-open="isOpen"
         title="Allocation RSA"
         :prevent-click-outside="true"
-        @close="onClose"
+        @close="$emit('close')"
       >
         <p class="mb-4">
           Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de
@@ -53,7 +53,7 @@ const forbiddenExtensions = [
 ]
 
 export default defineNuxtComponent({
-  emits: ['cancel', 'continue'],
+  emits: ['close', 'continue'],
   components: {},
   mixins: [FormErrors],
   props: {
@@ -100,6 +100,11 @@ export default defineNuxtComponent({
       }),
     }
   },
+  watch: {
+    initialForm(newVal) {
+      this.form = { ...newVal }
+    },
+  },
   methods: {
     async onContinue() {
       await this.formSchema
@@ -109,21 +114,10 @@ export default defineNuxtComponent({
             ft: true,
             ft_email_adviser: this.form.ft_email_adviser,
           })
-          this.onClose()
         })
         .catch((errors) => {
           this.setErrors(errors)
         })
-    },
-    onClose() {
-      console.log('onClose', this.form.ft_email_adviser)
-      if (!this.form.ft_email_adviser) {
-        this.$emit('continue', {
-          ...this.form,
-          ft: false,
-        })
-      }
-      this.$emit('cancel')
     },
   },
 })

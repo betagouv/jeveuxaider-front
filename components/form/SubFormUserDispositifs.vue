@@ -73,7 +73,8 @@
                 class="group flex items-center gap-2 hover:cursor-pointer"
               >
                 <div class="italic text-[#666666] text-sm">
-                  <span class="hidden lg:inline">Conseiller :</span> {{ form.cej_email_adviser }}
+                  <span class="hidden lg:inline">Conseiller :</span>
+                  {{ form.cej_email_adviser }}
                 </div>
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
@@ -136,19 +137,40 @@
     <ModalUserDispositifsSC
       :is-open="showModalSC"
       :initial-form="form"
-      @cancel="showModalSC = false"
+      @close="
+        () => {
+          if (!form.service_civique_completion_date) {
+            $emit('update', { service_civique: false })
+          }
+          showModalSC = false
+        }
+      "
       @continue="onContinueSC"
     />
     <ModalUserDispositifsCEJ
       :is-open="showModalCEJ"
       :initial-form="form"
-      @cancel="showModalCEJ = false"
+      @close="
+        () => {
+          if (!form.cej_email_adviser) {
+            $emit('update', { cej: false })
+          }
+          showModalCEJ = false
+        }
+      "
       @continue="onContinueCEJ"
     />
     <ModalUserDispositifsFT
       :is-open="showModalFT"
       :initial-form="form"
-      @cancel="showModalFT = false"
+      @close="
+        () => {
+          if (!form.ft_email_adviser) {
+            $emit('update', { ft: false })
+          }
+          showModalFT = false
+        }
+      "
       @continue="onContinueFT"
     />
   </div>
@@ -160,14 +182,14 @@ import ModalUserDispositifsCEJ from '@/components/modal/ModalUserDispositifsCEJ'
 import ModalUserDispositifsFT from '@/components/modal/ModalUserDispositifsFT'
 
 export default defineNuxtComponent({
-  emits: ['update', 'update:modelValue'],
+  emits: ['update'],
   components: {
     ModalUserDispositifsSC,
     ModalUserDispositifsCEJ,
     ModalUserDispositifsFT,
   },
   props: {
-    modelValue: { type: Object, required: true },
+    form: { type: Object, required: true },
     showHeader: {
       type: Boolean,
       default: false,
@@ -176,17 +198,10 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: { ...this.modelValue },
       showModalSC: false,
       showModalCEJ: false,
       showModalFT: false,
     }
-  },
-  watch: {
-    form(newVal) {
-      console.log('watch form', newVal)
-      this.$emit('update:modelValue', newVal)
-    },
   },
   computed: {
     headerTitle() {
@@ -220,31 +235,34 @@ export default defineNuxtComponent({
   },
   methods: {
     onContinueSC(payload) {
-      this.form = { ...this.form, ...payload }
+      this.$emit('update', payload)
+      this.showModalSC = false
     },
     onContinueCEJ(payload) {
-      this.form = { ...this.form, ...payload }
+      this.$emit('update', payload)
+      this.showModalCEJ = false
     },
     onContinueFT(payload) {
-      this.form = { ...this.form, ...payload }
+      this.$emit('update', payload)
+      this.showModalFT = false
     },
     onToggleSC(value) {
-      this.form.service_civique = value
-      this.form.service_civique_completion_date = null
+      this.$emit('update', {
+        service_civique: value,
+        service_civique_completion_date: null,
+      })
       if (value) {
         this.showModalSC = true
       }
     },
     onToggleCEJ(value) {
-      this.form.cej = value
-      this.form.cej_email_adviser = null
+      this.$emit('update', { cej: value, cej_email_adviser: null })
       if (value) {
         this.showModalCEJ = true
       }
     },
     onToggleFT(value) {
-      this.form.ft = value
-      this.form.ft_email_adviser = null
+      this.$emit('update', { ft: value, ft_email_adviser: null })
       if (value) {
         this.showModalFT = true
       }
