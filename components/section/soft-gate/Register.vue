@@ -128,7 +128,7 @@
 
         <transition name="fade">
           <div class="lg:col-span-2 space-y-6">
-            <FormSubFormUserDispositifs v-model="form" />
+            <FormSubFormUserDispositifs :form="form" @update="form = { ...form, ...$event }" />
           </div>
         </transition>
       </form>

@@ -64,7 +64,8 @@
               @blur="validate('phone')"
             />
           </BaseFormControl>
-          <FormSubFormUserDispositifs v-model="form" />
+
+          <FormSubFormUserDispositifs :form="form" @update="form = { ...form, ...$event }" />
 
           <DsfrButton size="lg" :loading="loading" @click.native.prevent="onSubmit">
             Continuer

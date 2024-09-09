@@ -190,7 +190,11 @@
         </div>
       </div>
 
-      <FormSubFormUserDispositifs :form="form" @update="onFormUserDispositifsUpdate" show-header />
+      <FormSubFormUserDispositifs
+        :form="form"
+        @update="form = { ...form, ...$event }"
+        show-header
+      />
 
       <transition name="fade">
         <div
@@ -346,9 +350,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    onFormUserDispositifsUpdate($event) {
-      this.form = { ...this.form, ...$event }
     },
   },
 })
