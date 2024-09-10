@@ -11,10 +11,8 @@
         {{ label }}
       </DsfrButton>
     </div>
-    <div>
-      <DsfrLink v-if="isMissionInUserWaitingList" class="text-sm" @click="onClickUnsubscribe">
-        Ne plus être notifié
-      </DsfrLink>
+    <div v-if="isMissionInUserWaitingList">
+      <DsfrLink class="text-sm" @click="onClickUnsubscribe"> Ne plus être notifié </DsfrLink>
     </div>
   </div>
 </template>

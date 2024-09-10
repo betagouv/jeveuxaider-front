@@ -111,13 +111,19 @@ export default {
       }
     },
     canRegisterWaitingList() {
-      return (
-        !this.mission.has_places_left &&
-        this.mission.is_online &&
-        !this.hasExpired &&
-        this.mission.state === 'Validée' &&
-        this.mission?.structure?.state === 'Validée'
-      )
+      if (!this.mission.is_online) {
+        return false
+      }
+      if (this.mission.state !== 'Validée') {
+        return false
+      }
+      if (this.mission.structure.state !== 'Validée') {
+        return false
+      }
+      if (this.hasExpired) {
+        return false
+      }
+      return !this.mission.has_places_left || !this.mission.is_registration_open
     },
     canRegister() {
       if (!this.mission.has_places_left) {
