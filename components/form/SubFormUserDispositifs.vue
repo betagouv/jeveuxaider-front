@@ -22,7 +22,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Volontaire en Service Civique ?</div>
+          <div class="text-balance font-bold">Volontaire en Service Civique</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasServiceCiviqueFilled">
               <div
@@ -36,7 +36,7 @@
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
-            <template v-else> Permet le suivi de votre parcours </template>
+            <template v-else> Permet de valoriser votre parcours </template>
           </div>
         </div>
         <div>
@@ -65,7 +65,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Contrat d’Engagement Jeune ?</div>
+          <div class="text-balance font-bold">Contrat d’Engagement Jeune</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasCejFilled">
               <div
@@ -107,7 +107,7 @@
           />
         </div>
         <div class="flex-1">
-          <div class="text-balance font-bold">Accompagné dans le cadre du RSA ?</div>
+          <div class="text-balance font-bold">Bénéficiaire du RSA</div>
           <div class="italic text-[#666666] text-sm">
             <template v-if="hasFtFilled">
               <div
@@ -120,7 +120,9 @@
                 <RiPencilLine class="lg:hidden group-hover:inline w-4 h-auto" />
               </div>
             </template>
-            <template v-else> Permet le suivi de votre parcours avec votre conseiller </template>
+            <template v-else>
+              Permet de suivre et valoriser votre engagement auprès de France Travail
+            </template>
           </div>
         </div>
         <div>

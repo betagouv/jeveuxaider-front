@@ -14,8 +14,8 @@
         "
       >
         <p class="mb-4">
-          Votre conseiller sera informé dès lors que vous proposez votre aide sur une mission de
-          bénévolat.
+          Votre conseiller sera informé de votre inscription et dès lors que vous proposez votre
+          aide sur une mission de bénévolat.
         </p>
         <DsfrFormControl
           label="Email de votre conseiller"
