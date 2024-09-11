@@ -3,16 +3,21 @@ import flareSourcemapUploader from '@flareapp/vite-plugin-sourcemap-uploader'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {
-    // enabled: true,
-    // timeline: {
-    //   enabled: true,
-    // },
-  },
-
-  // experimental: {
-  //   emitRouteChunkError: 'automatic',
+  // devtools: {
+  //   enabled: true,
+  //   timeline: {
+  //     enabled: true,
+  //   },
   // },
+
+  experimental: {
+    // emitRouteChunkError: 'automatic',
+    defaults: {
+      nuxtLink: {
+        prefetch: false,
+      },
+    },
+  },
 
   runtimeConfig: {
     strapi: {
@@ -121,9 +126,9 @@ export default defineNuxtConfig({
     '@nuxtjs/strapi',
     'dayjs-nuxt',
     'floating-vue/nuxt',
-    'nuxt-simple-sitemap',
     'nuxt-lodash',
     '@nuxt/image',
+    '@nuxtjs/sitemap',
   ],
 
   // https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order
@@ -139,6 +144,7 @@ export default defineNuxtConfig({
   },
 
   sourcemap: true,
+
   vite: {
     plugins: [
       ckeditor5({ theme: require.resolve('@ckeditor/ckeditor5-theme-lark') }),
@@ -241,4 +247,6 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
   },
+
+  compatibilityDate: '2024-09-11',
 })
