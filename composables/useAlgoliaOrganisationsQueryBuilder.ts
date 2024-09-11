@@ -41,7 +41,7 @@ export const useAlgoliaOrganisationsQueryBuilder = () => {
 }
 
 const getAroundLatLng = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   if (route.query.aroundLatLng) {
@@ -54,7 +54,7 @@ const getAroundLatLng = () => {
 }
 
 const getSearchParameters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   return {
@@ -72,7 +72,7 @@ const getSearchParameters = () => {
 }
 
 const getActiveFacets = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   let activeFacets = algoliaSearchStore.availableFacets.filter(
@@ -90,7 +90,7 @@ const getActiveFacets = () => {
 }
 
 const getNbMobileActiveFilters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   let nbFacets = algoliaSearchStore.availableFacets.filter(

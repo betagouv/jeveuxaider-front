@@ -35,7 +35,7 @@ export default {
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     const ressource = await apiFetch(`/documents/${route.params.id}`)
 

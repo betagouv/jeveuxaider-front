@@ -10,7 +10,7 @@ export default defineNuxtComponent({
     TerritoirePage,
   },
   async setup() {
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     const { data: territoire, error } = await useApiFetch(`/territoires/${route.params.slug}/view`)
 

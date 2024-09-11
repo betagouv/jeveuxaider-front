@@ -68,7 +68,7 @@ export default defineNuxtComponent({
     AlgoliaSearch,
   },
   async setup() {
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { $stores } = useNuxtApp()
 
     const { data: domaine, error: errorDomaine } = await useApiFetch(

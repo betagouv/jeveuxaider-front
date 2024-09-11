@@ -38,7 +38,7 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     if (!['admin', 'tete_de_reseau'].includes($stores.auth.contextRole)) {
       return showError({ statusCode: 403 })

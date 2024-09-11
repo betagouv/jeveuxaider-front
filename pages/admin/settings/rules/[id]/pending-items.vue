@@ -108,7 +108,7 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const rule = await apiFetch(
       `/rules/${route.params.id}?appends=totalItemsCount,pendingItemsCount`
     )

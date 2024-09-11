@@ -39,7 +39,7 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     const temoignage = await apiFetch(`/temoignages/${route.params.id}`)
     return {

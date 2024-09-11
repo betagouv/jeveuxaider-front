@@ -46,7 +46,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
 }
 
 const getAroundLatLng = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   if (route.query.type == 'Mission à distance') {
@@ -69,7 +69,7 @@ const getAroundLatLng = () => {
 }
 
 const getSearchParameters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   return {
@@ -88,7 +88,7 @@ const getSearchParameters = () => {
 }
 
 const recomputeFilters = (query = null) => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
   const queries = query || route.query
 
@@ -103,7 +103,7 @@ const recomputeFilters = (query = null) => {
 }
 
 const getActiveFacets = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   let activeFacets = algoliaSearchStore.availableFacets.filter(
@@ -127,7 +127,7 @@ const getActiveFacets = () => {
 }
 
 const getActiveNumericFilters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   let activeNumericFilters = algoliaSearchStore.availableNumericFilters.filter(
@@ -142,7 +142,7 @@ const getActiveNumericFilters = () => {
 }
 
 const getNbMobileSecondaryFilters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   const nbFacets = algoliaSearchStore.availableFacets.filter(

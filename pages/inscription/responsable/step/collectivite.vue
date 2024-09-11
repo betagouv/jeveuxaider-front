@@ -133,7 +133,7 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     if (!$stores.auth.currentRole || $stores.auth.currentRole.contextable_type !== 'structure') {
       return showError({ statusCode: 403 })
