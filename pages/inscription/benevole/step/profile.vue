@@ -65,88 +65,7 @@
             />
           </BaseFormControl>
 
-          <template v-if="canViewScAndCej">
-            <div class="flex lg:space-x-8">
-              <img
-                src="/images/service_civique.png"
-                srcset="/images/service_civique.png, /images/service_civique@2x.png 2x"
-                alt="Service Civique"
-                title="Service Civique"
-                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
-                data-not-lazy
-              />
-              <BaseToggle
-                v-model="form.service_civique"
-                class="flex-1"
-                label="Êtes-vous volontaire en Service Civique ?"
-                :description="
-                  form.service_civique
-                    ? 'Oui, je suis volontaire'
-                    : 'Non, je ne suis pas volontaire'
-                "
-              />
-            </div>
-            <BaseFormControl
-              v-if="form.service_civique"
-              label="Date de début de votre Service Civique"
-              html-for="service_civique_completion_date"
-              :error="errors.service_civique_completion_date"
-            >
-              <BaseInputDateNative
-                v-model="form.service_civique_completion_date"
-                required
-                name="service_civique_completion_date"
-                @blur="validate('service_civique_completion_date')"
-              />
-            </BaseFormControl>
-            <div class="flex lg:space-x-8">
-              <img
-                src="/images/cej.png"
-                srcset="/images/cej.png, /images/cej@2x.png 2x"
-                alt="Contrat d'Engagement Jeune"
-                title="Contrat d'Engagement Jeune"
-                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
-                data-not-lazy
-              />
-              <BaseToggle
-                v-model="form.cej"
-                class="flex-1"
-                label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                :description="
-                  form.cej
-                    ? 'Oui, je suis en Contrat d\'Engagement Jeune'
-                    : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
-                "
-              />
-            </div>
-            <BaseFormControl
-              v-if="form.cej"
-              label="Email de votre conseiller CEJ"
-              html-for="cej_email_adviser"
-              :error="errors.cej_email_adviser"
-              required
-            >
-              <template #afterLabel>
-                <span
-                  v-tooltip="{
-                    content:
-                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                  }"
-                  class="p-1 cursor-help group"
-                >
-                  <RiInformationLine
-                    class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current"
-                  />
-                </span>
-              </template>
-              <BaseInput
-                v-model="form.cej_email_adviser"
-                name="cej_email_adviser"
-                placeholder="Saisissez l'email de votre conseiller CEJ"
-                @blur="validate('cej_email_adviser')"
-              />
-            </BaseFormControl>
-          </template>
+          <FormSubFormUserDispositifs :form="form" @update="form = { ...form, ...$event }" />
 
           <DsfrButton size="lg" :loading="loading" @click.native.prevent="onSubmit">
             Continuer
@@ -209,73 +128,11 @@ export default defineNuxtComponent({
           .min(10, 'Le téléphone doit contenir au moins 10 caractères')
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
-        cej_email_adviser: string()
-          .nullable()
-          .email("Le format de l'email est incorrect")
-          .when('cej', {
-            is: true,
-            then: (schema) =>
-              schema
-                .required("L'email de votre conseiller CEJ est obligatoire")
-                .test(
-                  'email-extension',
-                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
-                    const emailParts = value.split('@')
-                    const emailExtension = emailParts[1]
-                    return !forbiddenExtensions.includes(emailExtension)
-                  }
-                )
-                .test(
-                  'no-current-user-email',
-                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
-                  (value) => {
-                    if (!value || !this.$stores.auth.isLogged) {
-                      return true
-                    }
-                    return value !== this.$stores.auth.profile?.email
-                  }
-                ),
-          }),
         service_civique_completion_date: date()
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
     }
-  },
-  computed: {
-    canViewScAndCej() {
-      if (this.form.cej || this.form.service_civique) {
-        return true
-      }
-      if (this.form.birthday) {
-        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-        return userAge >= 16 && userAge <= 30
-      }
-      return false
-    },
-  },
-  watch: {
-    'form.cej'(val) {
-      if (!val) {
-        this.form.cej_email_adviser = null
-      }
-    },
   },
   methods: {
     onSubmit() {

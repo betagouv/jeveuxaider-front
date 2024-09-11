@@ -125,8 +125,10 @@ import RiBardFill from 'vue-remix-icons/icons/ri-bard-fill.vue'
 import RiFilterLine from 'vue-remix-icons/icons/ri-filter-line.vue'
 import RiCheckboxBlankCircleLine from 'vue-remix-icons/icons/ri-checkbox-blank-circle-line.vue'
 import RiImageAddFill from 'vue-remix-icons/icons/ri-image-add-fill.vue'
+import RiAddFill from 'vue-remix-icons/icons/ri-add-fill.vue'
 
 const components = {
+  RiAddFill,
   RiShieldCheckLine,
   RiLockLine,
   RiInboxArchiveLine,

@@ -65,7 +65,7 @@
 
     <template v-if="totalPoints !== 100">
       <slot name="footer" v-bind="{ setIsOverlayOpen }" />
-      <SectionProfileOverlayCompletion :is-open="isOverlayOpen" @close="isOverlayOpen = false" />
+      <SectionProfileOverlayCompletion :is-open="isOverlayOpen" @close="onOverlayClose" />
     </template>
   </BaseBox>
 </template>
@@ -141,6 +141,12 @@ export default defineNuxtComponent({
         this.showBox = true
       }
     },
+    '$route.query.dialog': {
+      handler(newVal) {
+        this.isOverlayOpen = newVal === 'complete-profile'
+      },
+      immediate: true,
+    },
   },
   computed: {
     profile() {
@@ -208,6 +214,15 @@ export default defineNuxtComponent({
     },
     setIsOverlayOpen(val) {
       this.isOverlayOpen = val
+    },
+    onOverlayClose() {
+      if (this.$route?.query?.dialog === 'complete-profile') {
+        return this.$router.push({
+          path: this.$route.path,
+          query: { ...this.$route.query, ['dialog']: undefined },
+        })
+      }
+      this.isOverlayOpen = false
     },
   },
 })
