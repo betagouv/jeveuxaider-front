@@ -11,7 +11,7 @@
             type="button"
             class="relative inline-flex flex-shrink-0 border rounded-full transition-colors ease-in-out duration-200"
             :class="[
-              selected ? 'bg-jva-blue-500 border-jva-blue-500' : 'bg-white  border-jva-blue-500',
+              modelValue ? 'bg-jva-blue-500 border-jva-blue-500' : 'bg-white  border-jva-blue-500',
               { 'h-6 w-10': size === 'md' },
               { 'h-6 w-10': size === 'lg' },
               { 'h-8 w-12': size === 'xl' },
@@ -22,14 +22,14 @@
               aria-hidden="true"
               class="relative top-[-1px] left-[-1px] pointer-events-none inline-flex items-center justify-center bg-white border border-jva-blue-500 rounded-full transform ring-0 transition ease-in-out duration-200"
               :class="[
-                selected ? 'translate-x-4' : 'translate-x-0',
+                modelValue ? 'translate-x-4' : 'translate-x-0',
                 { 'h-6 w-6': size === 'md' },
                 { 'h-6 w-6': size === 'lg' },
                 { 'h-8 w-8': size === 'xl' },
               ]"
             >
               <RiCheckLine
-                v-if="selected"
+                v-if="modelValue"
                 class="text-jva-blue-500 fill-current leading-none"
                 :class="[
                   { 'h-3': size === 'md' },
@@ -40,7 +40,7 @@
             </span>
           </button>
           <div :class="['text-jva-blue-500 text-xs leading-none mt-1.5 mx-0.5', buttonLabelClass]">
-            {{ selected ? buttonLabels.on : buttonLabels.off }}
+            {{ modelValue ? buttonLabels.on : buttonLabels.off }}
           </div>
         </div>
 
@@ -123,21 +123,11 @@ export default defineNuxtComponent({
       },
     },
   },
-  data() {
-    return {
-      selected: this.modelValue,
-    }
-  },
-  watch: {
-    modelValue(newVal) {
-      this.selected = newVal
-    },
-  },
   methods: {
     onToggleSwitch() {
-      this.selected = !this.selected
-      this.$emit('update:modelValue', this.selected)
-      if (this.selected) {
+      const newVal = !this.modelValue
+      this.$emit('update:modelValue', newVal)
+      if (newVal) {
         this.$emit('checked')
       } else {
         this.$emit('unchecked')

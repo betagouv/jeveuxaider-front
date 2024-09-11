@@ -127,54 +127,8 @@
         </BaseFormControl>
 
         <transition name="fade">
-          <div v-if="canViewScAndCej" class="lg:col-span-2 space-y-6">
-            <div class="flex lg:space-x-4">
-              <img
-                src="/images/cej.png"
-                srcset="/images/cej.png, /images/cej@2x.png 2x"
-                alt="Contrat d'Engagement Jeune"
-                title="Contrat d'Engagement Jeune"
-                class="hidden lg:block flex-none w-[45px] object-contain object-left"
-                data-not-lazy
-              />
-              <BaseToggle
-                v-model="form.cej"
-                class="flex-1"
-                label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                :description="
-                  form.cej
-                    ? 'Oui, je suis en Contrat d\'Engagement Jeune'
-                    : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
-                "
-              />
-            </div>
-            <BaseFormControl
-              v-if="form.cej"
-              label="Email de votre conseiller CEJ"
-              html-for="cej_email_adviser"
-              :error="errors.cej_email_adviser"
-              required
-            >
-              <template #afterLabel>
-                <span
-                  v-tooltip="{
-                    content:
-                      'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                  }"
-                  class="p-1 cursor-help group"
-                >
-                  <RiInformationFill
-                    class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current"
-                  />
-                </span>
-              </template>
-              <BaseInput
-                v-model="form.cej_email_adviser"
-                name="cej_email_adviser"
-                placeholder="Saisissez l'email de votre conseiller CEJ"
-                @blur="validate('cej_email_adviser')"
-              />
-            </BaseFormControl>
+          <div class="lg:col-span-2 space-y-6">
+            <FormSubFormUserDispositifs :form="form" @update="form = { ...form, ...$event }" />
           </div>
         </transition>
       </form>
@@ -265,49 +219,6 @@ export default defineNuxtComponent({
         password_confirmation: string()
           .required('Une confirmation de mot de passe est requise')
           .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
-        cej_email_adviser: string()
-          .nullable()
-          .email("Le format de l'email est incorrect")
-          .when('cej', {
-            is: true,
-            then: (schema) =>
-              schema
-                .required("L'email de votre conseiller CEJ est obligatoire")
-                .test(
-                  'email-extension',
-                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
-                    const emailParts = value.split('@')
-                    const emailExtension = emailParts[1]
-                    return !forbiddenExtensions.includes(emailExtension)
-                  }
-                )
-                .test(
-                  'no-current-user-email',
-                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    return value !== this.form.email
-                  }
-                ),
-          }),
       }),
       countries,
       zipAutocompleteOptions: [],
@@ -315,7 +226,7 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    canViewScAndCej() {
+    canViewCej() {
       if (this.form.cej || this.form.service_civique) {
         return true
       }
@@ -325,12 +236,25 @@ export default defineNuxtComponent({
       }
       return false
     },
-  },
-  watch: {
-    'form.cej'(val) {
-      if (!val) {
-        this.form.cej_email_adviser = null
+    canViewFT() {
+      let isOldEnough = false
+      let isInDepartments = false
+      if (this.form?.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        if (userAge >= 18) {
+          isOldEnough = true
+        }
       }
+      if (this.form.department) {
+        if (['03', '23', '27', '80'].includes(this.form.department)) {
+          isInDepartments = true
+        }
+      }
+      if (isOldEnough && isInDepartments) {
+        return true
+      }
+
+      return false
     },
   },
   methods: {

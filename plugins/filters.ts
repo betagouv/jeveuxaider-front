@@ -9,6 +9,9 @@ export default defineNuxtPlugin(() => {
     label: (key: string, vocabulary: TypeVocabulary, labelKey = 'label') => {
       return $labels[vocabulary]?.find((item) => item.key === key)?.[labelKey] ?? key
     },
+    labelFromKey: (options: any, key: string, labelKey = 'label') => {
+      return options?.find((item: any) => item.key === key)?.[labelKey] ?? key
+    },
     prefix: (word: string) => {
       return word.match('^[aieouAIEOU].*') ? `l'${word}` : `la ${word}`
     },

@@ -28,7 +28,7 @@
       <div
         v-show="showOptions"
         :class="[
-          'absolute w-full z-50 mt-2 px-4 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
+          'absolute w-full z-50 mt-2 px-4 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden initial:min-w-[250px]',
           optionsPositionClass,
           optionsClass,
         ]"

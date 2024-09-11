@@ -189,122 +189,13 @@
           </DsfrFormControl>
         </div>
       </div>
-      <template v-if="canViewScAndCej">
-        <hr />
-        <div class="">
-          <DsfrHeading size="lg"> Autres dispositifs </DsfrHeading>
-          <div class="mt-12 flex flex-col gap-8 lg:gap-12">
-            <div class="flex flex-col gap-4 lg:gap-0">
-              <div class="flex items-center lg:gap-x-10">
-                <img
-                  src="/images/logo-service-civique.png"
-                  srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
-                  alt="Service Civique"
-                  title="Service Civique"
-                  class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
-                  data-not-lazy
-                />
-                <div class="w-full lg:w-[520px]">
-                  <BaseToggle
-                    v-model="form.service_civique"
-                    position="right"
-                    label="Êtes-vous volontaire en Service Civique ?"
-                    label-class="text-balance font-bold"
-                    wrapper-class="flex-grow"
-                    button-wrapper-class="items-end mt-1 sm:mt-0"
-                    button-label-class="text-right"
-                    :button-labels="{ on: 'Oui', off: 'Non' }"
-                  />
-                </div>
-              </div>
-              <div v-if="form.service_civique" class="max-w-xl lg:pl-[141px]">
-                <DsfrFormControl
-                  label="Date de début de votre Service Civique"
-                  html-for="service_civique_completion_date"
-                  :error="errors.service_civique_completion_date"
-                  required
-                >
-                  <DsfrInput
-                    v-model="form.service_civique_completion_date"
-                    required
-                    type="date"
-                    name="service_civique_completion_date"
-                    @blur="validate('service_civique_completion_date')"
-                  />
-                </DsfrFormControl>
-              </div>
-            </div>
-            <div class="flex flex-col gap-4 lg:gap-0">
-              <div class="flex items-center lg:gap-x-10">
-                <img
-                  src="/images/logo-cej.png"
-                  srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
-                  alt="Contrat d'Engagement Jeune"
-                  title="Contrat d'Engagement Jeune"
-                  class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
-                  data-not-lazy
-                />
-                <div class="w-full lg:w-[520px]">
-                  <BaseToggle
-                    v-model="form.cej"
-                    position="right"
-                    label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                    label-class="text-balance font-bold"
-                    wrapper-class="flex-grow"
-                    button-wrapper-class="items-end mt-1 sm:mt-0"
-                    button-label-class="text-right"
-                    :button-labels="{ on: 'Oui', off: 'Non' }"
-                  />
-                </div>
-              </div>
-              <div v-if="form.cej" class="max-w-xl lg:pl-[141px]">
-                <DsfrFormControl
-                  v-if="form.cej"
-                  label="Email de votre conseiller CEJ"
-                  html-for="cej_email_adviser"
-                  :error="errors.cej_email_adviser"
-                  required
-                >
-                  <template #afterLabel>
-                    <span
-                      v-tooltip="{
-                        content:
-                          'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                      }"
-                      class="p-1 cursor-help group"
-                    >
-                      <RiErrorWarningLine
-                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
-                      />
-                    </span>
-                  </template>
-                  <DsfrInput
-                    v-model="form.cej_email_adviser"
-                    required
-                    type="email"
-                    name="cej_email_adviser"
-                    placeholder="…@…"
-                    @blur="validate('cej_email_adviser')"
-                  />
-                </DsfrFormControl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-      <!-- <div class="hidden sm:block ">
-        <div class="text-center">
-          <DsfrButton
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!formIsDirty"
-            @click.native="handleSubmit()"
-          >
-            Enregistrer
-          </DsfrButton>
-        </div>
-      </div> -->
+
+      <FormSubFormUserDispositifs
+        :form="form"
+        @update="form = { ...form, ...$event }"
+        show-header
+      />
+
       <transition name="fade">
         <div
           v-if="formIsDirty"
@@ -398,57 +289,6 @@ export default defineNuxtComponent({
           .test('test-zip-required', 'Un code postal est requis', (zip) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || zip
           }),
-        cej_email_adviser: string()
-          .nullable()
-          .email("Le format de l'email est incorrect")
-          .when('cej', {
-            is: true,
-            then: (schema) =>
-              schema
-                .required("L'email de votre conseiller CEJ est obligatoire")
-                .test(
-                  'email-extension',
-                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
-                  (value) => {
-                    if (!value) {
-                      return true
-                    }
-                    const forbiddenExtensions = [
-                      'gmail.com',
-                      'icloud.com',
-                      'outlook.com',
-                      'orange.fr',
-                      'wanadoo.fr',
-                      'hotmail.com',
-                      'hotmail.fr',
-                      'free.fr',
-                      'sfr.fr',
-                      'laposte.net',
-                    ]
-                    const emailParts = value.split('@')
-                    const emailExtension = emailParts[1]
-                    return !forbiddenExtensions.includes(emailExtension)
-                  }
-                )
-                .test(
-                  'no-current-user-email',
-                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
-                  (value) => {
-                    if (!value || !this.$stores.auth.isLogged) {
-                      return true
-                    }
-                    return value !== this.$stores.auth.profile?.email
-                  }
-                ),
-          }),
-        service_civique_completion_date: date()
-          .typeError('La date indiquée est invalide')
-          .nullable()
-          .transform((curr, orig) => (orig === '' ? null : curr))
-          .when('service_civique', {
-            is: true,
-            then: (schema) => schema.required('La date de début de service civique est incorrecte'),
-          }),
         certifications: this.schemaCertifications,
         description: this.schemaDescription,
         skills: this.schemaSkills,
@@ -458,17 +298,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    canViewScAndCej() {
-      if (this.profile.cej || this.profile.service_civique) {
-        return true
-      }
-      if (this.form?.birthday) {
-        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
-        return userAge >= 16 && userAge <= 30
-      }
-
-      return false
-    },
     formIsDirty() {
       const isUploadsDirty = !!(
         this.uploads.add.length ||
@@ -485,11 +314,6 @@ export default defineNuxtComponent({
       handler(newProfile) {
         this.form = _cloneDeep(newProfile)
       },
-    },
-    'form.cej'(val) {
-      if (!val) {
-        this.form.cej_email_adviser = null
-      }
     },
     formIsDirty(newVal) {
       this.$emit('change', newVal)
