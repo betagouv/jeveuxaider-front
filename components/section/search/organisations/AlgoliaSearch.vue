@@ -143,7 +143,7 @@ export default defineNuxtComponent({
     },
     handleNavigatorGeolocation() {
       if (
-        navigator.geolocation &&
+        'geolocation' in navigator &&
         !this.$stores.algoliaSearch.navigatorGeolocation &&
         !this.$stores.algoliaSearch.aroundLatLng &&
         !this.$stores.algoliaSearch.searchParameters?.aroundLatLng
