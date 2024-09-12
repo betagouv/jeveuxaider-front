@@ -10,7 +10,11 @@
     <swiper-slide
       v-for="(logo, index) in logos"
       :key="index"
-      class="px-8 m-auto !flex w-auto h-full"
+      :class="[
+        'px-8 m-auto !flex w-auto h-full',
+        { 'swiper-slide-active': i === 0 },
+        { 'swiper-slide-next': i === 1 },
+      ]"
     >
       <img
         :src="logo.src"

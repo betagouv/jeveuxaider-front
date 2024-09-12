@@ -97,9 +97,13 @@
 
           <BaseSlideshow class="mb-6" :aria-labelledby="`label-autres-missions-${uuid}`">
             <swiper-slide
-              v-for="similarMission in similarMissions"
+              v-for="(similarMission, i) in similarMissions"
               :key="similarMission.id"
-              class="card--mission--wrapper"
+              :class="[
+                'card--mission--wrapper',
+                { 'swiper-slide-active': i === 0 },
+                { 'swiper-slide-next': i === 1 },
+              ]"
             >
               <nuxt-link
                 no-prefetch

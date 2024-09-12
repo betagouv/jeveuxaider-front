@@ -389,7 +389,11 @@
             <swiper-slide
               v-for="mission in similarMissions"
               :key="mission.id"
-              class="card--mission--wrapper"
+              :class="[
+                'card--mission--wrapper',
+                { 'swiper-slide-active': i === 0 },
+                { 'swiper-slide-next': i === 1 },
+              ]"
             >
               <NuxtLink
                 no-prefetch

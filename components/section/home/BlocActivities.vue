@@ -59,7 +59,11 @@
             <swiper-slide
               v-for="(group, i) in activitiesGroups"
               :key="i"
-              class="!flex flex-col gap-4 xl:gap-7 sm:flex-row flex-wrap"
+              :class="[
+                '!flex flex-col gap-4 xl:gap-7 sm:flex-row flex-wrap',
+                { 'swiper-slide-active': i === 0 },
+                { 'swiper-slide-next': i === 1 },
+              ]"
             >
               <div v-for="activity in group" :key="activity.key">
                 <button

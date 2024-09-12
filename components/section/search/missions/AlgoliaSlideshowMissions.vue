@@ -12,7 +12,15 @@
       :navigation-variant="navigationVariant"
       @init="onInit"
     >
-      <swiper-slide v-for="mission in missions" :key="mission.id" class="slide-wrapper">
+      <swiper-slide
+        v-for="(mission, i) in missions"
+        :key="mission.id"
+        :class="[
+          'slide-wrapper',
+          { 'swiper-slide-active': i === 0 },
+          { 'swiper-slide-next': i === 1 },
+        ]"
+      >
         <NuxtLink
           no-prefetch
           class="h-full"
