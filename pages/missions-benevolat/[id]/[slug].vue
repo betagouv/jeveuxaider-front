@@ -204,15 +204,25 @@
                 </p>
 
                 <div class="mt-4 flex justify-center">
-                  <img
-                    v-for="(portrait, index) in portraits"
-                    :key="index"
-                    :src="portrait"
-                    alt=""
-                    :class="[{ '-ml-1': index !== 0 }]"
-                    class="portrait rounded-full"
-                    style="width: 34px"
-                  />
+                  <ClientOnly fallback-tag="div">
+                    <img
+                      v-for="(portrait, index) in portraits"
+                      :key="index"
+                      :src="portrait"
+                      alt=""
+                      :class="[{ '-ml-1': index !== 0 }]"
+                      class="portrait rounded-full"
+                      style="width: 34px"
+                    />
+                    <template #fallback>
+                      <div
+                        v-for="(i, index) in Math.min(participationsCount, 3)"
+                        class="size-[34px] rounded-full bg-slate-100"
+                        :class="[{ '-ml-1': index !== 0 }]"
+                      />
+                    </template>
+                  </ClientOnly>
+
                   <div
                     v-if="participationsCount - 3 > 0"
                     class="h-9 w-9 text-cool-gray-500 shadow bg-gray-50 border font-bold inline-flex items-center justify-center rounded-full text-xs -ml-1"
