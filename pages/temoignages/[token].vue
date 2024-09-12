@@ -64,7 +64,7 @@ export default defineNuxtComponent({
       ],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     const notificationTemoignage = await apiFetch(`/notification-temoignage/${route.params.token}`)
     if (!notificationTemoignage) {

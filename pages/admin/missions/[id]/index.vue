@@ -167,7 +167,7 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(

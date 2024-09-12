@@ -35,7 +35,7 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const activity = await apiFetch(`/activities/${route.params.id}`)
 
     if (!activity) {

@@ -142,7 +142,6 @@ export default defineNuxtComponent({
     const { $stores } = useNuxtApp()
     const { recomputeFilters } = useAlgoliaMissionsQueryBuilder()
     const runtimeConfig = useRuntimeConfig()
-    const route = useRoute()
 
     $stores.algoliaSearch.reset()
     $stores.algoliaSearch.indexKey = 'missionsIndex'

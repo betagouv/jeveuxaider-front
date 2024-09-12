@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default defineNuxtComponent({
   emits: ['selected', 'update:modelValue', 'added'],
   props: {

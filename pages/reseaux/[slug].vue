@@ -125,7 +125,7 @@ export default defineNuxtComponent({
       layout: 'default-without-header',
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { data: reseau, error } = await useApiFetch(`/reseaux/${route.params.slug}/view`)
 
     useHead({

@@ -287,7 +287,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const runtimeConfig = useRuntimeConfig()
 
     if (!['admin', 'tete_de_reseau'].includes($stores.auth.contextRole)) {

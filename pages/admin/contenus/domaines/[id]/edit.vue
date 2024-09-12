@@ -35,7 +35,7 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const domaine = await apiFetch(`/domaines/${route.params.id}`)
 
     if (!domaine) {

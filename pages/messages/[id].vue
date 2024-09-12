@@ -29,12 +29,10 @@ export default defineNuxtComponent({
       layout: 'messages',
       middleware: ['authenticated'],
     })
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { $stores } = useNuxtApp()
 
-    const { data: conversation, error } = await useApiFetch(
-      `/conversations/${route.params.id}`
-    )
+    const { data: conversation, error } = await useApiFetch(`/conversations/${route.params.id}`)
 
     if (!conversation.value) {
       showError({

@@ -46,7 +46,7 @@ export default defineNuxtComponent({
   },
   async setup() {
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { data: activity, error } = await useApiFetch(`/activities/${route.params.slug}`)
 
     if (error.value) {

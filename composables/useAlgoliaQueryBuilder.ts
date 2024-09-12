@@ -16,7 +16,7 @@ export const useAlgoliaQueryBuilder = () => {
 }
 
 const hasActiveFilters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   return Object.keys(route.query).some((q) => q !== 'page')
 }
 
@@ -70,7 +70,7 @@ const searchForFacetValues = async (facetName: string, facetQuery: any) => {
 }
 
 const addFilter = (filterName: string, filterValue: any, multiple = false) => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const router = useRouter()
 
   let filterQueryValues = route.query[filterName]
@@ -93,7 +93,7 @@ const addFilter = (filterName: string, filterValue: any, multiple = false) => {
 }
 
 const deleteFilter = (filterName: string, filterValue = null as any, multiple = false) => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const router = useRouter()
 
   let filterQueryValues = (
@@ -120,7 +120,7 @@ const deleteFilter = (filterName: string, filterValue = null as any, multiple = 
 }
 
 const deleteAllFilters = () => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   const router = useRouter()
   router.push({
     path: route.path,
@@ -128,7 +128,7 @@ const deleteAllFilters = () => {
 }
 
 const isActiveFilter = (name: string, value: any) => {
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
   return !!(route.query[name] && (route.query[name] as string).split('|').includes(value))
 }
 

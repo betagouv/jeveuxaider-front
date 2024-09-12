@@ -482,7 +482,7 @@ export default defineNuxtComponent({
   },
   mixins: [MixinMission],
   async setup() {
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { $stores } = useNuxtApp()
     const { data: mission, error } = await useApiFetch(`/missions/${route.params.id}/view`)
 
