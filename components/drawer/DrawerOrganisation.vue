@@ -20,7 +20,7 @@
           :to="`/organisations/${organisation.slug}`"
           :is-external="true"
           class="text-xs font-normal"
-          icon-size="14"
+          :icon-size="14"
           >Voir l'organisation</DsfrLink
         >
         <Badges class="mt-5" :organisation="organisation" />
