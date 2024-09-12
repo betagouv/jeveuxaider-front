@@ -1,10 +1,5 @@
 <template>
-  <textarea
-    ref="textareaRef"
-    v-model="value"
-    :style="computedStyles"
-    @focus="resize"
-  />
+  <textarea ref="textareaRef" v-model="value" :style="computedStyles" @focus="resize" />
 </template>
 
 <script lang="ts">
@@ -13,9 +8,9 @@ import {
   computed,
   ref,
   nextTick,
-  CSSProperties,
+  type CSSProperties,
   onMounted,
-  PropType,
+  type PropType,
   onUpdated,
 } from 'vue'
 
@@ -81,8 +76,7 @@ export default defineComponent({
       nextTick(() => {
         let contentHeight = textareaRef.value.scrollHeight + 1
         if (props.minHeight) {
-          contentHeight =
-            contentHeight < props.minHeight ? props.minHeight : contentHeight
+          contentHeight = contentHeight < props.minHeight ? props.minHeight : contentHeight
         }
         if (props.maxHeight) {
           if (contentHeight > props.maxHeight) {
