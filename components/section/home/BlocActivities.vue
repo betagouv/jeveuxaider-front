@@ -88,7 +88,9 @@ import activities from '@/assets/activities.json'
 export default defineNuxtComponent({
   data() {
     return {
-      activities: activities.sort((a, b) => b.popular - a.popular),
+      activities: activities.sort(
+        (a, b) => +b.popular - +a.popular || a.name.localeCompare(b.name)
+      ),
       chunkSize: 5,
       waitingOnAnimRequest: false,
     }
@@ -112,7 +114,7 @@ export default defineNuxtComponent({
       if (!this.waitingOnAnimRequest) {
         window.requestAnimationFrame(() => {
           if (window.innerWidth >= 1024) {
-            this.chunkSize = 14
+            this.chunkSize = 15
           } else if (window.innerWidth >= 768) {
             this.chunkSize = 7
           } else {
