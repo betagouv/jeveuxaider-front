@@ -128,15 +128,3 @@ export default defineNuxtComponent({
   },
 })
 </script>
-
-<style lang="postcss" scoped>
-:deep(.slick-track) {
-  width: 100% !important;
-  @apply sm:!gap-16;
-}
-
-:deep(.slick-slide) {
-  width: 100%;
-  flex: none;
-}
-</style>

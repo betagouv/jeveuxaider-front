@@ -154,20 +154,4 @@ export default defineNuxtComponent({
   width: calc(100vw - 64px) !important;
   max-width: 360px;
 }
-
-:deep(.slick-slider) {
-  .slick-arrow {
-    &.slick-prev {
-      @apply translate-x-[-104px];
-    }
-    &.slick-next {
-      @apply translate-x-[104px];
-    }
-  }
-  .slick-dots {
-    @screen xl {
-      display: none !important;
-    }
-  }
-}
 </style> -->
