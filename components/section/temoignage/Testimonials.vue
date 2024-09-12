@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
   props: {
     model: {
@@ -80,11 +78,15 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       loading: true,
       testimonials: [],
-      uuid: uuidv4(),
     }
   },
   mounted() {

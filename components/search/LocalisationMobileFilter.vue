@@ -115,16 +115,17 @@
 
 <script>
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   components: {
     FacetSearch,
   },
   setup() {
+    const uuid = useId()
     const localisationHistoryCookie = useCookie('localisation-history')
     return {
       localisationHistoryCookie,
+      uuid,
     }
   },
   data() {
@@ -164,7 +165,6 @@ export default defineNuxtComponent({
         },
       ],
       isGeolocFilterActive: false,
-      uuid: uuidv4(),
     }
   },
   computed: {

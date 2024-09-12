@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
   emits: ['cancel', 'confirm'],
   props: {
@@ -65,10 +63,9 @@ export default defineNuxtComponent({
       default: null,
     },
   },
-  computed: {},
-  data() {
+  setup() {
     return {
-      uuid: uuidv4(),
+      uuid: useId(),
     }
   },
 })

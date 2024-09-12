@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
   emits: ['update:modelValue'],
   props: {
@@ -52,9 +50,9 @@ export default defineNuxtComponent({
     },
     classWrapper: { type: String, default: '' },
   },
-  data() {
+  setup() {
     return {
-      uuid: uuidv4(),
+      uuid: useId(),
     }
   },
   computed: {},

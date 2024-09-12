@@ -61,7 +61,6 @@ export default defineNuxtComponent({
       values: this.medias,
     }
   },
-  computed: {},
   mounted() {
     if (!this.limit || this.values.length < this.limit) {
       this.addEmptyMedia()

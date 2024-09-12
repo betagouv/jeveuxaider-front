@@ -467,7 +467,6 @@ import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.v
 import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
-import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
 export default defineNuxtComponent({
@@ -482,6 +481,7 @@ export default defineNuxtComponent({
   },
   mixins: [MixinMission],
   async setup() {
+    const uuid = useId()
     const route = useRouter().currentRoute.value
     const { $stores } = useNuxtApp()
     const { data: mission, error } = await useApiFetch(`/missions/${route.params.id}/view`)
@@ -537,6 +537,7 @@ export default defineNuxtComponent({
 
     return {
       mission,
+      uuid,
     }
   },
   data() {
@@ -546,7 +547,6 @@ export default defineNuxtComponent({
       loading: true,
       showFixedCtaMobile: true,
       structureScore: null,
-      uuid: uuidv4(),
     }
   },
   created() {

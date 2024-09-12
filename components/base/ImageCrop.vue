@@ -114,7 +114,6 @@
 <script>
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   emits: ['add', 'delete', 'crop'],
@@ -149,6 +148,11 @@ export default defineNuxtComponent({
     warning: { type: String, default: null },
     modalFooterClass: { type: String, default: null },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       showModal: false,
@@ -157,7 +161,6 @@ export default defineNuxtComponent({
         this.defaultValue?.urls?.[this.previewConversion] ?? this.defaultValue?.urls?.original,
       originalSrc: this.defaultValue?.urls?.original,
       manipulations: this.defaultValue?.manipulation ?? {},
-      uuid: uuidv4(),
     }
   },
   watch: {

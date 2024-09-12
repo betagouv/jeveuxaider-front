@@ -43,7 +43,6 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.main.min.css'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   props: {
@@ -57,10 +56,14 @@ export default defineNuxtComponent({
       validator: (t) => ['default', 'white', 'black'].includes(t),
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       hideButton: false,
-      uuid: uuidv4(),
     }
   },
   computed: {

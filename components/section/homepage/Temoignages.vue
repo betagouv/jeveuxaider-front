@@ -73,9 +73,12 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       testimonies: [
@@ -200,7 +203,6 @@ export default defineNuxtComponent({
           },
         },
       ],
-      uuid: uuidv4(),
     }
   },
 })

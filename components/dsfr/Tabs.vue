@@ -63,8 +63,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
   props: {
     name: {
@@ -88,12 +86,16 @@ export default defineNuxtComponent({
       default: '',
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       selectedKey: this.selectedTabKey ? this.selectedTabKey : this.tabs[0].key,
       hasShadowRight: false,
       hasShadowLeft: false,
-      uuid: uuidv4(),
     }
   },
   computed: {

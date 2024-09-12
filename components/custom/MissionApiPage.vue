@@ -147,7 +147,6 @@ import PresentielOrDistance from '@/components/section/mission/PresentielOrDista
 import ButtonJeProposeMonAideApiEngagement from '@/components/custom/ButtonJeProposeMonAideApiEngagement.vue'
 import MixinMission from '@/mixins/mission'
 import CardMission from '@/components/card/CardMission.vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   components: {
@@ -167,10 +166,10 @@ export default defineNuxtComponent({
     return {
       similarMissions: [],
       slideshowKey: 0,
-      uuid: uuidv4(),
     }
   },
   async setup(props) {
+    const uuid = useId()
     const { data: similarMissions } = await useApiFetch('/missions/similar-for-api', {
       method: 'POST',
       body: {
@@ -180,6 +179,7 @@ export default defineNuxtComponent({
 
     return {
       similarMissions,
+      uuid,
     }
   },
   computed: {

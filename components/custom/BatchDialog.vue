@@ -56,8 +56,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineNuxtComponent({
   components: {},
   props: {
@@ -94,13 +92,17 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       batchId: null,
       batch: null,
       progress: 0,
       state: 'initial', // initial, processing, processed, cancelled
-      uuid: uuidv4(),
     }
   },
   computed: {
