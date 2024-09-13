@@ -55,7 +55,7 @@ export default defineNuxtComponent({
             event: 'benevole-participation-soft-gate-waiting-list',
           })
 
-          this.$toast.success('Vous avez été ajouté à la liste d’attente')
+          this.$toast.success('Vous recevrez un email si des nouvelles places se libèrent')
           await this.$stores.auth.fetchUser()
           this.$emit('next')
         })

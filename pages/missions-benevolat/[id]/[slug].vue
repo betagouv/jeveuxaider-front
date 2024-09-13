@@ -288,8 +288,8 @@
             </div>
 
             <!-- CTA -->
-            <div class="pt-6">
-              <div v-if="canRegister && nextDates" class="text-center mb-6">
+            <div class="">
+              <div v-if="canRegister && nextDates" class="text-center my-6">
                 <p class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
                   Prochaines dates
                 </p>
@@ -321,11 +321,21 @@
               >
                 Suivre ma candidature
               </DsfrButton>
-              <div v-else-if="canRegister" class="relative text-center">
+              <div v-else-if="canRegister" class="relative text-center mt-6">
                 <ButtonJeProposeMonAide :mission="mission" class="w-full" />
               </div>
               <div v-else-if="canRegisterWaitingList" class="relative text-center">
                 <CustomButtonMissionWaitingList :mission="mission" class="w-full" />
+                <DsfrButton
+                  v-if="similarMissions.length > 0"
+                  v-scroll-to="{ el: '#missions-similaires', duration: 2000 }"
+                  size="lg"
+                  class="w-full mt-4"
+                  type="secondary"
+                  @click.native="onClickGoToSimilarMissions"
+                >
+                  Voir les missions similaires
+                </DsfrButton>
               </div>
               <template v-else>
                 <DsfrButton disabled size="lg" class="w-full"> Inscription fermée </DsfrButton>

@@ -1,19 +1,9 @@
 <template>
-  <div class="space-y-4">
-    <div>
-      <DsfrButton
-        :size="size"
-        :type="type"
-        :disabled="isMissionInUserWaitingList"
-        class="!font-bold w-full"
-        @click.native="onClick"
-      >
-        {{ label }}
-      </DsfrButton>
-    </div>
-    <div v-if="isMissionInUserWaitingList">
-      <DsfrLink class="text-sm" @click="onClickUnsubscribe"> Ne plus être notifié </DsfrLink>
-    </div>
+  <div>
+    <div class="text-[#666666] mb-6">Des places peuvent se libérer à l’avenir</div>
+    <DsfrButton :size="size" :type="buttonType" class="w-full" @click.native="onClick">
+      {{ !isMissionInUserWaitingList ? 'Être notifié par email' : 'Ne plus être notifié' }}
+    </DsfrButton>
   </div>
 </template>
 
@@ -24,20 +14,15 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
-    type: {
-      type: String,
-      default: 'primary',
-    },
     size: {
       type: String,
       default: 'lg',
     },
-    label: {
-      type: String,
-      default: 'Être notifié par email',
-    },
   },
   computed: {
+    buttonType() {
+      return this.isMissionInUserWaitingList ? 'secondary' : 'primary'
+    },
     isMissionInUserWaitingList() {
       return this.$stores.auth.user?.waiting_list_missions?.some(
         (waitingListMission) => waitingListMission.id === this.mission.id
@@ -49,6 +34,14 @@ export default defineNuxtComponent({
       if (this.disabled) {
         return
       }
+
+      if (this.isMissionInUserWaitingList) {
+        this.onClickUnsubscribe()
+      } else {
+        this.onClickSubscribe()
+      }
+    },
+    onClickSubscribe() {
       this.$plausible.trackEvent('Click CTA - Mission - Waiting list', {
         props: { isLogged: this.$stores.auth.isLogged },
       })
@@ -62,7 +55,7 @@ export default defineNuxtComponent({
         method: 'DELETE',
       })
         .then(async () => {
-          this.$toast.success('Votre alerte a été retirée')
+          this.$toast.success('Vous ne serez plus notifié pour cette mission')
           await this.$stores.auth.fetchUser()
         })
         .finally(() => {
