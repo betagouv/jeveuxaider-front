@@ -110,6 +110,7 @@ export default defineNuxtComponent({
     if (this.$utils.isElementInViewport(this.$refs.tablist)) {
       this.scrollSelectedTabIntoView({ behavior: 'auto' })
     }
+    this.$emit('mounted')
   },
   methods: {
     handleTabClick(tab) {

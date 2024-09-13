@@ -97,7 +97,8 @@ export default defineNuxtComponent({
       spacingClasses: 'px-6 py-6 lg:py-0 lg:px-10 xl:px-12',
     }
   },
-  mounted() {
+  async mounted() {
+    await new Promise((resolve) => setTimeout(resolve, 20))
     this.isPinnedObserver = new IntersectionObserver(
       ([e]) => {
         this.isPinned = e.intersectionRatio < 1
