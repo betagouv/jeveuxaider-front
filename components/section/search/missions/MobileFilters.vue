@@ -15,6 +15,7 @@
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
       :selected-tab-key="selectedTabKey"
       :class="[{ 'full-bleed shadow-xl': isPinned }]"
+      @mounted="onMountedTabs"
       @selected="onTabSelect"
     >
       <template #tab-onsite>
@@ -117,11 +118,8 @@ export default defineNuxtComponent({
       return this.$route.query.type === 'Mission à distance' ? 'remote' : 'onsite'
     },
   },
-  mounted() {
-    this.handleSticky()
-  },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.onScroll)
+    this.isPinnedObserver?.disconnect()
   },
   methods: {
     onTabSelect(tab) {
@@ -155,28 +153,17 @@ export default defineNuxtComponent({
         this.selectedTab === 0 ? this.$refs.buttonFilterOnsite : this.$refs.buttonFilterRemote
       button.focus()
     },
-    handleSticky() {
-      this.tabswrapperBoundingClientRect = this.$refs.mobileFilters.$el
-        .querySelector('ul[role="tablist"]')
-        .getBoundingClientRect()
-      if (this.tabswrapperBoundingClientRect.height === 0) {
-        return
-      }
-
-      this.tabswrapperElY = this.tabswrapperBoundingClientRect.top + window.scrollY
-      this.onScroll()
-      window.addEventListener('scroll', this.onScroll, false)
+    async onMountedTabs() {
+      this.handleSticky()
     },
-    onScroll() {
-      if (!this.waitingOnAnimRequest) {
-        window.requestAnimationFrame(() => {
-          this.isPinned =
-            window.visualViewport.pageTop - (this.tabswrapperBoundingClientRect.height - 4) >=
-            this.tabswrapperElY
-          this.waitingOnAnimRequest = false
-        })
-      }
-      this.waitingOnAnimRequest = true
+    handleSticky() {
+      this.isPinnedObserver = new IntersectionObserver(
+        ([e]) => {
+          this.isPinned = e.intersectionRatio < 0.9
+        },
+        { threshold: [0.9], rootMargin: '32px 0px 0px 0px' }
+      )
+      this.isPinnedObserver.observe(this.$refs.mobileFilters.$el)
     },
   },
 })

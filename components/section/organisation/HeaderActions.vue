@@ -28,7 +28,7 @@
                 :to="`/organisations/${organisation.slug}`"
                 :is-external="true"
                 class="text-xs font-normal flex-shrink-0"
-                icon-size="14"
+                :icon-size="14"
                 >Voir l'organisation</DsfrLink
               >
             </div>

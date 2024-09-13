@@ -142,6 +142,11 @@ export default defineNuxtComponent({
       default: true,
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       newFiles: [],
@@ -149,7 +154,6 @@ export default defineNuxtComponent({
       errors: [],
       dragging: false,
       showAlert: false,
-      uuid: uuidv4(),
     }
   },
   computed: {

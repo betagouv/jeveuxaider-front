@@ -58,7 +58,6 @@
 
 <script>
 import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   components: {
@@ -86,6 +85,11 @@ export default defineNuxtComponent({
       default: false,
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       disponibilities: [
@@ -108,7 +112,6 @@ export default defineNuxtComponent({
           },
         },
       ],
-      uuid: uuidv4(),
     }
   },
   methods: {

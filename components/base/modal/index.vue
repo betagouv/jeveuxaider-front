@@ -18,7 +18,7 @@
             'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyHeader && !stickyFooter,
           },
         ]"
-        :aria-labelledby="`modal-title-${uuid}`"
+        :aria-labelledby="title ? `modal-title-${uuid}` : undefined"
         role="dialog"
         aria-modal="true"
         v-scroll-lock="!stickyHeader && !stickyFooter ? isScrollLocked : undefined"
@@ -147,7 +147,6 @@
 
 <script>
 import { FocusLoop } from '@vue-a11y/focus-loop'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   emits: ['open', 'close'],
@@ -171,10 +170,14 @@ export default defineNuxtComponent({
     contentClass: { type: [String, Array], default: null },
     footerClass: { type: [String, Array], default: null },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       isScrollLocked: this.isOpen,
-      uuid: uuidv4(),
     }
   },
   methods: {

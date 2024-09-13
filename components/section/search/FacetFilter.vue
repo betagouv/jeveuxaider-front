@@ -78,13 +78,13 @@
 
 <script>
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   components: {
     FacetSearch,
   },
   setup() {
+    const uuid = useId()
     const { isActiveFilter, searchForFacetValues, addFilter, deleteFilter } =
       useAlgoliaQueryBuilder()
 
@@ -93,6 +93,7 @@ export default defineNuxtComponent({
       searchForFacetValues,
       addFilter,
       deleteFilter,
+      uuid,
     }
   },
   props: {
@@ -129,7 +130,6 @@ export default defineNuxtComponent({
       facetQuery: null,
       showSearch: false,
       showAllValues: false,
-      uuid: uuidv4(),
     }
   },
   computed: {

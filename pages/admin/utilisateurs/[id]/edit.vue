@@ -32,7 +32,7 @@ export default defineNuxtComponent({
   },
   async setup() {
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     definePageMeta({
       middleware: ['authenticated'],

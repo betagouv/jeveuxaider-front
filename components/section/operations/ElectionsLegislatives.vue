@@ -77,16 +77,15 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default defineNuxtComponent({
   components: {
     AlgoliaSlideshowMissions,
   },
-  data() {
+  setup() {
     return {
-      uuid: uuidv4(),
+      uuid: useId(),
     }
   },
   methods: {

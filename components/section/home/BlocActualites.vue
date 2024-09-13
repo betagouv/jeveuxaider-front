@@ -30,7 +30,15 @@
           navigation-id="slideshowArticlesArrows"
           aria-labelledby="label-slideshow-articles"
         >
-          <swiper-slide v-for="article in articles" :key="article.id" class="slide-wrapper">
+          <swiper-slide
+            v-for="article in articles"
+            :key="article.id"
+            :class="[
+              'slide-wrapper',
+              { 'swiper-slide-active': i === 0 },
+              { 'swiper-slide-next': i === 1 },
+            ]"
+          >
             <a
               :href="`${urlBlog}/${article.slug}`"
               target="_blank"

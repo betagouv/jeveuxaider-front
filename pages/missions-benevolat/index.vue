@@ -37,7 +37,7 @@ export default defineNuxtComponent({
       middleware: ['old-search-redirections'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     let title =
       'Devenez bénévole dans une association en quelques clics | JeVeuxAider.gouv.fr, la plateforme publique du bénévolat par la Réserve Civique'
     if (route.query?.page) {

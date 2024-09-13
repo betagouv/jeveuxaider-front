@@ -67,7 +67,7 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
 
     const invitation = await apiFetch(`/invitations/${route.params.hash}`)
 

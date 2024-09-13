@@ -38,7 +38,7 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const term = await apiFetch(`/terms/${route.params.id}`)
 
     if (!term) {

@@ -132,15 +132,24 @@
               </template>
               <template v-else>
                 <div class="flex mb-4">
-                  <img
-                    v-for="(portrait, index) in portraits"
-                    :key="index"
-                    :src="portrait"
-                    alt=""
-                    :class="[{ '-ml-2': index !== 0 }]"
-                    class="portrait rounded-full"
-                    style="width: 52px"
-                  />
+                  <ClientOnly fallback-tag="div">
+                    <img
+                      v-for="(portrait, index) in portraits"
+                      :key="index"
+                      :src="portrait"
+                      alt=""
+                      :class="[{ '-ml-2': index !== 0 }]"
+                      class="portrait rounded-full"
+                      style="width: 52px"
+                    />
+                    <template #fallback>
+                      <div
+                        v-for="(i, index) in Math.min(participationsCount, 3)"
+                        class="size-[52px] rounded-full bg-slate-100"
+                        :class="[{ '-ml-2': index !== 0 }]"
+                      />
+                    </template>
+                  </ClientOnly>
                 </div>
               </template>
               <div class="text-4xl lg:text-5xl font-bold">

@@ -52,7 +52,7 @@ export default defineNuxtComponent({
     },
   },
   async setup() {
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { $stores } = useNuxtApp()
 
     await $stores.messaging.fetchConversationMessages(route.params.id)

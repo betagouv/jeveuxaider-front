@@ -316,7 +316,7 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const runtimeConfig = useRuntimeConfig()
 
     if (
@@ -362,7 +362,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      const route = useRoute()
+      const route = useRouter().currentRoute.value
       apiFetch(`/statistics/organisations/${route.params.id}`).then((response) => {
         this.organisationStats = response
       })

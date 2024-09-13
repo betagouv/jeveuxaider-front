@@ -49,7 +49,6 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/accordion/accordion.main.min.css'
-import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
   props: {
@@ -75,10 +74,14 @@ export default defineNuxtComponent({
       default: 'hover:bg-[#F6F6F6] active:bg-[#EDEDED]',
     },
   },
+  setup() {
+    return {
+      uuid: useId(),
+    }
+  },
   data() {
     return {
       isOpen: this.initialIsOpen,
-      uuid: uuidv4(),
     }
   },
 })

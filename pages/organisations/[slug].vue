@@ -128,7 +128,7 @@ export default defineNuxtComponent({
       layout: 'default-without-header',
     })
 
-    const route = useRoute()
+    const route = useRouter().currentRoute.value
     const { $filters } = useNuxtApp()
 
     const { data: organisation, error } = await useApiFetch(`/associations/${route.params.slug}`)

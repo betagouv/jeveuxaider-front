@@ -142,7 +142,6 @@ export default defineNuxtComponent({
     const { $stores } = useNuxtApp()
     const { recomputeFilters } = useAlgoliaMissionsQueryBuilder()
     const runtimeConfig = useRuntimeConfig()
-    const route = useRoute()
 
     $stores.algoliaSearch.reset()
     $stores.algoliaSearch.indexKey = 'missionsIndex'
@@ -202,7 +201,7 @@ export default defineNuxtComponent({
       }
 
       if (
-        navigator.geolocation &&
+        'geolocation' in navigator &&
         !this.$stores.algoliaSearch.navigatorGeolocation &&
         !this.$stores.algoliaSearch.aroundLatLng &&
         !this.$stores.algoliaSearch.searchParameters?.aroundLatLng

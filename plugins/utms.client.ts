@@ -13,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     return value
   }
 
-  const route = useRoute()
+  const route = useRouter().currentRoute.value
 
   if (route.query.utm_source) {
     const utmSource = useCookie('utm_source', cookiesOptions)

@@ -38,15 +38,24 @@
         <div class="grid gris-cols-1 gap-8 lg:gap-10">
           <div class="p-10 bg-white shadow-2xl">
             <div class="flex mb-4">
-              <img
-                v-for="(portrait, index) in portraits"
-                :key="index"
-                :src="portrait"
-                alt=""
-                :class="[{ '-ml-2': index !== 0 }]"
-                class="portrait rounded-full"
-                style="width: 52px"
-              />
+              <ClientOnly fallback-tag="div">
+                <img
+                  v-for="(portrait, index) in portraits"
+                  :key="index"
+                  :src="portrait"
+                  alt=""
+                  :class="[{ '-ml-2': index !== 0 }]"
+                  class="portrait rounded-full"
+                  style="width: 52px"
+                />
+                <template #fallback>
+                  <div
+                    v-for="(i, index) in Math.min(statistics.participations_count, 3)"
+                    class="size-[52px] rounded-full bg-slate-100"
+                    :class="[{ '-ml-2': index !== 0 }]"
+                  />
+                </template>
+              </ClientOnly>
             </div>
             <div class="text-4xl lg:text-5xl font-bold">
               {{ $numeral(statistics.participations_count) }}
