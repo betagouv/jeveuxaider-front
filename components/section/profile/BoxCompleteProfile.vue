@@ -152,45 +152,6 @@ export default defineNuxtComponent({
     profile() {
       return this.$stores.auth?.user?.profile
     },
-    totalPoints() {
-      let points = 0
-      if (!!this.profile?.first_name) points += 5
-      if (!!this.profile?.last_name) points += 5
-      if (!!this.profile?.birthday) points += 10
-      if (!!this.profile?.zip) points += 10
-      if (!!this.profile?.type) points += 5
-      if (!!this.profile?.description) points += 5
-      if (!!this.profile?.avatar) points += 5
-      if (!!this.profile?.type_missions) points += 10
-      if (this.isDisponibilitiesCompleted) points += 15
-      if (this.isPreferencesCompleted) points += 20
-      if (this.isSkillsAndCertificationsCompleted) points += 10
-      return points
-    },
-    isContactInformationsCompleted() {
-      return (
-        !!this.profile?.email &&
-        !!this.profile?.mobile &&
-        !!this.profile?.type &&
-        !!this.profile?.birthday &&
-        !!this.profile?.zip
-      )
-    },
-    isDisponibilitiesCompleted() {
-      return !!this.profile?.commitment && this.profile?.disponibilities?.length > 0
-    },
-    isPreferencesCompleted() {
-      return this.profile?.activities?.length > 0 && !!this.profile?.type_missions
-    },
-    isMotMotivationCompleted() {
-      return !!this.profile?.description
-    },
-    isProfilePictureCompleted() {
-      return !!this.profile?.avatar
-    },
-    isSkillsAndCertificationsCompleted() {
-      return this.profile?.skills?.length > 0 || this.profile?.certifications?.length > 0
-    },
     totalToShow() {
       return this.totalPoints === 100 && this.totalPoints !== this.fakeTotal
         ? this.fakeTotal
