@@ -1,4 +1,4 @@
-type QueryBuilderResponse = {
+export type QueryBuilderResponse = {
   current_page: number
   data: any[]
   first_page_url: string

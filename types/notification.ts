@@ -1,4 +1,4 @@
-type Notification = {
+export type Notification = {
   id: string
   created_at: string
   data: { [key: string]: any }
@@ -9,6 +9,3 @@ type Notification = {
   type: string
   updated_at: string
 }
-
-// Duplicate identifier 'Notification'
-export default Notification

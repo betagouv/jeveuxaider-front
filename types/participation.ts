@@ -1,3 +1,3 @@
-type Participation = {
+export type Participation = {
   [key: string]: any
 }

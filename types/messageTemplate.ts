@@ -1,4 +1,4 @@
-type MessageTemplate = {
+export type MessageTemplate = {
   id: number
   name: string
   user_id: number

@@ -249,4 +249,8 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-09-11',
+
+  imports: {
+    dirs: ['types/*.ts', 'types/**/*.ts'],
+  },
 })

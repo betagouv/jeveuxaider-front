@@ -1,4 +1,4 @@
-type Conversation = {
+export type Conversation = {
   id: number
   conversable_id: number
   conversable_type: string

@@ -1,4 +1,4 @@
-type ConversationMessage = {
+export type ConversationMessage = {
   id: number
   content: string
   type: string

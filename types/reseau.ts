@@ -1,4 +1,4 @@
-type Reseau = {
+export type Reseau = {
   id: number
   name: string
   created_at: string
