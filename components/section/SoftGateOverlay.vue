@@ -212,12 +212,12 @@ export default defineNuxtComponent({
       this.step = 'complete-profile'
     },
     handleNextResolver() {
-      if (this.hasPrerequisites) {
+      if (this.$stores.softGate.waitingList) {
+        this.step = 'waiting-list'
+      } else if (this.hasPrerequisites) {
         this.step = 'prerequisites'
       } else if (this.hasCreneaux) {
         this.step = 'select-creneaux'
-      } else if (this.$stores.softGate.waitingList) {
-        this.step = 'waiting-list'
       } else {
         this.step = 'participate'
       }
