@@ -43,8 +43,10 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('Click CTA - Mission', {
         props: { isLogged: this.$stores.auth.isLogged },
       })
-      this.$stores.softGate.showOverlay = true
+
+      this.$stores.softGate.waitingList = false
       this.$stores.softGate.selectedMission = this.mission
+      this.$stores.softGate.showOverlay = true
     },
   },
 })

@@ -79,6 +79,14 @@ export default {
             contexte: this.notification.data.structure_name,
             redirection: `/admin/organisations/${this.notification.data.structure_id}`,
           }
+        case 'App\\Notifications\\MissionFull':
+          return {
+            emoji: '🔥',
+            message: 'Votre mission est **complète**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.mission_name,
+            redirection: `/admin/missions/${this.notification.data.mission_id}`,
+          }
         case 'App\\Notifications\\MissionAlmostFull':
           return {
             emoji: '🔥',

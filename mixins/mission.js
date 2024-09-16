@@ -110,17 +110,21 @@ export default {
           return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
       }
     },
-    // missionCity() {
-    //   if (this.mission.city?.startsWith('Paris ')) {
-    //     return 'Paris'
-    //   } else if (this.mission.city?.startsWith('Lyon ')) {
-    //     return 'Lyon'
-    //   } else if (this.mission.city?.startsWith('Marseille ')) {
-    //     return 'Marseille'
-    //   } else {
-    //     return this.mission.city?.replace(' Arrondissement', '')
-    //   }
-    // },
+    canRegisterWaitingList() {
+      if (!this.mission.is_online) {
+        return false
+      }
+      if (this.mission.state !== 'Validée') {
+        return false
+      }
+      if (this.mission.structure.state !== 'Validée') {
+        return false
+      }
+      if (this.hasExpired) {
+        return false
+      }
+      return !this.mission.has_places_left || !this.mission.is_registration_open
+    },
     canRegister() {
       if (!this.mission.has_places_left) {
         // console.log('no places left')

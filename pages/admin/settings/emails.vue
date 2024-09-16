@@ -243,6 +243,10 @@ const workflows = [
     label: 'Relances',
   },
   {
+    key: 'liste-attente',
+    label: 'Liste d’attente',
+  },
+  {
     key: 'france-travail',
     label: 'Bénéficiaire du RSA',
   },
@@ -420,6 +424,16 @@ const notifications = [
   //   tags: ['J+10'],
   //   databaseNotification: false,
   // },
+  {
+    receiver: 'benevole',
+    key: 'mission_has_available_place',
+    label: 'Des places se sont libérées sur une mission de bénévolat 🏃',
+    description: 'Le bénévole est alerté qu’une mission a des places disponibles',
+    workflows: ['relances', 'liste-attente'],
+    weight: 90,
+    tags: [],
+    databaseNotification: false,
+  },
   {
     receiver: 'benevole',
     key: 'benevole_cej_six_months_after',

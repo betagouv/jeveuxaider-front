@@ -1,37 +1,55 @@
 <template>
   <BaseOverlay :is-open="$stores.softGate.showOverlay" @close="onClose">
-    <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
-    <SoftGateLogin
-      v-if="step == 'login'"
-      :datas="datas"
-      @next="handleNextResolver"
-      @anti-flood="step = 'anti-flood'"
-      @close="onClose"
-    />
-    <SoftGateRegister
-      v-if="step == 'register'"
-      :datas="datas"
-      @next="handleRegisterNextStepResolver"
-    />
-    <SoftGateAntiFlood v-if="step == 'anti-flood'" @next="handleNextResolver" @close="onClose" />
-    <SoftGatePrerequisites
-      :check-distance="needToCheckDistance"
-      v-if="step == 'prerequisites'"
-      @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
-      @close="onClose"
-    />
-    <SoftGateSelectCreneaux
-      v-if="$stores.softGate.selectedMission && step == 'select-creneaux'"
-      @next="step = 'participate'"
-    />
-    <SoftGateParticipate
-      v-if="step == 'participate'"
-      @next="step = 'invitations'"
-      @back="step = 'select-creneaux'"
-    />
-    <SoftGateInvitations v-if="step == 'invitations'" @next="onStepInvitationsNext" />
-    <SoftGateCompleteProfile v-if="step == 'complete-profile'" @next="onClose" />
-    <!-- <SoftGateShare v-if="step == 'share'" @next="onClose" :emails="emails" /> -->
+    <template v-if="$stores.softGate.waitingList">
+      <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
+      <SoftGateLogin
+        v-if="step == 'login'"
+        :datas="datas"
+        @next="handleNextResolver"
+        @anti-flood="step = 'anti-flood'"
+        @close="onClose"
+      />
+      <SoftGateRegister
+        v-if="step == 'register'"
+        :datas="datas"
+        @next="handleRegisterNextStepResolver"
+      />
+      <SoftGateWaitingList v-if="step == 'waiting-list'" @next="onClose" />
+    </template>
+    <template v-else>
+      <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
+      <SoftGateLogin
+        v-if="step == 'login'"
+        :datas="datas"
+        @next="handleNextResolver"
+        @anti-flood="step = 'anti-flood'"
+        @close="onClose"
+      />
+      <SoftGateRegister
+        v-if="step == 'register'"
+        :datas="datas"
+        @next="handleRegisterNextStepResolver"
+      />
+      <SoftGateAntiFlood v-if="step == 'anti-flood'" @next="handleNextResolver" @close="onClose" />
+      <SoftGatePrerequisites
+        :check-distance="needToCheckDistance"
+        v-if="step == 'prerequisites'"
+        @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
+        @close="onClose"
+      />
+      <SoftGateSelectCreneaux
+        v-if="$stores.softGate.selectedMission && step == 'select-creneaux'"
+        @next="step = 'participate'"
+      />
+      <SoftGateParticipate
+        v-if="step == 'participate'"
+        @next="step = 'invitations'"
+        @back="step = 'select-creneaux'"
+      />
+      <SoftGateInvitations v-if="step == 'invitations'" @next="onStepInvitationsNext" />
+      <SoftGateCompleteProfile v-if="step == 'complete-profile'" @next="onClose" />
+      <!-- <SoftGateShare v-if="step == 'share'" @next="onClose" :emails="emails" /> -->
+    </template>
   </BaseOverlay>
 </template>
 
@@ -46,6 +64,7 @@ import SoftGateInvitations from '@/components/section/soft-gate/Invitations.vue'
 // import SoftGateShare from '@/components/section/soft-gate/Share.vue'
 import SoftGateCompleteProfile from '@/components/section/soft-gate/CompleteProfile.vue'
 import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites.vue'
+import SoftGateWaitingList from '@/components/section/soft-gate/WaitingList.vue'
 import Toast from '@/components/Toast.vue'
 
 export default defineNuxtComponent({
@@ -61,6 +80,7 @@ export default defineNuxtComponent({
     SoftGateCompleteProfile,
     // SoftGateShare,
     SoftGatePrerequisites,
+    SoftGateWaitingList,
   },
   data() {
     return {
@@ -152,6 +172,9 @@ export default defineNuxtComponent({
       if (!this.$stores.auth.isLogged) {
         return 'email'
       }
+      if (this.$stores.softGate.waitingList) {
+        return 'waiting-list'
+      }
       if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
         return 'anti-flood'
       }
@@ -189,7 +212,9 @@ export default defineNuxtComponent({
       this.step = 'complete-profile'
     },
     handleNextResolver() {
-      if (this.hasPrerequisites) {
+      if (this.$stores.softGate.waitingList) {
+        this.step = 'waiting-list'
+      } else if (this.hasPrerequisites) {
         this.step = 'prerequisites'
       } else if (this.hasCreneaux) {
         this.step = 'select-creneaux'

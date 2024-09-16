@@ -5,6 +5,7 @@ export const useSoftGateStore = defineStore({
   state: () => ({
     showOverlay: false,
     selectedMission: null,
+    waitingList: false,
   }),
   getters: {},
   actions: {
@@ -16,6 +17,10 @@ export const useSoftGateStore = defineStore({
     },
     resetSelectedMission() {
       this.selectedMission = null
+      this.waitingList = false
+    },
+    setWaitingList(value: boolean) {
+      this.waitingList = value
     },
     async closeOverlay() {
       this.hideOverlay()
