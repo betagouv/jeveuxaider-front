@@ -115,7 +115,7 @@ export default defineNuxtComponent({
   },
   computed: {
     hasWaitingParticipations() {
-      return this.$stores.auth.user.statistics?.participations_waiting_count > 0
+      return this.$stores.auth.user?.statistics?.participations_waiting_count > 0
     },
   },
   methods: {

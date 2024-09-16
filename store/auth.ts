@@ -140,7 +140,7 @@ export const useAuthStore = defineStore({
       const cookieAccessTokenImpersonate = useCookie('access-token-impersonate')
       const cookieTokenIdImpersonate = useCookie('token-id-impersonate')
 
-      navigateTo('/')
+      await navigateTo('/')
       await useApiFetch(`/logout`, {
         method: 'POST',
       })
