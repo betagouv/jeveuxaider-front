@@ -8,8 +8,8 @@
     aria-labelledby="label-carousel-logos-inscription-benevoles"
   >
     <swiper-slide
-      v-for="(logo, index) in logos"
-      :key="index"
+      v-for="(logo, i) in logos"
+      :key="i"
       :class="[
         'px-8 m-auto !flex w-auto h-full',
         { 'swiper-slide-active': i === 0 },

@@ -31,7 +31,7 @@
           aria-labelledby="label-slideshow-articles"
         >
           <swiper-slide
-            v-for="article in articles"
+            v-for="(article, i) in articles"
             :key="article.id"
             :class="[
               'slide-wrapper',

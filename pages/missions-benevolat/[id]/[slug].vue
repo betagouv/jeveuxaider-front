@@ -387,7 +387,7 @@
             :aria-labelledby="`label-autres-missions-${uuid}`"
           >
             <swiper-slide
-              v-for="mission in similarMissions"
+              v-for="(mission, i) in similarMissions"
               :key="mission.id"
               :class="[
                 'card--mission--wrapper',
