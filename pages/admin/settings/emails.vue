@@ -869,7 +869,7 @@ const notifications = [
     label: '[PRENOM], découvrez l’activité du jour sur JeVeuxAider.gouv.fr !',
     description:
       "Notification envoyée aux responsables lorsqu'ils ont activé le résumé quotidien dans leurs préférences de notification",
-    workflows: ['relances'],
+    workflows: ['relances', 'actions-en-attente'],
     weight: 100,
     tags: ['Tous les jours'],
     databaseNotification: false,
@@ -880,7 +880,7 @@ const notifications = [
     label: '[PRENOM], découvrez votre résumé mensuel d’activité sur JeVeuxaider.gouv.fr !',
     description:
       "Notification envoyée aux responsables lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification",
-    workflows: ['relances'],
+    workflows: ['relances', 'actions-en-attente'],
     weight: 100,
     tags: ['Tous les mois'],
     databaseNotification: false,
@@ -1030,7 +1030,7 @@ const notifications = [
     label: 'Ça bouge dans votre département !',
     description: "Notification envoyée aux référents lorsqu'ils ont des actions en attente",
     brevoTags: ['app-referent-daily-todo'],
-    workflows: ['actions-en-attente'],
+    workflows: ['relances', 'actions-en-attente'],
     weight: 100,
     databaseNotification: false,
   },
@@ -1041,7 +1041,7 @@ const notifications = [
     description:
       "Notification envoyée aux référents lorsqu'ils ont activé le résumé bi-hebdomadaire dans leurs préférences de notification",
     brevoTags: ['app-referent-bilan-quotidien'],
-    workflows: ['actions-en-attente'],
+    workflows: ['relances', 'actions-en-attente'],
     weight: 100,
     tags: ['Tous les jours'],
     databaseNotification: false,
