@@ -3,7 +3,12 @@
     <div class="flex w-full items-center gap-4 lg:gap-8">
       <div class="hidden lg:block lg:border-r pr-4 lg:pr-8 py-2 group">
         <div class="lg:flex items-center gap-2">
-          <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
+          <img
+            src="@/assets/images/jeveuxaider-logo-short.svg"
+            alt="Logo de JeVeuxAider"
+            width="59"
+            height="44"
+          />
         </div>
       </div>
       <div class="flex-1 max-w-full">
@@ -48,11 +53,13 @@
           <ModalMissionPublish :mission="$stores.formMission.mission" />
         </template>
       </div>
-      <button title="Fermer" class="py-2 group" @click="onClose">
+      <button :aria-label="labelButtonClose" class="py-2 group" @click="onClose">
         <div class="flex items-center gap-2 group-hover:cursor-pointer">
           <RiCloseLine
+            aria-hidden="true"
             class="block flex-none h-6 w-6 lg:h-8 lg:w-8 text-[#929292] fill-current group-hover:text-jva-blue-500 transition-colors"
           />
+          <span class="sr-only">{{ labelButtonClose }}</span>
         </div>
       </button>
     </div>
@@ -99,6 +106,13 @@ export default defineNuxtComponent({
       },
       immediate: true,
       deep: true,
+    },
+  },
+  computed: {
+    labelButtonClose() {
+      return this.$stores.formMission.mission
+        ? "Quitter l'édition de la mission"
+        : 'Quitter la création de la mission'
     },
   },
   methods: {
