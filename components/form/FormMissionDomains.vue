@@ -27,6 +27,7 @@
       @keydown.arrow-up.prevent="selectPreviousDomain"
       @keydown.arrow-right.prevent="selectNextDomain"
       @keydown.arrow-down.prevent="selectNextDomain"
+      @focus="onFocus(domain)"
     >
       <RiCheckboxCircleFill
         :class="[
@@ -60,12 +61,10 @@ export default defineNuxtComponent({
   props: {
     selectedDomain: { type: [Object, null], default: null },
   },
-  setup({ selectedDomain }) {
+  setup() {
     return {
       domains: domains.sort((a, b) => a.label.localeCompare(b.label)),
-      indexToFocus: selectedDomain
-        ? domains.findIndex((domain) => domain.key === selectedDomain.key)
-        : 0,
+      indexToFocus: 0,
     }
   },
   methods: {
@@ -89,10 +88,14 @@ export default defineNuxtComponent({
         return
       }
 
-      // Otherwise, reset the index to focus
+      // Reset the focused index on tab out
       this.indexToFocus = this.selectedDomain
         ? domains.findIndex((domain) => domain.key === this.selectedDomain.key)
         : 0
+    },
+    onFocus(domain) {
+      // Reset the focused index on tab in
+      this.indexToFocus = this.domains.findIndex((d) => d.key === domain.key)
     },
   },
   watch: {
