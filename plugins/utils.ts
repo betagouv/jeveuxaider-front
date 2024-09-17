@@ -61,6 +61,14 @@ export default defineNuxtPlugin(() => {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
       )
     },
+    setFocusPosition: (el: HTMLElement) => {
+      // For accessibility purpose.
+      // Usage exemples: after an autoscroll, after a DOM mutation, etc.
+      el.focus({
+        preventScroll: true,
+      })
+      el.blur()
+    },
   }
 
   return {
