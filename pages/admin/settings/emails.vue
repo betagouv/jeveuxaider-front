@@ -430,6 +430,7 @@ const notifications = [
     label: 'Des places se sont libérées sur une mission de bénévolat 🏃',
     description: 'Le bénévole est alerté qu’une mission a des places disponibles',
     workflows: ['relances', 'liste-attente'],
+    brevoTags: ['app-benevole-mission-has-available-place'],
     weight: 90,
     tags: [],
     databaseNotification: false,
