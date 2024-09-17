@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-[#F9F6F2] h-full">
+  <aside class="flex flex-col bg-[#F9F6F2] h-full">
     <div
       v-if="mission"
       id="sidebar-content"
@@ -202,19 +202,21 @@
     </div>
     <div v-else>
       <div class="p-8">
-        <div class="text-5xl">✌️</div>
+        <div class="text-5xl" aria-hidden="true">✌️</div>
         <h3 class="text-2xl font-bold mb-4">Vous êtes à deux doigts de trouver vos bénévoles</h3>
-        <div>
+        <p>
           Vous êtes sur le point de créer une mission de bénévolat, quelle bonne nouvelle ! Le
           formulaire vous guidera étape par étape pour décrire votre mission. Plus vous serez
           précis, plus vos futurs bénévoles pourront se projeter.
-        </div>
-        <div class="text-[#666666] mt-4 text-sm">
-          Les champs marqués par <span class="text-[#E1000F]">*</span> sont obligatoires
-        </div>
+        </p>
+        <p class="text-[#666666] mt-4 text-sm">
+          Les champs marqués par
+          <abbr title="required" class="text-[#E1000F] no-underline"><strong>*</strong></abbr> sont
+          obligatoires
+        </p>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script>
