@@ -272,7 +272,7 @@ export default defineNuxtComponent({
       await this.$nextTick()
       const _duration = duration ?? 1000
       const el = document.getElementById(id)
-      if (el && this.$utils.isElementInViewport(el)) {
+      if (!el || this.$utils.isElementInViewport(el)) {
         return
       }
       this.$scrollTo(`#${id}`, _duration, {

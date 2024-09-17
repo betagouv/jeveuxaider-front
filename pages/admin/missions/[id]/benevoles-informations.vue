@@ -8,8 +8,10 @@
         Quels bénévoles recherchez-vous ?
       </h2>
       <CustomTips class="mb-6 lg:mb-10">
-        En précisant le type de profils recherchés, vous augmentez vos chances de trouver des
-        bénévoles correspondant à vos besoins.
+        <p>
+          En précisant le type de profils recherchés, vous augmentez vos chances de trouver des
+          bénévoles correspondant à vos besoins.
+        </p>
       </CustomTips>
       <div class="space-y-10">
         <DsfrFormControl

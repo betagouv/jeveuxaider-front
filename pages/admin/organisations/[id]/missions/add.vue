@@ -10,9 +10,11 @@
           Quel est le domaine d’action de votre mission ?
         </h2>
         <CustomTips class="mb-6 lg:mb-10">
-          <template #title>Plusieurs domaines correspondent à votre mission ?</template>
-          Choisissez celui qui représente au mieux votre mission. Vous pourrez choisir un domaine
-          secondaire dans les étapes suivantes.
+          <template #title><p>Plusieurs domaines correspondent à votre mission ?</p></template>
+          <p>
+            Choisissez celui qui représente au mieux votre mission. Vous pourrez choisir un domaine
+            secondaire dans les étapes suivantes.
+          </p>
         </CustomTips>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div
@@ -67,8 +69,10 @@
           </div>
         </div>
         <CustomTips class="mb-6 lg:mb-10">
-          En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
-          validée par un référent.
+          <p>
+            En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
+            validée par un référent.
+          </p>
         </CustomTips>
 
         <div v-if="selectedDomaine" class="grid grid-cols-1 gap-4">
