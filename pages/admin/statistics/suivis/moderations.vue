@@ -25,6 +25,7 @@
     </BaseSectionHeading>
 
     <div class="space-y-12">
+      <ActivityLogsModerationsStatistics ref="activityLogsModerationsStatistics" />
       <ActivityLogsAdminsVsReferentsCumul ref="activityLogsAdminsVsReferentsCumul" />
       <ActivityLogsAdminsVsReferents ref="activityLogsAdminsVsReferents" />
     </div>
@@ -34,6 +35,7 @@
 <script>
 import FiltersStatisticsButton from '@/components/custom/FiltersStatisticsButton.vue'
 import FiltersStatisticsActive from '@/components/custom/FiltersStatisticsActive.vue'
+import ActivityLogsModerationsStatistics from '@/components/numbers/ActivityLogsModerationsStatistics.vue'
 import ActivityLogsAdminsVsReferents from '@/components/numbers/ActivityLogsAdminsVsReferents.vue'
 import ActivityLogsAdminsVsReferentsCumul from '@/components/numbers/ActivityLogsAdminsVsReferentsCumul.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
@@ -44,6 +46,7 @@ export default defineNuxtComponent({
     FiltersStatisticsActive,
     ActivityLogsAdminsVsReferents,
     ActivityLogsAdminsVsReferentsCumul,
+    ActivityLogsModerationsStatistics,
     Breadcrumb,
   },
   setup() {
@@ -72,6 +75,7 @@ export default defineNuxtComponent({
   },
   methods: {
     refetch() {
+      this.$refs.activityLogsModerationsStatistics?.fetch()
       this.$refs.activityLogsAdminsVsReferents?.fetch()
       this.$refs.activityLogsAdminsVsReferentsCumul?.fetch()
     },
