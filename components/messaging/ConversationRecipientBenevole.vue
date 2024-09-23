@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ConversationRecipient :title="user.profile.full_name">
+    <ConversationRecipient :title="profile.full_name">
       <template #suffix-title>
         <DsfrLink
-          @click="drawerProfileId = user.profile.id"
+          @click="drawerProfileId = profile.id"
           class="text-jva-blue-500 hover:text-jva-blue-300 text-xs"
           >Plus de détails</DsfrLink
         >
@@ -23,38 +23,35 @@
         <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ user.profile.email }}
+            {{ profile.email }}
           </p>
         </div>
-        <div v-if="user.profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div v-if="profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ user.profile.mobile }}
+            {{ profile.mobile }}
           </p>
         </div>
-        <div
-          v-if="user.profile.birthday"
-          class="flex gap-1 items-center text-sm text-cool-gray-500"
-        >
+        <div v-if="profile.birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiCakeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ $dayjs(user.profile.birthday).fromNow('year') }}
+            {{ $dayjs(profile.birthday).fromNow('year') }}
           </p>
         </div>
-        <div v-if="user.profile.city" class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div v-if="profile.city" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ user.profile.city }}
+            {{ profile.city }}
           </p>
         </div>
-        <div v-if="user.profile.type" class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div v-if="profile.type" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiSuitcaseFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
-            {{ $filters.label(user.profile.type, 'profile_type') }}
+            {{ $filters.label(profile.type, 'profile_type') }}
           </p>
         </div>
         <div
-          v-if="user.profile.service_civique"
+          v-if="profile.service_civique"
           class="flex gap-1 items-center text-sm text-cool-gray-500"
         >
           <img
@@ -70,7 +67,7 @@
           />
           <p>Service Civique</p>
         </div>
-        <div v-if="user.profile.cej" class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div v-if="profile.cej" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiFlagLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>Jeune en CEJ</p>
         </div>
@@ -78,7 +75,7 @@
       <template #right>
         <div
           class="border-l px-6 lg:px-8 flex flex-col justify-center items-center text-jva-blue-500 hover:text-jva-blue-300"
-          @click="drawerProfileId = user.profile.id"
+          @click="drawerProfileId = profile.id"
         >
           <RiFileUserLine class="h-7 w-7 fill-current cursor-pointer" />
           <div class="text-sm">Infos</div>
@@ -104,6 +101,10 @@ export default defineNuxtComponent({
   mixins: [MixinConversationParticipation],
   props: {
     user: {
+      type: Object,
+      required: true,
+    },
+    profile: {
       type: Object,
       required: true,
     },

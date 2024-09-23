@@ -12,7 +12,7 @@
         <ConversationRecipientOrganisation :structure="structure" :users="conversationUsers" />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationRecipientBenevole :user="benevoleUser" />
+        <ConversationRecipientBenevole :user="benevoleUser" :profile="participation.profile" />
       </template>
     </template>
     <template #actions>

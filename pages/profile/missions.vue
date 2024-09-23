@@ -128,10 +128,6 @@ export default defineNuxtComponent({
     return {
       loading: false,
       endpoint: '/user/participations',
-      queryParams: {
-        include:
-          'conversation.latestMessage,mission.responsables.avatar,mission.structure,temoignage',
-      },
     }
   },
   methods: {
