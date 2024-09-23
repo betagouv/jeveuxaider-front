@@ -113,9 +113,6 @@ export default defineNuxtComponent({
     return {
       loading: false,
       endpoint: '/activity-logs',
-      queryParams: {
-        include: 'causer,causer.profile',
-      },
       drawerActivityLogId: null,
     }
   },
