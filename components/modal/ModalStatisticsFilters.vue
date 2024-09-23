@@ -55,6 +55,20 @@
           </DsfrFormControl>
 
           <DsfrFormControl
+            v-if="filters.includes('region')"
+            label="Région"
+            html-for="region"
+            :error="errors.region"
+          >
+            <DsfrSelect
+              name="region"
+              v-model="form.region"
+              placeholder="Sélectionner une région"
+              :options="$labels.regions"
+            />
+          </DsfrFormControl>
+
+          <DsfrFormControl
             v-if="filters.includes('reseau')"
             label="Réseau"
             html-for="reseau"
@@ -163,6 +177,7 @@ export default defineNuxtComponent({
     return {
       form: {
         department: this.$route.query['department'] || null,
+        region: this.$route.query['region'] || null,
         start_date: this.$route.query['start_date'] || null,
         end_date: this.$route.query['end_date'] || null,
         reseau: this.$route.query['reseau'] || null,

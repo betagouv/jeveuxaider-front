@@ -106,6 +106,16 @@ export default defineNuxtComponent({
             ],
           },
           {
+            key: 'suivis',
+            label: 'Suivis',
+            childrens: [
+              {
+                label: 'Modérations',
+                to: `/admin/statistics/suivis/moderations${queryString}`,
+              },
+            ],
+          },
+          {
             key: 'api',
             label: 'API Engagement',
             childrens: [

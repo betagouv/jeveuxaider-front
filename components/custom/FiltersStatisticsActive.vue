@@ -28,6 +28,19 @@
         {{ $filters.label($route.query['department'], 'departments') }}
       </DsfrTag>
     </template>
+    <template v-if="filters.includes('region')">
+      <DsfrTag
+        as="button"
+        v-if="$route.query['region']"
+        size="md"
+        context="deletable"
+        :is-active="!!$route.query['region']"
+        icon-class="pointer-events-none"
+        @click.native="removeFilter('region')"
+      >
+        {{ $route.query['region'] }}
+      </DsfrTag>
+    </template>
     <template v-if="filters.includes('reseau')">
       <DsfrTag
         as="button"
