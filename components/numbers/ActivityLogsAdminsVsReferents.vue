@@ -30,7 +30,7 @@ export default defineNuxtComponent({
             data: [],
           },
           {
-            label: 'Referents',
+            label: 'Référents',
             backgroundColor: '#EF8C8E',
             data: [],
           },
@@ -71,7 +71,7 @@ export default defineNuxtComponent({
 
         response.forEach((item) => {
           const adminPercentage = item.actions_admin_count
-          const referentPercentage = item.action_referent_count
+          const referentPercentage = item.actions_referent_count
 
           labels.push(this.$dayjs(item.created_at).format('\SW-YY')) // Format date
           adminData.push(adminPercentage)
