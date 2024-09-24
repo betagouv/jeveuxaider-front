@@ -62,6 +62,25 @@ export default defineNuxtComponent({
           datalabels: {
             display: false,
           },
+          annotation: {
+            annotations: {
+              line1: {
+                type: 'line',
+                yMin: 50, // Position the line at 50%
+                yMax: 50,
+                borderColor: 'rgba(0, 0, 0, 0.5)', // Line color (gray with opacity)
+                borderWidth: 2,
+                borderDash: [10, 5], // Dashed style: 10px dash, 5px gap
+                label: {
+                  enabled: true,
+                  content: '50%',
+                  position: 'end',
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  color: '#fff',
+                },
+              },
+            },
+          },
         },
       },
     }

@@ -50,6 +50,7 @@
     "body-scroll-lock-upgrade": "^1.1.0",
     "canvas-confetti": "^1.9.3",
     "chart.js": "^4.4.0",
+    "chartjs-plugin-annotation": "^3.0.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^5.2.2",

@@ -26,8 +26,18 @@ import {
   LinearScale,
 } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import annotationPlugin from 'chartjs-plugin-annotation'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ChartDataLabels,
+  annotationPlugin
+)
 
 export default defineNuxtComponent({
   components: {
