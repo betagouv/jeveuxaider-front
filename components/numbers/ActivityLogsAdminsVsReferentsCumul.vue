@@ -1,6 +1,6 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Répartition en pourcentages" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Répartition en pourcentage" no-period class="mb-6" />
     <div class="w-full">
       <BarChart
         v-if="chartData"
@@ -89,7 +89,7 @@ export default defineNuxtComponent({
           const adminPercentage = total > 0 ? (item.actions_admin_count / total) * 100 : 0
           const referentPercentage = total > 0 ? (item.action_referent_count / total) * 100 : 0
 
-          labels.push(this.$dayjs(item.created_at).format('MMM YY')) // Format date
+          labels.push(this.$dayjs(item.created_at).format('\SW-YY')) // Format date
           adminData.push(adminPercentage)
           referentData.push(referentPercentage)
         })

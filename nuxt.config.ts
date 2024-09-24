@@ -156,7 +156,16 @@ export default defineNuxtConfig({
 
   dayjs: {
     locales: ['fr'],
-    plugins: ['relativeTime', 'customParseFormat', 'duration', 'utc', 'dayOfYear'],
+    plugins: [
+      'relativeTime',
+      'customParseFormat',
+      'duration',
+      'utc',
+      'dayOfYear',
+      'weekOfYear',
+      'isoWeek',
+      'advancedFormat',
+    ],
     defaultLocale: 'fr',
   },
 

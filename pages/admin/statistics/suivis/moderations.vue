@@ -9,13 +9,16 @@
               to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
             },
             { text: 'Plus de chiffres', to: '/admin/statistics' },
-            { text: 'Modérations des missions et des organisations' },
+            { text: 'Modérations' },
           ]"
         />
       </Teleport>
     </ClientOnly>
 
-    <BaseSectionHeading title="Modérations des missions et des organisations">
+    <BaseSectionHeading
+      title="Modérations"
+      secondary-title-bottom="Changements de statut des missions et organisations"
+    >
       <template #action>
         <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>

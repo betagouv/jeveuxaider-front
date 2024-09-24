@@ -48,7 +48,7 @@
       <BaseAlert
         v-if="
           isCurrentUserResponsable &&
-          $dayjs().diff($dayjs(benevoleUser.profile.birthday), 'year') < 18
+          $dayjs().diff($dayjs(participation.profile.birthday), 'year') < 18
         "
         class="mt-4 lg:ml-10"
       >

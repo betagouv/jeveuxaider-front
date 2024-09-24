@@ -1,6 +1,6 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Nombre d'actions de modérations" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Nombre d'actions de modération" no-period class="mb-6" />
     <div class="w-full">
       <BarChart
         v-if="chartData"
@@ -73,7 +73,7 @@ export default defineNuxtComponent({
           const adminPercentage = item.actions_admin_count
           const referentPercentage = item.action_referent_count
 
-          labels.push(this.$dayjs(item.created_at).format('MMM YY')) // Format date
+          labels.push(this.$dayjs(item.created_at).format('\SW-YY')) // Format date
           adminData.push(adminPercentage)
           referentData.push(referentPercentage)
         })
