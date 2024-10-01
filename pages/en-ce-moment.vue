@@ -66,7 +66,7 @@
           origin="calendrier"
         />
       </div>
-      <SeptembrePourApprendre />
+      <!-- <SeptembrePourApprendre /> -->
 
       <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
@@ -95,7 +95,7 @@ import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import LocalisationMobileFilter from '@/components/search/LocalisationMobileFilter.vue'
-import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'
+// import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -103,7 +103,7 @@ export default defineNuxtComponent({
     LocalisationFilter,
     LocalisationMobileFilter,
     AlgoliaMissions,
-    SeptembrePourApprendre,
+    // SeptembrePourApprendre,
   },
   mounted() {
     this.isPinnedObserver = new IntersectionObserver(

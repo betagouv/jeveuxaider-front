@@ -247,11 +247,11 @@ export default defineNuxtComponent({
           //   href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
           //   target: '_blank',
           // },
-          {
-            name: 'Septembre pour Apprendre ✏️',
-            href: 'https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/',
-            target: '_blank',
-          },
+          // {
+          //   name: 'Septembre pour Apprendre ✏️',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/',
+          //   target: '_blank',
+          // },
           // {
           //   name: 'Élections législatives 🗳️',
           //   href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
