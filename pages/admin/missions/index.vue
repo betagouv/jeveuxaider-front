@@ -58,7 +58,7 @@
               :options="[
                 { key: '-created_at', label: 'Les plus récentes' },
                 { key: 'created_at', label: 'Les plus anciennes' },
-                { key: '-updated_at', label: 'Date de denière modification' },
+                { key: '-updated_at', label: 'Date de dernière modification' },
                 { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
               ]"
               :modelValue="$route.query['sort']"
