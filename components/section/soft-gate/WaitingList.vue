@@ -11,7 +11,7 @@
         />
       </div> -->
       <div class="text-[48px]">💌</div>
-      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Soyez informé par e-mail </DsfrHeading>
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Restez informé par e-mail </DsfrHeading>
       <div v-if="selectedMission" class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
         Dès qu’une place se libère pour la mission “{{ selectedMission?.name }}”, vous serez le
         premier au courant par e-mail !
