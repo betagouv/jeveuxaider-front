@@ -11,10 +11,10 @@
         />
       </div> -->
       <div class="text-[48px]">💌</div>
-      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Soyez notifié par email </DsfrHeading>
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Soyez informé par e-mail </DsfrHeading>
       <div v-if="selectedMission" class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
-        Dès qu'une place se libère pour la mission “{{ selectedMission?.name }}”, nous vous
-        notifierons par email.
+        Dès qu’une place se libère pour la mission “{{ selectedMission?.name }}”, vous serez le
+        premier au courant par e-mail !
       </div>
     </div>
 
@@ -55,7 +55,7 @@ export default defineNuxtComponent({
             event: 'benevole-participation-soft-gate-waiting-list',
           })
 
-          this.$toast.success('Vous recevrez un email si des nouvelles places se libèrent')
+          this.$toast.success('Vous recevrez un e-mail si des nouvelles places se libèrent')
           await this.$stores.auth.fetchUser()
           this.$emit('next')
         })
