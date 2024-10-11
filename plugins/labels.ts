@@ -438,7 +438,7 @@ const labels: TypeLabels = {
     },
     {
       key: 'Validée',
-      to: ['Validée', 'Signalée'],
+      to: ['En cours de traitement', 'Validée', 'Signalée'],
       roles: ['admin', 'referent', 'referent_regional'],
       label: 'Validée',
       description:
@@ -446,7 +446,7 @@ const labels: TypeLabels = {
     },
     {
       key: 'Signalée',
-      to: ['Signalée'],
+      to: ['En cours de traitement', 'Signalée'],
       roles: ['admin'],
       label: 'Signalée',
       description:
