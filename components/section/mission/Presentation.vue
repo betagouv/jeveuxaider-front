@@ -19,7 +19,7 @@
         </nuxt-link>
       </div>
 
-      <DsfrTag
+      <!-- <DsfrTag
         :icon-only="true"
         size="md"
         icon="RiShareFill"
@@ -28,7 +28,8 @@
         as="button"
         title="partager la mission"
         @click.native="handleClickShare"
-      />
+      /> -->
+      <CustomButtonMissionFavorite v-if="$stores.auth.isLogged" :mission="mission" />
     </div>
 
     <DsfrHeading as="h2" size="xl">
