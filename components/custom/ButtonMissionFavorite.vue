@@ -75,7 +75,7 @@ export default defineNuxtComponent({
           this.$plausible.trackEvent('Click CTA - Mission - Favorite', {
             props: { isLogged: this.$stores.auth.isLogged },
           })
-          this.$toast.success('La mission a été enregistrée dans vos favoris')
+          // this.$toast.success('La mission a été enregistrée dans vos favoris')
           await this.$stores.auth.fetchUser()
         })
         .finally(() => {
@@ -87,7 +87,7 @@ export default defineNuxtComponent({
         method: 'DELETE',
       })
         .then(async () => {
-          this.$toast.success('La mission a été retirée de vos favoris')
+          // this.$toast.success('La mission a été retirée de vos favoris')
           await this.$stores.auth.fetchUser()
         })
         .finally(() => {

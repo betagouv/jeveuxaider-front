@@ -2,7 +2,7 @@
   <div class="container">
     <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes favoris' }]" />
 
-    <div class="space-y-8">
+    <div class="space-y-8 mb-12">
       <BaseSectionHeading
         :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
           queryResult.total,
@@ -13,23 +13,43 @@
         :loading="queryLoading"
       />
 
-      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <CardMission
-          class="cursor-pointer"
-          v-for="favoris in queryResult.data"
-          :key="favoris.id"
-          :mission="favoris.mission"
-          @click.native="handleClickMission(favoris.mission)"
+      <div v-if="queryResult.total > 0">
+        <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <CardMission
+            class="cursor-pointer"
+            v-for="favoris in queryResult.data"
+            :key="favoris.id"
+            :mission="favoris.mission"
+            @click.middle="handleClickMission(favoris.mission)"
+          />
+        </div>
+
+        <DsfrPagination
+          class="mt-8"
+          :current-page="queryResult.current_page"
+          :total-rows="queryResult.total"
+          :per-page="queryResult.per_page"
+          @page-change="changePage"
         />
       </div>
 
-      <DsfrPagination
-        class="mt-8"
-        :current-page="queryResult.current_page"
-        :total-rows="queryResult.total"
-        :per-page="queryResult.per_page"
-        @page-change="changePage"
-      />
+      <div v-else>
+        <div class="bg-white border p-6 lg:p-10 text-center">
+          <div class="max-w-[508px] mx-auto space-y-6">
+            <img src="/images/icons/dsfr/no-result.svg" alt="" data-not-lazy class="mx-auto" />
+            <div class="text-[28px] font-bold leading-9">
+              Ajoutez les missions qui vous intéressent en favoris
+            </div>
+            <div class="text-lg leading-7 text-[#DDDDDD]">
+              Cliquez sur l’icône <RiHearFill class="h-6" /> de n’importe quelle mission pour
+              l’ajouter à vos favoris et la retrouver plus tard.
+            </div>
+            <DsfrButton to="/missions-benevolat" icon="RiSearchLine" size="lg">
+              Découvrir les missions
+            </DsfrButton>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
