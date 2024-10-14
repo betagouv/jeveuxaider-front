@@ -26,6 +26,7 @@
 
         <DsfrPagination
           class="mt-8"
+          v-if="queryResult.total > queryResult.per_page"
           :current-page="queryResult.current_page"
           :total-rows="queryResult.total"
           :per-page="queryResult.per_page"
@@ -41,8 +42,9 @@
               Ajoutez les missions qui vous intéressent en favoris
             </div>
             <div class="text-lg leading-7 text-[#DDDDDD]">
-              Cliquez sur l’icône <RiHearFill class="h-6" /> de n’importe quelle mission pour
-              l’ajouter à vos favoris et la retrouver plus tard.
+              Cliquez sur l’icône
+              <RiHeartFill class="h-6 inline-block text-[#6F6F6F] stroke-white" /> de n’importe
+              quelle mission pour l’ajouter à vos favoris et la retrouver plus tard.
             </div>
             <DsfrButton to="/missions-benevolat" icon="RiSearchLine" size="lg">
               Découvrir les missions
