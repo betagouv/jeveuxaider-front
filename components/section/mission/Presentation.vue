@@ -29,7 +29,11 @@
         title="partager la mission"
         @click.native="handleClickShare"
       /> -->
-      <CustomButtonMissionFavorite v-if="$stores.auth.isLogged" :mission="mission" />
+      <CustomButtonMissionFavorite
+        v-if="$stores.auth.isLogged"
+        :mission="mission"
+        variant="button"
+      />
     </div>
 
     <DsfrHeading as="h2" size="xl">

@@ -46,6 +46,12 @@
             <span>Mes missions</span>
           </div>
         </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem @click.native="handleClick('/profile/favoris')">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
+            <RiHeartLine class="h-[17px] w-auto fill-current" />
+            <span>Mes favoris</span>
+          </div>
+        </BaseDropdownOptionsItem>
         <BaseDropdownOptionsItem @click.native="handleClick('/profile/edit')">
           <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
             <RiUserLine class="h-[17px] w-auto fill-current" />
@@ -75,6 +81,7 @@ export default defineNuxtComponent({
           break
         case '/profile':
         case '/profile/missions':
+        case '/profile/favoris':
         case '/profile/settings':
         case '/profile/preferences':
         case '/profile/notifications':
