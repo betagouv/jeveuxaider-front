@@ -12,6 +12,20 @@
       </Teleport>
     </ClientOnly>
 
+    <BaseAlertDialog
+      icon="RiErrorWarningLine"
+      title="Supprimer l'archive"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    >
+      <p>Vous êtes sur le point de supprimer l'archive pour {{ selectedUserArchiveData.email }}.</p>
+      <p class="mt-2">
+        Cette action est irrémédiable. Ne l'utilisez que si la personne en question est bloquée lors
+        de la connexion.
+      </p>
+    </BaseAlertDialog>
+
     <div class="flex flex-col gap-8">
       <BaseSectionHeading
         title="Rechercher un utilisateur archivé"
@@ -31,7 +45,7 @@
 
           <div class="p-6 bg-gray-50 mt-10 divide-y [&>*:first-child]:pt-0 [&>*:last-child]:mb-0">
             <div v-for="archivedUser in results" :key="archivedUser.id" class="mb-4 pt-4">
-              <div class="grid sm:grid-cols-2">
+              <div class="grid sm:grid-cols-2 gap-4">
                 <div>
                   <div><strong class="text-sm">User ID:</strong> {{ archivedUser.user_id }}</div>
                   <div>
@@ -57,6 +71,11 @@
                       )
                     }}
                   </div>
+                </div>
+                <div class="cols-span-2">
+                  <DsfrButton type="secondary" @click="onClickDelete(archivedUser)" size="sm"
+                    >Supprimer l'archive</DsfrButton
+                  >
                 </div>
               </div>
             </div>
@@ -90,9 +109,23 @@ export default defineNuxtComponent({
         append: 'unserializedDatas',
       },
       results: [],
+      showAlert: false,
+      selectedUserArchiveData: null,
     }
   },
   methods: {
+    onClickDelete(archivedUser) {
+      this.showAlert = true
+      this.selectedUserArchiveData = archivedUser
+    },
+    handleConfirmDelete() {
+      apiFetch(`/archived-users/${this.selectedUserArchiveData.id}`, {
+        method: 'DELETE',
+      }).then(() => {
+        this.fetch()
+        this.showAlert = false
+      })
+    },
     onSearchQueryChange(payload) {
       const search = payload.trim()
       if (search.length === 0) {
