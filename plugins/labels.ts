@@ -438,7 +438,7 @@ const labels: TypeLabels = {
     },
     {
       key: 'Validée',
-      to: ['Validée', 'Signalée'],
+      to: ['En cours de traitement', 'Validée', 'Signalée'],
       roles: ['admin', 'referent', 'referent_regional'],
       label: 'Validée',
       description:
@@ -446,7 +446,7 @@ const labels: TypeLabels = {
     },
     {
       key: 'Signalée',
-      to: ['Signalée'],
+      to: ['En cours de traitement', 'Signalée'],
       roles: ['admin'],
       label: 'Signalée',
       description:
@@ -738,7 +738,9 @@ const labels: TypeLabels = {
   ],
   profile_certifications: [
     { key: 'permis_b', label: 'Permis B' },
-    { key: 'psc1', label: 'Brevet de secourisme PSC1' },
+    { key: 'psc1', label: 'PSC1' },
+    { key: 'pse1', label: 'PSE1' },
+    { key: 'pse2', label: 'PSE2' },
     { key: 'bafa', label: 'BAFA' },
   ],
   profile_type_missions: [

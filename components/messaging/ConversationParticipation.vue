@@ -12,7 +12,7 @@
         <ConversationRecipientOrganisation :structure="structure" :users="conversationUsers" />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationRecipientBenevole :user="benevoleUser" />
+        <ConversationRecipientBenevole :user="benevoleUser" :profile="participation.profile" />
       </template>
     </template>
     <template #actions>
@@ -48,7 +48,7 @@
       <BaseAlert
         v-if="
           isCurrentUserResponsable &&
-          $dayjs().diff($dayjs(benevoleUser.profile.birthday), 'year') < 18
+          $dayjs().diff($dayjs(participation.profile.birthday), 'year') < 18
         "
         class="mt-4 lg:ml-10"
       >

@@ -123,7 +123,7 @@
           :options="[
             { key: '-created_at', label: 'Les plus récentes' },
             { key: 'created_at', label: 'Les plus anciennes' },
-            { key: '-updated_at', label: 'Date de denière modification' },
+            { key: '-updated_at', label: 'Date de dernière modification' },
           ]"
           :modelValue="$route.query['sort']"
           placeholder="Trier par"

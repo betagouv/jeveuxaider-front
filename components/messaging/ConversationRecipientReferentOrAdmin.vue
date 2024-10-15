@@ -1,5 +1,5 @@
 <template>
-  <ConversationRecipient :title="`${user.profile.first_name} ${user.profile.last_name[0]}.`">
+  <ConversationRecipient :title="`${user.profile.secret_name}`">
     <template #badges>
       <DsfrBadge size="sm" no-icon class="hidden lg:flex">
         {{ $filters.label(user.context_role, 'roles') }}

@@ -33,12 +33,20 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <BaseFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
               <BaseImageCrop
+                v-if="$stores.auth.contextRole === 'admin'"
                 :default-value="form.avatar"
                 :preview-width="100"
                 :min-width="200"
                 @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
+              />
+              <BaseAvatar
+                v-else
+                :img-srcset="form.avatar && form.avatar.urls.formPreview"
+                :img-src="form.avatar ? form.avatar.urls.original : null"
+                :initials="form.short_name"
+                size="lg"
               />
             </BaseFormControl>
             <BaseFormControl

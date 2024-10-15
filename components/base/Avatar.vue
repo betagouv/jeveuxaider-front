@@ -6,6 +6,7 @@
       { 'w-10 h-10': size == 'xs' },
       { 'w-12 h-12': size == 'sm' },
       { 'w-16 h-16': size == 'md' },
+      { 'w-24 h-24': size == 'lg' },
 
       // Background color
       { 'bg-jva-blue-500 ': backgroundColor == 'blue' && !sources },
@@ -28,6 +29,7 @@
         // Font size
         { 'text-lg': size == 'sm' },
         { 'text-2xl': size == 'md' },
+        { 'text-3xl': size == 'lg' },
 
         // Colors
         { 'text-white': backgroundColor == 'blue' },
@@ -44,6 +46,7 @@
         { 'h-4 w-4': size == 'xs' },
         { 'h-6 w-6': size == 'sm' },
         { 'h-8 w-8': size == 'md' },
+        { 'h-10 w-10': size == 'lg' },
 
         // Colors
         { 'text-white': backgroundColor == 'blue' },
@@ -72,7 +75,7 @@ export default defineNuxtComponent({
     size: {
       type: String,
       default: 'sm',
-      validator: (s) => ['xs', 'sm', 'md'].includes(s),
+      validator: (s) => ['xs', 'sm', 'md', 'lg'].includes(s),
     },
     backgroundColor: {
       type: String,

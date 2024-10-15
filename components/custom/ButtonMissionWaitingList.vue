@@ -2,7 +2,7 @@
   <div>
     <div class="text-[#666666] mb-6">Des places peuvent se libérer à l’avenir</div>
     <DsfrButton :size="size" :type="buttonType" class="w-full" @click.native="onClick">
-      {{ !isMissionInUserWaitingList ? 'Être notifié par email' : 'Ne plus être notifié' }}
+      {{ !isMissionInUserWaitingList ? 'Être informé par e-mail' : 'Ne plus être informé' }}
     </DsfrButton>
   </div>
 </template>

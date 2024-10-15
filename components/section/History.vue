@@ -106,13 +106,10 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      const queryActivityLogs = await apiFetch('/activity-logs', {
+      const queryActivityLogs = await apiFetch(`/activity-logs/${this.modelType}/${this.modelId}`, {
         params: {
           'filter[log_name]': 'default',
-          'filter[subject_id]': this.modelId,
-          'filter[subject_type]': this.modelType,
           'filter[description]': 'created,updated',
-          include: 'causer,causer.profile',
           pagination: 10,
           page: this.page,
         },
@@ -127,14 +124,15 @@ export default defineNuxtComponent({
       })
     },
     formatActionLabel(activity) {
-      let label = 'Crée le '
-      if (activity.description == 'updated') {
-        label = 'Modifiée le '
-      } else if (activity.description == 'duplicated') {
-        label = 'Dupliquée le '
-      }
-      label = label + this.$dayjs(activity.created_at).format('D MMM YYYY')
-      return label
+      return this.$dayjs(activity.created_at).format('DD/MM/YYYY HH:mm:ss')
+      // let label = 'Crée le '
+      // if (activity.description == 'updated') {
+      //   label = 'Modifiée le '
+      // } else if (activity.description == 'duplicated') {
+      //   label = 'Dupliquée le '
+      // }
+      // label = label + this.$dayjs(activity.created_at).format('DD/MM/YYYY H:i')
+      // return label
     },
     formatPropertyLabel(property) {
       switch (property) {

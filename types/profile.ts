@@ -34,5 +34,5 @@ export type Profile = {
   activities?: { [key: string]: any }[] // @todo
   missions_offline?: Mission[]
   type_missions?: 'all' | 'distance' | 'presentiel'
-  certifications?: 'permis_b' | 'psc1' | 'bafa'[]
+  certifications?: 'permis_b' | 'psc1' | 'pse1' | 'pse2' | 'bafa'[]
 }

@@ -50,8 +50,6 @@ export default defineNuxtComponent({
       const response = await apiFetch('/user/participations', {
         params: {
           'filter[state]': 'En attente de validation,En cours de traitement',
-          include:
-            'conversation.latestMessage,mission.responsables.avatar,mission.structure,temoignage',
           pagination: 3,
         },
       })

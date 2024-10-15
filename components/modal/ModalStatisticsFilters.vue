@@ -55,6 +55,20 @@
           </DsfrFormControl>
 
           <DsfrFormControl
+            v-if="filters.includes('region')"
+            label="Région"
+            html-for="region"
+            :error="errors.region"
+          >
+            <DsfrSelect
+              name="region"
+              v-model="form.region"
+              placeholder="Sélectionner une région"
+              :options="$labels.regions"
+            />
+          </DsfrFormControl>
+
+          <DsfrFormControl
             v-if="filters.includes('reseau')"
             label="Réseau"
             html-for="reseau"
@@ -163,6 +177,7 @@ export default defineNuxtComponent({
     return {
       form: {
         department: this.$route.query['department'] || null,
+        region: this.$route.query['region'] || null,
         start_date: this.$route.query['start_date'] || null,
         end_date: this.$route.query['end_date'] || null,
         reseau: this.$route.query['reseau'] || null,
@@ -184,6 +199,8 @@ export default defineNuxtComponent({
       }),
       datePrefilters: [
         { key: 'last_12_months', label: 'Les 12 derniers mois' },
+        { key: 'last_6_months', label: 'Les 6 derniers mois' },
+        { key: 'last_3_months', label: 'Les 3 derniers mois' },
         { key: 'current_year', label: 'Cette année' },
         { key: 'last_year', label: "L'année dernière" },
         { key: 'current_month', label: 'Ce mois-ci' },
@@ -200,6 +217,14 @@ export default defineNuxtComponent({
       switch (filter) {
         case 'last_12_months':
           this.form.start_date = this.$dayjs().subtract(12, 'month').format('YYYY-MM-DD')
+          this.form.end_date = this.$dayjs().format('YYYY-MM-DD')
+          break
+        case 'last_6_months':
+          this.form.start_date = this.$dayjs().subtract(6, 'month').format('YYYY-MM-DD')
+          this.form.end_date = this.$dayjs().format('YYYY-MM-DD')
+          break
+        case 'last_3_months':
+          this.form.start_date = this.$dayjs().subtract(3, 'month').format('YYYY-MM-DD')
           this.form.end_date = this.$dayjs().format('YYYY-MM-DD')
           break
         case 'current_year':

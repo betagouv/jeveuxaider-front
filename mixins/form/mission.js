@@ -22,9 +22,9 @@ export default {
 
         // Initialisation form
         // @todo: dans initMissionFields ?
-        if (this.form.publics_volontaires === null) {
-          this.form.publics_volontaires = ['Mineurs']
-        }
+        // if (this.form.publics_volontaires === null) {
+        //   this.form.publics_volontaires = ['Mineurs']
+        // }
         if (!this.form.participations_max) {
           this.form.participations_max = 1
         }
