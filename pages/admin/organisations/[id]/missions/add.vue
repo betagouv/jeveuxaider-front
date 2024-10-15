@@ -243,8 +243,8 @@ export default {
           offset: -50,
           cancelable: false,
         })
-        this.$utils.setFocusPosition(this.$refs.refFormActions)
       }
+      this.$utils.setFocusPosition(this.$refs.refFormActions)
     },
     async fetchTemplates() {
       await apiFetch('/mission-templates', {
