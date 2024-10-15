@@ -29,10 +29,13 @@
           <h2 class="text-[28px] font-bold leading-9 mb-2">Choisissez un modèle de mission</h2>
           <div>
             <span aria-hidden="true">{{ selectedDomain.emoji }}</span>
-            <span class="ml-2 text-[#666666]">{{ selectedDomain.label }}</span>
+            <span class="ml-2 text-[#666666]" aria-description="Domaine actuellement sélectionné">{{
+              selectedDomain.label
+            }}</span>
             <DsfrLink
               class="ml-4 text-jva-blue-500"
               ref="changeDomainButton"
+              aria-description="Changer de domaine d'action"
               @click.prevent="onChangeDomaineClick"
               >Changer</DsfrLink
             >
@@ -45,6 +48,7 @@
           </p>
         </CustomTips>
 
+        <!-- @todo: accessibility -->
         <div v-if="selectedDomain" class="grid grid-cols-1 gap-4">
           <CardTemplate :is-selected="noTemplateSelected" @click="onTemplateClick(null)">
             <template #tags
@@ -115,15 +119,15 @@
       </div> -->
     </div>
     <template #footer>
-      <div class="flex justify-end space-x-4">
-        <DsfrButton v-if="selectedTemplate" type="tertiary" @click="onChangeTemplateClick">
-          Choisir un autre modèle</DsfrButton
-        >
+      <div ref="refFormActions" tabindex="-1" class="flex justify-end gap-4 flex-row-reverse">
         <DsfrButton
           :loading="loading"
           :disabled="!(selectedDomain && (selectedTemplate || noTemplateSelected))"
           @click="onValidateClick"
           >Continuer</DsfrButton
+        >
+        <DsfrButton v-if="selectedTemplate" type="tertiary" @click="onChangeTemplateClick">
+          Choisir un autre modèle</DsfrButton
         >
       </div>
     </template>
@@ -222,7 +226,9 @@ export default {
       this.$scrollTo('#templates', 300, {
         container: '#content',
         offset: -50,
+        cancelable: false,
       })
+      this.$utils.setFocusPosition(this.$refs.refTemplates)
     },
     async onTemplateClick(template) {
       if (!template) {
@@ -235,7 +241,9 @@ export default {
         this.$scrollTo('#preview', 300, {
           container: '#content',
           offset: -50,
+          cancelable: false,
         })
+        this.$utils.setFocusPosition(this.$refs.refFormActions)
       }
     },
     async fetchTemplates() {
