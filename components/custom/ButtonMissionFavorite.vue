@@ -1,5 +1,5 @@
 <template>
-  <div class="group">
+  <div v-if="showButton" class="group cursor-pointer">
     <template v-if="variant === 'button'">
       <DsfrButton
         type="tertiary-no-outline"
@@ -14,13 +14,13 @@
     <template v-if="variant === 'icon'">
       <template v-if="isMissionInUserFavorite">
         <RiHeartFill
-          class="text-[#F93F42] h-8 stroke-white stroke-2 group-hover:scale-110 transition"
+          class="text-[#F93F42] drop-shadow h-8 stroke-white stroke-2 group-hover:scale-110 transition"
           @click.prevent="onClick"
         />
       </template>
       <template v-else>
-        <RiHeartLine
-          class="text-white fill-current h-8 group-hover:scale-110 transition"
+        <RiHeartFill
+          class="text-black stroke-white stroke-2 text-opacity-10 drop-shadow h-8 group-hover:scale-110 transition"
           @click.prevent="onClick"
         />
       </template>
@@ -46,6 +46,15 @@ export default defineNuxtComponent({
     },
   },
   computed: {
+    showButton() {
+      if (!this.mission.provider) {
+        return true
+      }
+      if (this.mission?.provider === 'reserve_civique') {
+        return true
+      }
+      return false
+    },
     icon() {
       return this.isMissionInUserFavorite ? 'RiHeartFill' : 'RiHeartLine'
     },
