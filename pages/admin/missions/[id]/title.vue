@@ -8,8 +8,10 @@
         Trouvez un titre accrocheur pour votre mission
       </h2>
       <CustomTips class="mb-6 lg:mb-10">
-        Rédigez le titre de votre mission à la première personne du singulier
-        <strong>du point de vue du bénévole</strong>
+        <p>
+          Rédigez le titre de votre mission à la première personne du singulier
+          <strong>du point de vue du bénévole</strong>
+        </p>
       </CustomTips>
       <DsfrFormControl label="Titre de votre mission" html-for="name" :error="errors.name" required>
         <template #description>

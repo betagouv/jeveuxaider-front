@@ -1,6 +1,7 @@
 <template>
   <div class="bg-white flex flex-col h-full overflow-x-hidden">
-    <div id="teleport-header" class="relative z-50"></div>
+    <header id="teleport-header" class="relative z-50"></header>
+
     <div v-if="$stores.formMission.isDraft" class="h-[6px] bg-[#EEEEEE]">
       <div
         class="bg-[#6A6AF4] h-full transition-all"
@@ -19,7 +20,7 @@
       </div>
     </div>
     <div class="flex-grow flex h-full min-h-0">
-      <LayoutSidebarFormMission class="hidden lg:block w-[400px]" width />
+      <LayoutSidebarFormMission class="hidden lg:block w-[400px]" />
       <NuxtPage class="flex-1" />
     </div>
     <div id="teleport-body-end"></div>

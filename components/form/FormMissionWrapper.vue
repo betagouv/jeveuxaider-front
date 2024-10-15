@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <main class="flex flex-col h-full">
     <ClientOnly>
       <Teleport to="#teleport-header"> <slot name="header"></slot></Teleport>
     </ClientOnly>
@@ -11,10 +11,10 @@
         </div>
       </div>
     </div>
-    <div id="footer-form-mission" class="border-t py-4 px-6 flex justify-end">
+    <footer id="footer-form-mission" class="border-t py-4 px-6 flex justify-end">
       <slot name="footer"></slot>
-    </div>
-  </div>
+    </footer>
+  </main>
 </template>
 
 <script>

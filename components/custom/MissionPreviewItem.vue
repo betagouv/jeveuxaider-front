@@ -1,13 +1,12 @@
 <template>
   <div
-    tabindex="0"
+    :tabindex="isDisabled ? -1 : 0"
     :class="[
       'relative p-6 shadow border-2 transition-shadow duration-300',
       { ' border-[#6A6AF4] bg-[#F5F5FE] ': isCurrent },
       { 'border-white bg-white': !isCurrent },
-      { '': isCompleted },
-      { 'cursor- cursor-not-allowed  opacity-70': isDisabled },
-      { 'cursor-pointer  hover:shadow-lg': !isDisabled },
+      { 'cursor-not-allowed opacity-70': isDisabled },
+      { 'cursor-pointer hover:shadow-lg': !isDisabled },
     ]"
     @click="onClick"
     @keydown.enter="onClick"

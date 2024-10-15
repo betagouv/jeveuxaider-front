@@ -9,14 +9,18 @@
       </h2>
 
       <CustomTips v-if="form.participations_max > 70" class="mb-10" variant="warning">
-        <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br />
-        Toutes les demandes de participations devront être mises à jour (validées ou refusées). Nous
-        vous conseillons de mobiliser progressivement des bénévoles, et de revoir votre besoin à la
-        hausse si nécessaire.
+        <p>
+          <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br />
+          Toutes les demandes de participations devront être mises à jour (validées ou refusées).
+          Nous vous conseillons de mobiliser progressivement des bénévoles, et de revoir votre
+          besoin à la hausse si nécessaire.
+        </p>
       </CustomTips>
       <CustomTips v-else class="mb-10">
-        Vous pourrez modifier le nombre de bénévoles recherchés en fonction des propositions d’aide
-        reçues et de vos besoins s’ils évoluent !
+        <p>
+          Vous pourrez modifier le nombre de bénévoles recherchés en fonction des propositions
+          d’aide reçues et de vos besoins s’ils évoluent !
+        </p>
       </CustomTips>
 
       <div

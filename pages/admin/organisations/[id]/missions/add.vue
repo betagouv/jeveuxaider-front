@@ -10,71 +10,49 @@
           Quel est le domaine d’action de votre mission ?
         </h2>
         <CustomTips class="mb-6 lg:mb-10">
-          <template #title>Plusieurs domaines correspondent à votre mission ?</template>
-          Choisissez celui qui représente au mieux votre mission. Vous pourrez choisir un domaine
-          secondaire dans les étapes suivantes.
+          <template #title><p>Plusieurs domaines correspondent à votre mission ?</p></template>
+          <p>
+            Choisissez celui qui représente au mieux votre mission. Vous pourrez choisir un domaine
+            secondaire dans les étapes suivantes.
+          </p>
         </CustomTips>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div
-            v-for="domaine in domaines"
-            :key="domaine.key"
-            :class="[
-              'relative group shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-[#8585F6]',
-              selectedDomaine && selectedDomaine.key === domaine.key
-                ? 'border-[#8585F6] bg-[#F5F5FE]'
-                : 'border-transparent bg-white',
-            ]"
-            @click="onDomaineClick(domaine)"
-            @keydown="
-              (e) => {
-                if (e.which === 13 || e.which === 32) {
-                  onDomaineClick(domaine)
-                }
-              }
-            "
-            tabindex="0"
-          >
-            <RiCheckboxCircleFill
-              v-if="selectedDomaine && selectedDomaine.key === domaine.key"
-              class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
-            />
-            <div class="text-4xl mb-2">
-              {{ domaine.emoji }}
-            </div>
-            <div
-              :class="[
-                'leading-tight font-bold group-hover:text-jva-blue-500',
-                selectedDomaine && selectedDomaine.key === domaine.key
-                  ? 'text-jva-blue-500'
-                  : 'text-[#161616]',
-              ]"
-            >
-              {{ domaine.label }}
-            </div>
-          </div>
-        </div>
+
+        <FormMissionDomains
+          ref="formMissionDomains"
+          :selectedDomain="selectedDomain"
+          @change="onDomaineChange($event)"
+        />
       </div>
 
-      <div v-if="selectedDomaine" id="templates" class="">
+      <div v-if="selectedDomain" id="templates" ref="refTemplates" tabindex="-1">
         <div class="mb-10">
           <h2 class="text-[28px] font-bold leading-9 mb-2">Choisissez un modèle de mission</h2>
           <div>
-            <span>{{ selectedDomaine.emoji }}</span>
-            <span class="ml-2 text-[#666666]">{{ selectedDomaine.label }}</span>
-            <DsfrLink class="ml-4 text-jva-blue-500" @click="onChangeDomaineClick"
+            <span aria-hidden="true">{{ selectedDomain.emoji }}</span>
+            <span class="ml-2 text-[#666666]" aria-description="Domaine actuellement sélectionné">{{
+              selectedDomain.label
+            }}</span>
+            <DsfrLink
+              class="ml-4 text-jva-blue-500"
+              ref="changeDomainButton"
+              aria-description="Changer de domaine d'action"
+              @click.prevent="onChangeDomaineClick"
               >Changer</DsfrLink
             >
           </div>
         </div>
         <CustomTips class="mb-6 lg:mb-10">
-          En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
-          validée par un référent.
+          <p>
+            En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
+            validée par un référent.
+          </p>
         </CustomTips>
 
-        <div v-if="selectedDomaine" class="grid grid-cols-1 gap-4">
+        <!-- @todo: accessibility -->
+        <div v-if="selectedDomain" class="grid grid-cols-1 gap-4">
           <CardTemplate :is-selected="noTemplateSelected" @click="onTemplateClick(null)">
             <template #tags
-              ><DsfrTag>{{ selectedDomaine.label }}</DsfrTag></template
+              ><DsfrTag>{{ selectedDomain.label }}</DsfrTag></template
             >
           </CardTemplate>
           <CardTemplate
@@ -135,21 +113,21 @@
             <div class="uppercase text-[#666666] font-bold text-sm mb-2">
               Domaine d’action principal
             </div>
-            <div class="font-medium">{{ selectedDomaine.label }}</div>
+            <div class="font-medium">{{ selectedDomain.label }}</div>
           </div>
         </CardTemplatePreview>
       </div> -->
     </div>
     <template #footer>
-      <div class="flex justify-end space-x-4">
-        <DsfrButton v-if="selectedTemplate" type="tertiary" @click="onChangeTemplateClick">
-          Choisir un autre modèle</DsfrButton
-        >
+      <div ref="refFormActions" tabindex="-1" class="flex justify-end gap-4 flex-row-reverse">
         <DsfrButton
           :loading="loading"
-          :disabled="!(selectedDomaine && (selectedTemplate || noTemplateSelected))"
+          :disabled="!(selectedDomain && (selectedTemplate || noTemplateSelected))"
           @click="onValidateClick"
           >Continuer</DsfrButton
+        >
+        <DsfrButton v-if="selectedTemplate" type="tertiary" @click="onChangeTemplateClick">
+          Choisir un autre modèle</DsfrButton
         >
       </div>
     </template>
@@ -157,7 +135,6 @@
 </template>
 
 <script>
-import domaines from '@/assets/domaines.json'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import CardTemplate from '@/components/card/CardTemplate.vue'
 import CardTemplatePreview from '@/components/card/CardTemplatePreview.vue'
@@ -206,8 +183,7 @@ export default {
   data() {
     return {
       loading: false,
-      domaines: domaines.sort((a, b) => a.label.localeCompare(b.label)),
-      selectedDomaine: null,
+      selectedDomain: null,
       selectedTemplate: null,
       noTemplateSelected: false,
       templates: [],
@@ -216,28 +192,32 @@ export default {
   created() {},
   computed: {},
   methods: {
-    async onDomaineClick(domaine) {
-      this.selectedDomaine = domaine
+    async onDomaineChange(domaine) {
+      this.selectedDomain = domaine
       this.selectedTemplate = null
       this.noTemplateSelected = false
       this.fetchTemplates()
-      await this.$nextTick()
+      await new Promise((resolve) => setTimeout(resolve, 400))
       this.$scrollTo('#templates', 300, {
         container: '#content',
         offset: -50,
+        cancelable: false,
       })
+      this.$utils.setFocusPosition(this.$refs.refTemplates)
     },
     async onChangeDomaineClick() {
       await this.$scrollTo('#domaines', 300, {
         container: '#content',
         offset: -50,
+        cancelable: false,
       })
       // Wait for scroll animation
       await new Promise((resolve) => setTimeout(resolve, 300))
-      this.selectedDomaine = null
+      this.selectedDomain = null
       this.selectedTemplate = null
       this.noTemplateSelected = false
       this.templates = []
+      this.$utils.setFocusPosition(this.$refs.formMissionDomains.$el)
     },
     async onChangeTemplateClick() {
       this.selectedTemplate = null
@@ -246,7 +226,9 @@ export default {
       this.$scrollTo('#templates', 300, {
         container: '#content',
         offset: -50,
+        cancelable: false,
       })
+      this.$utils.setFocusPosition(this.$refs.refTemplates)
     },
     async onTemplateClick(template) {
       if (!template) {
@@ -259,13 +241,15 @@ export default {
         this.$scrollTo('#preview', 300, {
           container: '#content',
           offset: -50,
+          cancelable: false,
         })
       }
+      this.$utils.setFocusPosition(this.$refs.refFormActions)
     },
     async fetchTemplates() {
       await apiFetch('/mission-templates', {
         params: {
-          'filter[domaine.id]': this.selectedDomaine.key,
+          'filter[domaine.id]': this.selectedDomain.key,
           'filter[published]': 1,
           'filter[state]': 'validated',
           'filter[with_reseaux]': this.structure.reseaux?.length
@@ -284,7 +268,7 @@ export default {
       await apiFetch(`/structures/${this.structure.id}/v2/missions`, {
         method: 'POST',
         body: {
-          domaine_id: this.selectedDomaine.key,
+          domaine_id: this.selectedDomain.key,
           template_id: this.selectedTemplate?.id,
         },
       })
