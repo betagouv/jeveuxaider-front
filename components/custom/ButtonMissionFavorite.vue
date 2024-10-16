@@ -20,7 +20,7 @@
       </template>
       <template v-else>
         <RiHeartFill
-          class="text-black stroke-white stroke-2 text-opacity-75 drop-shadow h-7 group-hover:scale-110 transition"
+          class="text-black stroke-white stroke-2 text-opacity-60 drop-shadow h-7 group-hover:scale-110 transition"
           @click.prevent="onClick"
         />
       </template>
@@ -84,7 +84,7 @@ export default defineNuxtComponent({
           this.$plausible.trackEvent('Click CTA - Mission - Favorite', {
             props: { isLogged: this.$stores.auth.isLogged },
           })
-          // this.$toast.success('La mission a été enregistrée dans vos favoris')
+          this.$toast.success('La mission a été enregistrée dans vos favoris')
           await this.$stores.auth.fetchUser()
         })
         .finally(() => {
@@ -96,7 +96,7 @@ export default defineNuxtComponent({
         method: 'DELETE',
       })
         .then(async () => {
-          // this.$toast.success('La mission a été retirée de vos favoris')
+          this.$toast.success('La mission a été retirée de vos favoris')
           await this.$stores.auth.fetchUser()
         })
         .finally(() => {

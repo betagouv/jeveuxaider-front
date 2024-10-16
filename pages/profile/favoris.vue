@@ -36,12 +36,12 @@
         />
 
         <div class="bg-white p-6 lg:py-12 lg:px-14 shadow-xl mt-12">
-          <div class="flex items-center justify-between gap-6">
-            <div class="flex gap-6 items-center">
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div class="flex flex-col lg:flex-row gap-6 items-center">
               <img src="/images/icons/dsfr/no-result.svg" alt="" data-not-lazy class="" />
-              <div>
+              <div class="text-center lg:text-left">
                 <div class="text-[28px] font-bold leading-9">Pas encore convaincu ?</div>
-                <div class="text-lg leading-7 text-[#DDDDDD] mt-2">
+                <div class="text-lg leading-7 text-[#666666] mt-2">
                   Effectuez une nouvelle recherche et trouvez une mission faite pour vous.
                 </div>
                 <DsfrButton
@@ -54,7 +54,7 @@
                 </DsfrButton>
               </div>
             </div>
-            <div class="md:hidden lg:block">
+            <div class="hidden lg:block">
               <DsfrButton to="/missions-benevolat" icon="RiSearchLine" size="lg">
                 Trouver une mission
               </DsfrButton>
@@ -70,7 +70,7 @@
             <div class="text-[28px] font-bold leading-9">
               Ajoutez les missions qui vous intéressent en favoris
             </div>
-            <div class="text-lg leading-7 text-[#DDDDDD]">
+            <div class="text-lg leading-7 text-[#666666]">
               Cliquez sur l’icône
               <RiHeartFill class="h-6 inline-block text-[#6F6F6F] stroke-white" /> de n’importe
               quelle mission pour l’ajouter à vos favoris et la retrouver plus tard.
