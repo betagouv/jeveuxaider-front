@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showButton" class="group cursor-pointer">
+  <div v-if="showButton" class="cursor-pointer">
     <template v-if="variant === 'button'">
       <DsfrButton
         type="tertiary-no-outline"
@@ -12,15 +12,15 @@
       </DsfrButton>
     </template>
     <template v-if="variant === 'icon'">
-      <button type="button" @click.prevent="onClick">
+      <button type="button" @click.prevent="onClick" class="group">
         <template v-if="isMissionInUserFavorite">
           <RiHeartFill
-            class="text-[#F93F42] drop-shadow h-7 stroke-white stroke-2 group-hover:scale-110 transition"
+            class="text-[#F93F42] drop-shadow h-7 stroke-white stroke-2 active:scale-95 group-hover:drop-shadow-lg transition"
           />
         </template>
         <template v-else>
           <RiHeartFill
-            class="text-black stroke-white stroke-2 text-opacity-60 drop-shadow h-7 group-hover:scale-110 transition"
+            class="text-black stroke-white stroke-2 text-opacity-60 drop-shadow h-7 active:scale-95 group-hover:drop-shadow-lg transition"
           />
         </template>
       </button>

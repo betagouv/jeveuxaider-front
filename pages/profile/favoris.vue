@@ -35,7 +35,7 @@
           @page-change="changePage"
         />
 
-        <div class="bg-white p-6 lg:py-12 lg:px-14 shadow-xl mt-12">
+        <div class="bg-white p-8 lg:py-12 lg:px-14 shadow-xl mt-12">
           <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div class="flex flex-col lg:flex-row gap-6 items-center">
               <img src="/images/icons/dsfr/no-result.svg" alt="" data-not-lazy class="" />
@@ -44,17 +44,17 @@
                 <div class="text-lg leading-7 text-[#666666] mt-2">
                   Effectuez une nouvelle recherche et trouvez une mission faite pour vous.
                 </div>
-                <DsfrButton
+                <!-- <DsfrButton
                   to="/missions-benevolat"
                   icon="RiSearchLine"
                   size="lg"
                   class="mt-4 lg:hidden"
                 >
                   Trouver une mission
-                </DsfrButton>
+                </DsfrButton> -->
               </div>
             </div>
-            <div class="hidden lg:block">
+            <div class="">
               <DsfrButton to="/missions-benevolat" icon="RiSearchLine" size="lg">
                 Trouver une mission
               </DsfrButton>
