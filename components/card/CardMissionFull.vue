@@ -58,6 +58,12 @@
             {{ formattedCommitment }}
           </DsfrBadge>
         </div>
+        <CustomButtonMissionFavorite
+          v-if="$stores.auth.isLogged"
+          :mission="mission"
+          variant="icon"
+          class="absolute top-4 right-4"
+        />
       </div>
 
       <div class="lg:flex-1 min-w-0 flex flex-col bg-white px-10 py-8">

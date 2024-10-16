@@ -68,6 +68,7 @@
           </div>
         </template>
       </BoxCompleteProfile>
+      <BoxUserFavoris />
       <BoxUserProfileBenevole :profile="$stores.auth?.user?.profile" />
 
       <HelpCenter />
@@ -88,6 +89,7 @@ import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
 import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
 import BoxUserWaitingParticipations from '@/components/section/profile/BoxUserWaitingParticipations.vue'
 import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import BoxUserFavoris from '@/components/section/profile/BoxUserFavoris.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -96,6 +98,7 @@ export default defineNuxtComponent({
     BoxUserProfileBenevole,
     BoxUserWaitingParticipations,
     BoxCompleteProfile,
+    BoxUserFavoris,
   },
   mixins: [MixinAction],
   setup() {
