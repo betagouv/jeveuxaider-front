@@ -10,7 +10,12 @@
           <RiArrowLeftLine
             class="hidden lg:block flex-none h-6 w-6 lg:h-8 lg:w-8 text-[#929292] fill-current group-hover:text-jva-blue-500 transition-colors"
           />
-          <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
+          <img
+            src="@/assets/images/jeveuxaider-logo-short.svg"
+            alt="Logo de JeVeuxAider"
+            width="59"
+            height="44"
+          />
         </nuxt-link>
       </div>
       <div class="">

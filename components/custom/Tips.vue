@@ -1,5 +1,6 @@
 <template>
-  <div
+  <aside
+    role="note"
     :class="[
       'border p-4 lg:p-6 rounded max-w-[600px] mx-auto',
       {
@@ -29,7 +30,7 @@
         <div class="text-[#161616] text-sm"><slot></slot></div>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script>

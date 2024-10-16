@@ -8,15 +8,17 @@
         En quoi consiste votre mission ?
       </h2>
       <CustomTips v-if="!$stores.formMission.mission.template_id" class="mb-10">
-        Consultez
-        <a
-          class="underline"
-          href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/"
-          target="_blank"
-          >cet article</a
-        >
-        pour découvrir nos astuces pour rédiger une mission qui donne envie aux bénévoles de
-        proposer leur aide.
+        <p>
+          Consultez
+          <a
+            class="underline"
+            href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/"
+            target="_blank"
+            >cet article</a
+          >
+          pour découvrir nos astuces pour rédiger une mission qui donne envie aux bénévoles de
+          proposer leur aide.
+        </p>
       </CustomTips>
       <template v-if="form.template_id">
         <div class="space-y-10">
@@ -134,9 +136,11 @@
           </div>
 
           <CustomTips class="mb-6 lg:mb-10">
-            Les informations ci-dessous seront visibles sur la fiche de votre mission. Vous ne
-            pouvez pas les modifier car elles sont propres au modèle que vous avez choisi pour créer
-            cette mission.
+            <p>
+              Les informations ci-dessous seront visibles sur la fiche de votre mission. Vous ne
+              pouvez pas les modifier car elles sont propres au modèle que vous avez choisi pour
+              créer cette mission.
+            </p>
           </CustomTips>
 
           <DsfrFormControl

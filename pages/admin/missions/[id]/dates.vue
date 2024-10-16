@@ -132,7 +132,7 @@
                 Vous voulez gagner du temps et obtenir plus de proposition d’aide de la part des
                 bénévoles ? <strong>Précisez la date de votre mission ! </strong>
               </p>
-              <p class="">
+              <p>
                 Vous permettrez aux bénévoles d’indiquez leurs disponibilités et de s’organiser en
                 conséquence !
               </p>

@@ -459,6 +459,17 @@ const notifications = [
   },
   {
     receiver: 'benevole',
+    key: 'mission_user_waiting_list_created_3_months_ago',
+    label: '[PRENOM], des missions de bénévolat vous attendent',
+    description: 'Le bénévole est en liste d’attente depuis 3 mois',
+    workflows: ['liste-attente'],
+    brevoTags: ['app-benevole-mission-user-waiting-list-created-3-months-ago'],
+    weight: 90,
+    tags: ['Mission complète'],
+    databaseNotification: false,
+  },
+  {
+    receiver: 'benevole',
     key: 'benevole_cej_six_months_after',
     label: '[PRENOM], êtes-vous toujours en Contrat d’Engagement Jeune ?',
     description:

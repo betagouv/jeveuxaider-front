@@ -3,12 +3,12 @@ import flareSourcemapUploader from '@flareapp/vite-plugin-sourcemap-uploader'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // devtools: {
-  //   enabled: true,
-  //   timeline: {
-  //     enabled: true,
-  //   },
-  // },
+  devtools: {
+    enabled: false,
+    // timeline: {
+    //   enabled: true,
+    // },
+  },
 
   experimental: {
     // emitRouteChunkError: 'automatic',
