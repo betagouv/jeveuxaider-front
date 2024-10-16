@@ -83,6 +83,11 @@ export default defineNuxtComponent({
           this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
     },
+    isMissionInUserFavorite() {
+      return this.$stores.auth?.user?.favorite_missions?.some(
+        (favoriteMission) => favoriteMission.id === this.selectedMission.id
+      )
+    },
   },
   methods: {
     onSubmit() {
@@ -115,10 +120,13 @@ export default defineNuxtComponent({
             console.error('API ENGAGEMENT - trackApplication', error)
           }
 
+          console.log('SoftGateParticipate - isMissionInUserFavorite', this.isMissionInUserFavorite)
+
           this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation', {
             props: {
               hasSlots: this.$stores.softGate.selectedMission?.dates?.length > 0,
               isMotivationRequired: this.$stores.softGate.selectedMission?.is_motivation_required,
+              isInFavorite: this.isMissionInUserFavorite,
             },
           })
 

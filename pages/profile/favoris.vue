@@ -6,7 +6,7 @@
       <BaseSectionHeading
         :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
           queryResult.total,
-          'favoris',
+          'favori',
           'favoris',
           false
         )}`"

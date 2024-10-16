@@ -12,18 +12,18 @@
       </DsfrButton>
     </template>
     <template v-if="variant === 'icon'">
-      <template v-if="isMissionInUserFavorite">
-        <RiHeartFill
-          class="text-[#F93F42] drop-shadow h-7 stroke-white stroke-2 group-hover:scale-110 transition"
-          @click.prevent="onClick"
-        />
-      </template>
-      <template v-else>
-        <RiHeartFill
-          class="text-black stroke-white stroke-2 text-opacity-60 drop-shadow h-7 group-hover:scale-110 transition"
-          @click.prevent="onClick"
-        />
-      </template>
+      <button type="button" @click.prevent="onClick">
+        <template v-if="isMissionInUserFavorite">
+          <RiHeartFill
+            class="text-[#F93F42] drop-shadow h-7 stroke-white stroke-2 group-hover:scale-110 transition"
+          />
+        </template>
+        <template v-else>
+          <RiHeartFill
+            class="text-black stroke-white stroke-2 text-opacity-60 drop-shadow h-7 group-hover:scale-110 transition"
+          />
+        </template>
+      </button>
     </template>
   </div>
 </template>
