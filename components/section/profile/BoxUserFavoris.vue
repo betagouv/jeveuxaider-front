@@ -19,10 +19,10 @@ export default defineNuxtComponent({
   },
   computed: {
     showBox() {
-      return this.$stores.auth.user.favorite_missions.length > 0
+      return this.$stores.auth.user?.favorite_missions?.length > 0
     },
     favoritesCount() {
-      return this.$stores.auth.user.favorite_missions.length
+      return this.$stores.auth.user?.favorite_missions?.length
     },
   },
   methods: {},
