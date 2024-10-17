@@ -41,7 +41,7 @@
           loading="lazy"
           @error="onImgError"
         />
-        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[398px] pr-8">
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[360px] pr-8">
           <DsfrBadge
             v-if="isIdealPourDebuter"
             size="sm"
