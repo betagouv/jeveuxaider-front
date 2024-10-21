@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        title="Allocation RSA"
+        title="Bénéficiaire du RSA"
         :prevent-click-outside="true"
         @close="
           () => {
