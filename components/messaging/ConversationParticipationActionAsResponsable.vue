@@ -41,38 +41,38 @@
         </template>
 
         <template #items>
-          <div class="w-[300px] py-4">
+          <div class="w-[300px]">
             <BaseDropdownOptionsItem
               v-if="!['En cours de traitement'].includes(participation.state)"
               @click.native.stop="showInProgressParticipationModal = true"
             >
-              <div class="px-4 text-base font-medium">Passer en cours de traitement</div>
+              Passer en cours de traitement
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="!['Validée'].includes(participation.state)"
               @click.native.stop="showValidateParticipationModal = true"
               class="block sm:hidden"
             >
-              <div class="px-4 text-base font-medium">Valider la participation</div>
+              Valider la participation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="!['Refusée'].includes(participation.state)"
               @click.native.stop="showRefuseParticipationModal = true"
               class="block sm:hidden"
             >
-              <div class="px-4 text-base font-medium">Refuser la participation</div>
+              Refuser la participation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="!['Annulée'].includes(participation.state)"
               @click.native.stop="showCancelParticipationModal = true"
             >
-              <div class="px-4 text-base font-medium">Annuler la participation</div>
+              Annuler la participation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
-              <div class="px-4 text-base font-medium">Archiver la conversation</div>
+              Archiver la conversation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
-              <div class="px-4 text-base font-medium">Désarchiver la conversation</div>
+              Désarchiver la conversation
             </BaseDropdownOptionsItem>
           </div>
         </template>

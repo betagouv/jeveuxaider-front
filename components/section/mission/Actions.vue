@@ -28,86 +28,84 @@
   />
   <BaseDropdown>
     <template #button>
-      <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
-        <RiMoreFill class="h-5 w-5 fill-current" />
+      <DsfrButton
+        :size="buttonSize"
+        type="tertiary"
+        class="!text-gray-800"
+        icon="RiMoreFill"
+        icon-only
+      >
       </DsfrButton>
     </template>
     <template #items>
-      <NuxtLink :to="`/admin/missions/${mission.id}/title`" class="inline sm:hidden">
-        <BaseDropdownOptionsItem>
+      <div :class="[{ 'w-[220px]': buttonSize === 'sm' }, { 'w-[270px]': buttonSize === 'md' }]">
+        <NuxtLink :to="`/admin/missions/${mission.id}/title`" class="inline sm:hidden">
+          <BaseDropdownOptionsItem icon="RiPencilLine"> Modifier </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <BaseDropdownOptionsItem
+          v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
+          @click.native="$emit('showModalSwitchIsOnline')"
+          :size="buttonSize"
+        >
           <div class="flex items-center">
-            <RiPencilLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Modifier
+            <div
+              :class="[
+                'h-3 w-3 rounded-full mr-3',
+                mission.is_online ? 'bg-jva-red-600' : 'bg-jva-green-600',
+              ]"
+            />
+            {{ mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne' }}
           </div>
         </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
-        @click.native="$emit('showModalSwitchIsOnline')"
-      >
-        <div class="flex items-center">
+        <BaseDropdownOptionsItem
+          v-if="mission.places_left > 0 && mission.is_online && mission.state == 'Validée'"
+          @click.native="handleChangeIsRegistrationOpen(!mission.is_registration_open)"
+          :size="buttonSize"
+          icon="RiUserFollow"
+        >
           <div
-            :class="[
-              'h-3 w-3 rounded-full mr-3',
-              mission.is_online ? 'bg-jva-red-600' : 'bg-jva-green-600',
-            ]"
-          />
-          {{ mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne' }}
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="mission.places_left > 0 && mission.is_online && mission.state == 'Validée'"
-        @click.native="handleChangeIsRegistrationOpen(!mission.is_registration_open)"
-      >
-        <div
-          v-if="mission.is_registration_open"
-          class="flex items-center"
-          v-tooltip="{
-            content: 'La mission reste en ligne. Les bénévoles ne peuvent plus postuler.',
-          }"
-        >
-          <RiUserUnfollow class="h-4 w-4 mr-2 fill-current text-gray-600" />Fermer les inscriptions
-        </div>
-        <div
-          v-else
-          class="flex items-center"
-          v-tooltip="{
-            content: 'La mission reste en ligne. Les bénévoles ne peuvent plus postuler.',
-          }"
-        >
-          <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" />Ouvrir les inscriptions
-        </div>
-      </BaseDropdownOptionsItem>
-      <NuxtLink
-        v-if="mission.places_left > 0 && mission.is_online"
-        :to="`/admin/missions/${mission.id}/trouver-des-benevoles`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiUserSearch class="h-4 w-4 mr-2 fill-current text-gray-600" /> Trouver des bénévoles
+            v-if="mission.is_registration_open"
+            v-tooltip="{
+              content: 'La mission reste en ligne. Les bénévoles ne peuvent plus postuler.',
+            }"
+          >
+            Fermer les inscriptions
           </div>
+          <div v-else>Ouvrir les inscriptions</div>
         </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <BaseDropdownOptionsItem v-if="canDuplicateMission" @click="showModalDuplicate = true">
-        <div class="flex items-center">
-          <RiFileCopyLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Dupliquer
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="showModalTags = true"
-      >
-        <div class="flex items-center">
-          <RiPriceTag3Line class="h-4 w-4 mr-2 fill-current text-gray-600" /> Gérer les tags
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
-        @click="showModalDelete = true"
-      >
-        <div class="flex items-center">
-          <RiDeleteBinLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Supprimer
-        </div>
-      </BaseDropdownOptionsItem>
+        <NuxtLink
+          v-if="mission.places_left > 0 && mission.is_online"
+          :to="`/admin/missions/${mission.id}/trouver-des-benevoles`"
+        >
+          <BaseDropdownOptionsItem :size="buttonSize" icon="RiUserSearch">
+            Trouver des bénévoles
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <BaseDropdownOptionsItem
+          v-if="canDuplicateMission"
+          @click="showModalDuplicate = true"
+          :size="buttonSize"
+          icon="RiFileCopyLine"
+        >
+          Dupliquer
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="showModalTags = true"
+          :size="buttonSize"
+          icon="RiPriceTag3Line"
+        >
+          Gérer les tags
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
+          @click="showModalDelete = true"
+          :size="buttonSize"
+          icon="RiDeleteBinLine"
+        >
+          Supprimer
+        </BaseDropdownOptionsItem>
+      </div>
     </template>
   </BaseDropdown>
 </template>

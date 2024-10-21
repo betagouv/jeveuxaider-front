@@ -44,67 +44,74 @@
   </BaseDrawer>
   <BaseDropdown>
     <template #button>
-      <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
-        <RiMoreFill class="h-5 w-5 fill-current" />
+      <DsfrButton
+        :size="buttonSize"
+        type="tertiary"
+        class="!text-gray-800"
+        icon="RiMoreFill"
+        icon-only
+      >
       </DsfrButton>
     </template>
     <template #items>
-      <NuxtLink
-        :to="`/admin/missions/?organisation_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiListUnordered class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les missions
-          </div>
-        </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <NuxtLink
-        :to="`/admin/participations/?organisation_name=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiMailStar class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les participations
-          </div>
-        </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <BaseDropdownOptionsItem
-        v-if="['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)"
-        @click.native="
-          () => {
-            showDrawerInvitation = true
-            showDrawerAddResponsable = false
-          }
-        "
-      >
-        <div class="flex items-center"><RiUserAdd class="h-4 w-4 mr-2" /> Inviter un membre</div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="
-          () => {
-            showDrawerAddResponsable = true
-            showDrawerInvitation = false
-          }
-        "
-      >
-        <div
-          class="flex items-center"
-          v-tooltip="{
-            content: 'L\'utilisateur ajouté à l\'organisation ne recevra pas de notifications.',
-          }"
-          variant="white"
+      <div :class="[{ 'w-[220px]': buttonSize === 'sm' }, { 'w-[270px]': buttonSize === 'md' }]">
+        <NuxtLink
+          :to="`/admin/missions/?organisation_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
         >
-          <RiUserAdd class="h-4 w-4 mr-2" /> Ajouter un membre
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="showModalDelete = true"
-      >
-        <div class="flex items-center">
-          <RiDeleteBinLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Supprimer
-        </div>
-      </BaseDropdownOptionsItem>
+          <BaseDropdownOptionsItem :size="buttonSize" icon="RiListUnordered">
+            Voir les missions
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/admin/participations/?organisation_name=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
+        >
+          <BaseDropdownOptionsItem :size="buttonSize" icon="RiMailStar">
+            Voir les participations
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <BaseDropdownOptionsItem
+          v-if="['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+          @click.native="
+            () => {
+              showDrawerInvitation = true
+              showDrawerAddResponsable = false
+            }
+          "
+          :size="buttonSize"
+          icon="RiUserAdd"
+        >
+          Inviter un membre
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          :size="buttonSize"
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="
+            () => {
+              showDrawerAddResponsable = true
+              showDrawerInvitation = false
+            }
+          "
+          icon="RiUserAdd"
+        >
+          <div
+            class="flex items-center"
+            v-tooltip="{
+              content: 'L\'utilisateur ajouté à l\'organisation ne recevra pas de notifications.',
+            }"
+            variant="white"
+          >
+            Ajouter un membre
+          </div>
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          :size="buttonSize"
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="showModalDelete = true"
+          icon="RiDeleteBinLine"
+        >
+          Supprimer
+        </BaseDropdownOptionsItem>
+      </div>
     </template>
   </BaseDropdown>
 </template>

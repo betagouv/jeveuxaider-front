@@ -34,37 +34,41 @@
 
   <BaseDropdown>
     <template #button>
-      <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
-        <RiMoreFill class="h-5 w-5 fill-current" />
+      <DsfrButton
+        :size="buttonSize"
+        type="tertiary"
+        class="!text-gray-800"
+        icon="RiMoreFill"
+        icon-only
+      >
       </DsfrButton>
     </template>
     <template #items>
-      <NuxtLink
-        :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiMailStar class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les participations
-          </div>
+      <div :class="[{ 'w-[220px]': buttonSize === 'sm' }, { 'w-[270px]': buttonSize === 'md' }]">
+        <NuxtLink
+          :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`"
+        >
+          <BaseDropdownOptionsItem icon="RiMailStar" :size="buttonSize">
+            Voir les participations
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <BaseDropdownOptionsItem
+          :size="buttonSize"
+          icon="RiUserForbid"
+          v-if="['admin'].includes($stores.auth.contextRole) && !profile.user.banned_at"
+          @click="showModalBan = true"
+        >
+          Bloquer l'utilisateur
         </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole) && !profile.user.banned_at"
-        @click="showModalBan = true"
-      >
-        <div class="flex items-center">
-          <RiUserForbid class="h-4 w-4 mr-2 fill-current text-gray-600" /> Bloquer l'utilisateur
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole) && profile.user.banned_at"
-        @click="showModalUnban = true"
-      >
-        <div class="flex items-center">
-          <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" /> Débloquer l'utilisateur
-        </div>
-      </BaseDropdownOptionsItem>
-      <!-- <BaseDropdownOptionsItem
+        <BaseDropdownOptionsItem
+          :size="buttonSize"
+          icon="RiUserFollow"
+          v-if="['admin'].includes($stores.auth.contextRole) && profile.user.banned_at"
+          @click="showModalUnban = true"
+        >
+          Débloquer l'utilisateur
+        </BaseDropdownOptionsItem>
+        <!-- <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole) && !profile.user.archived_at"
         @click="showModalArchive = true"
       >
@@ -73,7 +77,7 @@
           l'utilisateur
         </div>
       </BaseDropdownOptionsItem> -->
-      <!-- <BaseDropdownOptionsItem
+        <!-- <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole) && profile.user.archived_at"
         @click="showModalUnarchive = true"
       >
@@ -82,14 +86,15 @@
           l'utilisateur
         </div>
       </BaseDropdownOptionsItem> -->
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="handleImpersonate()"
-      >
-        <div class="flex items-center">
-          <RiSpy class="h-4 w-4 mr-2 fill-current text-gray-600" /> Prendre sa place
-        </div>
-      </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          icon="RiSpy"
+          :size="buttonSize"
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="handleImpersonate()"
+        >
+          Prendre sa place
+        </BaseDropdownOptionsItem>
+      </div>
     </template>
   </BaseDropdown>
 </template>

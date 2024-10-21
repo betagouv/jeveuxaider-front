@@ -42,32 +42,32 @@
         </template>
 
         <template #items>
-          <div class="w-full sm:w-[300px] py-1 sm:py-4">
+          <div class="w-full sm:w-[300px]">
             <BaseDropdownOptionsItem
               v-if="participationShouldBeDone"
               class="lg:hidden"
               @click.native.stop="showValidateParticipationModal = true"
             >
-              <div class="px-4 text-base font-medium">Oui, je valide ma participation</div>
+              Oui, je valide ma participation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="needTestimonial"
               class="lg:hidden"
               @click.native.stop="showTestimonialOverlay = true"
             >
-              <div class="px-4 text-base font-medium">Laisser un témoignage</div>
+              Laisser un témoignage
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="canCancel"
               @click.native.stop="showCancelParticipationModal = true"
             >
-              <div class="px-4 text-base font-medium">Annuler la participation</div>
+              Annuler la participation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canArchive" @click.native.stop="handleArchive">
-              <div class="px-4 text-base font-medium">Archiver la conversation</div>
+              Archiver la conversation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
-              <div class="px-4 text-base font-medium">Désarchiver la conversation</div>
+              Désarchiver la conversation
             </BaseDropdownOptionsItem>
           </div>
         </template>

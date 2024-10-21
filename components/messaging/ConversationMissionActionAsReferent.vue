@@ -32,29 +32,29 @@
         </template>
 
         <template #items>
-          <div class="w-[300px] py-4">
+          <div class="w-[300px]">
             <BaseDropdownOptionsItem
               v-if="canValidate"
               @click.native.stop="showValidateMissionModal = true"
             >
-              <div class="px-4 text-base font-medium">Valider cette mission</div>
+              Valider cette mission
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="canSignal"
               @click.native.stop="showReportMissionModal = true"
             >
-              <div class="px-4 text-base font-medium">Signaler cette mission</div>
+              Signaler cette mission
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               @click.native.stop="$router.push(`/admin/missions/${mission.id}/title`)"
             >
-              <div class="px-4 text-base font-medium">Modifier cette mission</div>
+              Modifier cette mission
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
-              <div class="px-4 text-base font-medium">Archiver la conversation</div>
+              Archiver la conversation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
-              <div class="px-4 text-base font-medium">Désarchiver la conversation</div>
+              Désarchiver la conversation
             </BaseDropdownOptionsItem>
           </div>
         </template>

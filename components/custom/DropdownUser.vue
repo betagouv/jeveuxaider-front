@@ -33,38 +33,41 @@
     </template>
 
     <template #items>
-      <div class="w-[330px] py-4">
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiListUnordered class="h-[17px] w-auto fill-current" />
-            <span>Mon espace</span>
-          </div>
+      <div class="w-[250px]">
+        <BaseDropdownOptionsItem
+          @click.native="handleClick('/profile')"
+          icon="RiListUnordered"
+          show-arrow
+        >
+          Mon espace
         </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile/missions')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiCalendarEventLine class="h-[17px] w-auto fill-current" />
-            <span>Mes missions</span>
-          </div>
+        <BaseDropdownOptionsItem
+          @click.native="handleClick('/profile/missions')"
+          icon="RiCalendarEventLine"
+          show-arrow
+        >
+          Mes missions
         </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile/favoris')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiHeartLine class="h-[17px] w-auto fill-current" />
-            <span>Mes favoris</span>
-          </div>
+        <BaseDropdownOptionsItem
+          @click.native="handleClick('/profile/favoris')"
+          icon="RiHeartLine"
+          show-arrow
+        >
+          Mes favoris
         </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile/edit')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiUserLine class="h-[17px] w-auto fill-current" />
-            <span>Mon compte</span>
-          </div>
+        <BaseDropdownOptionsItem
+          @click.native="handleClick('/profile/edit')"
+          icon="RiUserLine"
+          show-arrow
+        >
+          Mon compte
         </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('logout')">
-          <div
-            class="flex items-center justify-center space-x-3 px-4 text-base font-medium text-[#C9191E]"
-          >
-            <RiLogoutBoxRLine class="h-[17px] w-auto fill-current" />
-            <span>Déconnexion</span>
-          </div>
+        <BaseDropdownOptionsItem
+          @click.native="handleClick('logout')"
+          icon="RiLogoutBoxRLine"
+          icon-class="text-[#C9191E] group-hover/item:text-[#C9191E]"
+        >
+          <span class="text-[#C9191E]">Déconnexion</span>
         </BaseDropdownOptionsItem>
       </div>
     </template>

@@ -44,69 +44,73 @@
   </BaseDrawer>
   <BaseDropdown>
     <template #button>
-      <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
-        <RiMoreFill class="h-5 w-5 fill-current" />
+      <DsfrButton
+        :size="buttonSize"
+        type="tertiary"
+        class="!text-gray-800"
+        icon="RiMoreFill"
+        icon-only
+      >
       </DsfrButton>
     </template>
     <template #items>
-      <NuxtLink
-        :to="`/admin/missions/?territoire_name=${territoire.name}&filter[ofTerritoire]=${territoire.id}`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiListUnordered class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les missions
-          </div>
-        </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <NuxtLink
-        :to="`/admin/participations/?territoire_name=${territoire.name}&filter[ofTerritoire]=${territoire.id}`"
-      >
-        <BaseDropdownOptionsItem>
-          <div class="flex items-center">
-            <RiMailStar class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les participations
-          </div>
-        </BaseDropdownOptionsItem>
-      </NuxtLink>
-      <BaseDropdownOptionsItem
-        v-if="['admin', 'responsable_territoire'].includes($stores.auth.contextRole)"
-        @click.native="
-          () => {
-            showDrawerInvitation = true
-            showDrawerAddResponsable = false
-          }
-        "
-      >
-        <div class="flex items-center">
-          <RiUserAdd class="h-4 w-4 mr-2" /> Inviter un responsable
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="
-          () => {
-            showDrawerAddResponsable = true
-            showDrawerInvitation = false
-          }
-        "
-      >
-        <div
-          class="flex items-center"
-          v-tooltip="{
-            content: 'L\'utilisateur ajouté au territoire ne recevra pas de notifications.',
-          }"
-          variant="white"
+      <div :class="[{ 'w-[220px]': buttonSize === 'sm' }, { 'w-[270px]': buttonSize === 'md' }]">
+        <NuxtLink
+          :to="`/admin/missions/?territoire_name=${territoire.name}&filter[ofTerritoire]=${territoire.id}`"
         >
-          <RiUserAdd class="h-4 w-4 mr-2" /> Ajouter un responsable
-        </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
-        v-if="['admin'].includes($stores.auth.contextRole)"
-        @click="showModalDelete = true"
-      >
-        <div class="flex items-center">
-          <RiDeleteBinLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Supprimer
-        </div>
-      </BaseDropdownOptionsItem>
+          <BaseDropdownOptionsItem icon="RiListUnordered" :size="buttonSize">
+            Voir les missions
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/admin/participations/?territoire_name=${territoire.name}&filter[ofTerritoire]=${territoire.id}`"
+        >
+          <BaseDropdownOptionsItem icon="RiMailStar" :size="buttonSize">
+            Voir les participations
+          </BaseDropdownOptionsItem>
+        </NuxtLink>
+        <BaseDropdownOptionsItem
+          icon="RiUserAdd"
+          :size="buttonSize"
+          v-if="['admin', 'responsable_territoire'].includes($stores.auth.contextRole)"
+          @click.native="
+            () => {
+              showDrawerInvitation = true
+              showDrawerAddResponsable = false
+            }
+          "
+        >
+          Inviter un responsable
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          icon="RiUserAdd"
+          :size="buttonSize"
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="
+            () => {
+              showDrawerAddResponsable = true
+              showDrawerInvitation = false
+            }
+          "
+        >
+          <div
+            v-tooltip="{
+              content: 'L\'utilisateur ajouté au territoire ne recevra pas de notifications.',
+            }"
+            variant="white"
+          >
+            Ajouter un responsable
+          </div>
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
+          icon="RiDeleteBinLine"
+          :size="buttonSize"
+          v-if="['admin'].includes($stores.auth.contextRole)"
+          @click="showModalDelete = true"
+        >
+          Supprimer
+        </BaseDropdownOptionsItem>
+      </div>
     </template>
   </BaseDropdown>
 </template>

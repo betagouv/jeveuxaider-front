@@ -23,17 +23,17 @@
         </template>
 
         <template #items>
-          <div class="w-[300px] py-4">
+          <div class="w-[300px]">
             <BaseDropdownOptionsItem
               @click.native.stop="$router.push(`/admin/organisations/${organisation.id}/edit`)"
             >
-              <div class="px-4 text-base font-medium">Modifier cette organisation</div>
+              Modifier cette organisation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
-              <div class="px-4 text-base font-medium">Archiver la conversation</div>
+              Archiver la conversation
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
-              <div class="px-4 text-base font-medium">Désarchiver la conversation</div>
+              Désarchiver la conversation
             </BaseDropdownOptionsItem>
           </div>
         </template>
