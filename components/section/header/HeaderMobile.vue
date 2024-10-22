@@ -487,6 +487,11 @@ export default defineNuxtComponent({
           isActive: this.isActiveLink('profile/favoris'),
         },
         {
+          name: 'Mes alertes',
+          to: '/profile/alertes',
+          isActive: this.isActiveLink('profile/alertes'),
+        },
+        {
           name: 'Mon compte',
           to: '/profile/edit',
           isActive: this.isActiveLink('profile/edit'),

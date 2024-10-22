@@ -56,6 +56,13 @@
           Mes favoris
         </BaseDropdownOptionsItem>
         <BaseDropdownOptionsItem
+          @click.native="handleClick('/profile/alertes')"
+          icon="RiNotification2Line"
+          show-arrow
+        >
+          Mes alertes
+        </BaseDropdownOptionsItem>
+        <BaseDropdownOptionsItem
           @click.native="handleClick('/profile/edit')"
           icon="RiUserLine"
           show-arrow
@@ -85,6 +92,7 @@ export default defineNuxtComponent({
         case '/profile':
         case '/profile/missions':
         case '/profile/favoris':
+        case '/profile/alertes':
         case '/profile/settings':
         case '/profile/preferences':
         case '/profile/notifications':

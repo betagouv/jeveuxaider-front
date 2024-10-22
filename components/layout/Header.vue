@@ -21,6 +21,7 @@
             v-if="$stores.missionShare.showOverlay"
           />
           <LazySoftGateOverlay key="soft-gate-overlay" v-if="$stores.softGate.showOverlay" />
+          <LazyUserAlertOverlay key="user-alert-overlay" v-if="$stores.userAlert.showOverlay" />
           <LazyArchivedUserOverlay
             key="archived-user-overlay"
             v-if="$stores.archivedUser.showOverlay"
@@ -35,6 +36,7 @@
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import HeaderMobile from '@/components/section/header/HeaderMobile.vue'
 import HeaderDesktop from '@/components/section/header/HeaderDesktop.vue'
+import LazyUserAlertOverlay from '@/components/section/UserAlertOverlay.vue'
 import LazySoftGateOverlay from '@/components/section/SoftGateOverlay.vue'
 import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay.vue'
 import LazyArchivedUserOverlay from '@/components/section/ArchivedUserOverlay.vue'
@@ -45,6 +47,7 @@ export default defineNuxtComponent({
     HeaderMobile,
     HeaderDesktop,
     LazySoftGateOverlay,
+    LazyUserAlertOverlay,
     LazyMissionShareOverlay,
     LazyArchivedUserOverlay,
   },

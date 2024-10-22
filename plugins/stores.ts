@@ -12,6 +12,7 @@ import { useStructureTagsStore } from '@/store/structureTags'
 import { useArchivedUserStore } from '@/store/archivedUser'
 import { useFormMissionStore } from '@/store/formMission'
 import { useProfileOverlayCompletionStore } from '@/store/profileOverlayCompletion'
+import { useUserAlertStore } from '@/store/userAlert'
 
 export default defineNuxtPlugin(async () => {
   const storeAuth = useAuthStore()
@@ -28,6 +29,7 @@ export default defineNuxtPlugin(async () => {
   const storeArchivedUser = useArchivedUserStore()
   const storeFormMission = useFormMissionStore()
   const storeProfileOverlayCompletion = useProfileOverlayCompletionStore()
+  const storeUserAlert = useUserAlertStore()
   const cookieAccessToken = useCookie('access-token')
   const cookieAccessTokenImpersonate = useCookie('access-token-impersonate')
 
@@ -62,6 +64,7 @@ export default defineNuxtPlugin(async () => {
         archivedUser: storeArchivedUser,
         formMission: storeFormMission,
         profileOverlayCompletion: storeProfileOverlayCompletion,
+        userAlert: storeUserAlert,
       },
     },
   }
