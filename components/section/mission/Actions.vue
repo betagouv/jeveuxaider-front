@@ -40,7 +40,9 @@
     <template #items>
       <div :class="[{ 'w-[220px]': buttonSize === 'sm' }, { 'w-[270px]': buttonSize === 'md' }]">
         <NuxtLink :to="`/admin/missions/${mission.id}/title`" class="inline sm:hidden">
-          <BaseDropdownOptionsItem icon="RiPencilLine"> Modifier </BaseDropdownOptionsItem>
+          <BaseDropdownOptionsItem icon="RiPencilLine" :size="buttonSize">
+            Modifier
+          </BaseDropdownOptionsItem>
         </NuxtLink>
         <BaseDropdownOptionsItem
           v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
