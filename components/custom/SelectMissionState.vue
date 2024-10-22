@@ -5,7 +5,6 @@
       :options="statesAvailable"
       :modelValue="mission.state"
       @selected="handleSelect($event)"
-      orientation="right"
     />
 
     <ModalMissionValidate
