@@ -1,5 +1,6 @@
 <template>
   <BaseBox v-if="showBox">
+    <div class="text-[32px]">❤</div>
     <BaseHeading as="h2" :level="3" class="text-black">
       Vous avez {{ $filters.pluralize(favoritesCount, 'favori') }}
     </BaseHeading>
