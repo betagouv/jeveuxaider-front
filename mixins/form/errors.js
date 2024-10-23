@@ -31,7 +31,6 @@ export default {
       return this.formSchema.isValid(field)
     },
     validate(field) {
-      console.log('validate', field)
       this.formSchema
         .validateAt(field, this.form)
         .then(() => {

@@ -30,7 +30,50 @@
             context="radio"
           />
         </DsfrFormControl>
-        <DsfrFormControl :error="errors.activities" label="Activités">
+
+        <template v-if="['presentiel', 'all'].includes(form.type_missions)">
+          <DsfrFormControl
+            html-for="zip"
+            :error="errors.zip"
+            class="mt-6 @container"
+            label="Ville"
+            required
+          >
+            <DsfrInputAutocomplete
+              :model-value="form.zip ? `${form.zip} - ${form.city}` : null"
+              name="zip"
+              :options="zipAutocompleteOptions"
+              :min-length-to-search="3"
+              option-key-attribute="id"
+              option-label-attribute="label"
+              option-label-secondary-attribute="typeLabel"
+              placeholder="Rechercher une ville ou code postal"
+              search-input-placeholder="Recherche par ville ou code postal"
+              :loading="loadingFetchZips"
+              @selected="handleSelectedZip"
+              @fetch-suggestions="onFetchZipSuggestions($event)"
+            />
+          </DsfrFormControl>
+          <DsfrFormControl
+            html-for="radius"
+            :error="errors.radius"
+            class="mt-6 @container"
+            label="Rayon"
+            required
+          >
+            <DsfrSelect
+              name="radius"
+              v-model="form.radius"
+              :options="[
+                { key: 10, label: '10 kms' },
+                { key: 25, label: '25 kms' },
+                { key: 50, label: '50 kms' },
+              ]"
+            />
+          </DsfrFormControl>
+        </template>
+
+        <DsfrFormControl html-for="activities" :error="errors.activities" label="Activités">
           <DsfrTagsGroup
             v-model="form.activities"
             name="activites"
@@ -38,7 +81,7 @@
             :options="activities"
           />
         </DsfrFormControl>
-        <DsfrFormControl :error="errors.commitment" label="Disponibilités">
+        <DsfrFormControl html-for="commitment" :error="errors.commitment" label="Disponibilités">
           <DsfrSelect v-model="form.commitment" name="commitment" :options="$labels.commitment" />
         </DsfrFormControl>
 
@@ -51,28 +94,64 @@
 </template>
 
 <script>
-import { string, object, array } from 'yup'
+import { string, object, array, number } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import activities from '@/assets/activities.json'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   name: 'UserAlertStepForm',
-  mixins: [FormErrors],
+  mixins: [FormErrors, GeolocProfile],
   emits: ['next'],
   data() {
     return {
       activities: activities,
       loading: false,
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
       form: this.$stores.userAlert.selectedAlert ?? {
         type_missions: null,
         activities: [],
-        address: null,
+        zip: null,
+        city: null,
+        latitude: null,
+        longitude: null,
+        radius: 10,
         commitment: null,
+        test: 'test',
       },
       formSchema: object({
         type_missions: string().required('Un type de mission est requis'),
         activities: array().min(1, 'Une activité est requise').required('Une activité est requise'),
         commitment: string().required('Une disponibilité est requise'),
+        zip: string()
+          .nullable()
+          .when('type_missions', {
+            is: (type_missions) => type_missions !== 'distance',
+            then: (schema) => schema.required('Un code postal est requis'),
+          }),
+        city: string()
+          .nullable()
+          .when('type_missions', {
+            is: (type_missions) => type_missions !== 'distance',
+            then: (schema) => schema.required('Une ville est requise'),
+          }),
+        latitude: string()
+          .nullable()
+          .when('type_missions', {
+            is: (type_missions) => type_missions !== 'distance',
+            then: (schema) => schema.required('Une latitude est requise'),
+          }),
+        longitude: string()
+          .nullable()
+          .when('type_missions', {
+            is: (type_missions) => type_missions !== 'distance',
+            then: (schema) => schema.required('Une longitude est requise'),
+          }),
+        radius: number().when('type_missions', {
+          is: (type_missions) => type_missions !== 'distance',
+          then: (schema) => schema.required('Un rayon est requis'),
+        }),
       }),
     }
   },
@@ -102,6 +181,7 @@ export default defineNuxtComponent({
           this.$emit('next')
         })
         .catch((errors) => {
+          console.log('errorsss', errors)
           this.setErrors(errors)
         })
         .finally(() => {

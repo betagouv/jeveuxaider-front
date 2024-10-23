@@ -1,11 +1,14 @@
-import { test } from 'process'
-import { TypeVocabulary } from './labels'
+import type { TypeVocabulary } from './labels'
 import { marked } from 'marked'
+import activities from '@/assets/activities.json'
 
 export default defineNuxtPlugin(() => {
   const { $labels } = useNuxtApp()
 
   const filters = {
+    activities: (key: string, labelKey: keyof (typeof activities)[0] = 'label') => {
+      return activities.find((item: any) => item.key === key)?.[labelKey] ?? key
+    },
     label: (key: string, vocabulary: TypeVocabulary, labelKey = 'label') => {
       return $labels[vocabulary]?.find((item) => item.key === key)?.[labelKey] ?? key
     },
