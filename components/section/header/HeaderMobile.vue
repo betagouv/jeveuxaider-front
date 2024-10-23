@@ -263,6 +263,11 @@ export default defineNuxtComponent({
           //   target: '_blank',
           // },
           {
+            name: 'Banques alimentaires 🛒',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
+            target: '_blank',
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),

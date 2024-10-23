@@ -21,7 +21,7 @@
             :id="`label-missions-operation-${uuid}`"
             class="text-xl text-[#3A3A3A] xl:text-[24px] xl:leading-[38px]"
           >
-            <strong>Les 24, 25 et 26 novembre prochains</strong>, c’est le moment de lutter contre
+            <strong>Les 22, 23 et 24 novembre prochains</strong>, c’est le moment de lutter contre
             la précarité et le gaspillage alimentaire ! Entre 2020 et 2023, le nombre de personnes
             accueillies pour des aides alimentaires est en hausse de plus de 34%. Nous pouvons
             toutes et tous nous engager et aider les personnes qui ont des difficultés à se nourrir
@@ -61,7 +61,7 @@
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
-            facetFilters: [['tags:Collecte Nationale des Banques Alimentaires 2023']],
+            facetFilters: [['tags:Collecte Nationale des Banques Alimentaires 2024']],
             aroundLatLngViaIP: true,
             aroundRadius: 'all',
           }"
@@ -92,16 +92,16 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Opé nationale', {
         props: {
           isLogged: this.$stores.auth.isLogged,
-          operation: 'Collecte Nationale des Banques Alimentaires 2023',
+          operation: 'Collecte Nationale des Banques Alimentaires 2024',
         },
       })
-      this.$router.push('/missions-benevolat?tags=Collecte Nationale des Banques Alimentaires 2023')
+      this.$router.push('/missions-benevolat?tags=Collecte Nationale des Banques Alimentaires 2024')
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
         props: {
           isLogged: this.$stores.auth.isLogged,
-          operation: 'Collecte Nationale des Banques Alimentaires 2023',
+          operation: 'Collecte Nationale des Banques Alimentaires 2024',
         },
       })
     },
