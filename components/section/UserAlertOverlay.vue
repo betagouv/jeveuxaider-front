@@ -3,7 +3,7 @@
     <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
     <SoftGateLogin v-if="step == 'login'" :datas="datas" @next="step == 'alert'" />
     <SoftGateRegister v-if="step == 'register'" :datas="datas" @next="step == 'alert'" />
-    <UserAlertStepForm v-if="step == 'alert'" @next="handleNextFormAlert" />
+    <UserAlertStepForm v-if="step == 'alert'" :form="form" @next="handleNextFormAlert" />
     <template #footer>
       <div class="text-center text-white mt-4">Vous pouvez la désactiver à tout moment.</div>
     </template>
@@ -32,6 +32,23 @@ export default defineNuxtComponent({
   },
   created() {
     this.step = this.firstStepResolver()
+  },
+  computed: {
+    form() {
+      if (this.$stores.userAlert.selectedAlert) {
+        return this.$stores.userAlert.selectedAlert.conditions
+      }
+      return {
+        type_missions: null,
+        activities: [],
+        zip: null,
+        city: null,
+        latitude: null,
+        longitude: null,
+        radius: 10,
+        commitment: null,
+      }
+    },
   },
   methods: {
     firstStepResolver() {

@@ -5,7 +5,9 @@
         <div>
           <div class="mb-4 font-medium text-xl">{{ title }}</div>
           <div class="flex flex-wrap gap-2">
-            <DsfrTag v-if="!isDistance" size="sm">{{ alert.conditions.zip }}</DsfrTag>
+            <DsfrTag v-if="!isDistance" size="sm"
+              >{{ alert.conditions.city }} ({{ alert.conditions.zip }})</DsfrTag
+            >
             <DsfrTag v-if="!isDistance" size="sm"
               >À moins de {{ alert.conditions.radius }} kms</DsfrTag
             >
@@ -19,11 +21,12 @@
         </div>
         <div>
           <BaseToggle
-            :modelValue="alert.is_active"
-            button-label-class="text-right"
-            button-wrapper-class="items-end mt-1 sm:mt-0"
-            :button-labels="{ on: 'Oui', off: 'Non' }"
+            :modelValue="alert.is_email_notification_active"
+            button-label-class="!m-0"
+            button-wrapper-class="!flex-row-reverse items-center justify-center !w-[175px] gap-2"
+            :button-labels="{ on: 'Être averti par e-mail', off: 'Être averti par e-mail' }"
             @update:modelValue="onToggleClick"
+            position="left"
           />
         </div>
       </div>
@@ -31,7 +34,13 @@
     <div class="p-6 border-t">
       <div class="flex justify-end gap-2">
         <DsfrButton type="tertiary" size="sm" icon-only icon="RiDeleteBinLine"></DsfrButton>
-        <DsfrButton type="tertiary" size="sm" icon-only icon="RiPencilLine"></DsfrButton>
+        <DsfrButton
+          type="tertiary"
+          size="sm"
+          icon-only
+          icon="RiPencilLine"
+          @click="onEditClick"
+        ></DsfrButton>
         <DsfrButton type="primary" size="sm">Voir les missions</DsfrButton>
       </div>
     </div>
@@ -45,6 +54,7 @@ export default defineNuxtComponent({
   data() {
     return {
       activitiesJson: activitiesJson,
+      showDeleteDialog: false,
     }
   },
   props: {
@@ -58,7 +68,7 @@ export default defineNuxtComponent({
       if (this.alert.conditions.type_missions === 'presentiel') {
         return `Missions en présentiel • ${this.alert.conditions.city}`
       }
-      if (this.alert.conditions.type_missions === 'presentiel') {
+      if (this.alert.conditions.type_missions === 'distance') {
         return `Missions à distance`
       }
       return 'Missions en présentiel et à distance'
@@ -68,6 +78,10 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    onEditClick() {
+      this.$stores.userAlert.showOverlay = true
+      this.$stores.userAlert.selectedAlert = this.alert
+    },
     onToggleClick(value) {
       if (value) {
         this.activateAlert()
@@ -79,14 +93,14 @@ export default defineNuxtComponent({
       await apiFetch(`/user/alerts/${this.alert.id}/activate`, {
         method: 'POST',
       })
-      this.alert.is_active = true
+      this.alert.is_email_notification_active = true
       this.$toast.success('Votre alerte est activée')
     },
     async deactivateAlert() {
       await apiFetch(`/user/alerts/${this.alert.id}/deactivate`, {
         method: 'POST',
       })
-      this.alert.is_active = false
+      this.alert.is_email_notification_active = false
       this.$toast.success('Votre alerte est désactivée')
     },
   },

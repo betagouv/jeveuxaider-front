@@ -14,8 +14,8 @@
         </template>
       </BaseSectionHeading>
 
-      <div class="grid grid-cols-3 gap-8">
-        <div class="col-span-2">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
           <template v-if="alerts.length > 0">
             <div class="grid grid-cols-1 gap-6">
               <CardAlert v-for="alert in alerts" :key="alert.id" :alert="alert">

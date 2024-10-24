@@ -86,7 +86,7 @@
         </DsfrFormControl>
 
         <DsfrButton :loading="loading" class="w-full" full @click.native.prevent="onSubmit">
-          Créer mon alerte
+          {{ isModeUpdating ? 'Créer mon alerte' : 'Modifier mon alerte' }}
         </DsfrButton>
       </form>
     </div>
@@ -101,6 +101,12 @@ import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   name: 'UserAlertStepForm',
+  props: {
+    form: {
+      type: Object,
+      default: null,
+    },
+  },
   mixins: [FormErrors, GeolocProfile],
   emits: ['next'],
   data() {
@@ -109,17 +115,6 @@ export default defineNuxtComponent({
       loading: false,
       zipAutocompleteOptions: [],
       loadingFetchZips: false,
-      form: this.$stores.userAlert.selectedAlert ?? {
-        type_missions: null,
-        activities: [],
-        zip: null,
-        city: null,
-        latitude: null,
-        longitude: null,
-        radius: 10,
-        commitment: null,
-        test: 'test',
-      },
       formSchema: object({
         type_missions: string().required('Un type de mission est requis'),
         activities: array().min(1, 'Une activité est requise').required('Une activité est requise'),
@@ -155,7 +150,32 @@ export default defineNuxtComponent({
       }),
     }
   },
+  computed: {
+    isModeUpdating() {
+      return this.$stores.userAlert.selectedAlert !== null
+    },
+  },
   methods: {
+    async createAlert() {
+      await apiFetch('/user/alerts', {
+        method: 'POST',
+        body: this.form,
+      })
+
+      this.$plausible.trackEvent('User Alert - Creation')
+
+      this.$toast.success(
+        'Votre alerte a bien été créée. Vous recevrez un email par semaine avec les nouvelles missions disponibles.'
+      )
+    },
+    async updateAlert() {
+      await apiFetch(`/user/alerts/${this.$stores.userAlert.selectedAlert.id}`, {
+        method: 'PUT',
+        body: this.form,
+      })
+
+      this.$toast.success('Votre alerte a bien été modifiée.')
+    },
     onSubmit() {
       if (this.loading) {
         return
@@ -167,16 +187,12 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await apiFetch('/user/alerts', {
-            method: 'POST',
-            body: this.form,
-          })
+          if (this.$stores.userAlert.selectedAlert) {
+            this.updateAlert()
+          } else {
+            this.createAlert()
+          }
 
-          this.$plausible.trackEvent('User Alert - Creation')
-
-          this.$toast.success(
-            'Votre alerte a bien été créée. Vous recevrez un email par semaine avec les nouvelles missions disponibles.'
-          )
           await this.$stores.auth.fetchUser()
           this.$emit('next')
         })
