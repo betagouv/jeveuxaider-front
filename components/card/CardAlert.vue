@@ -2,23 +2,7 @@
   <div class="bg-white shadow-lg">
     <div class="p-6">
       <div class="flex justify-between gap-8">
-        <div>
-          <div class="mb-4 font-medium text-xl">{{ title }}</div>
-          <div class="flex flex-wrap gap-2">
-            <DsfrTag v-if="!isDistance" size="sm"
-              >{{ alert.conditions.city }} ({{ alert.conditions.zip }})</DsfrTag
-            >
-            <DsfrTag v-if="!isDistance" size="sm"
-              >À moins de {{ alert.conditions.radius }} kms</DsfrTag
-            >
-            <DsfrTag v-for="activityId in alert.conditions.activities" :key="activityId" size="sm">
-              {{ $filters.activities(activityId) }}
-            </DsfrTag>
-            <DsfrTag size="sm">{{
-              $filters.label(alert.conditions.commitment, 'commitment')
-            }}</DsfrTag>
-          </div>
-        </div>
+        <div class="mb-4 font-medium text-xl">{{ title }}</div>
         <div>
           <BaseToggle
             :modelValue="alert.is_email_notification_active"
@@ -30,10 +14,27 @@
           />
         </div>
       </div>
+      <div class="flex flex-wrap gap-2">
+        <DsfrTag v-if="!isDistance" size="sm"
+          >{{ alert.conditions.city }} ({{ alert.conditions.zip }})</DsfrTag
+        >
+        <DsfrTag v-if="!isDistance" size="sm">À moins de {{ alert.conditions.radius }} kms</DsfrTag>
+        <DsfrTag size="sm">{{ $filters.label(alert.conditions.commitment, 'commitment') }}</DsfrTag>
+        <DsfrTag v-for="activityId in alert.conditions.activities" :key="activityId" size="sm">
+          {{ $filters.activities(activityId) }}
+        </DsfrTag>
+      </div>
     </div>
     <div class="p-6 border-t">
       <div class="flex justify-end gap-2">
-        <DsfrButton type="tertiary" size="sm" icon-only icon="RiDeleteBinLine"></DsfrButton>
+        <DsfrButton
+          type="tertiary"
+          size="sm"
+          icon-only
+          icon="RiDeleteBinLine"
+          class="!text-[#CE0500]"
+          @click="showDeleteDialog = true"
+        ></DsfrButton>
         <DsfrButton
           type="tertiary"
           size="sm"
@@ -42,6 +43,17 @@
           @click="onEditClick"
         ></DsfrButton>
         <DsfrButton type="primary" size="sm">Voir les missions</DsfrButton>
+
+        <BaseAlertDialog
+          icon="RiErrorWarningLine"
+          title="Êtes-vous sûrs ?"
+          :is-open="showDeleteDialog"
+          button-label="Oui, je confirme"
+          @confirm="handleConfirmDelete()"
+          @cancel="showDeleteDialog = false"
+        >
+          Vous êtes sur le point de supprimer votre alerte.
+        </BaseAlertDialog>
       </div>
     </div>
   </div>
@@ -78,6 +90,14 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    async handleConfirmDelete() {
+      this.showDeleteDialog = false
+      await apiFetch(`/user/alerts/${this.alert.id}`, {
+        method: 'DELETE',
+      })
+      await this.$stores.auth.fetchUser()
+      this.$toast.success('Votre alerte a été supprimée')
+    },
     onEditClick() {
       this.$stores.userAlert.showOverlay = true
       this.$stores.userAlert.selectedAlert = this.alert

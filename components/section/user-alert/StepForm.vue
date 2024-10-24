@@ -86,7 +86,7 @@
         </DsfrFormControl>
 
         <DsfrButton :loading="loading" class="w-full" full @click.native.prevent="onSubmit">
-          {{ isModeUpdating ? 'Créer mon alerte' : 'Modifier mon alerte' }}
+          {{ isModeUpdating ? 'Modifier mon alerte' : 'Créer mon alerte' }}
         </DsfrButton>
       </form>
     </div>
@@ -164,9 +164,7 @@ export default defineNuxtComponent({
 
       this.$plausible.trackEvent('User Alert - Creation')
 
-      this.$toast.success(
-        'Votre alerte a bien été créée. Vous recevrez un email par semaine avec les nouvelles missions disponibles.'
-      )
+      this.$toast.success('Votre alerte a bien été créée.')
     },
     async updateAlert() {
       await apiFetch(`/user/alerts/${this.$stores.userAlert.selectedAlert.id}`, {
@@ -180,9 +178,6 @@ export default defineNuxtComponent({
       if (this.loading) {
         return
       }
-
-      console.log('onSubmit')
-
       this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
