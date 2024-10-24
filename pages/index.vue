@@ -6,7 +6,7 @@
       <BanquesAlimentaires />
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocActualitesEngagement />
+      <!-- <BlocActualitesEngagement /> -->
       <BlocNewsletter />
     </template>
     <template v-if="!$stores.auth.isLogged">
@@ -21,7 +21,7 @@
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
-      <BlocActualitesEngagement />
+      <!-- <BlocActualitesEngagement /> -->
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />
